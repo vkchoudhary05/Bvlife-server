@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "outDir": "./dist",
-    "noEmit": true
+    "noEmit": false
   },
   "include": ["server.ts", "server/**/*"]
 }

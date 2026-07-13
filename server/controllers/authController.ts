@@ -32,7 +32,9 @@ export const register = (req: Request, res: Response) => {
   const formattedPhone = validateAndFormatIndianPhone(phone) || phone;
   if (phone) {
     const existingPhone = db.getUsers().find(u => {
-      const uPhone = validateAndFormatIndianPhone(u.phone) || u.phone;
+     const uPhone = u.phone
+  ? (validateAndFormatIndianPhone(u.phone) || u.phone)
+  : "";
       return uPhone && uPhone === formattedPhone;
     });
     if (existingPhone) {
@@ -66,7 +68,9 @@ export const login = (req: Request, res: Response) => {
     // Attempt lookup by phone (clean the input format to compare)
     const formattedPhoneInput = validateAndFormatIndianPhone(email);
     user = db.getUsers().find(u => {
-      const dbPhone = validateAndFormatIndianPhone(u.phone) || u.phone;
+   const dbPhone = u.phone
+  ? (validateAndFormatIndianPhone(u.phone) || u.phone)
+  : "";
       return dbPhone && (dbPhone === email || dbPhone === formattedPhoneInput);
     });
   }
