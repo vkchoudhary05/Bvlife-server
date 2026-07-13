@@ -15,7 +15,8 @@
     "express": "^4.21.2",
     "gitignore": "^0.7.0",
     "mysql2": "^3.22.6",
-    "twilio": "^6.0.2"
+    "twilio": "^6.0.2",
+    "vite": "^6.4.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
