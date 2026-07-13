@@ -1,0 +1,24 @@
+import { Router } from "express";
+import { 
+  register, 
+  login, 
+  getMe, 
+  updateMe, 
+  getUserByEmail, 
+  updateUserByEmail, 
+  getCustomers, 
+  sendOtp, 
+  verifyOtp 
+} from "../controllers/authController";
+
+export const authRouter = Router();
+
+authRouter.post("/api/auth/register", register);
+authRouter.post("/api/auth/login", login);
+authRouter.get("/api/auth/me", getMe);
+authRouter.put("/api/auth/me", updateMe);
+authRouter.get("/api/users/:email", getUserByEmail);
+authRouter.put("/api/users/:email", updateUserByEmail);
+authRouter.get("/api/customers", getCustomers);
+authRouter.post("/api/auth/otp", sendOtp);
+authRouter.post("/api/auth/verify-otp", verifyOtp);

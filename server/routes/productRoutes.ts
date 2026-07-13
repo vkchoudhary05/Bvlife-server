@@ -1,0 +1,54 @@
+import { Router } from "express";
+import { 
+  getProducts, 
+  getProductById, 
+  createProduct, 
+  updateProduct, 
+  deleteProduct, 
+  getReviews, 
+  createReview, 
+  updateReview, 
+  deleteReview, 
+  getBlogs, 
+  createBlog, 
+  deleteBlog, 
+  getFAQs, 
+  createFAQ, 
+  deleteFAQ, 
+  getCoupons, 
+  createCoupon, 
+  deleteCoupon, 
+  getSettings, 
+  updateSettings, 
+  getActivityLogs 
+} from "../controllers/productController";
+
+export const productRouter = Router();
+
+productRouter.get("/api/products", getProducts);
+productRouter.get("/api/products/:id", getProductById);
+productRouter.post("/api/products", createProduct);
+productRouter.put("/api/products/:id", updateProduct);
+productRouter.delete("/api/products/:id", deleteProduct);
+
+productRouter.get("/api/reviews", getReviews);
+productRouter.post("/api/reviews", createReview);
+productRouter.put("/api/reviews/:id", updateReview);
+productRouter.delete("/api/reviews/:id", deleteReview);
+
+productRouter.get("/api/blogs", getBlogs);
+productRouter.post("/api/blogs", createBlog);
+productRouter.delete("/api/blogs/:id", deleteBlog);
+
+productRouter.get("/api/faqs", getFAQs);
+productRouter.post("/api/faqs", createFAQ);
+productRouter.delete("/api/faqs/:id", deleteFAQ);
+
+productRouter.get("/api/coupons", getCoupons);
+productRouter.post("/api/coupons", createCoupon);
+productRouter.delete("/api/coupons/:code", deleteCoupon);
+
+productRouter.get("/api/settings", getSettings);
+productRouter.post("/api/settings", updateSettings);
+
+productRouter.get("/api/logs", getActivityLogs);
