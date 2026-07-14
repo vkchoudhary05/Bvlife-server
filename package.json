@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-      "dev": "tsx server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js"
+  "dev": "tsx server.ts",
+  "build": "tsc",
+  "start": "tsx server.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
