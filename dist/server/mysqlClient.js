@@ -1,4 +1,4 @@
-import mysql from 'mysql2/promise';
+import mysql from "mysql2/promise";
 let pool = null;
 export function isMysqlConfigured() {
     return !!(process.env.MYSQL_HOST &&
@@ -19,6 +19,7 @@ export function getMysqlConfig() {
 }
 export async function initMysqlPool() {
     if (!isMysqlConfigured()) {
+        console.log("❌ MySQL environment variables are missing.");
         return null;
     }
     if (pool) {
@@ -27,33 +28,45 @@ export async function initMysqlPool() {
     const config = getMysqlConfig();
     console.log(`Connecting to MySQL database "${config.database}" at ${config.host}:${config.port}...`);
     try {
+        // Create pool
         pool = mysql.createPool(config);
-        // Test the connection
+        // Test connection
         const conn = await pool.getConnection();
-        console.log('Successfully connected to MySQL database!');
+        console.log("========================================");
+        console.log("✅ Successfully connected to MySQL database!");
+        console.log(`🌐 Host     : ${config.host}`);
+        console.log(`🗄️ Database : ${config.database}`);
+        console.log(`👤 User     : ${config.user}`);
+        console.log(`🔌 Port     : ${config.port}`);
+        const [dbInfo] = await conn.query("SELECT DATABASE() AS databaseName");
+        console.log("📋 Active Database:", dbInfo);
+        const [version] = await conn.query("SELECT VERSION() AS version");
+        console.log("🛢️ MySQL Version:", version);
+        console.log("========================================");
         conn.release();
         return pool;
     }
     catch (error) {
-        console.error('Failed to establish connection to MySQL database:', error);
+        console.error("❌ Failed to establish connection to MySQL database:");
+        console.error(error);
         pool = null;
         return null;
     }
 }
-export async function query(sql, params) {
+export async function query(sql, params = []) {
     const currentPool = await initMysqlPool();
     if (!currentPool) {
-        throw new Error('MySQL is not initialized or configured.');
+        throw new Error("MySQL is not initialized or configured.");
     }
     const [rows] = await currentPool.execute(sql, params);
     return rows;
 }
 export async function initTables() {
-    if (!isMysqlConfigured())
+    if (!isMysqlConfigured()) {
         return;
-    console.log('Initializing MySQL Database Tables (DDL)...');
+    }
+    console.log("Initializing MySQL Database Tables (DDL)...");
     try {
-        // 1. Users Table
         await query(`
       CREATE TABLE IF NOT EXISTS users (
         email VARCHAR(255) PRIMARY KEY,
@@ -62,9 +75,8 @@ export async function initTables() {
         phone VARCHAR(50),
         addresses TEXT,
         password VARCHAR(255)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 2. Products Table
         await query(`
       CREATE TABLE IF NOT EXISTS products (
         id VARCHAR(255) PRIMARY KEY,
@@ -85,20 +97,19 @@ export async function initTables() {
         usageInstructions TEXT,
         faqs TEXT,
         rating DECIMAL(3,2) NOT NULL,
-        featured TINYINT(1) DEFAULT 0,
-        bestSeller TINYINT(1) DEFAULT 0,
+        featured BOOLEAN DEFAULT FALSE,
+        bestSeller BOOLEAN DEFAULT FALSE,
         lowStockAlertLimit INT NOT NULL,
         createdDate VARCHAR(50) NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 3. Orders Table
         await query(`
       CREATE TABLE IF NOT EXISTS orders (
         id VARCHAR(255) PRIMARY KEY,
         userEmail VARCHAR(255) NOT NULL,
         userName VARCHAR(255) NOT NULL,
         shippingAddress TEXT NOT NULL,
-        items TEXT NOT NULL,
+        items LONGTEXT NOT NULL,
         subtotal DECIMAL(10,2) NOT NULL,
         tax DECIMAL(10,2) NOT NULL,
         shippingCharge DECIMAL(10,2) NOT NULL,
@@ -109,10 +120,9 @@ export async function initTables() {
         paymentStatus VARCHAR(50) NOT NULL,
         orderDate VARCHAR(100) NOT NULL,
         trackingNumber VARCHAR(100),
-        trackingUpdates TEXT
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        trackingUpdates LONGTEXT
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 4. Reviews Table
         await query(`
       CREATE TABLE IF NOT EXISTS reviews (
         id VARCHAR(255) PRIMARY KEY,
@@ -122,35 +132,32 @@ export async function initTables() {
         userEmail VARCHAR(255) NOT NULL,
         rating INT NOT NULL,
         comment TEXT,
-        isApproved TINYINT(1) DEFAULT 1,
+        isApproved BOOLEAN DEFAULT TRUE,
         date VARCHAR(50) NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 5. Blogs Table
         await query(`
       CREATE TABLE IF NOT EXISTS blogs (
         id VARCHAR(255) PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         slug VARCHAR(255) NOT NULL,
         summary TEXT,
-        content TEXT,
+        content LONGTEXT,
         image TEXT,
         author VARCHAR(255) NOT NULL,
         date VARCHAR(50) NOT NULL,
         categories TEXT,
         readTime VARCHAR(50) NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 6. FAQs Table
         await query(`
       CREATE TABLE IF NOT EXISTS faqs (
         id VARCHAR(255) PRIMARY KEY,
         category VARCHAR(255) NOT NULL,
         question TEXT NOT NULL,
         answer TEXT NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 7. Coupons Table
         await query(`
       CREATE TABLE IF NOT EXISTS coupons (
         code VARCHAR(100) PRIMARY KEY,
@@ -159,10 +166,9 @@ export async function initTables() {
         minOrderValue DECIMAL(10,2) NOT NULL,
         maxDiscount DECIMAL(10,2),
         expiryDate VARCHAR(50) NOT NULL,
-        active TINYINT(1) DEFAULT 1
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        active BOOLEAN DEFAULT TRUE
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 8. Settings Table
         await query(`
       CREATE TABLE IF NOT EXISTS settings (
         id VARCHAR(50) PRIMARY KEY,
@@ -176,9 +182,8 @@ export async function initTables() {
         defaultTaxPercentage DECIMAL(5,2) NOT NULL,
         baseShippingCharge DECIMAL(10,2) NOT NULL,
         freeShippingThreshold DECIMAL(10,2) NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 9. Activity Logs Table
         await query(`
       CREATE TABLE IF NOT EXISTS activityLogs (
         id VARCHAR(255) PRIMARY KEY,
@@ -186,9 +191,8 @@ export async function initTables() {
         userEmail VARCHAR(255) NOT NULL,
         action VARCHAR(255) NOT NULL,
         details TEXT NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        // 10. Payments Table
         await query(`
       CREATE TABLE IF NOT EXISTS payments (
         id VARCHAR(255) PRIMARY KEY,
@@ -199,11 +203,12 @@ export async function initTables() {
         transactionReference VARCHAR(255) NOT NULL,
         status VARCHAR(50) NOT NULL,
         createdAt VARCHAR(100) NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
-        console.log('MySQL Database Tables verified/created successfully!');
+        console.log("✅ MySQL Database Tables verified/created successfully!");
     }
     catch (error) {
-        console.error('Error during MySQL tables DDL setup:', error);
+        console.error("❌ Error during MySQL table initialization:");
+        console.error(error);
     }
 }
