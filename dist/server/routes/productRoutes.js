@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProducts, getProductById, createProduct, updateProduct, deleteProduct, getReviews, createReview, updateReview, deleteReview, getBlogs, createBlog, deleteBlog, getFAQs, createFAQ, deleteFAQ, getCoupons, createCoupon, deleteCoupon, getSettings, updateSettings, getActivityLogs } from "../controllers/productController";
+import { getProducts, getProductById, createProduct, updateProduct, deleteProduct, getReviews, createReview, updateReview, deleteReview, getBlogs, createBlog, deleteBlog, getFAQs, createFAQ, deleteFAQ, getCoupons, createCoupon, deleteCoupon, getSettings, updateSettings, getActivityLogs } from "../controllers/productController.js";
 export const productRouter = Router();
 productRouter.get("/api/products", getProducts);
 productRouter.get("/api/products/:id", getProductById);

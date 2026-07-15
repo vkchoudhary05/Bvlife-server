@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Product, Blog, FAQ, Coupon, WebsiteSettings } from './types';
+import { Product, Blog, FAQ, Coupon, WebsiteSettings } from './types.js';
 
 export const INITIAL_PRODUCTS: Product[] = [
   {

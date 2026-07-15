@@ -1,6 +1,6 @@
-import { db } from "../dbManager";
+import { db } from "../dbManager.js";
 import twilio from "twilio";
-import { validateAndFormatIndianPhone } from "../utils";
+import { validateAndFormatIndianPhone } from "../utils.js";
 // Lazy initialize Twilio client
 let twilioClient = null;
 function getTwilioClient() {

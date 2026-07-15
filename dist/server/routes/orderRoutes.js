@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getOrders, getOrdersByUser, placeOrder, updateOrder, getPayments, updatePayment } from "../controllers/orderController";
+import { getOrders, getOrdersByUser, placeOrder, updateOrder, getPayments, updatePayment } from "../controllers/orderController.js";
 export const orderRouter = Router();
 orderRouter.get("/api/orders", getOrders);
 orderRouter.get("/api/orders/user/:email", getOrdersByUser);

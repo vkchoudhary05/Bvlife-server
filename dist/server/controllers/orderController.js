@@ -1,4 +1,4 @@
-import { db } from "../dbManager";
+import { db } from "../dbManager.js";
 // Get all orders (Admin)
 export const getOrders = (req, res) => {
     res.json(db.getOrders());

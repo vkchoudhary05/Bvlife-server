@@ -9,7 +9,7 @@ import {
   getCustomers, 
   sendOtp, 
   verifyOtp 
-} from "../controllers/authController";
+} from "../controllers/authController.js";
 
 export const authRouter = Router();
 

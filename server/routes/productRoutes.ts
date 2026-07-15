@@ -21,7 +21,7 @@ import {
   getSettings, 
   updateSettings, 
   getActivityLogs 
-} from "../controllers/productController";
+} from "../controllers/productController.js";
 
 export const productRouter = Router();
 

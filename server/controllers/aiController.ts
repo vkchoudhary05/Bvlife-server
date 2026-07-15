@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { db } from "../dbManager";
+import { db } from "../dbManager.js";
 import { GoogleGenAI } from "@google/genai";
 
 // Lazy initialize Gemini client

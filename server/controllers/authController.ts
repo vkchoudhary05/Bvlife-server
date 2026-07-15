@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { db } from "../dbManager";
-import { User } from "../types";
+import { db } from "../dbManager.js";
+import { User } from "../types.js";
 import twilio from "twilio";
-import { validateAndFormatIndianPhone } from "../utils";
+import { validateAndFormatIndianPhone } from "../utils.js";
 
 // Lazy initialize Twilio client
 let twilioClient: any = null;

@@ -7,13 +7,13 @@ import fs from 'fs';
 import path from 'path';
 import { 
   Product, Order, Blog, FAQ, Coupon, WebsiteSettings, User, Review, ActivityLog, Payment 
-} from './types';
+} from './types.js';
 import { 
   INITIAL_PRODUCTS, INITIAL_BLOGS, INITIAL_FAQS, INITIAL_COUPONS, DEFAULT_SETTINGS 
-} from './initialData';
+} from './initialData.js';
 import { 
   isMysqlConfigured, initTables, query 
-} from './mysqlClient';
+} from './mysqlClient.js';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');

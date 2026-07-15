@@ -4,8 +4,8 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { INITIAL_PRODUCTS, INITIAL_BLOGS, INITIAL_FAQS, INITIAL_COUPONS, DEFAULT_SETTINGS } from './initialData';
-import { isMysqlConfigured, initTables, query } from './mysqlClient';
+import { INITIAL_PRODUCTS, INITIAL_BLOGS, INITIAL_FAQS, INITIAL_COUPONS, DEFAULT_SETTINGS } from './initialData.js';
+import { isMysqlConfigured, initTables, query } from './mysqlClient.js';
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
 class DBManager {

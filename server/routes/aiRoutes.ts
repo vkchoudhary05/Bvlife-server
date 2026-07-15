@@ -4,7 +4,7 @@ import {
   getHistory, 
   clearHistory, 
   chat 
-} from "../controllers/aiController";
+} from "../controllers/aiController.js";
 
 export const aiRouter = Router();
 

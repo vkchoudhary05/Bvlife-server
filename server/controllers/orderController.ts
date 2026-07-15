@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { db } from "../dbManager";
-import { Order, Payment } from "../types";
+import { db } from "../dbManager.js";
+import { Order, Payment } from "../types.js";
 
 // Get all orders (Admin)
 export const getOrders = (req: Request, res: Response) => {

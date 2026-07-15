@@ -6,7 +6,7 @@ import {
   updateOrder, 
   getPayments, 
   updatePayment 
-} from "../controllers/orderController";
+} from "../controllers/orderController.js";
 
 export const orderRouter = Router();
 

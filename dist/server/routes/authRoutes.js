@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, getMe, updateMe, getUserByEmail, updateUserByEmail, getCustomers, sendOtp, verifyOtp } from "../controllers/authController";
+import { register, login, getMe, updateMe, getUserByEmail, updateUserByEmail, getCustomers, sendOtp, verifyOtp } from "../controllers/authController.js";
 export const authRouter = Router();
 authRouter.post("/api/auth/register", register);
 authRouter.post("/api/auth/login", login);

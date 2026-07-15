@@ -7,12 +7,12 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 // Import MySQL
-import { initMysqlPool, initTables } from "./server/mysqlClient";
+import { initMysqlPool, initTables } from "./server/mysqlClient.js";
 // Import modular routes
-import { authRouter } from "./server/routes/authRoutes";
-import { productRouter } from "./server/routes/productRoutes";
-import { orderRouter } from "./server/routes/orderRoutes";
-import { aiRouter } from "./server/routes/aiRoutes";
+import { authRouter } from "./server/routes/authRoutes.js";
+import { productRouter } from "./server/routes/productRoutes.js";
+import { orderRouter } from "./server/routes/orderRoutes.js";
+import { aiRouter } from "./server/routes/aiRoutes.js";
 const app = express();
 const PORT = 5000;
 // Global Middleware

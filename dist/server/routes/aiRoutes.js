@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { consult, getHistory, clearHistory, chat } from "../controllers/aiController";
+import { consult, getHistory, clearHistory, chat } from "../controllers/aiController.js";
 export const aiRouter = Router();
 aiRouter.post("/api/ai/consult", consult);
 aiRouter.get("/api/ai/history", getHistory);

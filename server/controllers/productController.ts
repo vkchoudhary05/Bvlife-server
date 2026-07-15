@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { db } from "../dbManager";
-import { Product, Review, Blog, FAQ, Coupon } from "../types";
+import { db } from "../dbManager.js";
+import { Product, Review, Blog, FAQ, Coupon } from "../types.js";
 
 // Get all products
 export const getProducts = (req: Request, res: Response) => {
