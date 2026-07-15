@@ -59,7 +59,7 @@ async function startServer() {
     console.error("❌ Error initializing MySQL:", error);
   }
 
-  const isStandaloneApi = process.env.STANDALONE_API === "true" || true;
+  const isStandaloneApi = process.env.STANDALONE_API === "true";
 
   if (isStandaloneApi) {
     console.log(

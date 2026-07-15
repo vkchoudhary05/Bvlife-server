@@ -9,8 +9,8 @@
       "stock": 45,
       "category": "Immunity",
       "subcategory": "Syrup",
-      "brand": "Grams Life Organics",
-      "description": "An ancient, powerful blend of 45+ premium Ayurvedic herbs, enriched with handpicked Kashmiri saffron, wild forest honey, and organic ghee. Grams Life Chyawanprash acts as a natural immunity shield, restoring youthful energy, boosting stamina, and improving respiratory function.",
+      "brand": "BV Life Organics",
+      "description": "An ancient, powerful blend of 45+ premium Ayurvedic herbs, enriched with handpicked Kashmiri saffron, wild forest honey, and organic ghee. BV Life Chyawanprash acts as a natural immunity shield, restoring youthful energy, boosting stamina, and improving respiratory function.",
       "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
       "images": [
         "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
@@ -68,7 +68,7 @@
       "stock": 120,
       "category": "Immunity",
       "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
+      "brand": "BV Life Wellness",
       "description": "Premium high-concentration Ashwagandha root extract (standardized to 5% withanolides). Formulated scientifically using KSM-66, the most clinically researched ashwagandha on the market, to reduce daily cortisol levels, eliminate stress, and boost mental calmness.",
       "mainImage": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
       "images": [
@@ -110,7 +110,7 @@
       "stock": 35,
       "category": "Skin Care",
       "subcategory": "Oils",
-      "brand": "Grams Life Beauty",
+      "brand": "BV Life Beauty",
       "description": "An opulent, highly prized face oil made with pure saffron, sandalwood, and 26 precious Ayurvedic botanicals. This fast-absorbing golden elixir is prepared using traditional taila pak vidhi to overnight illuminate your skin, remove pigmentation, and cure fine lines.",
       "mainImage": "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600",
       "images": [
@@ -160,7 +160,7 @@
       "stock": 8,
       "category": "Hair Care",
       "subcategory": "Oils",
-      "brand": "Grams Life Beauty",
+      "brand": "BV Life Beauty",
       "description": "Cold-pressed black sesame oil infused with fresh Bhringraj leaves, Brahmi extract, and Amla juice. This intense therapeutic oil penetrates deeply to stimulate hair roots, stop hair fall, cool down the scalp, and prevent premature graying.",
       "mainImage": "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600",
       "images": [
@@ -210,7 +210,7 @@
       "stock": 150,
       "category": "Digestion",
       "subcategory": "Churna",
-      "brand": "Grams Life Organics",
+      "brand": "BV Life Organics",
       "description": "The classic Ayurvedic formula for gut health. A perfectly balanced blend of three certified organic fruits (Amalaki, Bibhitaki, and Haritaki) to gently cleanse the digestive tract, cure bloating, regulate bowel movements, and detoxify the entire gastrointestinal system.",
       "mainImage": "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
       "images": [
@@ -249,409 +249,6 @@
       "bestSeller": true,
       "lowStockAlertLimit": 20,
       "createdDate": "2026-03-10"
-    },
-    {
-      "id": "prod-6",
-      "name": "Shatavari Balance Capsules - Women's Tonic",
-      "sku": "AYUR-SHA-006",
-      "price": 450,
-      "originalPrice": 490,
-      "stock": 65,
-      "category": "Women's Health",
-      "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
-      "description": "Shatavari is revered in Ayurveda as the ultimate rejuvenating tonic for women. Grams Life uses concentrated Shatavari root extract to balance estrogen naturally, reduce PMS cramps, regulate cycles, and support breast lactation and energy levels.",
-      "mainImage": "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Shatavari (Asparagus racemosus)",
-          "description": "100% organic root extract standardized to 20% saponins."
-        }
-      ],
-      "benefits": [
-        "Supports optimal female hormonal balance during PMS, pregnancy, and menopause.",
-        "Reduces bloating, fatigue, mood swings, and period cramps significantly.",
-        "Improves natural hydration, energy, and overall health.",
-        "Enhances healthy lactation in nursing mothers."
-      ],
-      "dosage": "1 capsule twice daily, preferably with warm milk or water.",
-      "usageInstructions": "Take one capsule post breakfast and one post dinner. Best consumed with warm organic cow milk.",
-      "faqs": [
-        {
-          "question": "Can I take this if I have PCOD?",
-          "answer": "Shatavari is highly beneficial for PCOD/PCOS as it restores ovulation cycles and reduces ovarian cysts. However, we advise speaking with an Ayurvedic specialist to plan a complete lifestyle regimen."
-        }
-      ],
-      "rating": 4.7,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 12,
-      "createdDate": "2026-04-28"
-    },
-    {
-      "id": "prod-7",
-      "name": "Madhunashini Diabetes Care Tablets",
-      "sku": "AYUR-MAD-007",
-      "price": 380,
-      "originalPrice": 450,
-      "stock": 90,
-      "category": "Diabetes",
-      "subcategory": "Tablets",
-      "brand": "Grams Life Wellness",
-      "description": "A clinical Ayurvedic herbal formula featuring Gudmar (literally meaning sugar destroyer), Karela, Jamun seed, and Methi. It helps regenerate pancreatic cells, increases active insulin sensitivity, and controls sweet cravings.",
-      "mainImage": "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Gudmar (Gymnema sylvestre)",
-          "description": "Blocks sugar receptors on tongue and intestines, reducing glucose absorption."
-        },
-        {
-          "name": "Karela (Bitter Melon)",
-          "description": "Contains charantin and polypeptide-p which mimic insulin molecules."
-        },
-        {
-          "name": "Jamun Seed",
-          "description": "Slows down conversion of food starch into glucose, avoiding sudden sugar spikes."
-        }
-      ],
-      "benefits": [
-        "Maintains healthy fasting and post-meal blood sugar levels.",
-        "Reduces insulin resistance and nourishes vital pancreatic cells.",
-        "Eliminates sweet cravings and supports healthy weight loss.",
-        "Controls diabetic fatigue, frequent urination, and numbness in limbs."
-      ],
-      "dosage": "1 to 2 tablets twice daily on an empty stomach.",
-      "usageInstructions": "Take with warm water 30 minutes before your morning breakfast and evening dinner.",
-      "faqs": [
-        {
-          "question": "Can I take this alongside my regular diabetes pills?",
-          "answer": "Yes, it works as an excellent co-therapy. Monitor your blood glucose levels regularly. If levels drop below normal, consult your doctor to adjust your synthetic drug dosages."
-        }
-      ],
-      "rating": 4.4,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 15,
-      "createdDate": "2026-05-18"
-    },
-    {
-      "id": "prod-8",
-      "name": "Nirgundi Joint Care Massage Oil",
-      "sku": "AYUR-NIR-008",
-      "price": 340,
-      "originalPrice": 390,
-      "stock": 55,
-      "category": "Joint Care",
-      "subcategory": "Oils",
-      "brand": "Grams Life Wellness",
-      "description": "An instant pain-relieving therapeutic joint oil. Rich in Nirgundi, Shallaki, and Eucalyptus oils. Massaging this oil deeply warms tissues, clears congested fluid, and repairs stiff muscles and inflamed joints.",
-      "mainImage": "https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Nirgundi",
-          "description": "Powerful anti-inflammatory and pain-relieving herb, heals arthritis pain."
-        },
-        {
-          "name": "Shallaki (Boswellia)",
-          "description": "Prevents breakdown of cartilage tissue, repairs joint lubrication."
-        },
-        {
-          "name": "Eucalyptus Oil",
-          "description": "Improves local blood flow, creating a deep warm soothing effect."
-        }
-      ],
-      "benefits": [
-        "Relieves joint pain, stiffness, sciatica, knee arthritis, and backaches.",
-        "Restores synovial joint lubrication and flexibility.",
-        "Combats muscle cramps, sports injuries, and neck stiffness.",
-        "100% natural, fast-acting formula without synthetic chemical warming agents."
-      ],
-      "dosage": "Apply 5-10ml on the affected joint area.",
-      "usageInstructions": "Pour oil and massage gently in circular patterns over joints. Apply warmth with a hot water bag after massage for maximum therapeutic recovery.",
-      "faqs": [
-        {
-          "question": "How often can I apply this?",
-          "answer": "Apply 2-3 times daily, especially during morning stiffness and before sleeping."
-        }
-      ],
-      "rating": 4.8,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 10,
-      "createdDate": "2026-06-02"
-    },
-    {
-      "id": "prod-9",
-      "name": "Memory & Focus Elixir (Brahmi & Shankhpushpi)",
-      "sku": "AYUR-BRA-009",
-      "price": 620,
-      "originalPrice": 750,
-      "stock": 40,
-      "category": "Brain & Memory",
-      "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
-      "description": "A premium brain tonic designed to boost cognitive function, memory recall, and mental clarity. Infused with organic Brahmi and Shankhpushpi to naturally reduce mental fatigue and support peak focus.",
-      "mainImage": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Organic Brahmi",
-          "description": "Supports brain health, improves blood circulation to the brain, and enhances memory."
-        },
-        {
-          "name": "Shankhpushpi",
-          "description": "Revered as a medhya rasayana, reduces mental stress, anxiety, and enhances focus."
-        }
-      ],
-      "benefits": [
-        "Improves daily concentration, analytical skills, and memory retention.",
-        "Helps calm mind chatter, enabling sustained, focused work.",
-        "Acts as a powerful antioxidant to shield nervous cells from decay."
-      ],
-      "dosage": "1 capsule twice daily with warm milk or water.",
-      "usageInstructions": "Best taken after meals in the morning and evening for cognitive vitality.",
-      "faqs": [
-        {
-          "question": "How long before I see improvement?",
-          "answer": "Most users notice enhanced focus and calmness within 2 weeks of daily, regular consumption."
-        }
-      ],
-      "rating": 4.9,
-      "featured": true,
-      "bestSeller": true,
-      "lowStockAlertLimit": 8,
-      "createdDate": "2026-06-10"
-    },
-    {
-      "id": "prod-10",
-      "name": "Deep Sleep & Calm (Sarpagandha & Tagar)",
-      "sku": "AYUR-SLE-010",
-      "price": 480,
-      "originalPrice": 550,
-      "stock": 30,
-      "category": "Sleep & Stress",
-      "subcategory": "Tablets",
-      "brand": "Grams Life Wellness",
-      "description": "Formulated with precious Tagar (Indian Valerian) and Sarpagandha to naturally soothe the central nervous system, lower stress levels, and restore normal sleep cycles without grogginess.",
-      "mainImage": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Tagar (Indian Valerian)",
-          "description": "Naturally promotes sleep, relaxes smooth muscles, and relieves chronic tension."
-        },
-        {
-          "name": "Sarpagandha",
-          "description": "Helps calm hyperactive minds and supports optimal healthy blood pressure."
-        }
-      ],
-      "benefits": [
-        "Promotes deep, sound sleep without morning grogginess or dependency.",
-        "Helps calm an overactive, racing mind before bedtime.",
-        "Provides relief from muscle tension and daily physical stress."
-      ],
-      "dosage": "1 to 2 tablets 30 minutes before bedtime.",
-      "usageInstructions": "Take with warm water or warm milk shortly before sleep.",
-      "faqs": [
-        {
-          "question": "Is this habit-forming?",
-          "answer": "No. Our formulation uses natural non-addictive herbs that soothe the body's sleep sensors without altering long-term neuro-chemistry."
-        }
-      ],
-      "rating": 4.7,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-06-15"
-    },
-    {
-      "id": "prod-11",
-      "name": "Shilajit Gold Resin - Himalayan Peak Strength",
-      "sku": "AYUR-SHI-011",
-      "price": 1450,
-      "originalPrice": 1690,
-      "stock": 25,
-      "category": "Sexual Wellness",
-      "subcategory": "Resin",
-      "brand": "Grams Life Organics",
-      "description": "100% pure Himalayan Shilajit resin, purified using traditional Ayurvedic Shodhana methods and infused with 24K Swarna Bhasma (Gold) and Safed Musli. Naturally increases stamina, cellular energy, and daily physical vitality.",
-      "mainImage": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Purified Shilajit",
-          "description": "Rich in 80+ trace minerals and high Fulvic acid content for peak cellular energy."
-        },
-        {
-          "name": "Swarna Bhasma (24K Gold)",
-          "description": "Acts as a potent rejuvenator, boosts immunity, and improves micro-circulation."
-        },
-        {
-          "name": "Safed Musli",
-          "description": "Nourishes muscle tissue, boosts natural endurance and physical vitality."
-        }
-      ],
-      "benefits": [
-        "Maximizes daily physical endurance, muscle recovery, and stamina.",
-        "Improves mitochondrial ATP production, reducing chronic fatigue.",
-        "Acts as an excellent aphrodisiac to boost vitality and reproductive health."
-      ],
-      "dosage": "A pea-sized portion (approx. 250mg) once daily.",
-      "usageInstructions": "Dissolve completely in warm milk or warm water and consume in the morning on an empty stomach.",
-      "faqs": [
-        {
-          "question": "Is it certified pure?",
-          "answer": "Yes, our Shilajit is sourced from high-altitude Himalayan ranges and undergoes triple filtration and lab-testing to be completely free of heavy metals."
-        }
-      ],
-      "rating": 4.9,
-      "featured": true,
-      "bestSeller": true,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-06-20"
-    },
-    {
-      "id": "prod-12",
-      "name": "Liver Vitality & Detox (Kalmegh & Bhumi Amla)",
-      "sku": "AYUR-LIV-012",
-      "price": 420,
-      "originalPrice": 490,
-      "stock": 60,
-      "category": "Liver & Detox",
-      "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
-      "description": "A powerful hepatoprotective formula that naturally detoxifies the liver, stimulates bile secretion, and protects liver cells from damage. Rich in organic Kalmegh (King of Bitters) and Bhumi Amla.",
-      "mainImage": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Kalmegh (Andrographis)",
-          "description": "Extremely bitter herb, triggers quick liver detox, and stimulates bile production."
-        },
-        {
-          "name": "Bhumi Amla",
-          "description": "Protects liver tissues, regulates enzymes, and reverses cell damage."
-        }
-      ],
-      "benefits": [
-        "Supports efficient liver detoxification and natural enzyme levels.",
-        "Improves digestion, bloating, and absorption of dietary fats.",
-        "Protects the liver from toxins, alcohol, and processed foods."
-      ],
-      "dosage": "1 capsule twice daily with meals.",
-      "usageInstructions": "Consume daily after your primary lunch and dinner.",
-      "faqs": [
-        {
-          "question": "Can I take this daily for general detox?",
-          "answer": "Yes, our formulation is gentle yet highly effective for continuous, daily digestive and hepatic system detox."
-        }
-      ],
-      "rating": 4.6,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 12,
-      "createdDate": "2026-06-25"
-    },
-    {
-      "id": "prod-13",
-      "name": "Arjuna Cardio-Shield Capsules",
-      "sku": "AYUR-HRT-013",
-      "price": 550,
-      "originalPrice": 650,
-      "stock": 50,
-      "category": "Heart Health",
-      "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
-      "description": "Made from pure extract of the Arjuna tree bark, a legendary Ayurvedic cardioprotective herb. Supports healthy blood pressure, strengthens cardiovascular muscles, and regulates daily blood circulation.",
-      "mainImage": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Arjuna Bark Extract",
-          "description": "Standardized extract containing co-enzyme Q10 and saponins to nourish heart muscles."
-        }
-      ],
-      "benefits": [
-        "Strengthens the heart muscles and aids in normal, healthy cardiac output.",
-        "Assists in maintaining optimal arterial blood pressure levels.",
-        "Aids in managing oxidative stress in cardiovascular tissues."
-      ],
-      "dosage": "1 capsule twice daily after meals.",
-      "usageInstructions": "Take one capsule post breakfast and one post dinner with warm water.",
-      "faqs": [
-        {
-          "question": "Is Arjuna bark safe to take long-term?",
-          "answer": "Yes, Arjuna is a well-tolerated organic cardiotonic that can safely be taken long-term to keep heart functions healthy."
-        }
-      ],
-      "rating": 4.8,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 8,
-      "createdDate": "2026-06-28"
-    },
-    {
-      "id": "prod-14",
-      "name": "Vasaka & Pippali Lung Detox Syrup",
-      "sku": "AYUR-RSP-014",
-      "price": 290,
-      "originalPrice": 350,
-      "stock": 75,
-      "category": "Respiratory Care",
-      "subcategory": "Syrup",
-      "brand": "Grams Life Organics",
-      "description": "A comforting herbal syrup that clears bronchial passages, eases congestion, and soothes dry coughs. Infused with Vasaka (Malabar Nut) and Pippali (Long Pepper) for robust respiratory health.",
-      "mainImage": "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Vasaka (Adhatoda vasica)",
-          "description": "Powerful bronchodilator, clears phlegm, and eases chest congestion."
-        },
-        {
-          "name": "Pippali (Long Pepper)",
-          "description": "Warms up lungs, clears respiratory paths, and enhances bio-availability."
-        }
-      ],
-      "benefits": [
-        "Provides rapid, comforting relief from seasonal coughs, colds, and sore throats.",
-        "Clears airways and eases chronic breathing difficulty.",
-        "Strengthens lung tissue and acts as an immunity shield against pollution."
-      ],
-      "dosage": "1 to 2 teaspoons (5-10ml) twice or thrice a day.",
-      "usageInstructions": "Mix with warm water or drink directly. Best taken after meals.",
-      "faqs": [
-        {
-          "question": "Does this syrup contain artificial sugar?",
-          "answer": "No, our syrup is sweetened naturally with organic wild forest honey, preserving traditional healing standards."
-        }
-      ],
-      "rating": 4.7,
-      "featured": false,
-      "bestSeller": true,
-      "lowStockAlertLimit": 10,
-      "createdDate": "2026-07-01"
     }
   ],
   "orders": [],
@@ -697,7 +294,7 @@
     {
       "id": "faq-2",
       "category": "Product Usage",
-      "question": "Are Grams Life Ayurvedic products completely safe and lab-tested?",
+      "question": "Are BV Life Ayurvedic products completely safe and lab-tested?",
       "answer": "Absolutely. All our products are manufactured in GMP-certified, AYUSH-approved facilities. We rigorously lab-test every single batch for heavy metals, pesticides, and microbial contamination to guarantee the highest safety, purity, and clinical efficacy."
     },
     {
@@ -727,36 +324,70 @@
     }
   ],
   "settings": {
-    "logoName": "Grams Life",
-    "contactEmail": "care@gramslife.com",
+    "logoName": "BV Life",
+    "contactEmail": "care@BVlife.com",
     "contactPhone": "+1 (800) 555-GRAM",
-    "address": "Grams Life Herbals, Green Valley, Silicon City, CA 94016",
-    "facebook": "facebook.com/gramslife",
-    "instagram": "instagram.com/gramslife.ayur",
-    "twitter": "twitter.com/gramslife",
+    "address": "BV Life Herbals, Green Valley, Silicon City, CA 94016",
+    "facebook": "facebook.com/BVlife",
+    "instagram": "instagram.com/BVlife.ayur",
+    "twitter": "twitter.com/BVlife",
     "defaultTaxPercentage": 12,
     "baseShippingCharge": 50,
     "freeShippingThreshold": 999
   },
   "users": [
     {
-      "email": "admin@gramslife.com",
+      "email": "admin@bvlife.com",
       "fullName": "Aacharya Dhanvantari",
       "role": "admin",
       "phone": "+1 (800) 555-GRAM",
       "addresses": []
     },
     {
-      "email": "care@gramslife.com",
-      "fullName": "Grams Life Support",
-      "role": "admin",
+      "email": "care@bvlife.com",
+      "fullName": "BV Life Support",
+      "role": "customer",
       "phone": "+1 (800) 555-GRAM",
+      "addresses": []
+    },
+    {
+      "email": "ddkkdkdk1@gmail.com",
+      "fullName": "Vivek siggh",
+      "role": "customer",
+      "phone": "8888888888",
+      "addresses": [],
+      "password": "Vivek12"
+    },
+    {
+      "email": "heythere@gmail.com",
+      "fullName": "vivek",
+      "role": "customer",
+      "phone": "+917451050607",
+      "addresses": [],
+      "password": "qwerty"
+    },
+    {
+      "email": "iamvivekbaliyan07@gmail.com",
+      "fullName": "Iamvivekbaliyan07",
+      "role": "customer",
+      "addresses": []
+    },
+    {
+      "email": "shastri@bvlife.com",
+      "fullName": "Shastri",
+      "role": "customer",
+      "addresses": []
+    },
+    {
+      "email": "vkchoudhary@gmail.com",
+      "fullName": "Vkchoudhary",
+      "role": "customer",
       "addresses": []
     },
     {
       "email": "vkchoudhary050607@gmail.com",
       "fullName": "Vipin Choudhary",
-      "role": "admin",
+      "role": "customer",
       "phone": "+1 555-0199",
       "addresses": [
         {
@@ -798,6 +429,48 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1784107160431-qiey",
+      "timestamp": "2026-07-15T09:19:20.431Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784107132182-0cjs",
+      "timestamp": "2026-07-15T09:18:52.182Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784107101028-xy22",
+      "timestamp": "2026-07-15T09:18:21.028Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784106729452-ntqu",
+      "timestamp": "2026-07-15T09:12:09.452Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784106340862-667n",
+      "timestamp": "2026-07-15T09:05:40.862Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784106330245-9os8",
+      "timestamp": "2026-07-15T09:05:30.245Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
     {
       "id": "log-initial",
       "timestamp": "2026-07-13T09:28:56.109Z",
