@@ -47,7 +47,15 @@ async function startServer() {
     catch (error) {
         console.error("❌ Error initializing MySQL:", error);
     }
-    const isStandaloneApi = process.env.STANDALONE_API === "true" || true;
+    const isStandaloneApi = false;
+    console.log("######### NEW BUILD #########");
+    console.log("isStandaloneApi =", isStandaloneApi);
+    if (isStandaloneApi) {
+        console.log("Starting server in Standalone API-only mode...");
+    }
+    else {
+        console.log("Starting server in production mode serving static frontend...");
+    }
     if (isStandaloneApi) {
         console.log("Starting server in Standalone API-only mode (No Vite or static frontend serving)...");
     }
