@@ -59,7 +59,7 @@ async function startServer() {
     console.error("❌ Error initializing MySQL:", error);
   }
 
-  const isStandaloneApi = process.env.STANDALONE_API === "true" || true;
+  const isStandaloneApi = process.env.STANDALONE_API === "true";
 
   if (isStandaloneApi) {
     console.log(
@@ -85,16 +85,20 @@ async function startServer() {
       );
     }
   } else {
-    console.log("Starting server in production mode serving static frontend...");
+  console.log("Starting server in production mode serving static frontend...");
 
-    const distPath = path.join(process.cwd(), "dist");
+  // Serve the React frontend build
+  const distPath = path.resolve(process.cwd(), "../frontend/dist");
 
-    app.use(express.static(distPath));
+  console.log("Serving frontend from:", distPath);
 
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
-  }
+  app.use(express.static(distPath));
+
+  // React Router fallback (keep API routes working)
+  app.get(/^\/(?!api).*/, (req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
 
   const portToUse = process.env.PORT
     ? parseInt(process.env.PORT, 10)
