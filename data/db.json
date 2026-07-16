@@ -249,6 +249,31 @@
       "bestSeller": true,
       "lowStockAlertLimit": 20,
       "createdDate": "2026-03-10"
+    },
+    {
+      "id": "prod-1784183150896",
+      "name": "guggul",
+      "sku": "GL-6984",
+      "price": 100,
+      "originalPrice": 200,
+      "stock": 20,
+      "category": "Women's Health",
+      "brand": "Grams Life",
+      "description": "kdksndjsdnb",
+      "mainImage": "https://pharmeasy.in/health-care/products/baidyanath-nagpur-triphala-guggulu---80-tablets-pack-of-2--3688604",
+      "images": [],
+      "ingredients": [],
+      "benefits": [
+        "kewwhjw"
+      ],
+      "dosage": "Take 1 capsule daily after breakfast.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
+      "featured": true,
+      "bestSeller": false,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-07-16"
     }
   ],
   "orders": [],
@@ -379,6 +404,26 @@
       "addresses": []
     },
     {
+      "email": "vivek@gmail.com",
+      "fullName": "Vivek kumar",
+      "role": "customer",
+      "phone": "+919888888888",
+      "addresses": [
+        {
+          "id": "addr-1784114033567",
+          "fullName": "Vivek Baliyan",
+          "addressLine1": "52/7",
+          "addressLine2": "Subhash Nagar, Sector 13",
+          "city": "Panchkula",
+          "state": "Chandigarh",
+          "zipCode": "160101",
+          "phone": "+919888888888",
+          "isDefault": true
+        }
+      ],
+      "password": "Vivek123"
+    },
+    {
       "email": "vkchoudhary@gmail.com",
       "fullName": "Vkchoudhary",
       "role": "customer",
@@ -387,7 +432,7 @@
     {
       "email": "vkchoudhary050607@gmail.com",
       "fullName": "Vipin Choudhary",
-      "role": "customer",
+      "role": "admin",
       "phone": "+1 555-0199",
       "addresses": [
         {
@@ -429,6 +474,216 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1784184539160-dkhp",
+      "timestamp": "2026-07-16T06:48:59.161Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784184031890-91wk",
+      "timestamp": "2026-07-16T06:40:31.890Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784184030528-fu90",
+      "timestamp": "2026-07-16T06:40:30.528Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784184029134-2ug8",
+      "timestamp": "2026-07-16T06:40:29.134Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784184027813-y5y8",
+      "timestamp": "2026-07-16T06:40:27.813Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784184020169-13w2",
+      "timestamp": "2026-07-16T06:40:20.169Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784184010943-blg9",
+      "timestamp": "2026-07-16T06:40:10.943Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784183736404-lvw0",
+      "timestamp": "2026-07-16T06:35:36.404Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784183421202-7iuc",
+      "timestamp": "2026-07-16T06:30:21.202Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784183401808-ran2",
+      "timestamp": "2026-07-16T06:30:01.808Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784183150900-lea3",
+      "timestamp": "2026-07-16T06:25:50.900Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product guggul"
+    },
+    {
+      "id": "log-1784182756175-aab2",
+      "timestamp": "2026-07-16T06:19:16.175Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784182670423-lvii",
+      "timestamp": "2026-07-16T06:17:50.423Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784182664217-eqop",
+      "timestamp": "2026-07-16T06:17:44.217Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784182661641-ekko",
+      "timestamp": "2026-07-16T06:17:41.641Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784182643167-8xvh",
+      "timestamp": "2026-07-16T06:17:23.167Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784181862081-2rv8",
+      "timestamp": "2026-07-16T06:04:22.081Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784181594359-4u37",
+      "timestamp": "2026-07-16T05:59:54.359Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784181585971-ta9f",
+      "timestamp": "2026-07-16T05:59:45.971Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784181567150-zv8l",
+      "timestamp": "2026-07-16T05:59:27.150Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784181486914-2jlb",
+      "timestamp": "2026-07-16T05:58:06.914Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784114082690-sth9",
+      "timestamp": "2026-07-15T11:14:42.690Z",
+      "userEmail": "vivek@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784113980359-ptyd",
+      "timestamp": "2026-07-15T11:13:00.359Z",
+      "userEmail": "vivek@gmail.com",
+      "action": "User Registration",
+      "details": "Created account for Vivek kumar with phone +919888888888"
+    },
+    {
+      "id": "log-1784113579277-ccdw",
+      "timestamp": "2026-07-15T11:06:19.277Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784113414621-s5rd",
+      "timestamp": "2026-07-15T11:03:34.621Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784113128154-lg66",
+      "timestamp": "2026-07-15T10:58:48.154Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784113099059-8xcl",
+      "timestamp": "2026-07-15T10:58:19.059Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784113081400-n3m9",
+      "timestamp": "2026-07-15T10:58:01.400Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784113051226-hjq7",
+      "timestamp": "2026-07-15T10:57:31.226Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784113042108-pxis",
+      "timestamp": "2026-07-15T10:57:22.108Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
     {
       "id": "log-1784107160431-qiey",
       "timestamp": "2026-07-15T09:19:20.431Z",

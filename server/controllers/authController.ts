@@ -8,7 +8,7 @@ import { validateAndFormatIndianPhone } from "../utils.js";
 let twilioClient: any = null;
 function getTwilioClient() {
   if (!twilioClient) {
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const accountSid = process.env.TWILIO_ACCOUNT_SID
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     if (authToken && authToken !== '[AuthToken]' && authToken.trim() !== "") {
       twilioClient = twilio(accountSid, authToken);
@@ -32,9 +32,7 @@ export const register = (req: Request, res: Response) => {
   const formattedPhone = validateAndFormatIndianPhone(phone) || phone;
   if (phone) {
     const existingPhone = db.getUsers().find(u => {
-     const uPhone = u.phone
-  ? (validateAndFormatIndianPhone(u.phone) || u.phone)
-  : "";
+      const uPhone = validateAndFormatIndianPhone(u.phone) || u.phone;
       return uPhone && uPhone === formattedPhone;
     });
     if (existingPhone) {
@@ -68,9 +66,7 @@ export const login = (req: Request, res: Response) => {
     // Attempt lookup by phone (clean the input format to compare)
     const formattedPhoneInput = validateAndFormatIndianPhone(email);
     user = db.getUsers().find(u => {
-   const dbPhone = u.phone
-  ? (validateAndFormatIndianPhone(u.phone) || u.phone)
-  : "";
+      const dbPhone = validateAndFormatIndianPhone(u.phone) || u.phone;
       return dbPhone && (dbPhone === email || dbPhone === formattedPhoneInput);
     });
   }
@@ -86,6 +82,10 @@ export const login = (req: Request, res: Response) => {
   }
 
   db.logActivity(user.email, "User Login", "Logged in successfully.");
+  const lowerEmail = user.email.toLowerCase();
+  if (['vkchoudhary050607@gmail.com', 'admin@gramslife.com', 'care@gramslife.com'].includes(lowerEmail)) {
+    user.role = 'admin';
+  }
   res.json({ user, token: user.email });
 };
 
@@ -98,6 +98,12 @@ export const getMe = (req: Request, res: Response) => {
   const user = db.getUserByEmail(email);
   if (!user) {
     return res.status(401).json({ error: "Unauthorized" });
+  }
+  if (user) {
+    const lowerEmail = user.email.toLowerCase();
+    if (['vkchoudhary050607@gmail.com', 'admin@gramslife.com', 'care@gramslife.com'].includes(lowerEmail)) {
+      user.role = 'admin';
+    }
   }
   res.json({ user });
 };
@@ -167,7 +173,7 @@ export const sendOtp = async (req: Request, res: Response) => {
   }
 
   const client = getTwilioClient();
-  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID || 'VAd4bf5c3b7ceb85913b9f3e32c399cb15';
+  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID
 
   if (client) {
     try {
@@ -220,7 +226,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
   }
 
   const client = getTwilioClient();
-const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID;
+  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID || 'VAd4bf5c3b7ceb85913b9f3e32c399cb15';
 
   if (client) {
     try {
