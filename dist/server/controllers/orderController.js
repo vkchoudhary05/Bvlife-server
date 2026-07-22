@@ -47,12 +47,24 @@ export const placeOrder = (req, res) => {
         }
     });
     db.saveOrder(newOrder);
-    // Automatically save shipping address to user's saved addresses in DB if user exists
+    // Automatically save shipping address to user's saved addresses in DB or auto-create user if missing
     let existingUser = db.getUserByEmail(userEmail);
     if (!existingUser && shippingAddress && shippingAddress.phone) {
         existingUser = db.getUserByPhone(shippingAddress.phone);
     }
-    if (existingUser) {
+    if (!existingUser) {
+        // Auto register customer in DB so their token is valid and they can view/track their order
+        existingUser = {
+            email: userEmail.toLowerCase(),
+            fullName: userName || shippingAddress?.fullName || 'Valued Customer',
+            role: 'customer',
+            phone: shippingAddress?.phone || '',
+            addresses: shippingAddress ? [shippingAddress] : [],
+            password: 'password123'
+        };
+        db.saveUser(existingUser);
+    }
+    else {
         // Standardize user email on order to match existing user's main email
         newOrder.userEmail = existingUser.email;
         newOrder.userName = newOrder.userName || existingUser.fullName;
@@ -180,18 +192,32 @@ export const updatePayment = (req, res) => {
     db.logActivity("admin", "Update Payment Status", `Set payment transaction ${payment.id} status to ${status || payment.status}`);
     res.json({ message: "Payment updated successfully.", payment });
 };
-// Track single order by ID or Tracking Number
+// Track single order by ID, Tracking Number, Email, or Phone Number
 export const trackOrder = (req, res) => {
     const { identifier } = req.params;
     if (!identifier) {
         return res.status(400).json({ error: "Missing tracking identifier." });
     }
     const queryStr = identifier.trim().toLowerCase();
+    const cleanPhone = identifier.replace(/\D/g, '');
     const allOrders = db.getOrders();
-    const foundOrder = allOrders.find((o) => o.id.toLowerCase() === queryStr ||
-        (o.trackingNumber && o.trackingNumber.toLowerCase() === queryStr));
-    if (!foundOrder) {
-        return res.status(404).json({ error: "No wellness order found matching that ID or tracking number." });
+    const matchingOrders = allOrders.filter((o) => {
+        const oId = o.id.toLowerCase();
+        const oTrk = o.trackingNumber ? o.trackingNumber.toLowerCase() : '';
+        const oEmail = o.userEmail ? o.userEmail.toLowerCase() : '';
+        const oPhone = o.shippingAddress?.phone ? o.shippingAddress.phone.replace(/\D/g, '') : '';
+        const oName = o.shippingAddress?.fullName ? o.shippingAddress.fullName.toLowerCase() : '';
+        const matchId = oId === queryStr || oId.endsWith(queryStr) || queryStr.endsWith(oId);
+        const matchTrk = oTrk && (oTrk === queryStr || oTrk.includes(queryStr));
+        const matchEmail = oEmail && (oEmail === queryStr || oEmail.includes(queryStr));
+        const matchPhone = cleanPhone && cleanPhone.length >= 7 && oPhone.endsWith(cleanPhone.slice(-10));
+        const matchName = oName && oName === queryStr;
+        return matchId || matchTrk || matchEmail || matchPhone || matchName;
+    });
+    if (!matchingOrders || matchingOrders.length === 0) {
+        return res.status(404).json({ error: "No wellness order found matching that ID, tracking number, email, or mobile number." });
     }
-    res.json(foundOrder);
+    // Sort by date descending so the latest order comes first
+    matchingOrders.sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
+    res.json(matchingOrders[0]);
 };
