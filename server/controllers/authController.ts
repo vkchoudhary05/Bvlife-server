@@ -25,7 +25,11 @@ export const register = (req: Request, res: Response) => {
 
   const existingEmail = db.getUserByEmail(email);
   if (existingEmail) {
-    return res.status(400).json({ error: "User with this email already exists." });
+    return res.status(400).json({ 
+      error: "Account with this email address already exists. Please sign in to your account.",
+      accountExists: true,
+      existingEmail: existingEmail.email
+    });
   }
 
   // Format and validate the phone number
@@ -36,7 +40,11 @@ export const register = (req: Request, res: Response) => {
       return uPhone && uPhone === formattedPhone;
     });
     if (existingPhone) {
-      return res.status(400).json({ error: "An account with this mobile number already exists." });
+      return res.status(400).json({ 
+        error: "An account with this mobile number already exists. Please sign in to your account.",
+        accountExists: true,
+        existingEmail: existingPhone.email
+      });
     }
   }
 
@@ -173,7 +181,7 @@ export const sendOtp = async (req: Request, res: Response) => {
   }
 
   const client = getTwilioClient();
-  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID
+  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID || 'VAd4bf5c3b7ceb85913b9f3e32c399cb15';
 
   if (client) {
     try {
@@ -247,4 +255,64 @@ export const verifyOtp = async (req: Request, res: Response) => {
   } else {
     return res.status(400).json({ error: "Twilio integration is not configured on the server." });
   }
+};
+
+export const checkAccount = (req: Request, res: Response) => {
+  const { query } = req.body;
+  if (!query) {
+    return res.status(400).json({ error: "Email or phone number query is required." });
+  }
+
+  const queryStr = query.trim();
+  let user = db.getUserByEmail(queryStr);
+  if (!user) {
+    const formattedPhoneInput = validateAndFormatIndianPhone(queryStr);
+    user = db.getUsers().find(u => {
+      const dbPhone = validateAndFormatIndianPhone(u.phone) || u.phone;
+      return dbPhone && (dbPhone === queryStr || dbPhone === formattedPhoneInput);
+    });
+  }
+
+  if (user) {
+    return res.json({ 
+      exists: true, 
+      email: user.email, 
+      fullName: user.fullName, 
+      phone: user.phone,
+      addresses: user.addresses || [] 
+    });
+  }
+
+  return res.json({ exists: false });
+};
+
+export const resetPassword = (req: Request, res: Response) => {
+  const { query, newPassword } = req.body;
+  if (!query || !newPassword) {
+    return res.status(400).json({ error: "Registered email/phone and new password are required." });
+  }
+
+  const queryStr = query.trim();
+  let user = db.getUserByEmail(queryStr);
+  if (!user) {
+    const formattedPhoneInput = validateAndFormatIndianPhone(queryStr);
+    user = db.getUsers().find(u => {
+      const dbPhone = validateAndFormatIndianPhone(u.phone) || u.phone;
+      return dbPhone && (dbPhone === queryStr || dbPhone === formattedPhoneInput);
+    });
+  }
+
+  if (!user) {
+    return res.status(404).json({ error: "No account found registered with this email or mobile number." });
+  }
+
+  user.password = newPassword;
+  db.saveUser(user);
+  db.logActivity(user.email, "Password Reset", "Successfully updated password.");
+
+  res.json({ 
+    message: "Password updated successfully! Please log in with your new password.",
+    email: user.email,
+    token: user.email
+  });
 };

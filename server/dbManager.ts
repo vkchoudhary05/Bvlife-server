@@ -252,6 +252,7 @@ class DBManager {
         const s = mysqlSettings[0];
         this.data.settings = {
           logoName: s.logoName,
+          logoUrl: s.logoUrl || undefined,
           contactEmail: s.contactEmail,
           contactPhone: s.contactPhone,
           address: s.address,
@@ -594,16 +595,16 @@ class DBManager {
 
   private async saveSettingsToMysql(s: WebsiteSettings): Promise<void> {
     const sql = `
-      INSERT INTO settings (id, logoName, contactEmail, contactPhone, address, facebook, instagram, twitter, defaultTaxPercentage, baseShippingCharge, freeShippingThreshold)
-      VALUES ('main', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO settings (id, logoName, logoUrl, contactEmail, contactPhone, address, facebook, instagram, twitter, defaultTaxPercentage, baseShippingCharge, freeShippingThreshold)
+      VALUES ('main', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE 
-        logoName = VALUES(logoName), contactEmail = VALUES(contactEmail), contactPhone = VALUES(contactPhone),
+        logoName = VALUES(logoName), logoUrl = VALUES(logoUrl), contactEmail = VALUES(contactEmail), contactPhone = VALUES(contactPhone),
         address = VALUES(address), facebook = VALUES(facebook), instagram = VALUES(instagram), twitter = VALUES(twitter),
         defaultTaxPercentage = VALUES(defaultTaxPercentage), baseShippingCharge = VALUES(baseShippingCharge),
         freeShippingThreshold = VALUES(freeShippingThreshold);
     `;
     await query(sql, [
-      s.logoName, s.contactEmail, s.contactPhone, s.address, s.facebook || null, s.instagram || null, s.twitter || null,
+      s.logoName, s.logoUrl || null, s.contactEmail, s.contactPhone, s.address, s.facebook || null, s.instagram || null, s.twitter || null,
       s.defaultTaxPercentage, s.baseShippingCharge, s.freeShippingThreshold
     ]);
   }
@@ -693,8 +694,14 @@ class DBManager {
     return this.data.orders.find(o => o.id === id);
   }
 
-  getOrdersByUser(email: string): Order[] {
-    return this.data.orders.filter(o => o.userEmail.toLowerCase() === email.toLowerCase());
+  getOrdersByUser(identifier: string): Order[] {
+    const term = identifier.toLowerCase().trim();
+    const cleanPhone = term.replace(/\D/g, '');
+    return this.data.orders.filter(o => {
+      const emailMatch = o.userEmail.toLowerCase() === term;
+      const phoneMatch = cleanPhone.length >= 10 && o.shippingAddress && o.shippingAddress.phone && o.shippingAddress.phone.replace(/\D/g, '').endsWith(cleanPhone.slice(-10));
+      return emailMatch || phoneMatch;
+    });
   }
 
   saveOrder(order: Order): Order {
@@ -722,6 +729,13 @@ class DBManager {
 
   getUserByEmail(email: string): User | undefined {
     return this.data.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+  }
+
+  getUserByPhone(phone: string): User | undefined {
+    if (!phone) return undefined;
+    const clean = phone.replace(/\D/g, '');
+    if (!clean || clean.length < 10) return undefined;
+    return this.data.users.find(u => u.phone && u.phone.replace(/\D/g, '').endsWith(clean.slice(-10)));
   }
 
   saveUser(user: User): User {

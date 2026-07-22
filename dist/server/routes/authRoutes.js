@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, getMe, updateMe, getUserByEmail, updateUserByEmail, getCustomers, sendOtp, verifyOtp } from "../controllers/authController.js";
+import { register, login, getMe, updateMe, getUserByEmail, updateUserByEmail, getCustomers, sendOtp, verifyOtp, checkAccount, resetPassword } from "../controllers/authController.js";
 export const authRouter = Router();
 authRouter.post("/api/auth/register", register);
 authRouter.post("/api/auth/login", login);
@@ -10,3 +10,5 @@ authRouter.put("/api/users/:email", updateUserByEmail);
 authRouter.get("/api/customers", getCustomers);
 authRouter.post("/api/auth/otp", sendOtp);
 authRouter.post("/api/auth/verify-otp", verifyOtp);
+authRouter.post("/api/auth/check-account", checkAccount);
+authRouter.post("/api/auth/reset-password", resetPassword);

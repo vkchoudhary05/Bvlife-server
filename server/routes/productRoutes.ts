@@ -50,5 +50,6 @@ productRouter.delete("/api/coupons/:code", deleteCoupon);
 
 productRouter.get("/api/settings", getSettings);
 productRouter.post("/api/settings", updateSettings);
+productRouter.put("/api/settings", updateSettings);
 
 productRouter.get("/api/logs", getActivityLogs);

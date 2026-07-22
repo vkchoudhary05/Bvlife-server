@@ -6,7 +6,7 @@
       "sku": "AYUR-CHY-001",
       "price": 850,
       "originalPrice": 950,
-      "stock": 45,
+      "stock": 21,
       "category": "Immunity",
       "subcategory": "Syrup",
       "brand": "BV Life Organics",
@@ -60,12 +60,37 @@
       "createdDate": "2026-05-01"
     },
     {
+      "id": "prod-1784183150896",
+      "name": "guggul",
+      "sku": "GL-6984",
+      "price": 100,
+      "originalPrice": 200,
+      "stock": 15,
+      "category": "Women's Health",
+      "brand": "Grams Life",
+      "description": "kdksndjsdnb",
+      "mainImage": "https://pharmeasy.in/health-care/products/baidyanath-nagpur-triphala-guggulu---80-tablets-pack-of-2--3688604",
+      "images": [],
+      "ingredients": [],
+      "benefits": [
+        "kewwhjw"
+      ],
+      "dosage": "Take 1 capsule daily after breakfast.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
+      "featured": true,
+      "bestSeller": false,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-07-16"
+    },
+    {
       "id": "prod-2",
       "name": "Pure Ashwagandha KSM-66 Capsules",
       "sku": "AYUR-ASH-002",
       "price": 490,
       "originalPrice": 590,
-      "stock": 120,
+      "stock": 118,
       "category": "Immunity",
       "subcategory": "Capsules",
       "brand": "BV Life Wellness",
@@ -107,7 +132,7 @@
       "sku": "AYUR-KUM-003",
       "price": 1890,
       "originalPrice": 2200,
-      "stock": 35,
+      "stock": 34,
       "category": "Skin Care",
       "subcategory": "Oils",
       "brand": "BV Life Beauty",
@@ -157,7 +182,7 @@
       "sku": "AYUR-HAIR-004",
       "price": 520,
       "originalPrice": 590,
-      "stock": 8,
+      "stock": 7,
       "category": "Hair Care",
       "subcategory": "Oils",
       "brand": "BV Life Beauty",
@@ -249,34 +274,1102 @@
       "bestSeller": true,
       "lowStockAlertLimit": 20,
       "createdDate": "2026-03-10"
-    },
-    {
-      "id": "prod-1784183150896",
-      "name": "guggul",
-      "sku": "GL-6984",
-      "price": 100,
-      "originalPrice": 200,
-      "stock": 20,
-      "category": "Women's Health",
-      "brand": "Grams Life",
-      "description": "kdksndjsdnb",
-      "mainImage": "https://pharmeasy.in/health-care/products/baidyanath-nagpur-triphala-guggulu---80-tablets-pack-of-2--3688604",
-      "images": [],
-      "ingredients": [],
-      "benefits": [
-        "kewwhjw"
-      ],
-      "dosage": "Take 1 capsule daily after breakfast.",
-      "usageInstructions": "As directed",
-      "faqs": [],
-      "rating": 5,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-07-16"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "id": "GL-099991-85",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "userName": "Vipin Choudhary",
+      "shippingAddress": {
+        "id": "addr-1",
+        "fullName": "Vipin Choudhary",
+        "addressLine1": "108 Lotus Lotus Lane",
+        "addressLine2": "Ayur Vihar, Sector 4",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "zipCode": "110001",
+        "phone": "+91 98765 43210",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-21T12:14:59.992Z",
+      "trackingNumber": "GLTRK816445",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-21T12:14:59.992Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-431851-67",
+      "userEmail": "guest@gramslife.com",
+      "userName": "vivek",
+      "shippingAddress": {
+        "id": "addr-1784632431834",
+        "fullName": "vivek",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+913333333333",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-21T11:13:51.851Z",
+      "trackingNumber": "GLTRK163322",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-21T11:13:51.851Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-509518-82",
+      "userEmail": "guest@gramslife.com",
+      "userName": "vvoof",
+      "shippingAddress": {
+        "id": "addr-1784632509501",
+        "fullName": "vvoof",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+913033033333",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-2",
+          "productName": "Pure Ashwagandha KSM-66 Capsules",
+          "price": 490,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 490,
+      "tax": 59,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 599,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-21T11:15:09.518Z",
+      "trackingNumber": "GLTRK107029",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-21T11:15:09.518Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-608460-12",
+      "userEmail": "guest@gramslife.com",
+      "userName": "vivek",
+      "shippingAddress": {
+        "id": "addr-1784632608451",
+        "fullName": "vivek",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+912222222222",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1784183150896",
+          "productName": "guggul",
+          "price": 100,
+          "quantity": 1,
+          "mainImage": "https://pharmeasy.in/health-care/products/baidyanath-nagpur-triphala-guggulu---80-tablets-pack-of-2--3688604"
+        }
+      ],
+      "subtotal": 100,
+      "tax": 12,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 162,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-21T11:16:48.460Z",
+      "trackingNumber": "GLTRK731772",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-21T11:16:48.461Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-783780-11",
+      "userEmail": "iamvivek@gmail.com",
+      "userName": "vivek kumar",
+      "shippingAddress": {
+        "id": "addr-1784635783762",
+        "fullName": "vivek kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+918585858558",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1784183150896",
+          "productName": "guggul",
+          "price": 100,
+          "quantity": 1,
+          "mainImage": "https://pharmeasy.in/health-care/products/baidyanath-nagpur-triphala-guggulu---80-tablets-pack-of-2--3688604"
+        }
+      ],
+      "subtotal": 100,
+      "tax": 12,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 162,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-21T12:09:43.780Z",
+      "trackingNumber": "GLTRK285177",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-21T12:09:43.780Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-885119-39",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "userName": "Vipin Choudhary",
+      "shippingAddress": {
+        "id": "addr-1",
+        "fullName": "Vipin Choudhary",
+        "addressLine1": "108 Lotus Lotus Lane",
+        "addressLine2": "Ayur Vihar, Sector 4",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "zipCode": "110001",
+        "phone": "+91 98765 43210",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1784183150896",
+          "productName": "guggul",
+          "price": 100,
+          "quantity": 1,
+          "mainImage": "https://pharmeasy.in/health-care/products/baidyanath-nagpur-triphala-guggulu---80-tablets-pack-of-2--3688604"
+        }
+      ],
+      "subtotal": 100,
+      "tax": 12,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 162,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-21T11:21:25.119Z",
+      "trackingNumber": "GLTRK383357",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-21T11:21:25.119Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-896067-34",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "userName": "Vipin Choudhary",
+      "shippingAddress": {
+        "id": "addr-1",
+        "fullName": "Vipin Choudhary",
+        "addressLine1": "108 Lotus Lotus Lane",
+        "addressLine2": "Ayur Vihar, Sector 4",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "zipCode": "110001",
+        "phone": "+91 98765 43210",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-3",
+          "productName": "Kumkumadi Night Elixir Serum",
+          "price": 1890,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 1890,
+      "tax": 227,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 2117,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-21T11:21:36.067Z",
+      "trackingNumber": "GLTRK170789",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-21T11:21:36.067Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-942401-77",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "userName": "Vipin Choudhary",
+      "shippingAddress": {
+        "id": "addr-1",
+        "fullName": "Vipin Choudhary",
+        "addressLine1": "108 Lotus Lotus Lane",
+        "addressLine2": "Ayur Vihar, Sector 4",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "zipCode": "110001",
+        "phone": "+91 98765 43210",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-4",
+          "productName": "Brahmi & Bringraj Hair Therapy Oil",
+          "price": 520,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 520,
+      "tax": 62,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 632,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-21T11:22:22.401Z",
+      "trackingNumber": "GLTRK464665",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-21T11:22:22.401Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-048187-83",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "userName": "vivek kumar",
+      "shippingAddress": {
+        "id": "addr-1784697048155",
+        "fullName": "vivek kumar",
+        "addressLine1": "Vivek Kumar",
+        "addressLine2": "Vivek Kumar",
+        "city": "Vivek Kumar",
+        "state": "Uttar Pradesh",
+        "zipCode": "272772",
+        "phone": "+918383838383",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1784183150896",
+          "productName": "guggul",
+          "price": 100,
+          "quantity": 1,
+          "mainImage": "https://pharmeasy.in/health-care/products/baidyanath-nagpur-triphala-guggulu---80-tablets-pack-of-2--3688604"
+        }
+      ],
+      "subtotal": 100,
+      "tax": 12,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 162,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T05:10:48.187Z",
+      "trackingNumber": "GLTRK683495",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T05:10:48.187Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-549621-96",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "userName": "vivek kumar",
+      "shippingAddress": {
+        "id": "addr-1784697549590",
+        "fullName": "vivek kumar",
+        "addressLine1": "Vivek Kumar1",
+        "addressLine2": "Vivek Kumar",
+        "city": "Vivek Kumar",
+        "state": "Uttar Pradesh",
+        "zipCode": "111111",
+        "phone": "+918383838383",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-2",
+          "productName": "Pure Ashwagandha KSM-66 Capsules",
+          "price": 490,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 490,
+      "tax": 59,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 599,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T05:19:09.621Z",
+      "trackingNumber": "GLTRK124861",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T05:19:09.622Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-700411-93",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vibu",
+      "shippingAddress": {
+        "id": "addr-1784703676145",
+        "fullName": "Vibu",
+        "addressLine1": "Vivek Kumar",
+        "addressLine2": "Vivek Kumar",
+        "city": "Vivek Kumar",
+        "state": "Uttar Pradesh",
+        "zipCode": "333333",
+        "phone": "+918838838383",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1784183150896",
+          "productName": "guggul",
+          "price": 100,
+          "quantity": 1,
+          "mainImage": "https://pharmeasy.in/health-care/products/baidyanath-nagpur-triphala-guggulu---80-tablets-pack-of-2--3688604"
+        }
+      ],
+      "subtotal": 100,
+      "tax": 12,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 162,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T07:01:40.411Z",
+      "trackingNumber": "GLTRK577766",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:01:40.411Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-789488-40",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vibu",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": true
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 2,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 1700,
+      "tax": 204,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 1904,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T07:03:09.488Z",
+      "trackingNumber": "GLTRK308151",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:03:09.488Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-830134-13",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vibu",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": true
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 2,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 1700,
+      "tax": 204,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 1904,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T07:03:50.134Z",
+      "trackingNumber": "GLTRK710629",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:03:50.134Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-898058-96",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vibu",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": true
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 2,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 1700,
+      "tax": 204,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 1904,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T07:04:58.058Z",
+      "trackingNumber": "GLTRK513824",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:04:58.058Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-999536-33",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vibu",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": true
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 2,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 1700,
+      "tax": 204,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 1904,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T07:06:39.536Z",
+      "trackingNumber": "GLTRK395865",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:06:39.536Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-057003-78",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vibu",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": true
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 2,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 1700,
+      "tax": 204,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 1904,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T07:07:37.003Z",
+      "trackingNumber": "GLTRK737430",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:07:37.004Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-274987-12",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vibu",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": true
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 2,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 1700,
+      "tax": 204,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 1904,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T07:11:14.987Z",
+      "trackingNumber": "GLTRK508677",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:11:14.987Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-310994-29",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vivek Kumar",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T07:11:50.994Z",
+      "trackingNumber": "GLTRK441369",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:11:50.994Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-314091-65",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vivek Kumar",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T07:11:54.091Z",
+      "trackingNumber": "GLTRK639358",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:11:54.091Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-332123-10",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vivek Kumar",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T07:12:12.123Z",
+      "trackingNumber": "GLTRK994292",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:12:12.123Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-347640-13",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vivek Kumar",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T07:12:27.640Z",
+      "trackingNumber": "GLTRK728135",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:12:27.640Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-353077-94",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vivek Kumar",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T07:12:33.077Z",
+      "trackingNumber": "GLTRK851845",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:12:33.077Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-354942-72",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vivek Kumar",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T07:12:34.942Z",
+      "trackingNumber": "GLTRK978974",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:12:34.942Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-357064-38",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vivek Kumar",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T07:12:37.064Z",
+      "trackingNumber": "GLTRK765059",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:12:37.064Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-359392-78",
+      "userEmail": "vibu@gmail.com",
+      "userName": "Vivek Kumar",
+      "shippingAddress": {
+        "id": "addr-1784703775040",
+        "fullName": "Vivek Kumar",
+        "addressLine1": "vill manoharpur post dist-saharanpur",
+        "addressLine2": "",
+        "city": "saharanpur",
+        "state": "Uttar Pradesh",
+        "zipCode": "247554",
+        "phone": "+914773833444",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 850,
+      "tax": 102,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 1002,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-07-22T07:12:39.392Z",
+      "trackingNumber": "GLTRK227913",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:12:39.392Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-049092-26",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "userName": "Vipin Choudhary",
+      "shippingAddress": {
+        "id": "addr-1",
+        "fullName": "Vipin Choudhary",
+        "addressLine1": "108 Lotus Lotus Lane",
+        "addressLine2": "Ayur Vihar, Sector 4",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "zipCode": "110001",
+        "phone": "+91 98765 43210",
+        "isDefault": true
+      },
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Golden Chyawanprash - Saffron & Wild Honey",
+          "price": 850,
+          "quantity": 2,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600"
+        }
+      ],
+      "subtotal": 1700,
+      "tax": 204,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 1904,
+      "status": "Pending",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderDate": "2026-07-22T07:40:49.093Z",
+      "trackingNumber": "GLTRK808617",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-07-22T07:40:49.093Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    }
+  ],
   "blogs": [
     {
       "id": "blog-1",
@@ -351,7 +1444,7 @@
   "settings": {
     "logoName": "BV Life",
     "contactEmail": "care@BVlife.com",
-    "contactPhone": "+1 (800) 555-GRAM",
+    "contactPhone": "+917451050607",
     "address": "BV Life Herbals, Green Valley, Silicon City, CA 94016",
     "facebook": "facebook.com/BVlife",
     "instagram": "instagram.com/BVlife.ayur",
@@ -390,6 +1483,14 @@
       "phone": "+917451050607",
       "addresses": [],
       "password": "qwerty"
+    },
+    {
+      "email": "iamvivek@gmail.com",
+      "fullName": "vivek kumar",
+      "role": "customer",
+      "phone": "+918585858558",
+      "addresses": [],
+      "password": "123123"
     },
     {
       "email": "iamvivekbaliyan07@gmail.com",
@@ -447,6 +1548,34 @@
           "isDefault": true
         }
       ]
+    },
+    {
+      "email": "iamvivekkumar@gmail.com",
+      "fullName": "vivek kumar",
+      "role": "customer",
+      "phone": "+918383838383",
+      "addresses": [],
+      "password": "123123"
+    },
+    {
+      "email": "vibu@gmail.com",
+      "fullName": "Vibu",
+      "role": "customer",
+      "phone": "+918838838383",
+      "addresses": [
+        {
+          "id": "addr-1784703775040",
+          "fullName": "Vivek Kumar",
+          "addressLine1": "vill manoharpur post dist-saharanpur",
+          "addressLine2": "",
+          "city": "saharanpur",
+          "state": "Uttar Pradesh",
+          "zipCode": "247554",
+          "phone": "+914773833444",
+          "isDefault": true
+        }
+      ],
+      "password": "123123"
     }
   ],
   "reviews": [
@@ -474,6 +1603,461 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1784706049104-4wky",
+      "timestamp": "2026-07-22T07:40:49.104Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-049092-26 totaling 1904 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784706024648-nu7s",
+      "timestamp": "2026-07-22T07:40:24.648Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784704359406-gxpb",
+      "timestamp": "2026-07-22T07:12:39.406Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-359392-78 totaling 1002 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784704357068-rdr4",
+      "timestamp": "2026-07-22T07:12:37.068Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-357064-38 totaling 1002 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784704354955-jn9z",
+      "timestamp": "2026-07-22T07:12:34.955Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-354942-72 totaling 1002 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784704353089-uwnj",
+      "timestamp": "2026-07-22T07:12:33.089Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-353077-94 totaling 1002 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784704347657-95h7",
+      "timestamp": "2026-07-22T07:12:27.657Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-347640-13 totaling 1002 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784704332134-8i0h",
+      "timestamp": "2026-07-22T07:12:12.134Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-332123-10 totaling 1002 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784704314102-2ei9",
+      "timestamp": "2026-07-22T07:11:54.102Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-314091-65 totaling 1002 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784704311005-tdvg",
+      "timestamp": "2026-07-22T07:11:51.005Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-310994-29 totaling 1002 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784704274998-bx6o",
+      "timestamp": "2026-07-22T07:11:14.998Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-274987-12 totaling 1904 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784704057016-1wou",
+      "timestamp": "2026-07-22T07:07:37.016Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-057003-78 totaling 1904 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784704037048-sezo",
+      "timestamp": "2026-07-22T07:07:17.048Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784703999545-8fut",
+      "timestamp": "2026-07-22T07:06:39.545Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-999536-33 totaling 1904 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784703898070-ahc8",
+      "timestamp": "2026-07-22T07:04:58.070Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-898058-96 totaling 1904 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784703830142-n6qi",
+      "timestamp": "2026-07-22T07:03:50.142Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-830134-13 totaling 1904 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784703789495-zj9g",
+      "timestamp": "2026-07-22T07:03:09.495Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-789488-40 totaling 1904 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784703700422-n7y2",
+      "timestamp": "2026-07-22T07:01:40.422Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-700411-93 totaling 162 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784703668837-52w1",
+      "timestamp": "2026-07-22T07:01:08.837Z",
+      "userEmail": "vibu@gmail.com",
+      "action": "User Registration",
+      "details": "Created account for Vibu with phone +918838838383"
+    },
+    {
+      "id": "log-1784697549634-dwg3",
+      "timestamp": "2026-07-22T05:19:09.634Z",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-549621-96 totaling 599 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784697406020-68rd",
+      "timestamp": "2026-07-22T05:16:46.020Z",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784697228192-3ucz",
+      "timestamp": "2026-07-22T05:13:48.192Z",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784697147860-wsm5",
+      "timestamp": "2026-07-22T05:12:27.860Z",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784697089858-s1kc",
+      "timestamp": "2026-07-22T05:11:29.858Z",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784697048195-i51x",
+      "timestamp": "2026-07-22T05:10:48.195Z",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-048187-83 totaling 162 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784697013981-xy9z",
+      "timestamp": "2026-07-22T05:10:13.981Z",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "action": "User Registration",
+      "details": "Created account for vivek kumar with phone +918383838383"
+    },
+    {
+      "id": "log-1784636218424-gzod",
+      "timestamp": "2026-07-21T12:16:58.424Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784636100001-q9ig",
+      "timestamp": "2026-07-21T12:15:00.001Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-099991-85 totaling 1002 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784636054570-d5ey",
+      "timestamp": "2026-07-21T12:14:14.570Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784635856008-546d",
+      "timestamp": "2026-07-21T12:10:56.008Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784635783789-y3ob",
+      "timestamp": "2026-07-21T12:09:43.789Z",
+      "userEmail": "iamvivek@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-783780-11 totaling 162 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784635759459-mb4k",
+      "timestamp": "2026-07-21T12:09:19.459Z",
+      "userEmail": "iamvivek@gmail.com",
+      "action": "User Registration",
+      "details": "Created account for vivek kumar with phone +918585858558"
+    },
+    {
+      "id": "log-1784632942411-2yii",
+      "timestamp": "2026-07-21T11:22:22.411Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-942401-77 totaling 632 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784632896076-5tvx",
+      "timestamp": "2026-07-21T11:21:36.076Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-896067-34 totaling 2117 INR. Payment recorded: Paid."
+    },
+    {
+      "id": "log-1784632885130-ckhp",
+      "timestamp": "2026-07-21T11:21:25.130Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Place Order",
+      "details": "Placed order GL-885119-39 totaling 162 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784632870765-g834",
+      "timestamp": "2026-07-21T11:21:10.765Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784632608467-0wzb",
+      "timestamp": "2026-07-21T11:16:48.467Z",
+      "userEmail": "guest@gramslife.com",
+      "action": "Place Order",
+      "details": "Placed order GL-608460-12 totaling 162 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784632509524-xwl7",
+      "timestamp": "2026-07-21T11:15:09.524Z",
+      "userEmail": "guest@gramslife.com",
+      "action": "Place Order",
+      "details": "Placed order GL-509518-82 totaling 599 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784632431861-x31v",
+      "timestamp": "2026-07-21T11:13:51.861Z",
+      "userEmail": "guest@gramslife.com",
+      "action": "Place Order",
+      "details": "Placed order GL-431851-67 totaling 1002 INR. Payment recorded: Pending."
+    },
+    {
+      "id": "log-1784632025181-2zg0",
+      "timestamp": "2026-07-21T11:07:05.182Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784612730180-naxm",
+      "timestamp": "2026-07-21T05:45:30.180Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784376788035-ng89",
+      "timestamp": "2026-07-18T12:13:08.035Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784290887293-jpqh",
+      "timestamp": "2026-07-17T12:21:27.293Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784223834894-sm4z",
+      "timestamp": "2026-07-16T17:43:54.894Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784207986846-4edj",
+      "timestamp": "2026-07-16T13:19:46.846Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207983427-6dyd",
+      "timestamp": "2026-07-16T13:19:43.427Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207982206-los8",
+      "timestamp": "2026-07-16T13:19:42.206Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207981209-zht3",
+      "timestamp": "2026-07-16T13:19:41.209Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207980201-58p3",
+      "timestamp": "2026-07-16T13:19:40.201Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207979388-eysu",
+      "timestamp": "2026-07-16T13:19:39.388Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207978858-rs40",
+      "timestamp": "2026-07-16T13:19:38.858Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207978368-oiz8",
+      "timestamp": "2026-07-16T13:19:38.368Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207976904-ng6u",
+      "timestamp": "2026-07-16T13:19:36.904Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1784207947240-2p6o",
+      "timestamp": "2026-07-16T13:19:07.240Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784203833158-5v6n",
+      "timestamp": "2026-07-16T12:10:33.158Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784203737528-ct0b",
+      "timestamp": "2026-07-16T12:08:57.528Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784202207038-anhe",
+      "timestamp": "2026-07-16T11:43:27.038Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784202030034-ng1r",
+      "timestamp": "2026-07-16T11:40:30.034Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784202015148-ce9x",
+      "timestamp": "2026-07-16T11:40:15.148Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784201519249-p40e",
+      "timestamp": "2026-07-16T11:31:59.249Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784201323808-xnxz",
+      "timestamp": "2026-07-16T11:28:43.808Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784187055745-942f",
+      "timestamp": "2026-07-16T07:30:55.745Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784187030356-7wm3",
+      "timestamp": "2026-07-16T07:30:30.356Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784186807413-wqoc",
+      "timestamp": "2026-07-16T07:26:47.413Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784186792004-13hd",
+      "timestamp": "2026-07-16T07:26:32.004Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
     {
       "id": "log-1784184539160-dkhp",
       "timestamp": "2026-07-16T06:48:59.161Z",
@@ -531,6 +2115,13 @@
       "details": "Logged in successfully."
     },
     {
+      "id": "log-1784183644193-tl3e",
+      "timestamp": "2026-07-16T06:34:04.193Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
       "id": "log-1784183421202-7iuc",
       "timestamp": "2026-07-16T06:30:21.202Z",
       "userEmail": "vkchoudhary050607@gmail.com",
@@ -540,6 +2131,13 @@
     {
       "id": "log-1784183401808-ran2",
       "timestamp": "2026-07-16T06:30:01.808Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1784183367864-bzp4",
+      "timestamp": "2026-07-16T06:29:27.864Z",
       "userEmail": "vkchoudhary050607@gmail.com",
       "action": "User Login",
       "details": "Logged in successfully."
@@ -734,6 +2332,267 @@
       "details": "Prepopulated Grams Life database with standard premium Ayurvedic components."
     }
   ],
-  "payments": [],
+  "payments": [
+    {
+      "id": "PAY-099999-96",
+      "orderId": "GL-099991-85",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-89093450",
+      "status": "Paid",
+      "createdAt": "2026-07-21T12:14:59.999Z"
+    },
+    {
+      "id": "PAY-431858-15",
+      "orderId": "GL-431851-67",
+      "userEmail": "guest@gramslife.com",
+      "amount": 1002,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-431851-67",
+      "status": "Pending",
+      "createdAt": "2026-07-21T11:13:51.858Z"
+    },
+    {
+      "id": "PAY-509522-66",
+      "orderId": "GL-509518-82",
+      "userEmail": "guest@gramslife.com",
+      "amount": 599,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-509518-82",
+      "status": "Pending",
+      "createdAt": "2026-07-21T11:15:09.522Z"
+    },
+    {
+      "id": "PAY-608465-51",
+      "orderId": "GL-608460-12",
+      "userEmail": "guest@gramslife.com",
+      "amount": 162,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-608460-12",
+      "status": "Pending",
+      "createdAt": "2026-07-21T11:16:48.465Z"
+    },
+    {
+      "id": "PAY-783786-48",
+      "orderId": "GL-783780-11",
+      "userEmail": "iamvivek@gmail.com",
+      "amount": 162,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-50206550",
+      "status": "Paid",
+      "createdAt": "2026-07-21T12:09:43.786Z"
+    },
+    {
+      "id": "PAY-885127-47",
+      "orderId": "GL-885119-39",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "amount": 162,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-885119-39",
+      "status": "Pending",
+      "createdAt": "2026-07-21T11:21:25.127Z"
+    },
+    {
+      "id": "PAY-896073-79",
+      "orderId": "GL-896067-34",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "amount": 2117,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-95031058",
+      "status": "Paid",
+      "createdAt": "2026-07-21T11:21:36.073Z"
+    },
+    {
+      "id": "PAY-942408-66",
+      "orderId": "GL-942401-77",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "amount": 632,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-16018586",
+      "status": "Paid",
+      "createdAt": "2026-07-21T11:22:22.408Z"
+    },
+    {
+      "id": "PAY-048192-96",
+      "orderId": "GL-048187-83",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "amount": 162,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-44511728",
+      "status": "Paid",
+      "createdAt": "2026-07-22T05:10:48.192Z"
+    },
+    {
+      "id": "PAY-549627-65",
+      "orderId": "GL-549621-96",
+      "userEmail": "iamvivekkumar@gmail.com",
+      "amount": 599,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-549621-96",
+      "status": "Pending",
+      "createdAt": "2026-07-22T05:19:09.627Z"
+    },
+    {
+      "id": "PAY-700418-45",
+      "orderId": "GL-700411-93",
+      "userEmail": "vibu@gmail.com",
+      "amount": 162,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-27906586",
+      "status": "Paid",
+      "createdAt": "2026-07-22T07:01:40.418Z"
+    },
+    {
+      "id": "PAY-789493-86",
+      "orderId": "GL-789488-40",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1904,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-18399422",
+      "status": "Paid",
+      "createdAt": "2026-07-22T07:03:09.493Z"
+    },
+    {
+      "id": "PAY-830140-56",
+      "orderId": "GL-830134-13",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1904,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-31160806",
+      "status": "Paid",
+      "createdAt": "2026-07-22T07:03:50.140Z"
+    },
+    {
+      "id": "PAY-898066-36",
+      "orderId": "GL-898058-96",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1904,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-898058-96",
+      "status": "Pending",
+      "createdAt": "2026-07-22T07:04:58.066Z"
+    },
+    {
+      "id": "PAY-999543-15",
+      "orderId": "GL-999536-33",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1904,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-999536-33",
+      "status": "Pending",
+      "createdAt": "2026-07-22T07:06:39.543Z"
+    },
+    {
+      "id": "PAY-057012-86",
+      "orderId": "GL-057003-78",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1904,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-13153809",
+      "status": "Paid",
+      "createdAt": "2026-07-22T07:07:37.012Z"
+    },
+    {
+      "id": "PAY-274994-91",
+      "orderId": "GL-274987-12",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1904,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-46767645",
+      "status": "Paid",
+      "createdAt": "2026-07-22T07:11:14.994Z"
+    },
+    {
+      "id": "PAY-311002-10",
+      "orderId": "GL-310994-29",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-310994-29",
+      "status": "Pending",
+      "createdAt": "2026-07-22T07:11:51.002Z"
+    },
+    {
+      "id": "PAY-314099-19",
+      "orderId": "GL-314091-65",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-314091-65",
+      "status": "Pending",
+      "createdAt": "2026-07-22T07:11:54.099Z"
+    },
+    {
+      "id": "PAY-332131-61",
+      "orderId": "GL-332123-10",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-32213135",
+      "status": "Paid",
+      "createdAt": "2026-07-22T07:12:12.131Z"
+    },
+    {
+      "id": "PAY-347651-48",
+      "orderId": "GL-347640-13",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-33921244",
+      "status": "Paid",
+      "createdAt": "2026-07-22T07:12:27.651Z"
+    },
+    {
+      "id": "PAY-353084-68",
+      "orderId": "GL-353077-94",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-353077-94",
+      "status": "Pending",
+      "createdAt": "2026-07-22T07:12:33.084Z"
+    },
+    {
+      "id": "PAY-354951-42",
+      "orderId": "GL-354942-72",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-354942-72",
+      "status": "Pending",
+      "createdAt": "2026-07-22T07:12:34.951Z"
+    },
+    {
+      "id": "PAY-357067-85",
+      "orderId": "GL-357064-38",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-357064-38",
+      "status": "Pending",
+      "createdAt": "2026-07-22T07:12:37.067Z"
+    },
+    {
+      "id": "PAY-359402-87",
+      "orderId": "GL-359392-78",
+      "userEmail": "vibu@gmail.com",
+      "amount": 1002,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD-PENDING-GL-359392-78",
+      "status": "Pending",
+      "createdAt": "2026-07-22T07:12:39.402Z"
+    },
+    {
+      "id": "PAY-049101-91",
+      "orderId": "GL-049092-26",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "amount": 1904,
+      "paymentMethod": "UPI",
+      "transactionReference": "TXN-29881306",
+      "status": "Paid",
+      "createdAt": "2026-07-22T07:40:49.101Z"
+    }
+  ],
   "chatHistories": {}
 }

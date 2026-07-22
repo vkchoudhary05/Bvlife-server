@@ -8,7 +8,9 @@ import {
   updateUserByEmail, 
   getCustomers, 
   sendOtp, 
-  verifyOtp 
+  verifyOtp,
+  checkAccount,
+  resetPassword
 } from "../controllers/authController.js";
 
 export const authRouter = Router();
@@ -22,3 +24,5 @@ authRouter.put("/api/users/:email", updateUserByEmail);
 authRouter.get("/api/customers", getCustomers);
 authRouter.post("/api/auth/otp", sendOtp);
 authRouter.post("/api/auth/verify-otp", verifyOtp);
+authRouter.post("/api/auth/check-account", checkAccount);
+authRouter.post("/api/auth/reset-password", resetPassword);

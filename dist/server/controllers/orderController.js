@@ -47,6 +47,45 @@ export const placeOrder = (req, res) => {
         }
     });
     db.saveOrder(newOrder);
+    // Automatically save shipping address to user's saved addresses in DB if user exists
+    let existingUser = db.getUserByEmail(userEmail);
+    if (!existingUser && shippingAddress && shippingAddress.phone) {
+        existingUser = db.getUserByPhone(shippingAddress.phone);
+    }
+    if (existingUser) {
+        // Standardize user email on order to match existing user's main email
+        newOrder.userEmail = existingUser.email;
+        newOrder.userName = newOrder.userName || existingUser.fullName;
+        if (shippingAddress) {
+            if (!existingUser.addresses) {
+                existingUser.addresses = [];
+            }
+            const streetVal = shippingAddress.addressLine1 || shippingAddress.street || '';
+            const zipVal = shippingAddress.zipCode || shippingAddress.pincode || '';
+            const exists = existingUser.addresses.some((a) => {
+                const aStreet = a.addressLine1 || a.street || '';
+                const aZip = a.zipCode || a.pincode || '';
+                return aStreet && aStreet.toLowerCase() === streetVal.toLowerCase() && aZip === zipVal;
+            });
+            if (!exists && streetVal && zipVal) {
+                const newAddrRecord = {
+                    id: shippingAddress.id || `ADDR-${Date.now()}`,
+                    fullName: shippingAddress.fullName || shippingAddress.name || existingUser.fullName,
+                    phone: shippingAddress.phone || existingUser.phone,
+                    addressLine1: streetVal,
+                    street: streetVal,
+                    addressLine2: shippingAddress.addressLine2 || '',
+                    city: shippingAddress.city,
+                    state: shippingAddress.state,
+                    zipCode: zipVal,
+                    pincode: zipVal,
+                    isDefault: existingUser.addresses.length === 0
+                };
+                existingUser.addresses.push(newAddrRecord);
+                db.saveUser(existingUser);
+            }
+        }
+    }
     // Automatically record a database-backed Payment transaction for this order
     const paymentRecord = {
         id: `PAY-${Date.now().toString().slice(-6)}-${Math.floor(10 + Math.random() * 90)}`,
@@ -140,4 +179,19 @@ export const updatePayment = (req, res) => {
     db.savePayment(payment);
     db.logActivity("admin", "Update Payment Status", `Set payment transaction ${payment.id} status to ${status || payment.status}`);
     res.json({ message: "Payment updated successfully.", payment });
+};
+// Track single order by ID or Tracking Number
+export const trackOrder = (req, res) => {
+    const { identifier } = req.params;
+    if (!identifier) {
+        return res.status(400).json({ error: "Missing tracking identifier." });
+    }
+    const queryStr = identifier.trim().toLowerCase();
+    const allOrders = db.getOrders();
+    const foundOrder = allOrders.find((o) => o.id.toLowerCase() === queryStr ||
+        (o.trackingNumber && o.trackingNumber.toLowerCase() === queryStr));
+    if (!foundOrder) {
+        return res.status(404).json({ error: "No wellness order found matching that ID or tracking number." });
+    }
+    res.json(foundOrder);
 };
