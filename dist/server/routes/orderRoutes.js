@@ -1,10 +1,18 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
 import { Router } from "express";
 import { getOrders, getOrdersByUser, placeOrder, updateOrder, getPayments, updatePayment, trackOrder } from "../controllers/orderController.js";
+import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware.js";
+import { validateOrder } from "../middleware/validationMiddleware.js";
 export const orderRouter = Router();
-orderRouter.get("/api/orders", getOrders);
-orderRouter.get("/api/orders/user/:email", getOrdersByUser);
+// Order Endpoints
+orderRouter.get("/api/orders", authenticateToken, getOrders);
+orderRouter.get("/api/orders/user/:email", authenticateToken, getOrdersByUser);
 orderRouter.get("/api/orders/track/:identifier", trackOrder);
-orderRouter.post("/api/orders", placeOrder);
-orderRouter.put("/api/orders/:id", updateOrder);
-orderRouter.get("/api/payments", getPayments);
-orderRouter.put("/api/payments/:id", updatePayment);
+orderRouter.post("/api/orders", optionalAuthenticateToken, validateOrder, placeOrder);
+orderRouter.put("/api/orders/:id", authenticateToken, requireAdmin, updateOrder);
+// Payments (Admin only)
+orderRouter.get("/api/payments", authenticateToken, requireAdmin, getPayments);
+orderRouter.put("/api/payments/:id", authenticateToken, requireAdmin, updatePayment);

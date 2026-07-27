@@ -1,3 +1,8 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Router } from "express";
 import { 
   getProducts, 
@@ -22,34 +27,43 @@ import {
   updateSettings, 
   getActivityLogs 
 } from "../controllers/productController.js";
+import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware.js";
+import { validateProduct } from "../middleware/validationMiddleware.js";
 
 export const productRouter = Router();
 
+// Products (Public read, Admin write)
 productRouter.get("/api/products", getProducts);
 productRouter.get("/api/products/:id", getProductById);
-productRouter.post("/api/products", createProduct);
-productRouter.put("/api/products/:id", updateProduct);
-productRouter.delete("/api/products/:id", deleteProduct);
+productRouter.post("/api/products", authenticateToken, requireAdmin, validateProduct, createProduct);
+productRouter.put("/api/products/:id", authenticateToken, requireAdmin, validateProduct, updateProduct);
+productRouter.delete("/api/products/:id", authenticateToken, requireAdmin, deleteProduct);
 
+// Reviews (Public read/write, Admin edit/delete)
 productRouter.get("/api/reviews", getReviews);
-productRouter.post("/api/reviews", createReview);
-productRouter.put("/api/reviews/:id", updateReview);
-productRouter.delete("/api/reviews/:id", deleteReview);
+productRouter.post("/api/reviews", optionalAuthenticateToken, createReview);
+productRouter.put("/api/reviews/:id", authenticateToken, requireAdmin, updateReview);
+productRouter.delete("/api/reviews/:id", authenticateToken, requireAdmin, deleteReview);
 
+// Blogs (Public read, Admin write)
 productRouter.get("/api/blogs", getBlogs);
-productRouter.post("/api/blogs", createBlog);
-productRouter.delete("/api/blogs/:id", deleteBlog);
+productRouter.post("/api/blogs", authenticateToken, requireAdmin, createBlog);
+productRouter.delete("/api/blogs/:id", authenticateToken, requireAdmin, deleteBlog);
 
+// FAQs (Public read, Admin write)
 productRouter.get("/api/faqs", getFAQs);
-productRouter.post("/api/faqs", createFAQ);
-productRouter.delete("/api/faqs/:id", deleteFAQ);
+productRouter.post("/api/faqs", authenticateToken, requireAdmin, createFAQ);
+productRouter.delete("/api/faqs/:id", authenticateToken, requireAdmin, deleteFAQ);
 
+// Coupons (Public list, Admin create/delete)
 productRouter.get("/api/coupons", getCoupons);
-productRouter.post("/api/coupons", createCoupon);
-productRouter.delete("/api/coupons/:code", deleteCoupon);
+productRouter.post("/api/coupons", authenticateToken, requireAdmin, createCoupon);
+productRouter.delete("/api/coupons/:code", authenticateToken, requireAdmin, deleteCoupon);
 
+// Store Settings (Public read, Admin update)
 productRouter.get("/api/settings", getSettings);
-productRouter.post("/api/settings", updateSettings);
-productRouter.put("/api/settings", updateSettings);
+productRouter.post("/api/settings", authenticateToken, requireAdmin, updateSettings);
+productRouter.put("/api/settings", authenticateToken, requireAdmin, updateSettings);
 
-productRouter.get("/api/logs", getActivityLogs);
+// Activity Audit Logs (Admin only)
+productRouter.get("/api/logs", authenticateToken, requireAdmin, getActivityLogs);

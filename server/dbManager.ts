@@ -697,10 +697,24 @@ class DBManager {
   getOrdersByUser(identifier: string): Order[] {
     const term = identifier.toLowerCase().trim();
     const cleanPhone = term.replace(/\D/g, '');
+    
+    // Look up user object by email or phone if available
+    const user = this.getUserByEmail(term) || this.getUserByPhone(term);
+    const userEmail = user ? user.email.toLowerCase() : term;
+    const userPhoneClean = user?.phone ? user.phone.replace(/\D/g, '') : cleanPhone;
+    const userAddrPhones = (user?.addresses || [])
+      .map(a => a.phone ? a.phone.replace(/\D/g, '') : '')
+      .filter(p => p.length >= 7);
+
     return this.data.orders.filter(o => {
-      const emailMatch = o.userEmail.toLowerCase() === term;
-      const phoneMatch = cleanPhone.length >= 10 && o.shippingAddress && o.shippingAddress.phone && o.shippingAddress.phone.replace(/\D/g, '').endsWith(cleanPhone.slice(-10));
-      return emailMatch || phoneMatch;
+      const oEmail = (o.userEmail || '').toLowerCase();
+      const oPhone = o.shippingAddress?.phone ? o.shippingAddress.phone.replace(/\D/g, '') : '';
+      
+      const emailMatch = !!(userEmail && (oEmail === userEmail || (oEmail && oEmail.includes(userEmail))));
+      const phoneMatch = !!(userPhoneClean && userPhoneClean.length >= 7 && oPhone.length >= 7 && oPhone.endsWith(userPhoneClean.slice(-10)));
+      const addrPhoneMatch = userAddrPhones.some(ap => ap.length >= 7 && oPhone.length >= 7 && oPhone.endsWith(ap.slice(-10)));
+
+      return emailMatch || phoneMatch || addrPhoneMatch;
     });
   }
 

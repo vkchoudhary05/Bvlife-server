@@ -12,10 +12,11 @@ export const getProductById = (req, res) => {
 };
 // Add new product (Admin)
 export const createProduct = (req, res) => {
+    const userSku = typeof req.body.sku === 'string' ? req.body.sku.trim() : '';
     const newProd = {
         id: `prod-${Date.now()}`,
         name: req.body.name,
-        sku: req.body.sku || `AYUR-${Math.floor(100 + Math.random() * 900)}`,
+        sku: userSku || `AYUR-${Math.floor(100 + Math.random() * 900)}`,
         price: Number(req.body.price),
         originalPrice: Number(req.body.originalPrice || req.body.price),
         stock: Number(req.body.stock || 0),
@@ -45,9 +46,11 @@ export const updateProduct = (req, res) => {
     const prod = db.getProductById(req.params.id);
     if (!prod)
         return res.status(404).json({ error: "Product not found." });
+    const updatedSku = typeof req.body.sku === 'string' && req.body.sku.trim() !== '' ? req.body.sku.trim() : prod.sku;
     const updated = {
         ...prod,
         ...req.body,
+        sku: updatedSku,
         price: Number(req.body.price !== undefined ? req.body.price : prod.price),
         originalPrice: Number(req.body.originalPrice !== undefined ? req.body.originalPrice : prod.originalPrice),
         stock: Number(req.body.stock !== undefined ? req.body.stock : prod.stock),
