@@ -6,9 +6,9 @@
 import { Request, Response } from "express";
 import crypto from "crypto";
 import Razorpay from "razorpay";
-import { db } from "../dbManager";
-import { Order, Payment } from "../types";
-import { AuthenticatedRequest, ADMIN_EMAILS } from "../middleware/authMiddleware";
+import { db } from "../dbManager.js";
+import { Order, Payment } from "../types.js";
+import { AuthenticatedRequest, ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 
 /**
  * Get orders:

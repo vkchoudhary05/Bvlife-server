@@ -22,10 +22,10 @@ import {
   getFacebookAuthUrl,
   handleGoogleCallback,
   handleFacebookCallback
-} from "../controllers/authController";
-import { authenticateToken, requireAdmin } from "../middleware/authMiddleware";
-import { validateRegister, validateLogin, validateResetPassword } from "../middleware/validationMiddleware";
-import { rateLimiter } from "../middleware/rateLimitMiddleware";
+} from "../controllers/authController.js";
+import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
+import { validateRegister, validateLogin, validateResetPassword } from "../middleware/validationMiddleware.js";
+import { rateLimiter } from "../middleware/rateLimitMiddleware.js";
 
 export const authRouter = Router();
 

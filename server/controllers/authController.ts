@@ -4,12 +4,12 @@
  */
 
 import { Request, Response } from "express";
-import { db } from "../dbManager";
-import { User } from "../types";
-import { validateAndFormatIndianPhone } from "../utils";
-import { hashPassword, comparePassword } from "../passwordUtils";
-import { generateToken } from "../jwtUtils";
-import { AuthenticatedRequest } from "../middleware/authMiddleware";
+import { db } from "../dbManager.js";
+import { User } from "../types.js";
+import { validateAndFormatIndianPhone } from "../utils.js";
+import { hashPassword, comparePassword } from "../passwordUtils.js";
+import { generateToken } from "../jwtUtils.js";
+import { AuthenticatedRequest } from "../middleware/authMiddleware.js";
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -261,7 +261,7 @@ export const sendOtp = async (req: Request, res: Response) => {
         })
       });
 
-      const data = await response.json();
+      const data: any = await response.json();
       console.log('[MSG91 OTP] Dispatch Response:', data);
 
       if (data.type === 'success' || response.ok) {
@@ -331,7 +331,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
         }
       });
 
-      const data = await response.json();
+      const data: any = await response.json();
       console.log('[MSG91 Verify] Response:', data);
 
       if (data.type === 'success' || (data.message && data.message.toLowerCase().includes('verified'))) {
@@ -372,7 +372,7 @@ export const verifyMsg91Token = async (req: Request, res: Response) => {
         })
       });
 
-      const data = await response.json();
+      const data: any = await response.json();
       console.log('[MSG91 Token Verify] Response:', data);
 
       if (response.ok && (data.type === 'success' || data.status === 'success' || (data.message && data.message.toLowerCase().includes('success')) || (data.message && data.message.toLowerCase().includes('verified')))) {
