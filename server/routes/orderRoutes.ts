@@ -11,7 +11,9 @@ import {
   updateOrder, 
   getPayments, 
   updatePayment,
-  trackOrder
+  trackOrder,
+  createRazorpayOrder,
+  verifyRazorpayPayment
 } from "../controllers/orderController.js";
 import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware.js";
 import { validateOrder } from "../middleware/validationMiddleware.js";
@@ -24,6 +26,10 @@ orderRouter.get("/api/orders/user/:email", authenticateToken, getOrdersByUser);
 orderRouter.get("/api/orders/track/:identifier", trackOrder);
 orderRouter.post("/api/orders", optionalAuthenticateToken, validateOrder, placeOrder);
 orderRouter.put("/api/orders/:id", authenticateToken, requireAdmin, updateOrder);
+
+// Razorpay Payment Integration Endpoints
+orderRouter.post("/api/payment/razorpay-order", createRazorpayOrder);
+orderRouter.post("/api/payment/verify-razorpay", verifyRazorpayPayment);
 
 // Payments (Admin only)
 orderRouter.get("/api/payments", authenticateToken, requireAdmin, getPayments);

@@ -4,26 +4,12 @@
  */
 
 import { Request, Response } from "express";
-import { db } from "../dbManager.js";
-import { User } from "../types.js";
-import twilio from "twilio";
-import { validateAndFormatIndianPhone } from "../utils.js";
-import { hashPassword, comparePassword } from "../passwordUtils.js";
-import { generateToken } from "../jwtUtils.js";
-import { AuthenticatedRequest } from "../middleware/authMiddleware.js";
-
-// Lazy initialize Twilio client
-let twilioClient: any = null;
-function getTwilioClient() {
-  if (!twilioClient) {
-    const accountSid = process.env.TWILIO_ACCOUNT_SID 
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
-    if (authToken && authToken !== '[AuthToken]' && authToken.trim() !== "") {
-      twilioClient = twilio(accountSid, authToken);
-    }
-  }
-  return twilioClient;
-}
+import { db } from "../dbManager";
+import { User } from "../types";
+import { validateAndFormatIndianPhone } from "../utils";
+import { hashPassword, comparePassword } from "../passwordUtils";
+import { generateToken } from "../jwtUtils";
+import { AuthenticatedRequest } from "../middleware/authMiddleware";
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -244,50 +230,81 @@ export const sendOtp = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Invalid mobile number. Please supply a valid 10-digit mobile number." });
   }
 
-  const client = getTwilioClient();
-  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID || 'VAd4bf5c3b7ceb85913b9f3e32c399cb15';
+  const authKey = req.body.authKey?.trim() || process.env.MSG91_AUTH_KEY;
+  const templateId = req.body.templateId?.trim() || process.env.MSG91_TEMPLATE_ID;
 
-  if (client) {
+  const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+
+  if (authKey && authKey.trim() !== '') {
     try {
-      console.log(`[Twilio Verify] Dispatching SMS OTP to: ${formattedPhone} using service: ${serviceSid}`);
-      await client.verify.v2.services(serviceSid)
-        .verifications
-        .create({ to: formattedPhone, channel: 'sms' });
-
-      return res.json({ 
-        success: true, 
-        useRealTwilio: true, 
-        formattedPhone,
-        message: `OTP sent successfully via SMS to ${formattedPhone}.` 
+      const msg91Mobile = formattedPhone.replace(/\D/g, ''); // Extract 91XXXXXXXXXX
+      console.log(`[MSG91 OTP] Dispatching SMS OTP to: ${msg91Mobile} (Template ID: ${templateId || 'default'})`);
+      
+      const params = new URLSearchParams({
+        mobile: msg91Mobile,
+        otp_length: '4',
+        otp: generatedOtp
       });
+      if (templateId && templateId.trim() !== '') {
+        params.append('template_id', templateId);
+      }
+
+      const response = await fetch(`https://control.msg91.com/api/v5/otp?${params.toString()}`, {
+        method: 'POST',
+        headers: {
+          'authkey': authKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          otp: generatedOtp,
+          OTP: generatedOtp
+        })
+      });
+
+      const data = await response.json();
+      console.log('[MSG91 OTP] Dispatch Response:', data);
+
+      if (data.type === 'success' || response.ok) {
+        return res.json({ 
+          success: true, 
+          useRealMsg91: true,
+          useRealTwilio: true,
+          formattedPhone,
+          message: `OTP sent successfully via MSG91 to ${formattedPhone}.` 
+        });
+      } else {
+        console.error("[MSG91 OTP] Error response from MSG91:", data);
+        return res.status(400).json({ 
+          success: false, 
+          error: data.message || "Failed to dispatch SMS OTP via MSG91. Please check configuration/DLT status or use MSG91 Widget."
+        });
+      }
     } catch (err: any) {
-      console.error("[Twilio Verify] Error dispatching SMS OTP:", err);
-      const mockOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      return res.json({ 
-        success: true, 
-        useRealTwilio: false, 
-        otp: mockOtp, 
-        formattedPhone,
-        message: `SMS dispatch failed (${err.message || 'Configuration error'}). Falling back to sandbox simulation. Code is ${mockOtp} (shown for testing).` 
+      console.error("[MSG91 OTP] Error dispatching SMS OTP:", err);
+      return res.status(500).json({ 
+        success: false, 
+        error: `SMS dispatch failed: ${err.message || 'Network error'}` 
       });
     }
   } else {
-    const mockOtp = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log(`[Simulation] Dispatched simulated OTP code: ${mockOtp} to ${formattedPhone}`);
-    return res.json({ 
-      success: true, 
-      useRealTwilio: false, 
-      otp: mockOtp, 
-      formattedPhone,
-      message: `OTP dispatched to simulated sandbox terminal. Code is ${mockOtp} (shown for testing).` 
+    return res.status(400).json({ 
+      success: false,
+      error: "MSG91_AUTH_KEY is not configured on the server." 
     });
   }
 };
 
 export const verifyOtp = async (req: Request, res: Response) => {
-  const { phone, code } = req.body;
+  const { phone, code, accessToken, jwtToken } = req.body;
+  const widgetToken = accessToken || jwtToken;
+
+  // Support Widget Access Token verification if token is provided
+  if (widgetToken) {
+    return verifyMsg91Token(req, res);
+  }
+
   if (!phone || !code) {
-    return res.status(400).json({ error: "Phone number and 6-digit OTP code are required." });
+    return res.status(400).json({ error: "Phone number and OTP code are required." });
   }
 
   const formattedPhone = validateAndFormatIndianPhone(phone);
@@ -295,27 +312,87 @@ export const verifyOtp = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Invalid mobile number format." });
   }
 
-  const client = getTwilioClient();
-  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID || 'VAd4bf5c3b7ceb85913b9f3e32c399cb15';
+  const authKey = req.body.authKey?.trim() || process.env.MSG91_AUTH_KEY;
 
-  if (client) {
+  if (authKey && authKey.trim() !== '') {
     try {
-      console.log(`[Twilio Verify] Checking code ${code} for ${formattedPhone} on service ${serviceSid}`);
-      const check = await client.verify.v2.services(serviceSid)
-        .verificationChecks
-        .create({ to: formattedPhone, code });
+      const msg91Mobile = formattedPhone.replace(/\D/g, ''); // Extract 91XXXXXXXXXX
+      console.log(`[MSG91 Verify] Checking code ${code} for ${msg91Mobile}`);
 
-      if (check.status === 'approved') {
-        return res.json({ success: true, message: "OTP verification successful." });
+      const params = new URLSearchParams({
+        mobile: msg91Mobile,
+        otp: code.trim()
+      });
+
+      const response = await fetch(`https://control.msg91.com/api/v5/otp/verify?${params.toString()}`, {
+        method: 'GET',
+        headers: {
+          'authkey': authKey
+        }
+      });
+
+      const data = await response.json();
+      console.log('[MSG91 Verify] Response:', data);
+
+      if (data.type === 'success' || (data.message && data.message.toLowerCase().includes('verified'))) {
+        return res.json({ success: true, message: "OTP verification successful via MSG91." });
       } else {
-        return res.status(400).json({ error: "Invalid or expired verification code. Please check and try again." });
+        return res.status(400).json({ error: data.message || "Invalid or expired verification code. Please check and try again." });
       }
     } catch (err: any) {
-      console.error("[Twilio Verify] Verification check error:", err);
-      return res.status(400).json({ error: `Twilio verification check failed: ${err.message || 'Unknown error'}` });
+      console.error("[MSG91 Verify] Verification check error:", err);
+      return res.status(400).json({ error: `MSG91 verification check failed: ${err.message || 'Unknown error'}` });
     }
   } else {
-    return res.status(400).json({ error: "Twilio integration is not configured on the server." });
+    return res.status(400).json({ error: "MSG91 Auth Key is not configured on the server." });
+  }
+};
+
+export const verifyMsg91Token = async (req: Request, res: Response) => {
+  const { accessToken, jwtToken, token } = req.body;
+  const tokenToVerify = accessToken || jwtToken || token;
+
+  if (!tokenToVerify) {
+    return res.status(400).json({ error: "Access token (JWT) from MSG91 OTP Widget is required." });
+  }
+
+  const authKey = process.env.MSG91_AUTH_KEY || req.body.authKey;
+
+  if (authKey && authKey.trim() !== '') {
+    try {
+      console.log(`[MSG91 Token Verify] Verifying access token with MSG91 widget endpoint...`);
+      const response = await fetch('https://control.msg91.com/api/v5/widget/verifyAccessToken', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          authkey: authKey.trim(),
+          'access-token': tokenToVerify.trim()
+        })
+      });
+
+      const data = await response.json();
+      console.log('[MSG91 Token Verify] Response:', data);
+
+      if (response.ok && (data.type === 'success' || data.status === 'success' || (data.message && data.message.toLowerCase().includes('success')) || (data.message && data.message.toLowerCase().includes('verified')))) {
+        return res.json({ 
+          success: true, 
+          message: "MSG91 Widget Access Token verified successfully.",
+          data: data
+        });
+      } else {
+        return res.status(400).json({ 
+          error: data.message || "MSG91 Widget Access Token verification failed.",
+          details: data 
+        });
+      }
+    } catch (err: any) {
+      console.error("[MSG91 Token Verify] Error:", err);
+      return res.status(500).json({ error: `MSG91 Token verification error: ${err.message || 'Unknown error'}` });
+    }
+  } else {
+    return res.status(400).json({ error: "MSG91 Auth Key is not configured on the server." });
   }
 };
 

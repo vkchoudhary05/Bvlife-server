@@ -17,6 +17,7 @@
     "gitignore": "^0.7.0",
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.22.6",
+    "razorpay": "^2.9.8",
     "twilio": "^6.0.2",
     "vite": "^6.4.3"
   },

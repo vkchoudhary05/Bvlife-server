@@ -93,7 +93,7 @@ export interface Order {
   discount: number;
   finalTotal: number;
   status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled' | 'Returned';
-  paymentMethod: 'Razorpay' | 'UPI' | 'Cards' | 'Net Banking' | 'Cash on Delivery';
+  paymentMethod: 'UPI' | 'Cash on Delivery' | 'Razorpay';
   paymentStatus: 'Pending' | 'Paid' | 'Failed';
   orderDate: string;
   trackingNumber?: string;

@@ -15,16 +15,17 @@ import {
   getActivityLogs,
   sendOtp, 
   verifyOtp,
+  verifyMsg91Token,
   checkAccount,
   resetPassword,
   getGoogleAuthUrl,
   getFacebookAuthUrl,
   handleGoogleCallback,
   handleFacebookCallback
-} from "../controllers/authController.js";
-import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
-import { validateRegister, validateLogin, validateResetPassword } from "../middleware/validationMiddleware.js";
-import { rateLimiter } from "../middleware/rateLimitMiddleware.js";
+} from "../controllers/authController";
+import { authenticateToken, requireAdmin } from "../middleware/authMiddleware";
+import { validateRegister, validateLogin, validateResetPassword } from "../middleware/validationMiddleware";
+import { rateLimiter } from "../middleware/rateLimitMiddleware";
 
 export const authRouter = Router();
 
@@ -43,6 +44,7 @@ authRouter.get("/api/logs", getActivityLogs);
 // Security & Recovery Routes
 authRouter.post("/api/auth/otp", rateLimiter(15), sendOtp);
 authRouter.post("/api/auth/verify-otp", rateLimiter(20), verifyOtp);
+authRouter.post("/api/auth/verify-msg91-token", rateLimiter(20), verifyMsg91Token);
 authRouter.post("/api/auth/check-account", checkAccount);
 authRouter.post("/api/auth/reset-password", rateLimiter(10), validateResetPassword, resetPassword);
 
