@@ -35,7 +35,7 @@
       "sku": "GL-2435",
       "price": 500,
       "originalPrice": 600,
-      "stock": 18,
+      "stock": 17,
       "category": "Immunity",
       "brand": "bvlife",
       "description": "edwijsjknendm",
@@ -357,6 +357,468 @@
       "bestSeller": true,
       "lowStockAlertLimit": 20,
       "createdDate": "2026-03-10"
+    },
+    {
+      "id": "prod-1",
+      "name": "Golden Chyawanprash - Saffron & Wild Honey",
+      "sku": "AYUR-CHY-001",
+      "price": 850,
+      "originalPrice": 950,
+      "stock": 45,
+      "category": "Immunity",
+      "subcategory": "Syrup",
+      "brand": "Grams Life Organics",
+      "description": "An ancient, powerful blend of 45+ premium Ayurvedic herbs, enriched with handpicked Kashmiri saffron, wild forest honey, and organic ghee. Grams Life Chyawanprash acts as a natural immunity shield, restoring youthful energy, boosting stamina, and improving respiratory function.",
+      "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+        "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
+        "https://images.unsplash.com/photo-1608797178974-15b35a61d121?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Amalaki (Amla)",
+          "description": "Rich source of Vitamin C, potent antioxidant, supports cell regeneration."
+        },
+        {
+          "name": "Kesar (Saffron)",
+          "description": "Improves skin radiance, elevates mood, and boosts cell vitality."
+        },
+        {
+          "name": "Vanshlochan",
+          "description": "Strengthens lungs and respiratory passages, acts as a bone supplement."
+        },
+        {
+          "name": "Pippali",
+          "description": "Enhances bio-availability of nutrients, supports digestion and lung strength."
+        }
+      ],
+      "benefits": [
+        "Supercharges overall immune response and respiratory health.",
+        "Supports rapid cells recovery and fights early signs of aging.",
+        "Improves digestion, toxin elimination, and gut bio-diversity.",
+        "Naturally increases energy, daily focus, and physical endurance."
+      ],
+      "dosage": "1 teaspoon (10g) twice a day for adults, 1/2 teaspoon for children under 12.",
+      "usageInstructions": "Consume directly or dissolve in a cup of warm milk/water. Best taken first thing in the morning on an empty stomach.",
+      "faqs": [
+        {
+          "question": "Is this safe to consume in summers?",
+          "answer": "Yes. Our Chyawanprash is formulated with cooling herbs like Amalaki and Cardamom to balance the warming elements of pepper and ginger, making it completely safe for year-round consumption."
+        },
+        {
+          "question": "Can diabetic individuals take this?",
+          "answer": "This premium variant contains wild forest honey and minimal rock candy. For severe diabetic conditions, we recommend consulting your physician first, or choosing our sugar-free variants."
+        }
+      ],
+      "rating": 4.8,
+      "featured": true,
+      "bestSeller": true,
+      "lowStockAlertLimit": 10,
+      "createdDate": "2026-05-01"
+    },
+    {
+      "id": "prod-6",
+      "name": "Shatavari Balance Capsules - Women's Tonic",
+      "sku": "AYUR-SHA-006",
+      "price": 450,
+      "originalPrice": 490,
+      "stock": 65,
+      "category": "Women's Health",
+      "subcategory": "Capsules",
+      "brand": "Grams Life Wellness",
+      "description": "Shatavari is revered in Ayurveda as the ultimate rejuvenating tonic for women. Grams Life uses concentrated Shatavari root extract to balance estrogen naturally, reduce PMS cramps, regulate cycles, and support breast lactation and energy levels.",
+      "mainImage": "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Shatavari (Asparagus racemosus)",
+          "description": "100% organic root extract standardized to 20% saponins."
+        }
+      ],
+      "benefits": [
+        "Supports optimal female hormonal balance during PMS, pregnancy, and menopause.",
+        "Reduces bloating, fatigue, mood swings, and period cramps significantly.",
+        "Improves natural hydration, energy, and overall health.",
+        "Enhances healthy lactation in nursing mothers."
+      ],
+      "dosage": "1 capsule twice daily, preferably with warm milk or water.",
+      "usageInstructions": "Take one capsule post breakfast and one post dinner. Best consumed with warm organic cow milk.",
+      "faqs": [
+        {
+          "question": "Can I take this if I have PCOD?",
+          "answer": "Shatavari is highly beneficial for PCOD/PCOS as it restores ovulation cycles and reduces ovarian cysts. However, we advise speaking with an Ayurvedic specialist to plan a complete lifestyle regimen."
+        }
+      ],
+      "rating": 4.7,
+      "featured": false,
+      "bestSeller": false,
+      "lowStockAlertLimit": 12,
+      "createdDate": "2026-04-28"
+    },
+    {
+      "id": "prod-7",
+      "name": "Madhunashini Diabetes Care Tablets",
+      "sku": "AYUR-MAD-007",
+      "price": 380,
+      "originalPrice": 450,
+      "stock": 90,
+      "category": "Diabetes",
+      "subcategory": "Tablets",
+      "brand": "Grams Life Wellness",
+      "description": "A clinical Ayurvedic herbal formula featuring Gudmar (literally meaning sugar destroyer), Karela, Jamun seed, and Methi. It helps regenerate pancreatic cells, increases active insulin sensitivity, and controls sweet cravings.",
+      "mainImage": "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Gudmar (Gymnema sylvestre)",
+          "description": "Blocks sugar receptors on tongue and intestines, reducing glucose absorption."
+        },
+        {
+          "name": "Karela (Bitter Melon)",
+          "description": "Contains charantin and polypeptide-p which mimic insulin molecules."
+        },
+        {
+          "name": "Jamun Seed",
+          "description": "Slows down conversion of food starch into glucose, avoiding sudden sugar spikes."
+        }
+      ],
+      "benefits": [
+        "Maintains healthy fasting and post-meal blood sugar levels.",
+        "Reduces insulin resistance and nourishes vital pancreatic cells.",
+        "Eliminates sweet cravings and supports healthy weight loss.",
+        "Controls diabetic fatigue, frequent urination, and numbness in limbs."
+      ],
+      "dosage": "1 to 2 tablets twice daily on an empty stomach.",
+      "usageInstructions": "Take with warm water 30 minutes before your morning breakfast and evening dinner.",
+      "faqs": [
+        {
+          "question": "Can I take this alongside my regular diabetes pills?",
+          "answer": "Yes, it works as an excellent co-therapy. Monitor your blood glucose levels regularly. If levels drop below normal, consult your doctor to adjust your synthetic drug dosages."
+        }
+      ],
+      "rating": 4.4,
+      "featured": false,
+      "bestSeller": false,
+      "lowStockAlertLimit": 15,
+      "createdDate": "2026-05-18"
+    },
+    {
+      "id": "prod-8",
+      "name": "Nirgundi Joint Care Massage Oil",
+      "sku": "AYUR-NIR-008",
+      "price": 340,
+      "originalPrice": 390,
+      "stock": 55,
+      "category": "Joint Care",
+      "subcategory": "Oils",
+      "brand": "Grams Life Wellness",
+      "description": "An instant pain-relieving therapeutic joint oil. Rich in Nirgundi, Shallaki, and Eucalyptus oils. Massaging this oil deeply warms tissues, clears congested fluid, and repairs stiff muscles and inflamed joints.",
+      "mainImage": "https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Nirgundi",
+          "description": "Powerful anti-inflammatory and pain-relieving herb, heals arthritis pain."
+        },
+        {
+          "name": "Shallaki (Boswellia)",
+          "description": "Prevents breakdown of cartilage tissue, repairs joint lubrication."
+        },
+        {
+          "name": "Eucalyptus Oil",
+          "description": "Improves local blood flow, creating a deep warm soothing effect."
+        }
+      ],
+      "benefits": [
+        "Relieves joint pain, stiffness, sciatica, knee arthritis, and backaches.",
+        "Restores synovial joint lubrication and flexibility.",
+        "Combats muscle cramps, sports injuries, and neck stiffness.",
+        "100% natural, fast-acting formula without synthetic chemical warming agents."
+      ],
+      "dosage": "Apply 5-10ml on the affected joint area.",
+      "usageInstructions": "Pour oil and massage gently in circular patterns over joints. Apply warmth with a hot water bag after massage for maximum therapeutic recovery.",
+      "faqs": [
+        {
+          "question": "How often can I apply this?",
+          "answer": "Apply 2-3 times daily, especially during morning stiffness and before sleeping."
+        }
+      ],
+      "rating": 4.8,
+      "featured": true,
+      "bestSeller": false,
+      "lowStockAlertLimit": 10,
+      "createdDate": "2026-06-02"
+    },
+    {
+      "id": "prod-9",
+      "name": "Memory & Focus Elixir (Brahmi & Shankhpushpi)",
+      "sku": "AYUR-BRA-009",
+      "price": 620,
+      "originalPrice": 750,
+      "stock": 40,
+      "category": "Brain & Memory",
+      "subcategory": "Capsules",
+      "brand": "Grams Life Wellness",
+      "description": "A premium brain tonic designed to boost cognitive function, memory recall, and mental clarity. Infused with organic Brahmi and Shankhpushpi to naturally reduce mental fatigue and support peak focus.",
+      "mainImage": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Organic Brahmi",
+          "description": "Supports brain health, improves blood circulation to the brain, and enhances memory."
+        },
+        {
+          "name": "Shankhpushpi",
+          "description": "Revered as a medhya rasayana, reduces mental stress, anxiety, and enhances focus."
+        }
+      ],
+      "benefits": [
+        "Improves daily concentration, analytical skills, and memory retention.",
+        "Helps calm mind chatter, enabling sustained, focused work.",
+        "Acts as a powerful antioxidant to shield nervous cells from decay."
+      ],
+      "dosage": "1 capsule twice daily with warm milk or water.",
+      "usageInstructions": "Best taken after meals in the morning and evening for cognitive vitality.",
+      "faqs": [
+        {
+          "question": "How long before I see improvement?",
+          "answer": "Most users notice enhanced focus and calmness within 2 weeks of daily, regular consumption."
+        }
+      ],
+      "rating": 4.9,
+      "featured": true,
+      "bestSeller": true,
+      "lowStockAlertLimit": 8,
+      "createdDate": "2026-06-10"
+    },
+    {
+      "id": "prod-10",
+      "name": "Deep Sleep & Calm (Sarpagandha & Tagar)",
+      "sku": "AYUR-SLE-010",
+      "price": 480,
+      "originalPrice": 550,
+      "stock": 30,
+      "category": "Sleep & Stress",
+      "subcategory": "Tablets",
+      "brand": "Grams Life Wellness",
+      "description": "Formulated with precious Tagar (Indian Valerian) and Sarpagandha to naturally soothe the central nervous system, lower stress levels, and restore normal sleep cycles without grogginess.",
+      "mainImage": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Tagar (Indian Valerian)",
+          "description": "Naturally promotes sleep, relaxes smooth muscles, and relieves chronic tension."
+        },
+        {
+          "name": "Sarpagandha",
+          "description": "Helps calm hyperactive minds and supports optimal healthy blood pressure."
+        }
+      ],
+      "benefits": [
+        "Promotes deep, sound sleep without morning grogginess or dependency.",
+        "Helps calm an overactive, racing mind before bedtime.",
+        "Provides relief from muscle tension and daily physical stress."
+      ],
+      "dosage": "1 to 2 tablets 30 minutes before bedtime.",
+      "usageInstructions": "Take with warm water or warm milk shortly before sleep.",
+      "faqs": [
+        {
+          "question": "Is this habit-forming?",
+          "answer": "No. Our formulation uses natural non-addictive herbs that soothe the body's sleep sensors without altering long-term neuro-chemistry."
+        }
+      ],
+      "rating": 4.7,
+      "featured": true,
+      "bestSeller": false,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-06-15"
+    },
+    {
+      "id": "prod-11",
+      "name": "Shilajit Gold Resin - Himalayan Peak Strength",
+      "sku": "AYUR-SHI-011",
+      "price": 1450,
+      "originalPrice": 1690,
+      "stock": 25,
+      "category": "Sexual Wellness",
+      "subcategory": "Resin",
+      "brand": "Grams Life Organics",
+      "description": "100% pure Himalayan Shilajit resin, purified using traditional Ayurvedic Shodhana methods and infused with 24K Swarna Bhasma (Gold) and Safed Musli. Naturally increases stamina, cellular energy, and daily physical vitality.",
+      "mainImage": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Purified Shilajit",
+          "description": "Rich in 80+ trace minerals and high Fulvic acid content for peak cellular energy."
+        },
+        {
+          "name": "Swarna Bhasma (24K Gold)",
+          "description": "Acts as a potent rejuvenator, boosts immunity, and improves micro-circulation."
+        },
+        {
+          "name": "Safed Musli",
+          "description": "Nourishes muscle tissue, boosts natural endurance and physical vitality."
+        }
+      ],
+      "benefits": [
+        "Maximizes daily physical endurance, muscle recovery, and stamina.",
+        "Improves mitochondrial ATP production, reducing chronic fatigue.",
+        "Acts as an excellent aphrodisiac to boost vitality and reproductive health."
+      ],
+      "dosage": "A pea-sized portion (approx. 250mg) once daily.",
+      "usageInstructions": "Dissolve completely in warm milk or warm water and consume in the morning on an empty stomach.",
+      "faqs": [
+        {
+          "question": "Is it certified pure?",
+          "answer": "Yes, our Shilajit is sourced from high-altitude Himalayan ranges and undergoes triple filtration and lab-testing to be completely free of heavy metals."
+        }
+      ],
+      "rating": 4.9,
+      "featured": true,
+      "bestSeller": true,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-06-20"
+    },
+    {
+      "id": "prod-12",
+      "name": "Liver Vitality & Detox (Kalmegh & Bhumi Amla)",
+      "sku": "AYUR-LIV-012",
+      "price": 420,
+      "originalPrice": 490,
+      "stock": 60,
+      "category": "Liver & Detox",
+      "subcategory": "Capsules",
+      "brand": "Grams Life Wellness",
+      "description": "A powerful hepatoprotective formula that naturally detoxifies the liver, stimulates bile secretion, and protects liver cells from damage. Rich in organic Kalmegh (King of Bitters) and Bhumi Amla.",
+      "mainImage": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Kalmegh (Andrographis)",
+          "description": "Extremely bitter herb, triggers quick liver detox, and stimulates bile production."
+        },
+        {
+          "name": "Bhumi Amla",
+          "description": "Protects liver tissues, regulates enzymes, and reverses cell damage."
+        }
+      ],
+      "benefits": [
+        "Supports efficient liver detoxification and natural enzyme levels.",
+        "Improves digestion, bloating, and absorption of dietary fats.",
+        "Protects the liver from toxins, alcohol, and processed foods."
+      ],
+      "dosage": "1 capsule twice daily with meals.",
+      "usageInstructions": "Consume daily after your primary lunch and dinner.",
+      "faqs": [
+        {
+          "question": "Can I take this daily for general detox?",
+          "answer": "Yes, our formulation is gentle yet highly effective for continuous, daily digestive and hepatic system detox."
+        }
+      ],
+      "rating": 4.6,
+      "featured": false,
+      "bestSeller": false,
+      "lowStockAlertLimit": 12,
+      "createdDate": "2026-06-25"
+    },
+    {
+      "id": "prod-13",
+      "name": "Arjuna Cardio-Shield Capsules",
+      "sku": "AYUR-HRT-013",
+      "price": 550,
+      "originalPrice": 650,
+      "stock": 50,
+      "category": "Heart Health",
+      "subcategory": "Capsules",
+      "brand": "Grams Life Wellness",
+      "description": "Made from pure extract of the Arjuna tree bark, a legendary Ayurvedic cardioprotective herb. Supports healthy blood pressure, strengthens cardiovascular muscles, and regulates daily blood circulation.",
+      "mainImage": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Arjuna Bark Extract",
+          "description": "Standardized extract containing co-enzyme Q10 and saponins to nourish heart muscles."
+        }
+      ],
+      "benefits": [
+        "Strengthens the heart muscles and aids in normal, healthy cardiac output.",
+        "Assists in maintaining optimal arterial blood pressure levels.",
+        "Aids in managing oxidative stress in cardiovascular tissues."
+      ],
+      "dosage": "1 capsule twice daily after meals.",
+      "usageInstructions": "Take one capsule post breakfast and one post dinner with warm water.",
+      "faqs": [
+        {
+          "question": "Is Arjuna bark safe to take long-term?",
+          "answer": "Yes, Arjuna is a well-tolerated organic cardiotonic that can safely be taken long-term to keep heart functions healthy."
+        }
+      ],
+      "rating": 4.8,
+      "featured": false,
+      "bestSeller": false,
+      "lowStockAlertLimit": 8,
+      "createdDate": "2026-06-28"
+    },
+    {
+      "id": "prod-14",
+      "name": "Vasaka & Pippali Lung Detox Syrup",
+      "sku": "AYUR-RSP-014",
+      "price": 290,
+      "originalPrice": 350,
+      "stock": 75,
+      "category": "Respiratory Care",
+      "subcategory": "Syrup",
+      "brand": "Grams Life Organics",
+      "description": "A comforting herbal syrup that clears bronchial passages, eases congestion, and soothes dry coughs. Infused with Vasaka (Malabar Nut) and Pippali (Long Pepper) for robust respiratory health.",
+      "mainImage": "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600",
+      "images": [
+        "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600"
+      ],
+      "ingredients": [
+        {
+          "name": "Vasaka (Adhatoda vasica)",
+          "description": "Powerful bronchodilator, clears phlegm, and eases chest congestion."
+        },
+        {
+          "name": "Pippali (Long Pepper)",
+          "description": "Warms up lungs, clears respiratory paths, and enhances bio-availability."
+        }
+      ],
+      "benefits": [
+        "Provides rapid, comforting relief from seasonal coughs, colds, and sore throats.",
+        "Clears airways and eases chronic breathing difficulty.",
+        "Strengthens lung tissue and acts as an immunity shield against pollution."
+      ],
+      "dosage": "1 to 2 teaspoons (5-10ml) twice or thrice a day.",
+      "usageInstructions": "Mix with warm water or drink directly. Best taken after meals.",
+      "faqs": [
+        {
+          "question": "Does this syrup contain artificial sugar?",
+          "answer": "No, our syrup is sweetened naturally with organic wild forest honey, preserving traditional healing standards."
+        }
+      ],
+      "rating": 4.7,
+      "featured": false,
+      "bestSeller": true,
+      "lowStockAlertLimit": 10,
+      "createdDate": "2026-07-01"
     }
   ],
   "orders": [
@@ -5526,6 +5988,48 @@
           "comment": "Your organic wellbeing order has been received and is waiting for validation."
         }
       ]
+    },
+    {
+      "id": "GL-379149-43",
+      "userEmail": "vivek2@gmail.com",
+      "userName": "shubham",
+      "shippingAddress": {
+        "id": "addr-1784712777174",
+        "fullName": "shubham",
+        "addressLine1": "52/7",
+        "addressLine2": "",
+        "city": "Panchkula",
+        "state": "Rajasthan",
+        "zipCode": "160101",
+        "phone": "+919783788884",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1785128507459",
+          "productName": "abc",
+          "price": 500,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200"
+        }
+      ],
+      "subtotal": 500,
+      "tax": 60,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 560,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-08-18T07:16:19.149Z",
+      "trackingNumber": "GLTRK552913",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-08-18T07:16:19.151Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
     }
   ],
   "blogs": [
@@ -5856,9 +6360,20 @@
           "zipCode": "247554",
           "phone": "8262982922",
           "isDefault": false
+        },
+        {
+          "id": "addr-1784712777174",
+          "fullName": "shubham",
+          "addressLine1": "52/7",
+          "addressLine2": "",
+          "city": "Panchkula",
+          "state": "Rajasthan",
+          "zipCode": "160101",
+          "phone": "+919783788884",
+          "isDefault": false
         }
       ],
-      "password": "123123"
+      "password": "$2b$10$oWYp4H087rP4Quiuu9UjuemsRzsExyapMN.aKbJuFsf/0l.esfjEe"
     },
     {
       "email": "vkchoudhary@gmail.com",
@@ -5895,6 +6410,14 @@
           "isDefault": false
         }
       ]
+    },
+    {
+      "email": "iamvivekhu@gmail.com",
+      "fullName": "Vivek chaudhary",
+      "role": "customer",
+      "phone": "+919690941439",
+      "addresses": [],
+      "password": "$2b$10$l0NL3bSzG/uiKBqR461Cnuz3MQoe8xplE8lHkoz2xRX7F8N2oyAkO"
     }
   ],
   "reviews": [
@@ -5922,6 +6445,454 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1787037379235-xq2w",
+      "timestamp": "2026-08-18T07:16:19.235Z",
+      "userEmail": "+919783788884",
+      "action": "[SMS] Payment",
+      "details": "Grams Life Payment: ₹560 received for Order #GL-379149-43 via Cash on Delivery. Your order is confirmed."
+    },
+    {
+      "id": "log-1787037379230-73ln",
+      "timestamp": "2026-08-18T07:16:19.230Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "[EMAIL] Invoice",
+      "details": "Order Invoice #GL-379149-43 (₹560) dispatched to vivek2@gmail.com."
+    },
+    {
+      "id": "log-1787037379180-fmy8",
+      "timestamp": "2026-08-18T07:16:19.180Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "Order Placed",
+      "details": "Placed order #GL-379149-43 for amount ₹560"
+    },
+    {
+      "id": "log-1787035900040-in28",
+      "timestamp": "2026-08-18T06:51:40.040Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "Profile Update",
+      "details": "Updated contact details/addresses."
+    },
+    {
+      "id": "log-1787035704270-wn08",
+      "timestamp": "2026-08-18T06:48:24.270Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787035283373-r0wr",
+      "timestamp": "2026-08-18T06:41:23.373Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787034133165-vf3n",
+      "timestamp": "2026-08-18T06:22:13.165Z",
+      "userEmail": "iamvivekhu@gmail.com",
+      "action": "[EMAIL] Welcome",
+      "details": "Welcome email dispatched to Vivek chaudhary (iamvivekhu@gmail.com)."
+    },
+    {
+      "id": "log-1787034133157-n5pg",
+      "timestamp": "2026-08-18T06:22:13.157Z",
+      "userEmail": "iamvivekhu@gmail.com",
+      "action": "User Registration",
+      "details": "Created account for Vivek chaudhary with phone +919690941439"
+    },
+    {
+      "id": "log-1787034103121-on0m",
+      "timestamp": "2026-08-18T06:21:43.121Z",
+      "userEmail": "+919690941439",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +919690941439."
+    },
+    {
+      "id": "log-1787034103116-g5cg",
+      "timestamp": "2026-08-18T06:21:43.116Z",
+      "userEmail": "+919690941439",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787034102889_k6365."
+    },
+    {
+      "id": "log-1787033949273-trw3",
+      "timestamp": "2026-08-18T06:19:09.273Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787033949266-ueou",
+      "timestamp": "2026-08-18T06:19:09.266Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787033949084_y8mxl."
+    },
+    {
+      "id": "log-1787033373313-ia0c",
+      "timestamp": "2026-08-18T06:09:33.313Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787033373306-hrwa",
+      "timestamp": "2026-08-18T06:09:33.306Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787033373143_xu5w0."
+    },
+    {
+      "id": "log-1787033241439-nezv",
+      "timestamp": "2026-08-18T06:07:21.439Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787033241431-lz5z",
+      "timestamp": "2026-08-18T06:07:21.431Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787033241223_jli8v."
+    },
+    {
+      "id": "log-1787030477935-y2dq",
+      "timestamp": "2026-08-18T05:21:17.935Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787030477926-g07g",
+      "timestamp": "2026-08-18T05:21:17.926Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787030477734_qp5nb."
+    },
+    {
+      "id": "log-1787029868372-ntbk",
+      "timestamp": "2026-08-18T05:11:08.372Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787029868364-s7wp",
+      "timestamp": "2026-08-18T05:11:08.364Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787029868207_6goo9."
+    },
+    {
+      "id": "log-1787029788720-n8bt",
+      "timestamp": "2026-08-18T05:09:48.720Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787029742629-kwoj",
+      "timestamp": "2026-08-18T05:09:02.629Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787029742622-lt9e",
+      "timestamp": "2026-08-18T05:09:02.622Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787029742369_ok8r4."
+    },
+    {
+      "id": "log-1787029703446-8ojv",
+      "timestamp": "2026-08-18T05:08:23.446Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787028238720-havi",
+      "timestamp": "2026-08-18T04:43:58.720Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1786960597248-qfm8",
+      "timestamp": "2026-08-17T09:56:37.248Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified OTP authentication."
+    },
+    {
+      "id": "log-1786960564545-nugo",
+      "timestamp": "2026-08-17T09:56:04.545Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786960564537-0s47",
+      "timestamp": "2026-08-17T09:56:04.537Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786960564359_uj96r."
+    },
+    {
+      "id": "log-1786960038313-jg9r",
+      "timestamp": "2026-08-17T09:47:18.313Z",
+      "userEmail": "iamvivekbaliyassn07@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1786959720175-htgn",
+      "timestamp": "2026-08-17T09:42:00.175Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786959720169-ddyq",
+      "timestamp": "2026-08-17T09:42:00.169Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786959719997_7ohe7."
+    },
+    {
+      "id": "log-1786959611432-41zg",
+      "timestamp": "2026-08-17T09:40:11.432Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified OTP authentication."
+    },
+    {
+      "id": "log-1786959589325-e2x4",
+      "timestamp": "2026-08-17T09:39:49.325Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786959589319-f39t",
+      "timestamp": "2026-08-17T09:39:49.319Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786959589183_gmo04."
+    },
+    {
+      "id": "log-1786959541907-420s",
+      "timestamp": "2026-08-17T09:39:01.907Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786959541900-772h",
+      "timestamp": "2026-08-17T09:39:01.900Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786959541740_pwis8."
+    },
+    {
+      "id": "log-1786959474340-r18z",
+      "timestamp": "2026-08-17T09:37:54.340Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786959474329-3bur",
+      "timestamp": "2026-08-17T09:37:54.329Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786959474166_rcfxl."
+    },
+    {
+      "id": "log-1786959426911-cg1g",
+      "timestamp": "2026-08-17T09:37:06.911Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified OTP authentication."
+    },
+    {
+      "id": "log-1786959397981-nujb",
+      "timestamp": "2026-08-17T09:36:37.981Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786959397975-rjnj",
+      "timestamp": "2026-08-17T09:36:37.975Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786959397792_uy2bz."
+    },
+    {
+      "id": "log-1786958466657-b231",
+      "timestamp": "2026-08-17T09:21:06.657Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786958466650-ybjm",
+      "timestamp": "2026-08-17T09:21:06.650Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786958466498_7kwt5."
+    },
+    {
+      "id": "log-1786957334164-xllw",
+      "timestamp": "2026-08-17T09:02:14.164Z",
+      "userEmail": "iamvivekbaliyassn07@gmail.com",
+      "action": "[EMAIL] Welcome",
+      "details": "Welcome email dispatched to vivek (iamvivekbaliyassn07@gmail.com)."
+    },
+    {
+      "id": "log-1786957334150-rlgs",
+      "timestamp": "2026-08-17T09:02:14.150Z",
+      "userEmail": "iamvivekbaliyassn07@gmail.com",
+      "action": "User Registration",
+      "details": "Created account for vivek with phone +919690941439"
+    },
+    {
+      "id": "log-1786956931002-85qd",
+      "timestamp": "2026-08-17T08:55:31.002Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786956930993-as7e",
+      "timestamp": "2026-08-17T08:55:30.993Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786956930713_pe3c3."
+    },
+    {
+      "id": "log-1786693032029-azbn",
+      "timestamp": "2026-08-14T07:37:12.029Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786693032020-uvin",
+      "timestamp": "2026-08-14T07:37:12.020Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786693031869_5fq6n."
+    },
+    {
+      "id": "log-1786692854774-aauk",
+      "timestamp": "2026-08-14T07:34:14.775Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786692854766-c56q",
+      "timestamp": "2026-08-14T07:34:14.766Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786692854483_bwcs2."
+    },
+    {
+      "id": "log-1786692740333-l2k7",
+      "timestamp": "2026-08-14T07:32:20.333Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786692740325-4r2f",
+      "timestamp": "2026-08-14T07:32:20.325Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786692740173_enwcx."
+    },
+    {
+      "id": "log-1786692467386-25a7",
+      "timestamp": "2026-08-14T07:27:47.387Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786692467378-1zwc",
+      "timestamp": "2026-08-14T07:27:47.378Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786692467229_0s2p0."
+    },
+    {
+      "id": "log-1786691678977-sd01",
+      "timestamp": "2026-08-14T07:14:38.977Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786691678971-ueaf",
+      "timestamp": "2026-08-14T07:14:38.971Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786691678800_qgkgq."
+    },
+    {
+      "id": "log-1786691366778-4217",
+      "timestamp": "2026-08-14T07:09:26.778Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786691366771-swwu",
+      "timestamp": "2026-08-14T07:09:26.771Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786691366608_lw4jz."
+    },
+    {
+      "id": "log-1786690578167-6p4b",
+      "timestamp": "2026-08-14T06:56:18.167Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1786690578159-k9wy",
+      "timestamp": "2026-08-14T06:56:18.159Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1786690577939_i1ofm."
+    },
+    {
+      "id": "log-1785933136797-i4jl",
+      "timestamp": "2026-08-05T12:32:16.797Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1785932711407-6f1w",
+      "timestamp": "2026-08-05T12:25:11.407Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1785491623439-vljt",
+      "timestamp": "2026-07-31T09:53:43.439Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
     {
       "id": "log-1785490509990-mne5",
       "timestamp": "2026-07-31T09:35:09.990Z",
@@ -6873,454 +7844,6 @@
       "userEmail": "vivek2@gmail.com",
       "action": "Place Order",
       "details": "Placed order GL-005484-59 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784788968377-dyhi",
-      "timestamp": "2026-07-23T06:42:48.377Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784788893581-ipmt",
-      "timestamp": "2026-07-23T06:41:33.581Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-893565-69 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784788640096-x6t7",
-      "timestamp": "2026-07-23T06:37:20.096Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-640080-57 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784788628391-yftg",
-      "timestamp": "2026-07-23T06:37:08.391Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784786774837-sjfr",
-      "timestamp": "2026-07-23T06:06:14.837Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784786758951-sh05",
-      "timestamp": "2026-07-23T06:05:58.951Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784724077724-2cl6",
-      "timestamp": "2026-07-22T12:41:17.724Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-077721-93 totaling 330 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784724035604-rcm5",
-      "timestamp": "2026-07-22T12:40:35.604Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784723742753-pnur",
-      "timestamp": "2026-07-22T12:35:42.753Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-742749-74 totaling 2117 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784723527975-hgdb",
-      "timestamp": "2026-07-22T12:32:07.975Z",
-      "userEmail": "facebook.user@example.com",
-      "action": "User Registration",
-      "details": "Created account for Social User with phone +919425011088"
-    },
-    {
-      "id": "log-1784723480378-zlfh",
-      "timestamp": "2026-07-22T12:31:20.378Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-480374-71 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784723374241-6bks",
-      "timestamp": "2026-07-22T12:29:34.241Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-374238-92 totaling 599 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784723366278-0qna",
-      "timestamp": "2026-07-22T12:29:26.278Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-366275-38 totaling 599 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784723313552-6lv7",
-      "timestamp": "2026-07-22T12:28:33.552Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-313546-69 totaling 599 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784722926256-qks4",
-      "timestamp": "2026-07-22T12:22:06.256Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-926239-94 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784722594347-92jj",
-      "timestamp": "2026-07-22T12:16:34.347Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-594324-95 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784722585207-lsfz",
-      "timestamp": "2026-07-22T12:16:25.207Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-585184-25 totaling 162 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784722584269-lkcj",
-      "timestamp": "2026-07-22T12:16:24.269Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-584252-92 totaling 162 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784722582820-zrvt",
-      "timestamp": "2026-07-22T12:16:22.820Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-582801-70 totaling 162 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784722372128-57d5",
-      "timestamp": "2026-07-22T12:12:52.128Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-372109-28 totaling 599 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784722363543-uy9a",
-      "timestamp": "2026-07-22T12:12:43.543Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-363528-79 totaling 599 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784722109880-o9pc",
-      "timestamp": "2026-07-22T12:08:29.880Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-109863-20 totaling 599 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784722099221-x4m8",
-      "timestamp": "2026-07-22T12:08:19.221Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784721733248-23xj",
-      "timestamp": "2026-07-22T12:02:13.248Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-733226-55 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784721666308-lr4l",
-      "timestamp": "2026-07-22T12:01:06.308Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-666296-10 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784721663877-mu8d",
-      "timestamp": "2026-07-22T12:01:03.877Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-663863-18 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784721656637-90f3",
-      "timestamp": "2026-07-22T12:00:56.637Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-656622-78 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784721639420-agfe",
-      "timestamp": "2026-07-22T12:00:39.420Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784721540223-js24",
-      "timestamp": "2026-07-22T11:59:00.223Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-540219-16 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784721525301-kogt",
-      "timestamp": "2026-07-22T11:58:45.301Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784721328050-wyr0",
-      "timestamp": "2026-07-22T11:55:28.050Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-328036-87 totaling 2117 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784721326151-oxb9",
-      "timestamp": "2026-07-22T11:55:26.151Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-326137-19 totaling 2117 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784721319821-gnkx",
-      "timestamp": "2026-07-22T11:55:19.821Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784721249265-pbrw",
-      "timestamp": "2026-07-22T11:54:09.265Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-249247-39 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784721242396-tc3c",
-      "timestamp": "2026-07-22T11:54:02.396Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-242380-29 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784721227848-s7ca",
-      "timestamp": "2026-07-22T11:53:47.848Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784720954978-zlxo",
-      "timestamp": "2026-07-22T11:49:14.978Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-954962-83 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784720927749-5hgt",
-      "timestamp": "2026-07-22T11:48:47.749Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-927734-47 totaling 1904 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784720693264-i0k4",
-      "timestamp": "2026-07-22T11:44:53.264Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784720655588-osu4",
-      "timestamp": "2026-07-22T11:44:15.588Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-655577-59 totaling 599 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784720653242-uzv6",
-      "timestamp": "2026-07-22T11:44:13.242Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-653229-96 totaling 599 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784720644600-2hjb",
-      "timestamp": "2026-07-22T11:44:04.600Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-644579-14 totaling 599 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784720627462-w57e",
-      "timestamp": "2026-07-22T11:43:47.462Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784720312373-hvu9",
-      "timestamp": "2026-07-22T11:38:32.373Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-312360-45 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784720309472-pf6u",
-      "timestamp": "2026-07-22T11:38:29.472Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-309463-13 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784720302508-9z2p",
-      "timestamp": "2026-07-22T11:38:22.508Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-302493-60 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784720273880-ywzc",
-      "timestamp": "2026-07-22T11:37:53.880Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784719811595-je4l",
-      "timestamp": "2026-07-22T11:30:11.595Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-811581-33 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784719745952-x9by",
-      "timestamp": "2026-07-22T11:29:05.952Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-745939-35 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784719713582-1gei",
-      "timestamp": "2026-07-22T11:28:33.582Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784718987259-1p9s",
-      "timestamp": "2026-07-22T11:16:27.259Z",
-      "userEmail": "facebook.user@example.com",
-      "action": "User Registration",
-      "details": "Created account for Vipin Choudhary with phone +919425011088"
-    },
-    {
-      "id": "log-1784718957843-oh9v",
-      "timestamp": "2026-07-22T11:15:57.843Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784718932195-zk6i",
-      "timestamp": "2026-07-22T11:15:32.195Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784718513830-2t29",
-      "timestamp": "2026-07-22T11:08:33.830Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784717842473-ha23",
-      "timestamp": "2026-07-22T10:57:22.473Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784717561463-i9ya",
-      "timestamp": "2026-07-22T10:52:41.464Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784715717550-vrpk",
-      "timestamp": "2026-07-22T10:21:57.550Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784715687093-dkcm",
-      "timestamp": "2026-07-22T10:21:27.093Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784715660515-7vzm",
-      "timestamp": "2026-07-22T10:21:00.515Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784714284467-pmnw",
-      "timestamp": "2026-07-22T09:58:04.467Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784713900052-83t0",
-      "timestamp": "2026-07-22T09:51:40.052Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-798259-60 status to Delivered"
-    },
-    {
-      "id": "log-1784713897628-6b6g",
-      "timestamp": "2026-07-22T09:51:37.628Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-798259-60 status to Delivered"
-    },
-    {
-      "id": "log-1784713826633-7xhg",
-      "timestamp": "2026-07-22T09:50:26.633Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-049092-26 status to Delivered"
-    },
-    {
-      "id": "log-1784713823106-xw09",
-      "timestamp": "2026-07-22T09:50:23.106Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-049092-26 status to Delivered"
     }
   ],
   "payments": [
@@ -8533,6 +9056,16 @@
       "transactionReference": "COD-PENDING-GL-999536-33",
       "status": "Pending",
       "createdAt": "2026-07-22T07:06:39.543Z"
+    },
+    {
+      "id": "PAY-379170",
+      "orderId": "GL-379149-43",
+      "userEmail": "vivek2@gmail.com",
+      "amount": 560,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD_PENDING",
+      "status": "Pending",
+      "createdAt": "2026-08-18T07:16:19.171Z"
     }
   ],
   "chatHistories": {}

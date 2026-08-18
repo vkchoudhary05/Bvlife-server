@@ -6,6 +6,7 @@ import crypto from "crypto";
 import Razorpay from "razorpay";
 import { db } from "../dbManager.js";
 import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
+import { communicationService } from "../services/communicationService.js";
 /**
  * Get orders:
  * Returns ALL orders if authenticated user is an Admin.
@@ -106,6 +107,23 @@ export const placeOrder = (req, res) => {
     };
     db.savePayment(newPayment);
     db.logActivity(emailToUse, "Order Placed", `Placed order #${newOrder.id} for amount ₹${newOrder.finalTotal}`);
+    // Unified Omnichannel Communication:
+    // 1. Email Invoice & Receipt
+    communicationService.sendOrderInvoiceEmail(newOrder).catch(err => {
+        console.warn('[Order Invoice Email] Non-blocking dispatch notice:', err);
+    });
+    // 2. SMS Payment & Order Confirmation
+    if (shippingAddress?.phone) {
+        communicationService.sendPaymentConfirmationSms({
+            phone: shippingAddress.phone,
+            orderId: newOrder.id,
+            amount: newOrder.finalTotal,
+            paymentMethod: newOrder.paymentMethod,
+            status: newOrder.paymentStatus
+        }).catch(err => {
+            console.warn('[Payment Confirmation SMS] Non-blocking dispatch notice:', err);
+        });
+    }
     return res.json({ message: "Order placed successfully!", order: newOrder });
 };
 // Update order status (Admin only)
@@ -116,6 +134,7 @@ export const updateOrder = (req, res) => {
     if (!order) {
         return res.status(404).json({ error: "Order not found." });
     }
+    const previousStatus = order.status;
     if (status)
         order.status = status;
     if (paymentStatus)
@@ -132,6 +151,30 @@ export const updateOrder = (req, res) => {
     }
     db.saveOrder(order);
     db.logActivity(req.user?.email || "admin@gramslife.com", "Order Update", `Updated order #${orderId} status to ${status}`);
+    // Omnichannel Delivery & Refund triggers
+    if (status && status !== previousStatus) {
+        // Delivery Tracking SMS
+        if (order.shippingAddress?.phone) {
+            communicationService.sendDeliveryTrackingSms({
+                phone: order.shippingAddress.phone,
+                orderId: order.id,
+                status: order.status,
+                trackingNumber: order.trackingNumber,
+                comment: comment || `Your order status is now ${order.status}.`
+            }).catch(err => console.warn('[Delivery SMS] Notice:', err));
+        }
+        // Refund Email if Cancelled or Returned
+        if (['Cancelled', 'Returned'].includes(status) && order.paymentStatus === 'Paid') {
+            communicationService.sendRefundEmail({
+                orderId: order.id,
+                userEmail: order.userEmail,
+                userName: order.userName,
+                amount: order.finalTotal,
+                reason: comment || `Order status changed to ${status}`,
+                reference: `REF-${order.id}`
+            }).catch(err => console.warn('[Refund Email] Notice:', err));
+        }
+    }
     return res.json({ message: "Order updated successfully.", order });
 };
 // Get payment transactions (Admin only)
@@ -153,7 +196,7 @@ export const updatePayment = (req, res) => {
     db.savePayment(payment);
     return res.json({ message: "Payment updated successfully.", payment });
 };
-// Track order by Order ID, Tracking Number, Email, or Mobile Number (Public access)
+// Track order by Order ID, Tracking Number, Email, or Mobile Number (Privacy & Customer-Isolated)
 export const trackOrder = (req, res) => {
     const rawIdentifier = req.params.identifier;
     if (!rawIdentifier) {
@@ -164,7 +207,9 @@ export const trackOrder = (req, res) => {
     const cleanId = lowerId.replace(/[^a-z0-9]/g, '');
     const cleanPhone = lowerId.replace(/\D/g, '');
     const allOrders = db.getOrders();
-    // Search by Order ID, Tracking Number, Email, or Phone Number
+    const reqUser = req.user;
+    const isReqUserAdmin = !!(reqUser && (ADMIN_EMAILS.includes(reqUser.email.toLowerCase()) || reqUser.role === 'admin'));
+    // Search by exact Order ID, Tracking Number, Email, or Phone Number
     let matchingOrders = allOrders.filter(o => {
         const oId = (o.id || "").toLowerCase();
         const oIdClean = oId.replace(/[^a-z0-9]/g, '');
@@ -173,10 +218,10 @@ export const trackOrder = (req, res) => {
         const oEmail = (o.userEmail || "").toLowerCase();
         const oPhone = o.shippingAddress?.phone ? o.shippingAddress.phone.replace(/\D/g, '') : '';
         const exactIdMatch = oId === lowerId || oTrk === lowerId;
-        const cleanIdMatch = cleanId.length >= 4 && (oIdClean.includes(cleanId) || oTrkClean.includes(cleanId));
+        const cleanExactIdMatch = cleanId.length >= 6 && (oIdClean === cleanId || oTrkClean === cleanId);
         const emailMatch = oEmail === lowerId;
         const phoneMatch = cleanPhone.length >= 10 && oPhone.endsWith(cleanPhone.slice(-10));
-        return exactIdMatch || cleanIdMatch || emailMatch || phoneMatch;
+        return exactIdMatch || cleanExactIdMatch || emailMatch || phoneMatch;
     });
     if (matchingOrders.length === 0) {
         return res.status(404).json({ error: "No order found matching this Order ID, Tracking Number, Email, or Phone Number." });
@@ -185,21 +230,28 @@ export const trackOrder = (req, res) => {
     matchingOrders.sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
     // Pick the latest/primary matched order
     const primaryOrder = matchingOrders[0];
-    // Fetch ALL orders for the user associated with this primary order (both previous and latest orders)
-    const userEmail = (primaryOrder.userEmail || "").toLowerCase();
-    const userPhone = primaryOrder.shippingAddress?.phone ? primaryOrder.shippingAddress.phone.replace(/\D/g, '') : '';
-    const userOrders = allOrders.filter(o => {
-        const oEmail = (o.userEmail || "").toLowerCase();
-        const oPhone = o.shippingAddress?.phone ? o.shippingAddress.phone.replace(/\D/g, '') : '';
-        const emailMatch = !!(userEmail && oEmail === userEmail);
-        const phoneMatch = !!(userPhone && userPhone.length >= 10 && oPhone.endsWith(userPhone.slice(-10)));
-        return emailMatch || phoneMatch;
-    }).sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
-    const finalUserOrdersList = userOrders.length > 0 ? userOrders : matchingOrders;
+    // PRIVACY & CUSTOMER ISOLATION:
+    // - If Admin: can see all matching orders
+    // - If Logged-in Customer: userOrders is restricted to THEIR OWN orders
+    // - If Public (by email/phone): userOrders is restricted to that specific email/phone
+    // - If Public (by Order ID/Tracking Number): return ONLY that single order (do not leak other orders of that customer)
+    let userOrders = [];
+    const isSearchByEmailOrPhone = lowerId.includes('@') || cleanPhone.length >= 10;
+    if (isReqUserAdmin) {
+        userOrders = matchingOrders;
+    }
+    else if (reqUser) {
+        userOrders = db.getOrdersByUser(reqUser.email);
+    }
+    else if (isSearchByEmailOrPhone) {
+        userOrders = matchingOrders;
+    }
+    else {
+        userOrders = [primaryOrder];
+    }
     return res.json({
         order: primaryOrder,
-        userOrders: finalUserOrdersList,
-        // Spread all properties of primaryOrder at root level for backward compatibility
+        userOrders: userOrders,
         ...primaryOrder
     });
 };

@@ -10,7 +10,7 @@ export const orderRouter = Router();
 // Order Endpoints
 orderRouter.get("/api/orders", authenticateToken, getOrders);
 orderRouter.get("/api/orders/user/:email", authenticateToken, getOrdersByUser);
-orderRouter.get("/api/orders/track/:identifier", trackOrder);
+orderRouter.get("/api/orders/track/:identifier", optionalAuthenticateToken, trackOrder);
 orderRouter.post("/api/orders", optionalAuthenticateToken, validateOrder, placeOrder);
 orderRouter.put("/api/orders/:id", authenticateToken, requireAdmin, updateOrder);
 // Razorpay Payment Integration Endpoints
