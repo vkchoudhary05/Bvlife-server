@@ -5,9 +5,10 @@
 import { verifyToken } from "../jwtUtils.js";
 import { db } from "../dbManager.js";
 export const ADMIN_EMAILS = [
-    'vkchoudhary050607@gmail.com',
-    'admin@gramslife.com',
-    'care@gramslife.com'
+    'iamvivekbaliyan07@gmail.com',
+    // 'vkchoudhary050607@gmail.com',
+    // 'admin@gramslife.com',
+    // 'care@gramslife.com'
 ];
 /**
  * Authentication Middleware:

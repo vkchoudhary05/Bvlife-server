@@ -9,7 +9,7 @@ import { User } from "../types.js";
 import { validateAndFormatIndianPhone } from "../utils.js";
 import { hashPassword, comparePassword } from "../passwordUtils.js";
 import { generateToken } from "../jwtUtils.js";
-import { AuthenticatedRequest } from "../middleware/authMiddleware.js";
+import { AuthenticatedRequest, ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 import { communicationService } from "../services/communicationService.js";
 
 export const register = async (req: Request, res: Response) => {
@@ -123,7 +123,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const lowerEmail = user.email.toLowerCase();
-    if (['vkchoudhary050607@gmail.com', 'admin@gramslife.com', 'care@gramslife.com'].includes(lowerEmail)) {
+    if (ADMIN_EMAILS.includes(lowerEmail)) {
       user.role = 'admin';
     }
 
@@ -150,7 +150,7 @@ export const getMe = (req: AuthenticatedRequest, res: Response) => {
   }
 
   const lowerEmail = user.email.toLowerCase();
-  if (['vkchoudhary050607@gmail.com', 'admin@gramslife.com', 'care@gramslife.com'].includes(lowerEmail)) {
+  if (ADMIN_EMAILS.includes(lowerEmail)) {
     user.role = 'admin';
   }
 
@@ -227,7 +227,7 @@ export const getActivityLogs = (req: Request, res: Response) => {
         timestamp: new Date(Date.now() - 3600000).toISOString(),
         userEmail: "admin@gramslife.com",
         action: "Admin Access",
-        details: "Naturals Director authenticated via JWT secure session."
+        details: "Apothecary Director authenticated via JWT secure session."
       }
     ]);
   } catch (err: any) {
@@ -337,6 +337,12 @@ export const otpLogin = async (req: Request, res: Response) => {
       }
     }
 
+    // Ensure admin role is set if applicable
+    const lowerEmail = user.email.toLowerCase();
+    if (ADMIN_EMAILS.includes(lowerEmail)) {
+      user.role = 'admin';
+    }
+
     const token = generateToken(user);
     db.logActivity(user.email, "OTP Login", `Logged in via unified SMS OTP authentication.`);
 
@@ -348,6 +354,60 @@ export const otpLogin = async (req: Request, res: Response) => {
   } catch (err: any) {
     console.error("[OTP Login Error]:", err);
     return res.status(500).json({ error: err.message || "OTP Login failed." });
+  }
+};
+
+/**
+ * Step 1 Admin Verification: Validates admin email + password before triggering SMS OTP
+ */
+export const adminCheckCredentials = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: "Admin email and passcode are required." });
+    }
+
+    const cleanEmail = email.trim();
+    let user = db.getUserByEmail(cleanEmail);
+    if (!user) {
+      const formattedPhoneInput = validateAndFormatIndianPhone(cleanEmail);
+      user = db.getUsers().find(u => {
+        const dbPhone = validateAndFormatIndianPhone(u.phone) || u.phone;
+        return dbPhone && (dbPhone === cleanEmail || dbPhone === formattedPhoneInput);
+      });
+    }
+
+    if (!user) {
+      return res.status(401).json({ error: "No administrative account matches these credentials." });
+    }
+
+    const lowerEmail = user.email.toLowerCase();
+    const isAdmin = user.role === 'admin' || ADMIN_EMAILS.includes(lowerEmail);
+
+    if (!isAdmin) {
+      return res.status(403).json({ error: "Access Denied: Account lacks administrative privileges." });
+    }
+
+    const isValidPassword = await comparePassword(password, user.password);
+    if (!isValidPassword) {
+      return res.status(401).json({ error: "Invalid admin security passcode. Please check your credentials." });
+    }
+
+    const adminPhone = user.phone || '9425011088';
+
+    return res.json({
+      success: true,
+      message: "Admin credentials verified. Please complete SMS OTP verification.",
+      admin: {
+        email: user.email,
+        fullName: user.fullName,
+        phone: adminPhone,
+        role: 'admin'
+      }
+    });
+  } catch (err: any) {
+    console.error("[Admin Credentials Check Error]:", err);
+    return res.status(500).json({ error: err.message || "Failed to verify admin credentials." });
   }
 };
 

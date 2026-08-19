@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import { Router } from "express";
-import { register, login, getMe, updateMe, getUserByEmail, updateUserByEmail, getCustomers, getActivityLogs, sendOtp, verifyOtp, verifyMsg91Token, getMsg91Config, checkAccount, resetPassword, otpLogin, changeMobile, changeEmail, getGoogleAuthUrl, getFacebookAuthUrl, handleGoogleCallback, handleFacebookCallback } from "../controllers/authController.js";
+import { register, login, getMe, updateMe, getUserByEmail, updateUserByEmail, getCustomers, getActivityLogs, sendOtp, verifyOtp, verifyMsg91Token, getMsg91Config, checkAccount, resetPassword, otpLogin, adminCheckCredentials, changeMobile, changeEmail, getGoogleAuthUrl, getFacebookAuthUrl, handleGoogleCallback, handleFacebookCallback } from "../controllers/authController.js";
 import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
 import { validateRegister, validateLogin, validateResetPassword } from "../middleware/validationMiddleware.js";
 import { rateLimiter } from "../middleware/rateLimitMiddleware.js";
@@ -22,6 +22,7 @@ authRouter.put("/api/users/:email", authenticateToken, updateUserByEmail);
 authRouter.get("/api/customers", authenticateToken, requireAdmin, getCustomers);
 authRouter.get("/api/logs", getActivityLogs);
 // Security & Recovery Routes
+authRouter.post("/api/auth/admin-check-credentials", rateLimiter(20), adminCheckCredentials);
 authRouter.post("/api/auth/otp", rateLimiter(15), sendOtp);
 authRouter.post("/api/auth/verify-otp", rateLimiter(20), verifyOtp);
 authRouter.post("/api/auth/verify-msg91-token", rateLimiter(20), verifyMsg91Token);

@@ -168,6 +168,29 @@
       "createdDate": "2026-07-31"
     },
     {
+      "id": "prod-1787052370079",
+      "name": "Amla",
+      "sku": "bv292",
+      "price": 500,
+      "originalPrice": 600,
+      "stock": 20,
+      "category": "Hair Care",
+      "brand": "Bv life",
+      "description": "dmd",
+      "mainImage": "https://drive.google.com/file/d/1Grlh_UVvcDPyKcE45JUeqEybqEUII15_/view?usp=sharing",
+      "images": [],
+      "ingredients": [],
+      "benefits": [],
+      "dosage": "Take 1 capsule daily after breakfast.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
+      "featured": false,
+      "bestSeller": false,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-08-18"
+    },
+    {
       "id": "prod-2",
       "name": "Pure Ashwagandha KSM-66 Capsules",
       "sku": "AYUR-ASH-002",
@@ -357,468 +380,6 @@
       "bestSeller": true,
       "lowStockAlertLimit": 20,
       "createdDate": "2026-03-10"
-    },
-    {
-      "id": "prod-1",
-      "name": "Golden Chyawanprash - Saffron & Wild Honey",
-      "sku": "AYUR-CHY-001",
-      "price": 850,
-      "originalPrice": 950,
-      "stock": 45,
-      "category": "Immunity",
-      "subcategory": "Syrup",
-      "brand": "Grams Life Organics",
-      "description": "An ancient, powerful blend of 45+ premium Ayurvedic herbs, enriched with handpicked Kashmiri saffron, wild forest honey, and organic ghee. Grams Life Chyawanprash acts as a natural immunity shield, restoring youthful energy, boosting stamina, and improving respiratory function.",
-      "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1608797178974-15b35a61d121?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Amalaki (Amla)",
-          "description": "Rich source of Vitamin C, potent antioxidant, supports cell regeneration."
-        },
-        {
-          "name": "Kesar (Saffron)",
-          "description": "Improves skin radiance, elevates mood, and boosts cell vitality."
-        },
-        {
-          "name": "Vanshlochan",
-          "description": "Strengthens lungs and respiratory passages, acts as a bone supplement."
-        },
-        {
-          "name": "Pippali",
-          "description": "Enhances bio-availability of nutrients, supports digestion and lung strength."
-        }
-      ],
-      "benefits": [
-        "Supercharges overall immune response and respiratory health.",
-        "Supports rapid cells recovery and fights early signs of aging.",
-        "Improves digestion, toxin elimination, and gut bio-diversity.",
-        "Naturally increases energy, daily focus, and physical endurance."
-      ],
-      "dosage": "1 teaspoon (10g) twice a day for adults, 1/2 teaspoon for children under 12.",
-      "usageInstructions": "Consume directly or dissolve in a cup of warm milk/water. Best taken first thing in the morning on an empty stomach.",
-      "faqs": [
-        {
-          "question": "Is this safe to consume in summers?",
-          "answer": "Yes. Our Chyawanprash is formulated with cooling herbs like Amalaki and Cardamom to balance the warming elements of pepper and ginger, making it completely safe for year-round consumption."
-        },
-        {
-          "question": "Can diabetic individuals take this?",
-          "answer": "This premium variant contains wild forest honey and minimal rock candy. For severe diabetic conditions, we recommend consulting your physician first, or choosing our sugar-free variants."
-        }
-      ],
-      "rating": 4.8,
-      "featured": true,
-      "bestSeller": true,
-      "lowStockAlertLimit": 10,
-      "createdDate": "2026-05-01"
-    },
-    {
-      "id": "prod-6",
-      "name": "Shatavari Balance Capsules - Women's Tonic",
-      "sku": "AYUR-SHA-006",
-      "price": 450,
-      "originalPrice": 490,
-      "stock": 65,
-      "category": "Women's Health",
-      "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
-      "description": "Shatavari is revered in Ayurveda as the ultimate rejuvenating tonic for women. Grams Life uses concentrated Shatavari root extract to balance estrogen naturally, reduce PMS cramps, regulate cycles, and support breast lactation and energy levels.",
-      "mainImage": "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Shatavari (Asparagus racemosus)",
-          "description": "100% organic root extract standardized to 20% saponins."
-        }
-      ],
-      "benefits": [
-        "Supports optimal female hormonal balance during PMS, pregnancy, and menopause.",
-        "Reduces bloating, fatigue, mood swings, and period cramps significantly.",
-        "Improves natural hydration, energy, and overall health.",
-        "Enhances healthy lactation in nursing mothers."
-      ],
-      "dosage": "1 capsule twice daily, preferably with warm milk or water.",
-      "usageInstructions": "Take one capsule post breakfast and one post dinner. Best consumed with warm organic cow milk.",
-      "faqs": [
-        {
-          "question": "Can I take this if I have PCOD?",
-          "answer": "Shatavari is highly beneficial for PCOD/PCOS as it restores ovulation cycles and reduces ovarian cysts. However, we advise speaking with an Ayurvedic specialist to plan a complete lifestyle regimen."
-        }
-      ],
-      "rating": 4.7,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 12,
-      "createdDate": "2026-04-28"
-    },
-    {
-      "id": "prod-7",
-      "name": "Madhunashini Diabetes Care Tablets",
-      "sku": "AYUR-MAD-007",
-      "price": 380,
-      "originalPrice": 450,
-      "stock": 90,
-      "category": "Diabetes",
-      "subcategory": "Tablets",
-      "brand": "Grams Life Wellness",
-      "description": "A clinical Ayurvedic herbal formula featuring Gudmar (literally meaning sugar destroyer), Karela, Jamun seed, and Methi. It helps regenerate pancreatic cells, increases active insulin sensitivity, and controls sweet cravings.",
-      "mainImage": "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Gudmar (Gymnema sylvestre)",
-          "description": "Blocks sugar receptors on tongue and intestines, reducing glucose absorption."
-        },
-        {
-          "name": "Karela (Bitter Melon)",
-          "description": "Contains charantin and polypeptide-p which mimic insulin molecules."
-        },
-        {
-          "name": "Jamun Seed",
-          "description": "Slows down conversion of food starch into glucose, avoiding sudden sugar spikes."
-        }
-      ],
-      "benefits": [
-        "Maintains healthy fasting and post-meal blood sugar levels.",
-        "Reduces insulin resistance and nourishes vital pancreatic cells.",
-        "Eliminates sweet cravings and supports healthy weight loss.",
-        "Controls diabetic fatigue, frequent urination, and numbness in limbs."
-      ],
-      "dosage": "1 to 2 tablets twice daily on an empty stomach.",
-      "usageInstructions": "Take with warm water 30 minutes before your morning breakfast and evening dinner.",
-      "faqs": [
-        {
-          "question": "Can I take this alongside my regular diabetes pills?",
-          "answer": "Yes, it works as an excellent co-therapy. Monitor your blood glucose levels regularly. If levels drop below normal, consult your doctor to adjust your synthetic drug dosages."
-        }
-      ],
-      "rating": 4.4,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 15,
-      "createdDate": "2026-05-18"
-    },
-    {
-      "id": "prod-8",
-      "name": "Nirgundi Joint Care Massage Oil",
-      "sku": "AYUR-NIR-008",
-      "price": 340,
-      "originalPrice": 390,
-      "stock": 55,
-      "category": "Joint Care",
-      "subcategory": "Oils",
-      "brand": "Grams Life Wellness",
-      "description": "An instant pain-relieving therapeutic joint oil. Rich in Nirgundi, Shallaki, and Eucalyptus oils. Massaging this oil deeply warms tissues, clears congested fluid, and repairs stiff muscles and inflamed joints.",
-      "mainImage": "https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Nirgundi",
-          "description": "Powerful anti-inflammatory and pain-relieving herb, heals arthritis pain."
-        },
-        {
-          "name": "Shallaki (Boswellia)",
-          "description": "Prevents breakdown of cartilage tissue, repairs joint lubrication."
-        },
-        {
-          "name": "Eucalyptus Oil",
-          "description": "Improves local blood flow, creating a deep warm soothing effect."
-        }
-      ],
-      "benefits": [
-        "Relieves joint pain, stiffness, sciatica, knee arthritis, and backaches.",
-        "Restores synovial joint lubrication and flexibility.",
-        "Combats muscle cramps, sports injuries, and neck stiffness.",
-        "100% natural, fast-acting formula without synthetic chemical warming agents."
-      ],
-      "dosage": "Apply 5-10ml on the affected joint area.",
-      "usageInstructions": "Pour oil and massage gently in circular patterns over joints. Apply warmth with a hot water bag after massage for maximum therapeutic recovery.",
-      "faqs": [
-        {
-          "question": "How often can I apply this?",
-          "answer": "Apply 2-3 times daily, especially during morning stiffness and before sleeping."
-        }
-      ],
-      "rating": 4.8,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 10,
-      "createdDate": "2026-06-02"
-    },
-    {
-      "id": "prod-9",
-      "name": "Memory & Focus Elixir (Brahmi & Shankhpushpi)",
-      "sku": "AYUR-BRA-009",
-      "price": 620,
-      "originalPrice": 750,
-      "stock": 40,
-      "category": "Brain & Memory",
-      "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
-      "description": "A premium brain tonic designed to boost cognitive function, memory recall, and mental clarity. Infused with organic Brahmi and Shankhpushpi to naturally reduce mental fatigue and support peak focus.",
-      "mainImage": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Organic Brahmi",
-          "description": "Supports brain health, improves blood circulation to the brain, and enhances memory."
-        },
-        {
-          "name": "Shankhpushpi",
-          "description": "Revered as a medhya rasayana, reduces mental stress, anxiety, and enhances focus."
-        }
-      ],
-      "benefits": [
-        "Improves daily concentration, analytical skills, and memory retention.",
-        "Helps calm mind chatter, enabling sustained, focused work.",
-        "Acts as a powerful antioxidant to shield nervous cells from decay."
-      ],
-      "dosage": "1 capsule twice daily with warm milk or water.",
-      "usageInstructions": "Best taken after meals in the morning and evening for cognitive vitality.",
-      "faqs": [
-        {
-          "question": "How long before I see improvement?",
-          "answer": "Most users notice enhanced focus and calmness within 2 weeks of daily, regular consumption."
-        }
-      ],
-      "rating": 4.9,
-      "featured": true,
-      "bestSeller": true,
-      "lowStockAlertLimit": 8,
-      "createdDate": "2026-06-10"
-    },
-    {
-      "id": "prod-10",
-      "name": "Deep Sleep & Calm (Sarpagandha & Tagar)",
-      "sku": "AYUR-SLE-010",
-      "price": 480,
-      "originalPrice": 550,
-      "stock": 30,
-      "category": "Sleep & Stress",
-      "subcategory": "Tablets",
-      "brand": "Grams Life Wellness",
-      "description": "Formulated with precious Tagar (Indian Valerian) and Sarpagandha to naturally soothe the central nervous system, lower stress levels, and restore normal sleep cycles without grogginess.",
-      "mainImage": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Tagar (Indian Valerian)",
-          "description": "Naturally promotes sleep, relaxes smooth muscles, and relieves chronic tension."
-        },
-        {
-          "name": "Sarpagandha",
-          "description": "Helps calm hyperactive minds and supports optimal healthy blood pressure."
-        }
-      ],
-      "benefits": [
-        "Promotes deep, sound sleep without morning grogginess or dependency.",
-        "Helps calm an overactive, racing mind before bedtime.",
-        "Provides relief from muscle tension and daily physical stress."
-      ],
-      "dosage": "1 to 2 tablets 30 minutes before bedtime.",
-      "usageInstructions": "Take with warm water or warm milk shortly before sleep.",
-      "faqs": [
-        {
-          "question": "Is this habit-forming?",
-          "answer": "No. Our formulation uses natural non-addictive herbs that soothe the body's sleep sensors without altering long-term neuro-chemistry."
-        }
-      ],
-      "rating": 4.7,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-06-15"
-    },
-    {
-      "id": "prod-11",
-      "name": "Shilajit Gold Resin - Himalayan Peak Strength",
-      "sku": "AYUR-SHI-011",
-      "price": 1450,
-      "originalPrice": 1690,
-      "stock": 25,
-      "category": "Sexual Wellness",
-      "subcategory": "Resin",
-      "brand": "Grams Life Organics",
-      "description": "100% pure Himalayan Shilajit resin, purified using traditional Ayurvedic Shodhana methods and infused with 24K Swarna Bhasma (Gold) and Safed Musli. Naturally increases stamina, cellular energy, and daily physical vitality.",
-      "mainImage": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Purified Shilajit",
-          "description": "Rich in 80+ trace minerals and high Fulvic acid content for peak cellular energy."
-        },
-        {
-          "name": "Swarna Bhasma (24K Gold)",
-          "description": "Acts as a potent rejuvenator, boosts immunity, and improves micro-circulation."
-        },
-        {
-          "name": "Safed Musli",
-          "description": "Nourishes muscle tissue, boosts natural endurance and physical vitality."
-        }
-      ],
-      "benefits": [
-        "Maximizes daily physical endurance, muscle recovery, and stamina.",
-        "Improves mitochondrial ATP production, reducing chronic fatigue.",
-        "Acts as an excellent aphrodisiac to boost vitality and reproductive health."
-      ],
-      "dosage": "A pea-sized portion (approx. 250mg) once daily.",
-      "usageInstructions": "Dissolve completely in warm milk or warm water and consume in the morning on an empty stomach.",
-      "faqs": [
-        {
-          "question": "Is it certified pure?",
-          "answer": "Yes, our Shilajit is sourced from high-altitude Himalayan ranges and undergoes triple filtration and lab-testing to be completely free of heavy metals."
-        }
-      ],
-      "rating": 4.9,
-      "featured": true,
-      "bestSeller": true,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-06-20"
-    },
-    {
-      "id": "prod-12",
-      "name": "Liver Vitality & Detox (Kalmegh & Bhumi Amla)",
-      "sku": "AYUR-LIV-012",
-      "price": 420,
-      "originalPrice": 490,
-      "stock": 60,
-      "category": "Liver & Detox",
-      "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
-      "description": "A powerful hepatoprotective formula that naturally detoxifies the liver, stimulates bile secretion, and protects liver cells from damage. Rich in organic Kalmegh (King of Bitters) and Bhumi Amla.",
-      "mainImage": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Kalmegh (Andrographis)",
-          "description": "Extremely bitter herb, triggers quick liver detox, and stimulates bile production."
-        },
-        {
-          "name": "Bhumi Amla",
-          "description": "Protects liver tissues, regulates enzymes, and reverses cell damage."
-        }
-      ],
-      "benefits": [
-        "Supports efficient liver detoxification and natural enzyme levels.",
-        "Improves digestion, bloating, and absorption of dietary fats.",
-        "Protects the liver from toxins, alcohol, and processed foods."
-      ],
-      "dosage": "1 capsule twice daily with meals.",
-      "usageInstructions": "Consume daily after your primary lunch and dinner.",
-      "faqs": [
-        {
-          "question": "Can I take this daily for general detox?",
-          "answer": "Yes, our formulation is gentle yet highly effective for continuous, daily digestive and hepatic system detox."
-        }
-      ],
-      "rating": 4.6,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 12,
-      "createdDate": "2026-06-25"
-    },
-    {
-      "id": "prod-13",
-      "name": "Arjuna Cardio-Shield Capsules",
-      "sku": "AYUR-HRT-013",
-      "price": 550,
-      "originalPrice": 650,
-      "stock": 50,
-      "category": "Heart Health",
-      "subcategory": "Capsules",
-      "brand": "Grams Life Wellness",
-      "description": "Made from pure extract of the Arjuna tree bark, a legendary Ayurvedic cardioprotective herb. Supports healthy blood pressure, strengthens cardiovascular muscles, and regulates daily blood circulation.",
-      "mainImage": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Arjuna Bark Extract",
-          "description": "Standardized extract containing co-enzyme Q10 and saponins to nourish heart muscles."
-        }
-      ],
-      "benefits": [
-        "Strengthens the heart muscles and aids in normal, healthy cardiac output.",
-        "Assists in maintaining optimal arterial blood pressure levels.",
-        "Aids in managing oxidative stress in cardiovascular tissues."
-      ],
-      "dosage": "1 capsule twice daily after meals.",
-      "usageInstructions": "Take one capsule post breakfast and one post dinner with warm water.",
-      "faqs": [
-        {
-          "question": "Is Arjuna bark safe to take long-term?",
-          "answer": "Yes, Arjuna is a well-tolerated organic cardiotonic that can safely be taken long-term to keep heart functions healthy."
-        }
-      ],
-      "rating": 4.8,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 8,
-      "createdDate": "2026-06-28"
-    },
-    {
-      "id": "prod-14",
-      "name": "Vasaka & Pippali Lung Detox Syrup",
-      "sku": "AYUR-RSP-014",
-      "price": 290,
-      "originalPrice": 350,
-      "stock": 75,
-      "category": "Respiratory Care",
-      "subcategory": "Syrup",
-      "brand": "Grams Life Organics",
-      "description": "A comforting herbal syrup that clears bronchial passages, eases congestion, and soothes dry coughs. Infused with Vasaka (Malabar Nut) and Pippali (Long Pepper) for robust respiratory health.",
-      "mainImage": "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Vasaka (Adhatoda vasica)",
-          "description": "Powerful bronchodilator, clears phlegm, and eases chest congestion."
-        },
-        {
-          "name": "Pippali (Long Pepper)",
-          "description": "Warms up lungs, clears respiratory paths, and enhances bio-availability."
-        }
-      ],
-      "benefits": [
-        "Provides rapid, comforting relief from seasonal coughs, colds, and sore throats.",
-        "Clears airways and eases chronic breathing difficulty.",
-        "Strengthens lung tissue and acts as an immunity shield against pollution."
-      ],
-      "dosage": "1 to 2 teaspoons (5-10ml) twice or thrice a day.",
-      "usageInstructions": "Mix with warm water or drink directly. Best taken after meals.",
-      "faqs": [
-        {
-          "question": "Does this syrup contain artificial sugar?",
-          "answer": "No, our syrup is sweetened naturally with organic wild forest honey, preserving traditional healing standards."
-        }
-      ],
-      "rating": 4.7,
-      "featured": false,
-      "bestSeller": true,
-      "lowStockAlertLimit": 10,
-      "createdDate": "2026-07-01"
     }
   ],
   "orders": [
@@ -1289,7 +850,7 @@
         "city": "saharanpur",
         "state": "Uttar Pradesh",
         "zipCode": "247554",
-        "phone": "+919383939383",
+        "phone": "+917451050607",
         "isDefault": false
       },
       "items": [
@@ -2669,6 +2230,48 @@
         {
           "status": "Pending",
           "date": "2026-07-22T12:29:34.238Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
+    },
+    {
+      "id": "GL-379149-43",
+      "userEmail": "vivek2@gmail.com",
+      "userName": "shubham",
+      "shippingAddress": {
+        "id": "addr-1784712777174",
+        "fullName": "shubham",
+        "addressLine1": "52/7",
+        "addressLine2": "",
+        "city": "Panchkula",
+        "state": "Rajasthan",
+        "zipCode": "160101",
+        "phone": "+919783788884",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1785128507459",
+          "productName": "abc",
+          "price": 500,
+          "quantity": 1,
+          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200"
+        }
+      ],
+      "subtotal": 500,
+      "tax": 60,
+      "shippingCharge": 0,
+      "discount": 0,
+      "finalTotal": 560,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-08-18T07:16:19.149Z",
+      "trackingNumber": "GLTRK552913",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-08-18T07:16:19.151Z",
           "comment": "Your organic wellbeing order has been received and is waiting for validation."
         }
       ]
@@ -5988,48 +5591,6 @@
           "comment": "Your organic wellbeing order has been received and is waiting for validation."
         }
       ]
-    },
-    {
-      "id": "GL-379149-43",
-      "userEmail": "vivek2@gmail.com",
-      "userName": "shubham",
-      "shippingAddress": {
-        "id": "addr-1784712777174",
-        "fullName": "shubham",
-        "addressLine1": "52/7",
-        "addressLine2": "",
-        "city": "Panchkula",
-        "state": "Rajasthan",
-        "zipCode": "160101",
-        "phone": "+919783788884",
-        "isDefault": false
-      },
-      "items": [
-        {
-          "productId": "prod-1785128507459",
-          "productName": "abc",
-          "price": 500,
-          "quantity": 1,
-          "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200"
-        }
-      ],
-      "subtotal": 500,
-      "tax": 60,
-      "shippingCharge": 0,
-      "discount": 0,
-      "finalTotal": 560,
-      "status": "Pending",
-      "paymentMethod": "Cash on Delivery",
-      "paymentStatus": "Pending",
-      "orderDate": "2026-08-18T07:16:19.149Z",
-      "trackingNumber": "GLTRK552913",
-      "trackingUpdates": [
-        {
-          "status": "Pending",
-          "date": "2026-08-18T07:16:19.151Z",
-          "comment": "Your organic wellbeing order has been received and is waiting for validation."
-        }
-      ]
     }
   ],
   "blogs": [
@@ -6280,6 +5841,14 @@
       "addresses": []
     },
     {
+      "email": "iamvivekhu@gmail.com",
+      "fullName": "Vivek chaudhary",
+      "role": "customer",
+      "phone": "+919690941439",
+      "addresses": [],
+      "password": "$2b$10$l0NL3bSzG/uiKBqR461Cnuz3MQoe8xplE8lHkoz2xRX7F8N2oyAkO"
+    },
+    {
       "email": "iamvivekkumar@gmail.com",
       "fullName": "vivek kumar",
       "role": "customer",
@@ -6410,14 +5979,6 @@
           "isDefault": false
         }
       ]
-    },
-    {
-      "email": "iamvivekhu@gmail.com",
-      "fullName": "Vivek chaudhary",
-      "role": "customer",
-      "phone": "+919690941439",
-      "addresses": [],
-      "password": "$2b$10$l0NL3bSzG/uiKBqR461Cnuz3MQoe8xplE8lHkoz2xRX7F8N2oyAkO"
     }
   ],
   "reviews": [
@@ -6445,6 +6006,188 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1787118026405-1e6j",
+      "timestamp": "2026-08-19T05:40:26.405Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787118000531-cc6x",
+      "timestamp": "2026-08-19T05:40:00.531Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787118000522-p260",
+      "timestamp": "2026-08-19T05:40:00.522Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787118000336_l0w46."
+    },
+    {
+      "id": "log-1787117933959-zcgx",
+      "timestamp": "2026-08-19T05:38:53.959Z",
+      "userEmail": "+919425011088",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +919425011088."
+    },
+    {
+      "id": "log-1787117933951-u6ux",
+      "timestamp": "2026-08-19T05:38:53.951Z",
+      "userEmail": "+919425011088",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787117933681_bforl."
+    },
+    {
+      "id": "log-1787117523637-fpqo",
+      "timestamp": "2026-08-19T05:32:03.637Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787117523627-ho9a",
+      "timestamp": "2026-08-19T05:32:03.627Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787117523469_yk608."
+    },
+    {
+      "id": "log-1787117491226-q46u",
+      "timestamp": "2026-08-19T05:31:31.226Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787117491218-fn9o",
+      "timestamp": "2026-08-19T05:31:31.218Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787117490999_7e6v8."
+    },
+    {
+      "id": "log-1787116457138-jn4e",
+      "timestamp": "2026-08-19T05:14:17.138Z",
+      "userEmail": "+919425011088",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +919425011088."
+    },
+    {
+      "id": "log-1787116457130-hcn0",
+      "timestamp": "2026-08-19T05:14:17.130Z",
+      "userEmail": "+919425011088",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787116456869_16fc5."
+    },
+    {
+      "id": "log-1787115333383-iazo",
+      "timestamp": "2026-08-19T04:55:33.383Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787113452355-08qi",
+      "timestamp": "2026-08-19T04:24:12.355Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787113043758-7qaz",
+      "timestamp": "2026-08-19T04:17:23.758Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787066592245-c761",
+      "timestamp": "2026-08-18T15:23:12.245Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787052582150-b28m",
+      "timestamp": "2026-08-18T11:29:42.150Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787052370082-g39d",
+      "timestamp": "2026-08-18T11:26:10.082Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product Amla"
+    },
+    {
+      "id": "log-1787052278450-88mp",
+      "timestamp": "2026-08-18T11:24:38.450Z",
+      "userEmail": "vkchoudhary050607@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787047860413-ibyg",
+      "timestamp": "2026-08-18T10:11:00.413Z",
+      "userEmail": "+919690941439",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +919690941439."
+    },
+    {
+      "id": "log-1787047860410-qy27",
+      "timestamp": "2026-08-18T10:11:00.410Z",
+      "userEmail": "+919690941439",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787047860410_bv3nk."
+    },
+    {
+      "id": "log-1787047707509-4ten",
+      "timestamp": "2026-08-18T10:08:27.509Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787047688673-c88t",
+      "timestamp": "2026-08-18T10:08:08.673Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787047688670-1hcg",
+      "timestamp": "2026-08-18T10:08:08.670Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787047688670_jpig8."
+    },
+    {
+      "id": "log-1787047351745-llcd",
+      "timestamp": "2026-08-18T10:02:31.745Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787047322616-fzct",
+      "timestamp": "2026-08-18T10:02:02.616Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787047322612-fv0k",
+      "timestamp": "2026-08-18T10:02:02.612Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787047322611_0sbu9."
+    },
     {
       "id": "log-1787037379235-xq2w",
       "timestamp": "2026-08-18T07:16:19.235Z",
@@ -7662,188 +7405,6 @@
       "userEmail": "vivek2@gmail.com",
       "action": "Place Order",
       "details": "Placed order GL-623453-28 totaling 599 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784802618252-z7jx",
-      "timestamp": "2026-07-23T10:30:18.252Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784800831057-jilv",
-      "timestamp": "2026-07-23T10:00:31.057Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-831036-39 totaling 599 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784800805415-bt30",
-      "timestamp": "2026-07-23T10:00:05.415Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-805400-79 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784800793278-kkjw",
-      "timestamp": "2026-07-23T09:59:53.278Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784800184100-h1vt",
-      "timestamp": "2026-07-23T09:49:44.100Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-184080-99 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784800154082-l7xt",
-      "timestamp": "2026-07-23T09:49:14.082Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-154060-47 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784800151453-t3gb",
-      "timestamp": "2026-07-23T09:49:11.453Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-151429-85 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784800146745-krz2",
-      "timestamp": "2026-07-23T09:49:06.745Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-146725-58 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784800143516-lzt1",
-      "timestamp": "2026-07-23T09:49:03.516Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-143497-32 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784800131933-canq",
-      "timestamp": "2026-07-23T09:48:51.933Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-131912-31 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784799826038-r87s",
-      "timestamp": "2026-07-23T09:43:46.038Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-826017-82 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784799818000-i3vf",
-      "timestamp": "2026-07-23T09:43:38.000Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-817980-34 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784799815122-325d",
-      "timestamp": "2026-07-23T09:43:35.123Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-815098-87 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784799814145-qtnb",
-      "timestamp": "2026-07-23T09:43:34.145Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-814128-68 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784799812465-0yjt",
-      "timestamp": "2026-07-23T09:43:32.465Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-812449-50 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784799802230-3plk",
-      "timestamp": "2026-07-23T09:43:22.230Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-802204-90 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784799788163-wz7a",
-      "timestamp": "2026-07-23T09:43:08.163Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784799377864-ejbz",
-      "timestamp": "2026-07-23T09:36:17.864Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Google OAuth Login",
-      "details": "Logged in via Google OAuth"
-    },
-    {
-      "id": "log-1784799360996-zcwm",
-      "timestamp": "2026-07-23T09:36:00.996Z",
-      "userEmail": "facebook.user@example.com",
-      "action": "Facebook OAuth Login",
-      "details": "Logged in via Facebook OAuth"
-    },
-    {
-      "id": "log-1784798507748-nnma",
-      "timestamp": "2026-07-23T09:21:47.748Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-507731-13 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784798499921-yh5p",
-      "timestamp": "2026-07-23T09:21:39.921Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-499896-44 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784795515805-qvqm",
-      "timestamp": "2026-07-23T08:31:55.805Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-515799-26 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784791791606-e649",
-      "timestamp": "2026-07-23T07:29:51.606Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-791590-79 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784791390761-o9lk",
-      "timestamp": "2026-07-23T07:23:10.761Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-390745-88 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784791379610-cg80",
-      "timestamp": "2026-07-23T07:22:59.611Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-379593-17 totaling 162 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784789005496-h3im",
-      "timestamp": "2026-07-23T06:43:25.496Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-005484-59 totaling 1002 INR. Payment recorded: Pending."
     }
   ],
   "payments": [
@@ -8276,6 +7837,16 @@
       "transactionReference": "TXN-73295063",
       "status": "Paid",
       "createdAt": "2026-07-22T12:29:34.240Z"
+    },
+    {
+      "id": "PAY-379170",
+      "orderId": "GL-379149-43",
+      "userEmail": "vivek2@gmail.com",
+      "amount": 560,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD_PENDING",
+      "status": "Pending",
+      "createdAt": "2026-08-18T07:16:19.171Z"
     },
     {
       "id": "PAY-379606-16",
@@ -9056,16 +8627,6 @@
       "transactionReference": "COD-PENDING-GL-999536-33",
       "status": "Pending",
       "createdAt": "2026-07-22T07:06:39.543Z"
-    },
-    {
-      "id": "PAY-379170",
-      "orderId": "GL-379149-43",
-      "userEmail": "vivek2@gmail.com",
-      "amount": 560,
-      "paymentMethod": "Cash on Delivery",
-      "transactionReference": "COD_PENDING",
-      "status": "Pending",
-      "createdAt": "2026-08-18T07:16:19.171Z"
     }
   ],
   "chatHistories": {}

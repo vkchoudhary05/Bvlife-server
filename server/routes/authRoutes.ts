@@ -20,6 +20,7 @@ import {
   checkAccount,
   resetPassword,
   otpLogin,
+  adminCheckCredentials,
   changeMobile,
   changeEmail,
   getGoogleAuthUrl,
@@ -49,6 +50,7 @@ authRouter.get("/api/customers", authenticateToken, requireAdmin, getCustomers);
 authRouter.get("/api/logs", getActivityLogs);
 
 // Security & Recovery Routes
+authRouter.post("/api/auth/admin-check-credentials", rateLimiter(20), adminCheckCredentials);
 authRouter.post("/api/auth/otp", rateLimiter(15), sendOtp);
 authRouter.post("/api/auth/verify-otp", rateLimiter(20), verifyOtp);
 authRouter.post("/api/auth/verify-msg91-token", rateLimiter(20), verifyMsg91Token);

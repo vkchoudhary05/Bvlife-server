@@ -44,24 +44,47 @@ class DBManager {
                 this.data.settings = this.data.settings || { ...DEFAULT_SETTINGS };
                 this.data.users = this.data.users || [
                     {
+                        email: "iamvivekbaliyan07@gmail.com",
+                        fullName: "Vivek Baliyan",
+                        role: "admin",
+                        phone: "7451050607",
+                        password: "123123123",
+                        addresses: [
+                            {
+                                id: "addr-admin-vivek",
+                                fullName: "Vivek Baliyan",
+                                addressLine1: "Grams Life Administrative Headquarters",
+                                addressLine2: "Civil Lines",
+                                city: "Meerut",
+                                state: "Uttar Pradesh",
+                                zipCode: "250001",
+                                phone: "7451050607",
+                                isDefault: true
+                            }
+                        ]
+                    },
+                    {
                         email: "admin@gramslife.com",
                         fullName: "Aacharya Dhanvantari",
                         role: "admin",
-                        phone: "+1 (800) 555-GRAM",
+                        phone: "9425011088",
+                        password: "123123123",
                         addresses: []
                     },
                     {
                         email: "care@gramslife.com",
                         fullName: "Grams Life Support",
                         role: "admin",
-                        phone: "+1 (800) 555-GRAM",
+                        phone: "9425011088",
+                        password: "123123123",
                         addresses: []
                     },
                     {
                         email: "vkchoudhary050607@gmail.com",
                         fullName: "Vipin Choudhary",
                         role: "admin",
-                        phone: "+1 555-0199",
+                        phone: "9425011088",
+                        password: "123123123",
                         addresses: [
                             {
                                 id: "addr-1",
@@ -71,7 +94,7 @@ class DBManager {
                                 city: "New Delhi",
                                 state: "Delhi",
                                 zipCode: "110001",
-                                phone: "+91 98765 43210",
+                                phone: "9425011088",
                                 isDefault: true
                             }
                         ]
