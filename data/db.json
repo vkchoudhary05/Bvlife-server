@@ -850,7 +850,7 @@
         "city": "saharanpur",
         "state": "Uttar Pradesh",
         "zipCode": "247554",
-        "phone": "+917451050607",
+        "phone": "+919383939383",
         "isDefault": false
       },
       "items": [
@@ -5750,7 +5750,7 @@
     {
       "email": "heythere@gmail.com",
       "fullName": "vivek",
-      "role": "customer",
+      "role": "admin",
       "phone": "+917451050607",
       "addresses": [],
       "password": "qwerty"
@@ -6006,6 +6006,377 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1787138454222-qbml",
+      "timestamp": "2026-08-19T11:20:54.222Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787138432739-ywyo",
+      "timestamp": "2026-08-19T11:20:32.739Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787138432734-hbvu",
+      "timestamp": "2026-08-19T11:20:32.734Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787138432734_o4z1c."
+    },
+    {
+      "id": "log-1787138390085-j99x",
+      "timestamp": "2026-08-19T11:19:50.085Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787138390077-ezuh",
+      "timestamp": "2026-08-19T11:19:50.077Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787138390076_wxns3."
+    },
+    {
+      "id": "log-1787138356655-2rgb",
+      "timestamp": "2026-08-19T11:19:16.655Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787138356650-mwlu",
+      "timestamp": "2026-08-19T11:19:16.650Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787138356650_zadbf."
+    },
+    {
+      "id": "log-1787137326309-6fte",
+      "timestamp": "2026-08-19T11:02:06.309Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787137298117-2jqv",
+      "timestamp": "2026-08-19T11:01:38.117Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787137298112-tp8a",
+      "timestamp": "2026-08-19T11:01:38.112Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787137298111_z6ztr."
+    },
+    {
+      "id": "log-1787137216878-yw9t",
+      "timestamp": "2026-08-19T11:00:16.878Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787137216871-97we",
+      "timestamp": "2026-08-19T11:00:16.871Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787137216719_3064k."
+    },
+    {
+      "id": "log-1787137185291-x9tn",
+      "timestamp": "2026-08-19T10:59:45.291Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787136946217-farc",
+      "timestamp": "2026-08-19T10:55:46.217Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787136946210-catc",
+      "timestamp": "2026-08-19T10:55:46.210Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787136946057_uqp2t."
+    },
+    {
+      "id": "log-1787135919895-11m7",
+      "timestamp": "2026-08-19T10:38:39.895Z",
+      "userEmail": "+919690941439",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +919690941439."
+    },
+    {
+      "id": "log-1787135919886-fsbg",
+      "timestamp": "2026-08-19T10:38:39.886Z",
+      "userEmail": "+919690941439",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787135919719_jzyri."
+    },
+    {
+      "id": "log-1787135675708-2izu",
+      "timestamp": "2026-08-19T10:34:35.708Z",
+      "userEmail": "+919425011088",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +919425011088."
+    },
+    {
+      "id": "log-1787135675703-nm1h",
+      "timestamp": "2026-08-19T10:34:35.703Z",
+      "userEmail": "+919425011088",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787135675294_bnt03."
+    },
+    {
+      "id": "log-1787135597382-pif7",
+      "timestamp": "2026-08-19T10:33:17.382Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787135565575-flcy",
+      "timestamp": "2026-08-19T10:32:45.575Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787135546571-zarz",
+      "timestamp": "2026-08-19T10:32:26.571Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787135546565-sx7j",
+      "timestamp": "2026-08-19T10:32:26.565Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787135546388_p6gqy."
+    },
+    {
+      "id": "log-1787134458246-8x93",
+      "timestamp": "2026-08-19T10:14:18.246Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787134458239-9fu3",
+      "timestamp": "2026-08-19T10:14:18.239Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787134457931_nc5i3."
+    },
+    {
+      "id": "log-1787133543882-nnqw",
+      "timestamp": "2026-08-19T09:59:03.882Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787133520014-rjqt",
+      "timestamp": "2026-08-19T09:58:40.014Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787133520012-jjhj",
+      "timestamp": "2026-08-19T09:58:40.012Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787133520012_uwgyh."
+    },
+    {
+      "id": "log-1787133000873-t1xq",
+      "timestamp": "2026-08-19T09:50:00.873Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787132970308-39ue",
+      "timestamp": "2026-08-19T09:49:30.308Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787132970305-d8zz",
+      "timestamp": "2026-08-19T09:49:30.305Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787132970305_dg2y4."
+    },
+    {
+      "id": "log-1787132116141-a7jo",
+      "timestamp": "2026-08-19T09:35:16.141Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787132116136-3pw5",
+      "timestamp": "2026-08-19T09:35:16.136Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787132115992_ggy5h."
+    },
+    {
+      "id": "log-1787132064109-i6w0",
+      "timestamp": "2026-08-19T09:34:24.109Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787132064104-c57z",
+      "timestamp": "2026-08-19T09:34:24.104Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787132063945_69dse."
+    },
+    {
+      "id": "log-1787132040028-ux1f",
+      "timestamp": "2026-08-19T09:34:00.028Z",
+      "userEmail": "+919425011088",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +919425011088."
+    },
+    {
+      "id": "log-1787132040018-uah6",
+      "timestamp": "2026-08-19T09:34:00.018Z",
+      "userEmail": "+919425011088",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787132039535_57pr4."
+    },
+    {
+      "id": "log-1787131452591-sa79",
+      "timestamp": "2026-08-19T09:24:12.591Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787131431654-44n4",
+      "timestamp": "2026-08-19T09:23:51.654Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787131431649-595g",
+      "timestamp": "2026-08-19T09:23:51.649Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787131431502_u99hi."
+    },
+    {
+      "id": "log-1787131378125-7m42",
+      "timestamp": "2026-08-19T09:22:58.125Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787131378117-4lpa",
+      "timestamp": "2026-08-19T09:22:58.117Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787131377978_2u46r."
+    },
+    {
+      "id": "log-1787131346826-1szw",
+      "timestamp": "2026-08-19T09:22:26.826Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787131346821-nels",
+      "timestamp": "2026-08-19T09:22:26.821Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787131346680_frkuh."
+    },
+    {
+      "id": "log-1787130767278-vxdm",
+      "timestamp": "2026-08-19T09:12:47.278Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787130744675-h0cv",
+      "timestamp": "2026-08-19T09:12:24.675Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787130744671-6cni",
+      "timestamp": "2026-08-19T09:12:24.671Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787130744538_rvorp."
+    },
+    {
+      "id": "log-1787130711208-t4r5",
+      "timestamp": "2026-08-19T09:11:51.208Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787130711200-z9u2",
+      "timestamp": "2026-08-19T09:11:51.200Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787130711052_x482g."
+    },
+    {
+      "id": "log-1787130655348-4ptt",
+      "timestamp": "2026-08-19T09:10:55.348Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787130655340-p9jf",
+      "timestamp": "2026-08-19T09:10:55.340Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787130655193_gg22y."
+    },
+    {
+      "id": "log-1787130544831-rgkj",
+      "timestamp": "2026-08-19T09:09:04.831Z",
+      "userEmail": "+919425011088",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +919425011088."
+    },
+    {
+      "id": "log-1787130544825-00l1",
+      "timestamp": "2026-08-19T09:09:04.825Z",
+      "userEmail": "+919425011088",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787130544504_lrb0y."
+    },
     {
       "id": "log-1787118026405-1e6j",
       "timestamp": "2026-08-19T05:40:26.405Z",
@@ -7034,377 +7405,6 @@
       "userEmail": "iamvivek90@gmail.com",
       "action": "Order Placed",
       "details": "Placed order #GL-418296-97 for amount ₹610"
-    },
-    {
-      "id": "log-1785145806099-7qhs",
-      "timestamp": "2026-07-27T09:50:06.099Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785140904848-k8zg",
-      "timestamp": "2026-07-27T08:28:24.848Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785139457341-haeh",
-      "timestamp": "2026-07-27T08:04:17.341Z",
-      "userEmail": "vishal@gmail.com",
-      "action": "User Registration",
-      "details": "Created account for vishal  with phone +917262262728"
-    },
-    {
-      "id": "log-1785138935100-vtqo",
-      "timestamp": "2026-07-27T07:55:35.100Z",
-      "userEmail": "iamvivek02@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785138489738-oezq",
-      "timestamp": "2026-07-27T07:48:09.738Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785137795359-ohrg",
-      "timestamp": "2026-07-27T07:36:35.359Z",
-      "userEmail": "iamvivek02@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785137475377-rcyy",
-      "timestamp": "2026-07-27T07:31:15.377Z",
-      "userEmail": "iamvivek02@gmail.com",
-      "action": "User Registration",
-      "details": "Created account for vivek2"
-    },
-    {
-      "id": "log-1785135670855-0pwc",
-      "timestamp": "2026-07-27T07:01:10.856Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785135241524-3kno",
-      "timestamp": "2026-07-27T06:54:01.524Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785135212066-y5ld",
-      "timestamp": "2026-07-27T06:53:32.066Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785135187209-iyro",
-      "timestamp": "2026-07-27T06:53:07.209Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785134867929-u47i",
-      "timestamp": "2026-07-27T06:47:47.929Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785134860553-hxgf",
-      "timestamp": "2026-07-27T06:47:40.553Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-566182-41 status to Delivered"
-    },
-    {
-      "id": "log-1785134856311-5rlo",
-      "timestamp": "2026-07-27T06:47:36.311Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-566182-41 status to Processing"
-    },
-    {
-      "id": "log-1785134853335-8ocm",
-      "timestamp": "2026-07-27T06:47:33.335Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-566182-41 status to Shipped"
-    },
-    {
-      "id": "log-1785134849635-msma",
-      "timestamp": "2026-07-27T06:47:29.635Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-566182-41 status to Delivered"
-    },
-    {
-      "id": "log-1785134785815-cvud",
-      "timestamp": "2026-07-27T06:46:25.815Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785134720424-vin2",
-      "timestamp": "2026-07-27T06:45:20.424Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-566182-41 status to Processing"
-    },
-    {
-      "id": "log-1785134711396-bkcl",
-      "timestamp": "2026-07-27T06:45:11.396Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-566182-41 status to Processing"
-    },
-    {
-      "id": "log-1785134669195-jhhb",
-      "timestamp": "2026-07-27T06:44:29.195Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-005484-59 status to Cancelled"
-    },
-    {
-      "id": "log-1785134665140-o5ex",
-      "timestamp": "2026-07-27T06:44:25.140Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-005484-59 status to Cancelled"
-    },
-    {
-      "id": "log-1785134655194-nd7j",
-      "timestamp": "2026-07-27T06:44:15.194Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-005484-59 status to Delivered"
-    },
-    {
-      "id": "log-1785134615840-soc1",
-      "timestamp": "2026-07-27T06:43:35.840Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785134566221-hlk9",
-      "timestamp": "2026-07-27T06:42:46.221Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-566182-41 totaling 1512 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1785134479054-lqr9",
-      "timestamp": "2026-07-27T06:41:19.054Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "User Registration",
-      "details": "Created account for vivek kumar with phone +919039399399"
-    },
-    {
-      "id": "log-1785133565790-hl5s",
-      "timestamp": "2026-07-27T06:26:05.790Z",
-      "userEmail": "admin",
-      "action": "Create Product",
-      "details": "Added product ggddd"
-    },
-    {
-      "id": "log-1785133536523-obiv",
-      "timestamp": "2026-07-27T06:25:36.523Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785133211825-rogu",
-      "timestamp": "2026-07-27T06:20:11.825Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785132520982-7e3p",
-      "timestamp": "2026-07-27T06:08:40.982Z",
-      "userEmail": "admin",
-      "action": "Create Product",
-      "details": "Added product dkjkd"
-    },
-    {
-      "id": "log-1785132489109-3xe6",
-      "timestamp": "2026-07-27T06:08:09.109Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785132185897-v9ek",
-      "timestamp": "2026-07-27T06:03:05.897Z",
-      "userEmail": "achinkahaleer2016@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-185890-38 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1785130725972-kb5k",
-      "timestamp": "2026-07-27T05:38:45.972Z",
-      "userEmail": "achinkahaleer2016@gmail.com",
-      "action": "User Registration",
-      "details": "Created account for Achin Kahaleer with phone +917617696700"
-    },
-    {
-      "id": "log-1785129065805-hgwp",
-      "timestamp": "2026-07-27T05:11:05.805Z",
-      "userEmail": "admin",
-      "action": "Create Product",
-      "details": "Added product ffdd"
-    },
-    {
-      "id": "log-1785128519398-ynhm",
-      "timestamp": "2026-07-27T05:01:59.398Z",
-      "userEmail": "admin",
-      "action": "Delete Product",
-      "details": "Removed product: Golden Chyawanprash - Saffron & Wild Honey"
-    },
-    {
-      "id": "log-1785128507469-bodk",
-      "timestamp": "2026-07-27T05:01:47.469Z",
-      "userEmail": "admin",
-      "action": "Create Product",
-      "details": "Added product abc"
-    },
-    {
-      "id": "log-1785128063539-czyz",
-      "timestamp": "2026-07-27T04:54:23.539Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784979097629-4j14",
-      "timestamp": "2026-07-25T11:31:37.629Z",
-      "userEmail": "admin",
-      "action": "Update Product",
-      "details": "Updated product details for Dabur Himalayan Shilajit Resin | Boosts Muscle Growth & Stamina | Grade A shilajit - 15g"
-    },
-    {
-      "id": "log-1784978723834-5d6t",
-      "timestamp": "2026-07-25T11:25:23.834Z",
-      "userEmail": "admin",
-      "action": "Create Product",
-      "details": "Added product Dabur Himalayan Shilajit Resin | Boosts Muscle Growth & Stamina | Grade A shilajit - 15g"
-    },
-    {
-      "id": "log-1784972872136-mso2",
-      "timestamp": "2026-07-25T09:47:52.136Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784968641535-rocu",
-      "timestamp": "2026-07-25T08:37:21.535Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-641529-29 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784965949331-u1nn",
-      "timestamp": "2026-07-25T07:52:29.331Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-949324-31 totaling 599 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784963624411-ybl8",
-      "timestamp": "2026-07-25T07:13:44.411Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784809633237-a3f4",
-      "timestamp": "2026-07-23T12:27:13.237Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-633231-53 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784808726196-yhsp",
-      "timestamp": "2026-07-23T12:12:06.196Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-726189-21 totaling 1002 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784803184398-yltl",
-      "timestamp": "2026-07-23T10:39:44.398Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-184379-58 totaling 632 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784803176984-u7yl",
-      "timestamp": "2026-07-23T10:39:36.984Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1784802871930-j9k4",
-      "timestamp": "2026-07-23T10:34:31.930Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-871907-98 totaling 632 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784802836296-j9h2",
-      "timestamp": "2026-07-23T10:33:56.297Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-836275-34 totaling 632 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784802780428-vz23",
-      "timestamp": "2026-07-23T10:33:00.428Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-780407-87 totaling 632 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784802747847-sepr",
-      "timestamp": "2026-07-23T10:32:27.847Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-747825-19 totaling 2117 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784802662090-cynf",
-      "timestamp": "2026-07-23T10:31:02.090Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-662062-36 totaling 632 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1784802642376-yvoc",
-      "timestamp": "2026-07-23T10:30:42.376Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-642354-79 totaling 1002 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1784802623468-ofjg",
-      "timestamp": "2026-07-23T10:30:23.468Z",
-      "userEmail": "vivek2@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-623453-28 totaling 599 INR. Payment recorded: Pending."
     }
   ],
   "payments": [
