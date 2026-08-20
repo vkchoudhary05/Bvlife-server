@@ -86,16 +86,18 @@ export const getReviews = (req: Request, res: Response) => {
 
 export const createReview = (req: Request, res: Response) => {
   const { productId, productName, userName, userEmail, rating, comment } = req.body;
-  if (!productId || !userEmail || !rating) {
-    return res.status(400).json({ error: "Product, Email and Rating are required." });
+  const activeEmail = userEmail || (req as any).user?.email || "customer@gramslife.com";
+  
+  if (!productId || !rating) {
+    return res.status(400).json({ error: "Product ID and Rating are required." });
   }
 
   const newReview: Review = {
     id: `rev-${Date.now()}`,
     productId,
-    productName,
-    userName: userName || "Verified Customer",
-    userEmail: userEmail.toLowerCase(),
+    productName: productName || "Ayurvedic Product",
+    userName: userName || (req as any).user?.fullName || "Verified Customer",
+    userEmail: activeEmail.toLowerCase(),
     rating: Number(rating),
     comment: comment || "",
     isApproved: true, // Auto-approve in showcase sandbox for quick feedback, admin can delete/unapprove

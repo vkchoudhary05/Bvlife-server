@@ -1,385 +1,221 @@
 {
   "products": [
     {
-      "id": "prod-1784978723826",
-      "name": "Dabur Himalayan Shilajit Resin | Boosts Muscle Growth & Stamina | Grade A shilajit - 15g",
-      "sku": "GL-8040",
-      "price": 500,
-      "originalPrice": 600,
-      "stock": 14,
-      "category": "Immunity",
-      "brand": "Bv Life",
-      "description": "Dabur Himalayan Shilajit is 100% Pure, Natural extract from Himalayas, that helps fight fatigue and improves immunity. It is easily consumed by mixing a pea sized ball (250 mg- 500 mg) in a glass of lukewarm water. Regular consumption of Himalayan Shilajit reduces risk of diseases.\nNatural Revitalizer - With >80% Fulvic Acid, Dabur Himalayan Shilajit improves overall health and supports healthy ageing with its superior anti-oxidant benefits that inhibits the formation of free radicals and subsequently reduce oxidative stress. Organically Sourced - Dabur Himalayan Shilajit is organi\ncally sourced from high altitudes of Himalayas (~20,000 ft), making it a rich source of 80+ Trace minerals and 10 vital minerals. Highest Safety Standards - It is lab tested for toxins, heavy metals and highest safety standards to ensure purest form of Shilajit extract in the product.",
-      "mainImage": "https://i.pinimg.com/1200x/b2/3a/8d/b23a8d2b2ab912268e0e4a66eb69f7a2.jpg",
-      "images": [
-        "https://i.pinimg.com/1200x/83/88/be/8388be3188eeca278c51db2edcf19356.jpg",
-        "https://i.pinimg.com/1200x/cb/7f/e1/cb7fe152d3248cda2395f61b2c506e6c.jpg",
-        "https://i.pinimg.com/736x/e2/75/2b/e2752bdb1e99552b46737c794298cba2.jpg"
-      ],
-      "ingredients": [],
-      "benefits": [
-        "Boot immunity"
-      ],
-      "dosage": "Take 1 capsule  per day",
-      "usageInstructions": "As directed",
-      "faqs": [],
-      "rating": 5,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 100,
-      "createdDate": "2026-07-25"
-    },
-    {
-      "id": "prod-1785128507459",
-      "name": "abc",
-      "sku": "GL-2435",
-      "price": 500,
-      "originalPrice": 600,
-      "stock": 17,
-      "category": "Immunity",
-      "brand": "bvlife",
-      "description": "edwijsjknendm",
-      "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200",
-      "images": [],
-      "ingredients": [],
-      "benefits": [],
-      "dosage": "Take 1 capsule daily after breakfast.",
-      "usageInstructions": "As directed",
-      "faqs": [],
-      "rating": 5,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-07-27"
-    },
-    {
-      "id": "prod-1785129065799",
-      "name": "ffdd",
-      "sku": "GL-3762",
-      "price": 500,
-      "originalPrice": 600,
-      "stock": 20,
-      "category": "Immunity",
-      "brand": "Grams Life",
-      "description": "dkd",
-      "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200",
-      "images": [],
-      "ingredients": [],
-      "benefits": [],
-      "dosage": "Take 1 capsule daily after breakfast.",
-      "usageInstructions": "As directed",
-      "faqs": [],
-      "rating": 5,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-07-27"
-    },
-    {
-      "id": "prod-1785132520975",
-      "name": "dkjkd",
-      "sku": "GL-7787",
-      "price": 500,
-      "originalPrice": 600,
-      "stock": 20,
-      "category": "Immunity",
-      "brand": "Grams Life",
-      "description": "djoddjd",
-      "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200",
-      "images": [],
-      "ingredients": [],
-      "benefits": [],
-      "dosage": "Take 1 capsule daily after breakfast.",
-      "usageInstructions": "As directed",
-      "faqs": [],
-      "rating": 5,
-      "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-07-27"
-    },
-    {
-      "id": "prod-1785133565781",
-      "name": "ggddd",
-      "sku": "Bv-52",
-      "price": 500,
-      "originalPrice": 600,
-      "stock": 20,
-      "category": "Immunity",
-      "brand": "Grams Life",
-      "description": "dndn",
-      "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200",
-      "images": [],
-      "ingredients": [],
-      "benefits": [],
-      "dosage": "Take 1 capsule daily after breakfast.",
-      "usageInstructions": "As directed",
-      "faqs": [],
-      "rating": 5,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-07-27"
-    },
-    {
-      "id": "prod-1785479910689",
-      "name": "testing",
-      "sku": "BV-101",
-      "price": 500,
-      "originalPrice": 600,
-      "stock": 20,
-      "category": "Immunity",
-      "brand": "Grams Life",
-      "description": "snjs",
-      "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200",
-      "images": [],
-      "ingredients": [],
-      "benefits": [],
-      "dosage": "Take 1 capsule daily after breakfast.",
-      "usageInstructions": "As directed",
-      "faqs": [],
-      "rating": 5,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-07-31"
-    },
-    {
-      "id": "prod-1785479979923",
-      "name": "testing",
-      "sku": "Bv-10",
-      "price": 1,
-      "originalPrice": 2,
-      "stock": 18,
-      "category": "Immunity",
-      "brand": "Grams Life",
-      "description": "djhwj",
-      "mainImage": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=200",
-      "images": [],
-      "ingredients": [],
-      "benefits": [],
-      "dosage": "Take 1 capsule daily after breakfast.",
-      "usageInstructions": "As directed",
-      "faqs": [],
-      "rating": 5,
-      "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-07-31"
-    },
-    {
-      "id": "prod-1787052370079",
-      "name": "Amla",
-      "sku": "bv292",
-      "price": 500,
-      "originalPrice": 600,
+      "id": "prod-1787139177034",
+      "name": "Amla Tablet",
+      "sku": "Bv-001",
+      "price": 165,
+      "originalPrice": 185,
       "stock": 20,
       "category": "Hair Care",
-      "brand": "Bv life",
-      "description": "dmd",
-      "mainImage": "https://drive.google.com/file/d/1Grlh_UVvcDPyKcE45JUeqEybqEUII15_/view?usp=sharing",
-      "images": [],
+      "brand": "Bv Life",
+      "description": "BV Life Amla Tablet is an Ayurvedic herbal supplement formulated with premium quality Amla (Indian Gooseberry), a natural source of Vitamin C and antioxidants known for supporting immunity, digestion, liver wellness, and overall health. Widely used in Ayurveda for daily wellness support, Amla Tablets help promote healthy metabolism, natural detoxification, energy, and vitality. Regular consumption may help support immune health, digestive comfort, skin wellness, and antioxidant protection against free radicals. Suitable for men and women seeking a natural Ayurvedic immunity booster and daily wellness supplement.",
+      "mainImage": "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778321960389-Amla%20Tablet%20-%20BV%20Life.png",
+      "images": [
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778321986810-Amla%20Tablet%20-%20BV%20Life%2002.png",
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778321992904-Amla%20Tablet%20-%20BV%20Life%2003.png"
+      ],
       "ingredients": [],
-      "benefits": [],
-      "dosage": "Take 1 capsule daily after breakfast.",
+      "benefits": [
+        "Supports natural immunity and wellness. Rich source of Vitamin C and antioxidants. Helps support healthy digestion and liver function. Supports skin glow",
+        "hair wellness",
+        "and vitality. Helps reduce oxidative stress naturally. Suitable for daily Ayurvedic health support."
+      ],
+      "dosage": "Take 1 tablet twice daily with lukewarm water after meals or as directed by a healthcare professional.",
       "usageInstructions": "As directed",
       "faqs": [],
       "rating": 5,
       "featured": false,
-      "bestSeller": false,
-      "lowStockAlertLimit": 5,
-      "createdDate": "2026-08-18"
-    },
-    {
-      "id": "prod-2",
-      "name": "Pure Ashwagandha KSM-66 Capsules",
-      "sku": "AYUR-ASH-002",
-      "price": 490,
-      "originalPrice": 590,
-      "stock": 112,
-      "category": "Immunity",
-      "subcategory": "Capsules",
-      "brand": "BV Life Wellness",
-      "description": "Premium high-concentration Ashwagandha root extract (standardized to 5% withanolides). Formulated scientifically using KSM-66, the most clinically researched ashwagandha on the market, to reduce daily cortisol levels, eliminate stress, and boost mental calmness.",
-      "mainImage": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Ashwagandha Extract KSM-66",
-          "description": "Full-spectrum root extract with high bio-availability, standard 5% withanolides."
-        }
-      ],
-      "benefits": [
-        "Clinically proven to significantly lower anxiety, stress levels, and stress-induced cravings.",
-        "Improves sleep cycle quality, promoting restorative deep REM sleep.",
-        "Enhances natural muscle recovery, muscle endurance, and strength.",
-        "Supports cognitive performance, memory retention, and brain focus."
-      ],
-      "dosage": "1 capsule twice daily with milk or water after meals.",
-      "usageInstructions": "Take one capsule in the morning to handle daily stress and one before bedtime for deep sleep.",
-      "faqs": [
-        {
-          "question": "What is KSM-66?",
-          "answer": "KSM-66 is an award-winning, certified organic root extract of Ashwagandha produced using a unique milk-processing extraction method, keeping the natural chemical balance of the herb fully intact."
-        }
-      ],
-      "rating": 4.7,
-      "featured": true,
       "bestSeller": true,
-      "lowStockAlertLimit": 15,
-      "createdDate": "2026-05-10"
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-08-19"
     },
     {
-      "id": "prod-3",
-      "name": "Kumkumadi Night Elixir Serum",
-      "sku": "AYUR-KUM-003",
-      "price": 1890,
-      "originalPrice": 2200,
-      "stock": 31,
+      "id": "prod-1787140413595",
+      "name": "Ashwagandha Tablet",
+      "sku": "Bv-002",
+      "price": 199,
+      "originalPrice": 230,
+      "stock": 20,
+      "category": "Immunity",
+      "subcategory": "Tablet",
+      "brand": "Bv Life",
+      "description": "BV Life Ashwagandha Tablet is an Ayurvedic herbal supplement formulated with Ashwagandha (Withania somnifera), a well-known adaptogenic herb traditionally used to support strength, vitality, stress management, and overall wellness. This herbal formulation helps support energy levels, healthy aging, stamina, and mental wellness when used regularly as part of a balanced lifestyle.",
+      "mainImage": "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668190591-Ashwagandha%20Tablet%20-%20BV%20Life.webp",
+      "images": [
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668189822-Ashwagandha%20Tablet%20-%20BV%20Life%2002.webp",
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668190386-Ashwagandha%20Tablet%20-%20BV%20Life%2003.webp"
+      ],
+      "ingredients": [],
+      "benefits": [
+        "Supports stress relief and mental wellness",
+        "Helps improve strength",
+        "stamina",
+        "and vitality",
+        "Supports healthy energy and endurance levels",
+        "Helps support overall wellness and rejuvenation",
+        "Traditional Ayurvedic adaptogenic herbal supplement",
+        "Suitable for daily wellness support."
+      ],
+      "dosage": "Take 1 tablet twice daily after meals or as directed by a healthcare professional.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
+      "featured": false,
+      "bestSeller": true,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-08-19"
+    },
+    {
+      "id": "prod-1787140682779",
+      "name": "Bakuchi Oil",
+      "sku": "Bv-003",
+      "price": 199,
+      "originalPrice": 250,
+      "stock": 20,
       "category": "Skin Care",
       "subcategory": "Oils",
-      "brand": "BV Life Beauty",
-      "description": "An opulent, highly prized face oil made with pure saffron, sandalwood, and 26 precious Ayurvedic botanicals. This fast-absorbing golden elixir is prepared using traditional taila pak vidhi to overnight illuminate your skin, remove pigmentation, and cure fine lines.",
-      "mainImage": "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600",
+      "brand": "BvLife",
+      "description": "BV Life Bakuchi Oil is a traditional Ayurvedic herbal oil prepared from Bakuchi (Psoralea corylifolia) seeds using the steam distillation process. Known for its skin-supporting properties, this herbal oil is traditionally used in Ayurveda for maintaining healthy skin tone, supporting pigmentation balance, and promoting overall skin wellness. The formulation contains naturally occurring herbal compounds known for their antibacterial, antifungal, and skin-rejuvenating properties.\n\n",
+      "mainImage": "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668301085-Bakuchi%20Oil%20100ml%20-%20BV%20Life.webp",
       "images": [
-        "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600"
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668299625-Bakuchi%20Oil%20100ml%20-%20BV%20Life%2002.webp",
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668300306-Bakuchi%20Oil%20100ml%20-%20BV%20Life%2003.webp"
       ],
-      "ingredients": [
-        {
-          "name": "Kumkuma (Saffron)",
-          "description": "Brightens complexion, clears blemishes, and increases skin cell renewal."
-        },
-        {
-          "name": "Chandana (Sandalwood)",
-          "description": "Cools the skin, heals irritation, and creates a flawless matte texture."
-        },
-        {
-          "name": "Manjistha",
-          "description": "Improves blood circulation in skin layers and clarifies internal toxins."
-        }
-      ],
+      "ingredients": [],
       "benefits": [
-        "Produces a luminous golden skin glow and deeply hydrates skin.",
-        "Visibly fades dark circles, pigmentation, age spots, and sun spots.",
-        "Improves natural skin elasticity and fights premature wrinkles.",
-        "Soothes sensitive skin, curing redness, dry patches, and acne scars."
+        "Supports skin nourishment and rejuvenation",
+        "Helps maintain healthy skin appearance",
+        "Supports pigmentation balance and skin tone",
+        "Contains traditional Ayurvedic herbal properties",
+        "Helps support skin wellness naturally",
+        "Suitable for regular Ayurvedic skin care use."
       ],
-      "dosage": "3-4 drops for normal to dry skin; 2-3 drops for oily skin.",
-      "usageInstructions": "Wash face thoroughly. Dampen skin with rose water, take drops on palms, gently massage on face in upward circles until absorbed. Leave overnight.",
-      "faqs": [
-        {
-          "question": "Is this suitable for oily, acne-prone skin?",
-          "answer": "Yes, but use sparingly. The formulation contains Manjistha and Sandalwood which actively regulate oil glands. Apply only 1-2 drops directly onto scars rather than the entire face if highly prone to breakout."
-        }
-      ],
-      "rating": 4.9,
+      "dosage": "Apply a few drops of the oil to the affected area 4–5 times daily, avoiding sensitive areas, or use as directed by a healthcare professional.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
       "featured": true,
-      "bestSeller": false,
-      "lowStockAlertLimit": 8,
-      "createdDate": "2026-04-15"
+      "bestSeller": true,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-08-19"
     },
     {
-      "id": "prod-4",
-      "name": "Brahmi & Bringraj Hair Therapy Oil",
-      "sku": "AYUR-HAIR-004",
-      "price": 520,
-      "originalPrice": 590,
-      "stock": 1,
+      "id": "prod-1787141156208",
+      "name": "Avipattikar Churna",
+      "sku": "Bv-004",
+      "price": 199,
+      "originalPrice": 250,
+      "stock": 20,
+      "category": "Immunity",
+      "brand": "Grams Life",
+      "description": "BV Life Avipattikar Churna is a traditional Ayurvedic herbal formulation prepared with a blend of digestive herbs and natural ingredients known for supporting digestive health and maintaining acid balance. Traditionally used in Ayurveda for managing acidity, indigestion, bloating, gastritis, and digestive discomfort, this herbal churna helps promote healthy digestion and overall gastrointestinal wellness.\n\n",
+      "mainImage": "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668269032-Avipattikar%20Churna%20-%20BV%20Life.webp",
+      "images": [
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668267736-Avipattikar%20Churna%20-%20BV%20Life%2002.webp",
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668268480-Avipattikar%20Churna%20-%20BV%20Life%2003.webp"
+      ],
+      "ingredients": [],
+      "benefits": [
+        "Supports healthy digestion and acid balance. Helps relieve acidity and heartburn discomfort. Supports appetite and digestive comfort. Helps reduce bloating and gastric irritation. Traditional Ayurvedic digestive wellness formulation. Suitable for daily digestive wellness support."
+      ],
+      "dosage": "Take 1–2 teaspoons twice daily with normal water or as directed by a healthcare professional.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
+      "featured": true,
+      "bestSeller": true,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-08-19"
+    },
+    {
+      "id": "prod-1787141323843",
+      "name": "Bala Churna",
+      "sku": "Bv-005",
+      "price": 149,
+      "originalPrice": 200,
+      "stock": 20,
+      "category": "Brain & Memory",
+      "subcategory": "churna",
+      "brand": "Bv Life",
+      "description": "BV Life Bala Churna is a traditional Ayurvedic herbal powder prepared from the dried stem and root of Bala (Sida cordifolia) under hygienic conditions as per Ayurvedic guidelines. Traditionally valued in Ayurveda for supporting strength, vitality, nerve health, and overall wellness, Bala Churna is commonly used to support energy levels, physical endurance, and musculoskeletal health as part of a balanced lifestyle.",
+      "mainImage": "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668336128-Bala%20Churna%20-%20BV%20Life.webp",
+      "images": [
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668334394-Bala%20Churna%20-%20BV%20Life%2002.webp",
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668335449-Bala%20Churna%20-%20BV%20Life%2003.webp"
+      ],
+      "ingredients": [],
+      "benefits": [
+        "Supports nerve and muscle strength. Helps improve stamina and vitality. Supports healthy energy and endurance levels. Helps support joint and respiratory wellness. Traditional Ayurvedic rejuvenating herbal powder. Suitable for daily wellness support."
+      ],
+      "dosage": "Take ½ to 1 teaspoon with plain water twice daily after meals or as directed by a healthcare professional.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
+      "featured": false,
+      "bestSeller": false,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-08-19"
+    },
+    {
+      "id": "prod-1787141502903",
+      "name": "Brahmi Churna",
+      "sku": "Bv-06",
+      "price": 199,
+      "originalPrice": 250,
+      "stock": 20,
+      "category": "Brain & Memory",
+      "subcategory": "Churna",
+      "brand": "Bv Life",
+      "description": "BV Life Brahmi Churna is a traditional Ayurvedic herbal powder made from premium quality Brahmi (Bacopa monnieri), a well-known herb in Ayurveda traditionally used for supporting brain health, memory, concentration, and mental wellness. Rich in natural herbal properties, Brahmi Powder is commonly used to help support cognitive function, focus, learning ability, stress management, and nervous system wellness. Regular use may help promote mental clarity, relaxation, and overall brain health naturally. Suitable for students, professionals, and individuals seeking Ayurvedic brain and memory support.",
+      "mainImage": "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778670339677-Brahmi%20Churna%20-%20BV%20Life.webp",
+      "images": [
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778670338713-Brahmi%20Churna%20-%20BV%20Life%2002.webp",
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778670339336-Brahmi%20Churna%20-%20BV%20Life%2003.webp"
+      ],
+      "ingredients": [],
+      "benefits": [
+        "Supports memory",
+        "focus",
+        "and concentration naturally. Helps maintain brain and nervous system wellness. Supports mental clarity and cognitive performance. Helps support relaxation and stress management. Traditional Ayurvedic herbal brain wellness powder. Suitable for daily memory and wellness support."
+      ],
+      "dosage": "Take 1–2 teaspoons twice daily with lukewarm water, milk, or honey or as directed by a healthcare professional.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
+      "featured": false,
+      "bestSeller": false,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-08-19"
+    },
+    {
+      "id": "prod-1787141656914",
+      "name": "Brahmi Hair Oil",
+      "sku": "Bv-007",
+      "price": 205,
+      "originalPrice": 255,
+      "stock": 20,
       "category": "Hair Care",
       "subcategory": "Oils",
-      "brand": "BV Life Beauty",
-      "description": "Cold-pressed black sesame oil infused with fresh Bhringraj leaves, Brahmi extract, and Amla juice. This intense therapeutic oil penetrates deeply to stimulate hair roots, stop hair fall, cool down the scalp, and prevent premature graying.",
-      "mainImage": "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600",
+      "brand": "Bv Life",
+      "description": "BV Life Brahmi Oil is a traditional Ayurvedic herbal oil (tailam/tail/tel) formulated with Brahmi (Bacopa monnieri), sesame oil, and classical Ayurvedic herbs known for supporting scalp nourishment, hair wellness, mental relaxation, and overall head care. Widely used in Ayurveda for head massage and daily hair care, Brahmi Tailam helps support healthy hair roots, scalp hydration, stress relief, and mental calmness naturally. Regular massage with this Ayurvedic hair oil may help promote relaxation, healthy-looking hair, scalp wellness, and overall rejuvenation. Suitable for daily Ayurvedic hair and head massage routines.\n\n",
+      "mainImage": "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778670593394-Brahmi%20Hair%20Oil%20100ml%20-%20BV%20Life.webp",
       "images": [
-        "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&q=80&w=600"
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778670591820-Brahmi%20Hair%20Oil%20100ml%20-%20BV%20Life%2002.webp",
+        "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778670592787-Brahmi%20Hair%20Oil%20100ml%20-%20BV%20Life%2003.webp"
       ],
-      "ingredients": [
-        {
-          "name": "Bhringraj",
-          "description": "The 'King of Hair' herbs, triggers dormant hair follicles, increases volume."
-        },
-        {
-          "name": "Brahmi",
-          "description": "Cools the mind, reduces stress, and strengthens the root shafts."
-        },
-        {
-          "name": "Amla",
-          "description": "Deeply conditions, provides shine, and prevents premature gray hair."
-        }
-      ],
+      "ingredients": [],
       "benefits": [
-        "Reduces hair fall up to 90% with regular bi-weekly therapeutic massage.",
-        "Soothes itchy, dry scalps and cures dandruff flakes naturally.",
-        "Promotes deep sleep, eases headaches, and relieves mental fatigue.",
-        "Leaves hair deeply conditioned, voluminous, silky, and lustrous."
+        "Supports scalp nourishment and healthy-looking hair. Helps maintain hair strength and scalp hydration naturally. Supports relaxation and calming head massage experience. Helps support stress relief and mental wellness. Traditional Ayurvedic herbal hair oil formulation. Suitable for regular hair and scalp care routines."
       ],
-      "dosage": "10-15ml depending on hair volume.",
-      "usageInstructions": "Warm the oil slightly. Part hair and apply directly to the scalp. Massage gently for 10 minutes. Keep overnight or for at least 2 hours before washing with a sulfate-free herbal shampoo.",
-      "faqs": [
-        {
-          "question": "How fast will I see results for hair fall?",
-          "answer": "Most customers notice a significant reduction in hair fall and a cooler, less irritated scalp within 3 to 4 weeks of consistent bi-weekly usage."
-        }
-      ],
-      "rating": 4.6,
+      "dosage": "Apply a sufficient quantity of oil/tailam to the scalp and hair roots. Massage gently for a few minutes and leave for some time before washing or use as directed by a healthcare professional.",
+      "usageInstructions": "As directed",
+      "faqs": [],
+      "rating": 5,
       "featured": false,
-      "bestSeller": true,
-      "lowStockAlertLimit": 10,
-      "createdDate": "2026-05-20"
-    },
-    {
-      "id": "prod-5",
-      "name": "Triphala Organic Digestive Cleanse Churna",
-      "sku": "AYUR-TRI-005",
-      "price": 250,
-      "originalPrice": 290,
-      "stock": 144,
-      "category": "Digestion",
-      "subcategory": "Churna",
-      "brand": "BV Life Organics",
-      "description": "The classic Ayurvedic formula for gut health. A perfectly balanced blend of three certified organic fruits (Amalaki, Bibhitaki, and Haritaki) to gently cleanse the digestive tract, cure bloating, regulate bowel movements, and detoxify the entire gastrointestinal system.",
-      "mainImage": "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
-      "images": [
-        "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600"
-      ],
-      "ingredients": [
-        {
-          "name": "Organic Amalaki (Emblica officinalis)",
-          "description": "Cools the gut, balances acidity, and repairs the digestive lining."
-        },
-        {
-          "name": "Organic Bibhitaki (Terminalia bellirica)",
-          "description": "Clears old toxic mucus from colon, supports liver health."
-        },
-        {
-          "name": "Organic Haritaki (Terminalia chebula)",
-          "description": "Natural laxative, helps eliminate waste and digest toxins."
-        }
-      ],
-      "benefits": [
-        "Relieves chronic constipation, acidity, and bloated feeling.",
-        "Gently detoxifies the colon without causing dependency or loose stools.",
-        "Supports healthy weight management by boosting gut metabolism.",
-        "Aids nutrient absorption, leaving you lighter and highly energized."
-      ],
-      "dosage": "1/2 to 1 teaspoon (2.5g to 5g) daily before bedtime.",
-      "usageInstructions": "Mix in a glass of warm water or drink with honey. Consume at night, ideally 1 hour after dinner.",
-      "faqs": [
-        {
-          "question": "Does Triphala cause stomach cramps?",
-          "answer": "No. Unlike synthetic laxatives, organic Triphala does not force intestinal contractions; it gently tones colon muscles and moisturizes dry intestines to restore natural stool elimination."
-        }
-      ],
-      "rating": 4.5,
-      "featured": false,
-      "bestSeller": true,
-      "lowStockAlertLimit": 20,
-      "createdDate": "2026-03-10"
+      "bestSeller": false,
+      "lowStockAlertLimit": 5,
+      "createdDate": "2026-08-19"
     }
   ],
   "orders": [
@@ -5994,6 +5830,28 @@
       "date": "2026-06-18"
     },
     {
+      "id": "rev-1787217727111",
+      "productId": "prod-1787140413595",
+      "productName": "Ashwagandha Tablet",
+      "userName": "shubham",
+      "userEmail": "vivek2@gmail.com",
+      "rating": 5,
+      "comment": "wnnw",
+      "isApproved": true,
+      "date": "2026-08-20"
+    },
+    {
+      "id": "rev-1787218192830",
+      "productId": "prod-1787140682779",
+      "productName": "Bakuchi Oil",
+      "userName": "shubham",
+      "userEmail": "vivek2@gmail.com",
+      "rating": 5,
+      "comment": "ss",
+      "isApproved": true,
+      "date": "2026-08-20"
+    },
+    {
       "id": "rev-2",
       "productId": "prod-3",
       "productName": "Kumkumadi Night Elixir Serum",
@@ -6006,6 +5864,223 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1787219916219-c9o4",
+      "timestamp": "2026-08-20T09:58:36.219Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787219889189-t1cc",
+      "timestamp": "2026-08-20T09:58:09.189Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787219889184-o2t5",
+      "timestamp": "2026-08-20T09:58:09.184Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787219889183_n5hhp."
+    },
+    {
+      "id": "log-1787219802886-yoy7",
+      "timestamp": "2026-08-20T09:56:42.886Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787219802880-xl6t",
+      "timestamp": "2026-08-20T09:56:42.880Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787219802879_aa488."
+    },
+    {
+      "id": "log-1787218192845-w8lx",
+      "timestamp": "2026-08-20T09:29:52.845Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "Add Product Review",
+      "details": "Reviewed Bakuchi Oil with 5 stars"
+    },
+    {
+      "id": "log-1787217727124-pffo",
+      "timestamp": "2026-08-20T09:22:07.124Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "Add Product Review",
+      "details": "Reviewed Ashwagandha Tablet with 5 stars"
+    },
+    {
+      "id": "log-1787216697843-afs5",
+      "timestamp": "2026-08-20T09:04:57.843Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1787141728870-zjty",
+      "timestamp": "2026-08-19T12:15:28.870Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: Amla"
+    },
+    {
+      "id": "log-1787141727550-1ce9",
+      "timestamp": "2026-08-19T12:15:27.550Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: testing"
+    },
+    {
+      "id": "log-1787141726658-o2l6",
+      "timestamp": "2026-08-19T12:15:26.658Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: testing"
+    },
+    {
+      "id": "log-1787141726072-qlfs",
+      "timestamp": "2026-08-19T12:15:26.072Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: ggddd"
+    },
+    {
+      "id": "log-1787141725693-wh1p",
+      "timestamp": "2026-08-19T12:15:25.693Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: dkjkd"
+    },
+    {
+      "id": "log-1787141724926-ji5r",
+      "timestamp": "2026-08-19T12:15:24.926Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: ffdd"
+    },
+    {
+      "id": "log-1787141724223-nk62",
+      "timestamp": "2026-08-19T12:15:24.223Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: abc"
+    },
+    {
+      "id": "log-1787141722803-llon",
+      "timestamp": "2026-08-19T12:15:22.804Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: Dabur Himalayan Shilajit Resin | Boosts Muscle Growth & Stamina | Grade A shilajit - 15g"
+    },
+    {
+      "id": "log-1787141700599-bia6",
+      "timestamp": "2026-08-19T12:15:00.599Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: Triphala Organic Digestive Cleanse Churna"
+    },
+    {
+      "id": "log-1787141699448-2hhw",
+      "timestamp": "2026-08-19T12:14:59.448Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: Brahmi & Bringraj Hair Therapy Oil"
+    },
+    {
+      "id": "log-1787141698148-d5m0",
+      "timestamp": "2026-08-19T12:14:58.148Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: Kumkumadi Night Elixir Serum"
+    },
+    {
+      "id": "log-1787141697193-0i3v",
+      "timestamp": "2026-08-19T12:14:57.193Z",
+      "userEmail": "admin",
+      "action": "Delete Product",
+      "details": "Removed product: Pure Ashwagandha KSM-66 Capsules"
+    },
+    {
+      "id": "log-1787141656917-b2t8",
+      "timestamp": "2026-08-19T12:14:16.917Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product Brahmi Hair Oil"
+    },
+    {
+      "id": "log-1787141502906-qbif",
+      "timestamp": "2026-08-19T12:11:42.906Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product Brahmi Churna"
+    },
+    {
+      "id": "log-1787141323845-l2zn",
+      "timestamp": "2026-08-19T12:08:43.845Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product Bala Churna"
+    },
+    {
+      "id": "log-1787141156211-cx54",
+      "timestamp": "2026-08-19T12:05:56.211Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product Avipattikar Churna"
+    },
+    {
+      "id": "log-1787140682782-akud",
+      "timestamp": "2026-08-19T11:58:02.782Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product Bakuchi Oil"
+    },
+    {
+      "id": "log-1787140413597-np7a",
+      "timestamp": "2026-08-19T11:53:33.597Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product Ashwagandha Tablet"
+    },
+    {
+      "id": "log-1787139629655-obxd",
+      "timestamp": "2026-08-19T11:40:29.655Z",
+      "userEmail": "admin",
+      "action": "Update Product",
+      "details": "Updated product details for Amla Tablet"
+    },
+    {
+      "id": "log-1787139177037-8mg8",
+      "timestamp": "2026-08-19T11:32:57.037Z",
+      "userEmail": "admin",
+      "action": "Create Product",
+      "details": "Added product Amla Tablet"
+    },
+    {
+      "id": "log-1787138908738-38kl",
+      "timestamp": "2026-08-19T11:28:28.738Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1787138891779-q53t",
+      "timestamp": "2026-08-19T11:28:11.779Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1787138891776-gipl",
+      "timestamp": "2026-08-19T11:28:11.776Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787138891775_3h3qa."
+    },
     {
       "id": "log-1787138454222-qbml",
       "timestamp": "2026-08-19T11:20:54.222Z",
@@ -7188,223 +7263,6 @@
       "userEmail": "admin",
       "action": "Delete Product",
       "details": "Removed product: Golden Chyawanprash - Saffron & Wild Honey"
-    },
-    {
-      "id": "log-1785154030910-54vc",
-      "timestamp": "2026-07-27T12:07:10.910Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785153895272-ouf5",
-      "timestamp": "2026-07-27T12:04:55.272Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Profile Update",
-      "details": "Updated contact details/addresses."
-    },
-    {
-      "id": "log-1785153888682-mo74",
-      "timestamp": "2026-07-27T12:04:48.682Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785153307335-n4ma",
-      "timestamp": "2026-07-27T11:55:07.335Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785153173313-lxs7",
-      "timestamp": "2026-07-27T11:52:53.313Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785153152831-v6p9",
-      "timestamp": "2026-07-27T11:52:32.831Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "Order Placed",
-      "details": "Placed order #GL-152793-93 for amount ₹1618"
-    },
-    {
-      "id": "log-1785152936560-5u8b",
-      "timestamp": "2026-07-27T11:48:56.560Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "Order Placed",
-      "details": "Placed order #GL-936538-25 for amount ₹330"
-    },
-    {
-      "id": "log-1785152930992-en0u",
-      "timestamp": "2026-07-27T11:48:50.992Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785152610057-lw2e",
-      "timestamp": "2026-07-27T11:43:30.058Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Order Update",
-      "details": "Updated order #GL-117927-79 status to Delivered"
-    },
-    {
-      "id": "log-1785152607252-zy2c",
-      "timestamp": "2026-07-27T11:43:27.252Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Order Update",
-      "details": "Updated order #GL-117927-79 status to Delivered"
-    },
-    {
-      "id": "log-1785152566733-ju11",
-      "timestamp": "2026-07-27T11:42:46.733Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785152214654-7cbu",
-      "timestamp": "2026-07-27T11:36:54.654Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785151675478-j8kv",
-      "timestamp": "2026-07-27T11:27:55.478Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "Order Update",
-      "details": "Updated order #GL-530805-11 status to Shipped"
-    },
-    {
-      "id": "log-1785151572807-u6tz",
-      "timestamp": "2026-07-27T11:26:12.807Z",
-      "userEmail": "iamvivek02@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785151530824-pbgg",
-      "timestamp": "2026-07-27T11:25:30.824Z",
-      "userEmail": "iamvivek02@gmail.com",
-      "action": "Order Placed",
-      "details": "Placed order #GL-530805-11 for amount ₹1002"
-    },
-    {
-      "id": "log-1785151526738-ndth",
-      "timestamp": "2026-07-27T11:25:26.738Z",
-      "userEmail": "iamvivek02@gmail.com",
-      "action": "Profile Update",
-      "details": "Updated contact details/addresses."
-    },
-    {
-      "id": "log-1785151452347-5t4s",
-      "timestamp": "2026-07-27T11:24:12.347Z",
-      "userEmail": "iamvivek02@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785150529407-m4tk",
-      "timestamp": "2026-07-27T11:08:49.407Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785149985896-xq5m",
-      "timestamp": "2026-07-27T10:59:45.896Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-815014-54 status to Shipped"
-    },
-    {
-      "id": "log-1785149983311-0br9",
-      "timestamp": "2026-07-27T10:59:43.311Z",
-      "userEmail": "admin",
-      "action": "Update Order Status",
-      "details": "Set order GL-815014-54 status to Shipped"
-    },
-    {
-      "id": "log-1785149903549-au7w",
-      "timestamp": "2026-07-27T10:58:23.549Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1785149815021-606t",
-      "timestamp": "2026-07-27T10:56:55.021Z",
-      "userEmail": "customer@example.com",
-      "action": "Place Order",
-      "details": "Placed order GL-815014-54 totaling 1120 INR. Payment recorded: Paid."
-    },
-    {
-      "id": "log-1785149750745-iax8",
-      "timestamp": "2026-07-27T10:55:50.745Z",
-      "userEmail": "customer@example.com",
-      "action": "Place Order",
-      "details": "Placed order GL-750738-60 totaling 632 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1785149649266-jlxy",
-      "timestamp": "2026-07-27T10:54:09.266Z",
-      "userEmail": "customer@example.com",
-      "action": "Place Order",
-      "details": "Placed order GL-649258-92 totaling 610 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1785149609191-z1no",
-      "timestamp": "2026-07-27T10:53:29.191Z",
-      "userEmail": "customer@example.com",
-      "action": "User Registration",
-      "details": "Created account for bool with phone +918283939383"
-    },
-    {
-      "id": "log-1785149472380-9jqe",
-      "timestamp": "2026-07-27T10:51:12.380Z",
-      "userEmail": "iamakshit@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-472375-13 totaling 2117 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1785149455804-sd42",
-      "timestamp": "2026-07-27T10:50:55.804Z",
-      "userEmail": "iamakshit@gmail.com",
-      "action": "Place Order",
-      "details": "Placed order GL-455797-69 totaling 610 INR. Payment recorded: Pending."
-    },
-    {
-      "id": "log-1785149382033-xr1p",
-      "timestamp": "2026-07-27T10:49:42.033Z",
-      "userEmail": "iamakshit@gmail.com",
-      "action": "User Registration",
-      "details": "Created account for Akshit kumar with phone +919684648699"
-    },
-    {
-      "id": "log-1785147117947-ndt3",
-      "timestamp": "2026-07-27T10:11:57.947Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "Order Placed",
-      "details": "Placed order #GL-117927-79 for amount ₹610"
-    },
-    {
-      "id": "log-1785147004058-5vx3",
-      "timestamp": "2026-07-27T10:10:04.058Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "Order Placed",
-      "details": "Placed order #GL-004035-98 for amount ₹1904"
-    },
-    {
-      "id": "log-1785146418330-jxlx",
-      "timestamp": "2026-07-27T10:00:18.330Z",
-      "userEmail": "iamvivek90@gmail.com",
-      "action": "Order Placed",
-      "details": "Placed order #GL-418296-97 for amount ₹610"
     }
   ],
   "payments": [
