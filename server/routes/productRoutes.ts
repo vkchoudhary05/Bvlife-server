@@ -7,6 +7,11 @@ import { Router } from "express";
 import { 
   getProducts, 
   getProductById, 
+  getProductVariant,
+  switchProductFormulation,
+  createProductVariant,
+  updateProductVariant,
+  deleteProductVariant,
   createProduct, 
   updateProduct, 
   deleteProduct, 
@@ -26,15 +31,20 @@ import {
   getSettings, 
   updateSettings, 
   getActivityLogs 
-} from "../controllers/productController.js";
-import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware.js";
-import { validateProduct } from "../middleware/validationMiddleware.js";
+} from "../controllers/productController";
+import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware";
+import { validateProduct } from "../middleware/validationMiddleware";
 
 export const productRouter = Router();
 
 // Products (Public read, Admin write)
 productRouter.get("/api/products", getProducts);
 productRouter.get("/api/products/:id", getProductById);
+productRouter.get("/api/products/:id/variants/:variantId", getProductVariant);
+productRouter.get("/api/products/:id/switch-formulation/:formType", switchProductFormulation);
+productRouter.post("/api/products/:id/variants", authenticateToken, requireAdmin, createProductVariant);
+productRouter.put("/api/products/:id/variants/:variantId", authenticateToken, requireAdmin, updateProductVariant);
+productRouter.delete("/api/products/:id/variants/:variantId", authenticateToken, requireAdmin, deleteProductVariant);
 productRouter.post("/api/products", authenticateToken, requireAdmin, validateProduct, createProduct);
 productRouter.put("/api/products/:id", authenticateToken, requireAdmin, validateProduct, updateProduct);
 productRouter.delete("/api/products/:id", authenticateToken, requireAdmin, deleteProduct);
