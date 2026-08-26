@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Product, ProductVariant } from './types';
+import { Product, ProductVariant } from './types.js';
 
 export interface FormulationPreset {
   id: string;

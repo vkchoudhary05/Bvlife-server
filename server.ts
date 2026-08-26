@@ -8,14 +8,14 @@ import path from "path";
 import cors from "cors";
 
 // Import custom middleware
-import { requestLogger, errorHandler } from "./server/middleware/errorMiddleware";
+import { requestLogger, errorHandler } from "./server/middleware/errorMiddleware.js";
 
 // Import modular routes
-import { authRouter } from "./server/routes/authRoutes";
-import { productRouter } from "./server/routes/productRoutes";
-import { orderRouter } from "./server/routes/orderRoutes";
-import { aiRouter } from "./server/routes/aiRoutes";
-import { doctorRouter } from "./server/routes/doctorRoutes";
+import { authRouter } from "./server/routes/authRoutes.js";
+import { productRouter } from "./server/routes/productRoutes.js";
+import { orderRouter } from "./server/routes/orderRoutes.js";
+import { aiRouter } from "./server/routes/aiRoutes.js";
+import { doctorRouter } from "./server/routes/doctorRoutes.js";
 
 const app = express();
 const PORT = 5000; // Standalone port

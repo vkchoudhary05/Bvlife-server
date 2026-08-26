@@ -31,9 +31,9 @@ import {
   getSettings, 
   updateSettings, 
   getActivityLogs 
-} from "../controllers/productController";
-import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware";
-import { validateProduct } from "../middleware/validationMiddleware";
+} from "../controllers/productController.js";
+import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware.js";
+import { validateProduct } from "../middleware/validationMiddleware.js";
 
 export const productRouter = Router();
 
