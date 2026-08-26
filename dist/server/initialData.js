@@ -4,6 +4,253 @@
  */
 export const INITIAL_PRODUCTS = [
     {
+        id: "prod-amla-tab",
+        name: "Pure Amla C-Shield Tablets (Amalaki Vati)",
+        sku: "AYUR-AML-TAB-001",
+        price: 290,
+        originalPrice: 340,
+        stock: 130,
+        category: "Immunity",
+        subcategory: "Tablets",
+        brand: "Grams Life Organics",
+        familyGroup: "amla-family",
+        baseHerb: "Amla",
+        formulation: "tablet",
+        formLabel: "Tablets / Vati",
+        description: "Pure Amalaki (Indian Gooseberry) standardized extract tablets enriched with natural Vitamin C, bioflavonoids, and polyphenols. Promotes cellular longevity, supports eyesight, boosts immune defenses, and delays aging.",
+        mainImage: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+        images: [
+            "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1550572017-ed200f5e6343?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&q=80&w=600"
+        ],
+        ingredients: [
+            { name: "Organic Amalaki Extract (Emblica officinalis)", description: "Standardized fruit extract containing 45% natural Vitamin C and bio-active tannins." },
+            { name: "Pippali", description: "Enhances nutrient absorption and bio-potency." }
+        ],
+        benefits: [
+            "20x more potent Vitamin C than citrus fruits for natural immune shield.",
+            "Promotes radiant skin tone, collagen synthesis, and bright vision.",
+            "Neutralizes oxidative free radicals and revitalizes internal organs.",
+            "Easy-to-swallow measured tablet dosing, mess-free for daily routine."
+        ],
+        dosage: "1 to 2 tablets twice daily with water after meals.",
+        usageInstructions: "Swallow whole with lukewarm water in the morning and evening.",
+        faqs: [
+            { question: "How does Amla tablet differ from Churna or Oil?", answer: "Amla tablets provide convenient, measured active extract dosing on the go. Churna is ideal for traditional warm water/honey drinks, while Amla Oil is designed for external hair & scalp nourishment." }
+        ],
+        rating: 4.8,
+        featured: true,
+        bestSeller: true,
+        lowStockAlertLimit: 15,
+        createdDate: "2026-05-01",
+        variants: [
+            {
+                id: "var-amla-tab-60",
+                name: "60 Tablets Bottle",
+                size: "60 tab",
+                form: "tablet",
+                formType: "Tablets / Vati",
+                price: 290,
+                originalPrice: 340,
+                stock: 80,
+                sku: "AYUR-AML-60TAB",
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 tablet twice daily with lukewarm water.",
+                netQuantity: "60 Coated Tablets Bottle (500mg each)",
+                description: "1-Month personal supply of concentrated Amalaki Vati for immune stamina.",
+                benefits: ["Natural Vitamin C source", "Improves eyesight and digestion", "Pocket & office friendly"],
+                isDefault: true
+            },
+            {
+                id: "var-amla-tab-120",
+                name: "120 Tablets Value Bottle",
+                size: "120 tab",
+                form: "tablet",
+                formType: "Tablets / Vati",
+                price: 520,
+                originalPrice: 620,
+                stock: 50,
+                sku: "AYUR-AML-120TAB",
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 to 2 tablets twice daily after food.",
+                netQuantity: "120 Coated Tablets Economical Value Pack",
+                description: "Full 2-month family course of Ayurvedic Amla tablets with premium savings.",
+                benefits: ["Double course savings", "Sustained all-season immunity", "Strengthens hair roots from within"]
+            }
+        ]
+    },
+    {
+        id: "prod-amla-oil",
+        name: "Pure Amla & Bhringraj Nourishing Hair & Scalp Oil",
+        sku: "AYUR-AML-OIL-002",
+        price: 280,
+        originalPrice: 340,
+        stock: 110,
+        category: "Hair Care",
+        subcategory: "Oils",
+        brand: "Grams Life Beauty",
+        familyGroup: "amla-family",
+        baseHerb: "Amla",
+        formulation: "oil",
+        formLabel: "Taila / Hair Oil",
+        description: "Authentic Taila Pak Vidhi formulation prepared by slow-infusing fresh cold-pressed wild Amla juice, Bhringraj, and Sesame Oil. Strengthens hair shafts from the root, prevents premature graying, and restores natural gloss.",
+        mainImage: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600",
+        images: [
+            "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1608248597358-1f09564f26b5?auto=format&fit=crop&q=80&w=600"
+        ],
+        ingredients: [
+            { name: "Fresh Amalaki Swarasa (Amla Juice)", description: "Rich in antioxidants that protect melanin in hair and repair root follicles." },
+            { name: "Bhringraj Extract", description: "Triggers dormant hair follicles and promotes thick healthy hair growth." },
+            { name: "Cold-Pressed Black Sesame Oil", description: "Deep penetrating base oil carrying botanical actives to scalp layers." }
+        ],
+        benefits: [
+            "Reduces hair fall and stimulates dormant follicle growth.",
+            "Prevents premature graying and darkens natural hair luster.",
+            "Soothes dry, itchy scalp and eliminates stubborn dandruff.",
+            "Leaves hair silky, conditioned, and voluminous."
+        ],
+        dosage: "5-10ml per application depending on hair length.",
+        usageInstructions: "Apply oil directly onto scalp with fingertips. Massage in circular motions for 10 mins. Keep for 2 hours or overnight before washing.",
+        faqs: [
+            { question: "Is this sticky or heavy?", answer: "Our oil uses a cold-pressed micro-filtered sesame base that penetrates deeply without leaving an excessively sticky residue." }
+        ],
+        rating: 4.9,
+        featured: true,
+        bestSeller: true,
+        lowStockAlertLimit: 12,
+        createdDate: "2026-05-02",
+        variants: [
+            {
+                id: "var-amla-oil-100ml",
+                name: "100ml Glass Bottle",
+                size: "100ml",
+                form: "oil",
+                formType: "Taila / Hair Oil",
+                price: 280,
+                originalPrice: 340,
+                stock: 65,
+                sku: "AYUR-AML-100ML",
+                image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600",
+                dosage: "5-10ml twice weekly.",
+                netQuantity: "100ml Herbal Scalp Therapy Bottle",
+                description: "Compact 100ml glass bottle for regular hair nourishing and scalp conditioning.",
+                benefits: ["Stops split ends and breakage", "Deep cooling scalp therapy", "Natural herbal fragrance"],
+                isDefault: true
+            },
+            {
+                id: "var-amla-oil-200ml",
+                name: "200ml Family Dropper Bottle",
+                size: "200ml",
+                form: "oil",
+                formType: "Taila / Hair Oil",
+                price: 490,
+                originalPrice: 590,
+                stock: 45,
+                sku: "AYUR-AML-200ML",
+                image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600",
+                dosage: "10-15ml twice or thrice weekly.",
+                netQuantity: "200ml Value Pack with Precision Applicator",
+                description: "Family size 200ml bottle with ergonomic dropper for targeted root application.",
+                benefits: ["Best value for bi-weekly routines", "Targeted scalp root applicator", "Long-lasting botanical freshness"]
+            }
+        ]
+    },
+    {
+        id: "prod-amla-churna",
+        name: "Organic Amla Fruit Churna (Pure Amalaki Powder)",
+        sku: "AYUR-AML-CHU-003",
+        price: 180,
+        originalPrice: 220,
+        stock: 200,
+        category: "Immunity",
+        subcategory: "Churna",
+        brand: "Grams Life Organics",
+        familyGroup: "amla-family",
+        baseHerb: "Amla",
+        formulation: "churna",
+        formLabel: "Churna / Herbal Powder",
+        description: "Stone-ground micronized powder prepared from sun-dried deseeded organic Amla berries. A traditional Tridoshic superfood that detoxifies the gut, enhances digestive fire (Agni), and purifies blood naturally.",
+        mainImage: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+        images: [
+            "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&q=80&w=600"
+        ],
+        ingredients: [
+            { name: "100% Pure Organic Amalaki Fruit Pulp", description: "Wild-harvested, deseeded, shade-dried, and finely micro-pulverized." }
+        ],
+        benefits: [
+            "Balances all three doshas (Vata, Pitta, Kapha) especially excess Pitta heat.",
+            "Aids natural digestion, relieves acid reflux, and supports liver detox.",
+            "Can be consumed internally or mixed as a natural hair mask pack.",
+            "100% additive-free, raw botanical powder without starch or preservatives."
+        ],
+        dosage: "3g to 5g (1 level teaspoon) twice daily.",
+        usageInstructions: "Mix with warm water, honey, or ghee first thing in the morning or before bedtime.",
+        faqs: [
+            { question: "Can I use this as a hair pack?", answer: "Yes! Mix 2 tbsp Amla Churna with warm water or yogurt to form a smooth paste. Apply to scalp for 30 minutes, then rinse for glossy conditioning." }
+        ],
+        rating: 4.7,
+        featured: true,
+        bestSeller: false,
+        lowStockAlertLimit: 20,
+        createdDate: "2026-05-03",
+        variants: [
+            {
+                id: "var-amla-churna-100g",
+                name: "100g Organic Jar",
+                size: "100g",
+                form: "churna",
+                formType: "Churna / Powder",
+                price: 180,
+                originalPrice: 220,
+                stock: 90,
+                sku: "AYUR-AML-100G",
+                image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 teaspoon (3g-5g) twice daily.",
+                netQuantity: "100g Airtight Jar",
+                description: "Freshly packed 100g jar of stone-ground Amalaki powder.",
+                benefits: ["Tridosha balancing", "Digestive Agni booster", "Airtight freshness seal"],
+                isDefault: true
+            },
+            {
+                id: "var-amla-churna-200g",
+                name: "200g Value Jar",
+                size: "200g",
+                form: "churna",
+                formType: "Churna / Powder",
+                price: 320,
+                originalPrice: 390,
+                stock: 70,
+                sku: "AYUR-AML-200G",
+                image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 teaspoon (3g-5g) twice daily.",
+                netQuantity: "200g Airtight Jar",
+                description: "200g supply ideal for regular morning Ayurvedic detox rituals.",
+                benefits: ["Save on daily consumption", "Supports gut flora and glowing skin"]
+            },
+            {
+                id: "var-amla-churna-500g",
+                name: "500g Bulk Pack",
+                size: "500g",
+                form: "churna",
+                formType: "Churna / Powder",
+                price: 690,
+                originalPrice: 850,
+                stock: 40,
+                sku: "AYUR-AML-500G",
+                image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 teaspoon (3g-5g) daily for whole family.",
+                netQuantity: "500g Eco-Seal Bulk Kitchen Pack",
+                description: "Economical 500g bulk pack for health enthusiasts, families, and hair mask preparations.",
+                benefits: ["Maximum savings", "Dual use for health drinks & hair conditioning packs"]
+            }
+        ]
+    },
+    {
         id: "prod-1",
         name: "Golden Chyawanprash - Saffron & Wild Honey",
         sku: "AYUR-CHY-001",
@@ -13,6 +260,10 @@ export const INITIAL_PRODUCTS = [
         category: "Immunity",
         subcategory: "Syrup",
         brand: "Grams Life Organics",
+        familyGroup: "chyawanprash-family",
+        baseHerb: "Chyawanprash",
+        formulation: "paste",
+        formLabel: "Avaleha / Paste",
         description: "An ancient, powerful blend of 45+ premium Ayurvedic herbs, enriched with handpicked Kashmiri saffron, wild forest honey, and organic ghee. Grams Life Chyawanprash acts as a natural immunity shield, restoring youthful energy, boosting stamina, and improving respiratory function.",
         mainImage: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -42,19 +293,68 @@ export const INITIAL_PRODUCTS = [
         featured: true,
         bestSeller: true,
         lowStockAlertLimit: 10,
-        createdDate: "2026-05-01"
+        createdDate: "2026-05-01",
+        variants: [
+            {
+                id: "var-chy-500g",
+                name: "500g Glass Jar",
+                size: "500g",
+                form: "paste",
+                formType: "Avaleha / Paste",
+                price: 480,
+                originalPrice: 550,
+                stock: 45,
+                sku: "AYUR-CHY-500",
+                image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 teaspoon (10g) twice daily with warm milk or lukewarm water.",
+                usageInstructions: "Best taken on an empty stomach in the morning and before sleep.",
+                netQuantity: "500g Herbal Avaleha Jar",
+                description: "Classical 500g glass jar packaging preserved with wild forest honey and organic cow ghee.",
+                benefits: [
+                    "Quick-acting digestive and respiratory immunity",
+                    "Rich natural Vitamin C from wild Amalaki",
+                    "Optimal size for personal 1-month daily wellness cycle"
+                ],
+                isDefault: true
+            },
+            {
+                id: "var-chy-1kg",
+                name: "1kg Family Pack",
+                size: "1kg",
+                form: "paste",
+                formType: "Avaleha / Paste",
+                price: 850,
+                originalPrice: 950,
+                stock: 40,
+                sku: "AYUR-CHY-1KG",
+                image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 teaspoon (10g) for adults, 1/2 teaspoon (5g) for kids twice daily.",
+                usageInstructions: "Consume directly or stir into warm milk.",
+                netQuantity: "1000g (1kg) Family Economical Pack",
+                description: "Value family pack providing a full seasonal supply of vitalizing Chyawanprash.",
+                benefits: [
+                    "Economic family packaging with maximum herbal freshness",
+                    "Enhanced stamina and all-season immunity shield",
+                    "Sustains respiratory vitality for all age groups"
+                ]
+            }
+        ]
     },
     {
         id: "prod-2",
-        name: "Pure Ashwagandha KSM-66 Capsules",
+        name: "Pure Ashwagandha KSM-66 Capsules & Churna",
         sku: "AYUR-ASH-002",
-        price: 490,
-        originalPrice: 590,
-        stock: 120,
+        price: 280,
+        originalPrice: 340,
+        stock: 305,
         category: "Immunity",
         subcategory: "Capsules",
         brand: "Grams Life Wellness",
-        description: "Premium high-concentration Ashwagandha root extract (standardized to 5% withanolides). Formulated scientifically using KSM-66, the most clinically researched ashwagandha on the market, to reduce daily cortisol levels, eliminate stress, and boost mental calmness.",
+        familyGroup: "ashwagandha-family",
+        baseHerb: "Ashwagandha",
+        formulation: "churna",
+        formLabel: "Churna & Tablets",
+        description: "Premium high-concentration Ashwagandha root extract (standardized to 5% withanolides). Available in authentic organic Churna (100g/200g) and vegetarian Tablets/Capsules (60/120 tab) formulated scientifically using KSM-66 to eliminate stress, lower cortisol, and boost calmness.",
         mainImage: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
         images: [
             "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
@@ -69,8 +369,8 @@ export const INITIAL_PRODUCTS = [
             "Enhances natural muscle recovery, muscle endurance, and strength.",
             "Supports cognitive performance, memory retention, and brain focus."
         ],
-        dosage: "1 capsule twice daily with milk or water after meals.",
-        usageInstructions: "Take one capsule in the morning to handle daily stress and one before bedtime for deep sleep.",
+        dosage: "1 capsule twice daily or 1/2 tsp churna with warm milk after meals.",
+        usageInstructions: "Take in the morning to handle daily stress and before bedtime with warm milk for deep restorative sleep.",
         faqs: [
             { question: "What is KSM-66?", answer: "KSM-66 is an award-winning, certified organic root extract of Ashwagandha produced using a unique milk-processing extraction method, keeping the natural chemical balance of the herb fully intact." }
         ],
@@ -78,7 +378,94 @@ export const INITIAL_PRODUCTS = [
         featured: true,
         bestSeller: true,
         lowStockAlertLimit: 15,
-        createdDate: "2026-05-10"
+        createdDate: "2026-05-10",
+        variants: [
+            {
+                id: "var-ash-churna-100g",
+                name: "100g Churna Jar",
+                size: "100g",
+                form: "churna",
+                formType: "Churna / Powder",
+                price: 280,
+                originalPrice: 340,
+                stock: 60,
+                sku: "AYUR-ASH-100G",
+                image: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
+                dosage: "Take 3g to 5g (approx. 1/2 to 1 level teaspoon) of Churna twice daily.",
+                usageInstructions: "Mix with warm milk, honey, or ghee 30 minutes before bedtime.",
+                netQuantity: "100g Micronized Root Powder Jar",
+                description: "Stone-pulverized organic Ashwagandha root powder (Withania somnifera) for classical Vedic preparation.",
+                benefits: [
+                    "100% Raw whole root powder with natural full-spectrum alkaloids",
+                    "Optimal for traditional warm golden milk (Haldi Doodh) mixing",
+                    "Balances Vata dosha and calms nervous exhaustion"
+                ],
+                isDefault: true
+            },
+            {
+                id: "var-ash-churna-200g",
+                name: "200g Churna Jar",
+                size: "200g",
+                form: "churna",
+                formType: "Churna / Powder",
+                price: 490,
+                originalPrice: 590,
+                stock: 50,
+                sku: "AYUR-ASH-200G",
+                image: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
+                dosage: "Take 1/2 to 1 teaspoon (3g-5g) twice daily with warm milk or lukewarm water.",
+                usageInstructions: "Best taken in morning and night with warm beverage.",
+                netQuantity: "200g Micronized Root Powder Jar",
+                description: "Extended supply of organic root Churna for sustained adaptogenic and vitality support.",
+                benefits: [
+                    "Cost-effective double size for a complete 60-day Ayurvedic course",
+                    "Pure organic ground root without fillers or starch",
+                    "Enhances restorative deep REM sleep"
+                ]
+            },
+            {
+                id: "var-ash-tab-60",
+                name: "60 Tablets Bottle",
+                size: "60 tab",
+                form: "tablet",
+                formType: "Tablets / Vati",
+                price: 490,
+                originalPrice: 590,
+                stock: 120,
+                sku: "AYUR-ASH-60TAB",
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 to 2 tablets twice daily after meals with water.",
+                usageInstructions: "Swallow whole with lukewarm water. Convenient for travel and office.",
+                netQuantity: "60 Coated Herbal Tablets Bottle (500mg each)",
+                description: "Standardized KSM-66 Ashwagandha extract tablets delivering measured withanolide actives per tablet.",
+                benefits: [
+                    "Standardized to 5% withanolides for targeted cortisol reduction",
+                    "Easy-to-swallow vegetarian coated tablets",
+                    "Mess-free, pocket & travel friendly dosing"
+                ]
+            },
+            {
+                id: "var-ash-tab-120",
+                name: "120 Tablets Value Bottle",
+                size: "120 tab",
+                form: "tablet",
+                formType: "Tablets / Vati",
+                price: 890,
+                originalPrice: 1050,
+                stock: 75,
+                sku: "AYUR-ASH-120TAB",
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                dosage: "1 tablet twice daily after meals with water.",
+                usageInstructions: "Take post breakfast and post dinner with water.",
+                netQuantity: "120 Coated Herbal Tablets Value Pack",
+                description: "2-Month full course value pack of KSM-66 Ashwagandha tablets for athletes and busy professionals.",
+                benefits: [
+                    "Full 60-day clinical strength adaptogenic protocol",
+                    "Boosts muscle recovery, physical stamina and mental focus",
+                    "Significant savings compared to standard bottles"
+                ]
+            }
+        ]
     },
     {
         id: "prod-3",
@@ -116,7 +503,40 @@ export const INITIAL_PRODUCTS = [
         featured: true,
         bestSeller: false,
         lowStockAlertLimit: 8,
-        createdDate: "2026-04-15"
+        createdDate: "2026-04-15",
+        variants: [
+            {
+                id: "var-kum-30ml",
+                name: "30ml Dropper Bottle",
+                size: "30ml",
+                form: "oil",
+                price: 1190,
+                originalPrice: 1390,
+                stock: 20,
+                sku: "AYUR-KUM-30ML"
+            },
+            {
+                id: "var-kum-50ml",
+                name: "50ml Luxury Dropper",
+                size: "50ml",
+                form: "oil",
+                price: 1890,
+                originalPrice: 2200,
+                stock: 35,
+                sku: "AYUR-KUM-50ML",
+                isDefault: true
+            },
+            {
+                id: "var-kum-100ml",
+                name: "100ml Grand Bottle",
+                size: "100ml",
+                form: "oil",
+                price: 3390,
+                originalPrice: 3990,
+                stock: 15,
+                sku: "AYUR-KUM-100ML"
+            }
+        ]
     },
     {
         id: "prod-4",
@@ -128,6 +548,10 @@ export const INITIAL_PRODUCTS = [
         category: "Hair Care",
         subcategory: "Oils",
         brand: "Grams Life Beauty",
+        familyGroup: "brahmi-family",
+        baseHerb: "Brahmi",
+        formulation: "oil",
+        formLabel: "Taila / Hair Oil",
         description: "Cold-pressed black sesame oil infused with fresh Bhringraj leaves, Brahmi extract, and Amla juice. This intense therapeutic oil penetrates deeply to stimulate hair roots, stop hair fall, cool down the scalp, and prevent premature graying.",
         mainImage: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -154,11 +578,34 @@ export const INITIAL_PRODUCTS = [
         featured: false,
         bestSeller: true,
         lowStockAlertLimit: 10,
-        createdDate: "2026-05-20"
+        createdDate: "2026-05-20",
+        variants: [
+            {
+                id: "var-hair-100ml",
+                name: "100ml Bottle",
+                size: "100ml",
+                form: "oil",
+                price: 290,
+                originalPrice: 340,
+                stock: 25,
+                sku: "AYUR-HAIR-100ML"
+            },
+            {
+                id: "var-hair-200ml",
+                name: "200ml Bottle",
+                size: "200ml",
+                form: "oil",
+                price: 520,
+                originalPrice: 590,
+                stock: 35,
+                sku: "AYUR-HAIR-200ML",
+                isDefault: true
+            }
+        ]
     },
     {
         id: "prod-5",
-        name: "Triphala Organic Digestive Cleanse Churna",
+        name: "Triphala Organic Digestive Cleanse Churna & Tablets",
         sku: "AYUR-TRI-005",
         price: 250,
         originalPrice: 290,
@@ -166,6 +613,10 @@ export const INITIAL_PRODUCTS = [
         category: "Digestion",
         subcategory: "Churna",
         brand: "Grams Life Organics",
+        familyGroup: "triphala-family",
+        baseHerb: "Triphala",
+        formulation: "churna",
+        formLabel: "Churna & Tablets",
         description: "The classic Ayurvedic formula for gut health. A perfectly balanced blend of three certified organic fruits (Amalaki, Bibhitaki, and Haritaki) to gently cleanse the digestive tract, cure bloating, regulate bowel movements, and detoxify the entire gastrointestinal system.",
         mainImage: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -182,8 +633,8 @@ export const INITIAL_PRODUCTS = [
             "Supports healthy weight management by boosting gut metabolism.",
             "Aids nutrient absorption, leaving you lighter and highly energized."
         ],
-        dosage: "1/2 to 1 teaspoon (2.5g to 5g) daily before bedtime.",
-        usageInstructions: "Mix in a glass of warm water or drink with honey. Consume at night, ideally 1 hour after dinner.",
+        dosage: "1/2 to 1 teaspoon (2.5g to 5g) or 1-2 tablets daily before bedtime.",
+        usageInstructions: "Mix powder in a glass of warm water or swallow tablets with warm water at night, ideally 1 hour after dinner.",
         faqs: [
             { question: "Does Triphala cause stomach cramps?", answer: "No. Unlike synthetic laxatives, organic Triphala does not force intestinal contractions; it gently tones colon muscles and moisturizes dry intestines to restore natural stool elimination." }
         ],
@@ -191,11 +642,54 @@ export const INITIAL_PRODUCTS = [
         featured: false,
         bestSeller: true,
         lowStockAlertLimit: 20,
-        createdDate: "2026-03-10"
+        createdDate: "2026-03-10",
+        variants: [
+            {
+                id: "var-tri-100g",
+                name: "100g Churna Jar",
+                size: "100g",
+                form: "churna",
+                price: 150,
+                originalPrice: 180,
+                stock: 60,
+                sku: "AYUR-TRI-100G"
+            },
+            {
+                id: "var-tri-200g",
+                name: "200g Churna Jar",
+                size: "200g",
+                form: "churna",
+                price: 250,
+                originalPrice: 290,
+                stock: 80,
+                sku: "AYUR-TRI-200G",
+                isDefault: true
+            },
+            {
+                id: "var-tri-60tab",
+                name: "60 Tablets Bottle",
+                size: "60 tab",
+                form: "tablet",
+                price: 240,
+                originalPrice: 280,
+                stock: 45,
+                sku: "AYUR-TRI-60TAB"
+            },
+            {
+                id: "var-tri-120tab",
+                name: "120 Tablets Value Bottle",
+                size: "120 tab",
+                form: "tablet",
+                price: 440,
+                originalPrice: 520,
+                stock: 30,
+                sku: "AYUR-TRI-120TAB"
+            }
+        ]
     },
     {
         id: "prod-6",
-        name: "Shatavari Balance Capsules - Women's Tonic",
+        name: "Shatavari Balance Capsules & Powder - Women's Tonic",
         sku: "AYUR-SHA-006",
         price: 450,
         originalPrice: 490,
@@ -226,11 +720,44 @@ export const INITIAL_PRODUCTS = [
         featured: false,
         bestSeller: false,
         lowStockAlertLimit: 12,
-        createdDate: "2026-04-28"
+        createdDate: "2026-04-28",
+        variants: [
+            {
+                id: "var-sha-100g",
+                name: "100g Churna Jar",
+                size: "100g",
+                form: "churna",
+                price: 280,
+                originalPrice: 320,
+                stock: 30,
+                sku: "AYUR-SHA-100G"
+            },
+            {
+                id: "var-sha-60tab",
+                name: "60 Tablets Bottle",
+                size: "60 tab",
+                form: "tablet",
+                price: 450,
+                originalPrice: 490,
+                stock: 65,
+                sku: "AYUR-SHA-60TAB",
+                isDefault: true
+            },
+            {
+                id: "var-sha-120tab",
+                name: "120 Tablets Bottle",
+                size: "120 tab",
+                form: "tablet",
+                price: 790,
+                originalPrice: 890,
+                stock: 25,
+                sku: "AYUR-SHA-120TAB"
+            }
+        ]
     },
     {
         id: "prod-7",
-        name: "Madhunashini Diabetes Care Tablets",
+        name: "Madhunashini Diabetes Care Tablets & Churna",
         sku: "AYUR-MAD-007",
         price: 380,
         originalPrice: 450,
@@ -263,7 +790,40 @@ export const INITIAL_PRODUCTS = [
         featured: false,
         bestSeller: false,
         lowStockAlertLimit: 15,
-        createdDate: "2026-05-18"
+        createdDate: "2026-05-18",
+        variants: [
+            {
+                id: "var-mad-100g",
+                name: "100g Churna Jar",
+                size: "100g",
+                form: "churna",
+                price: 290,
+                originalPrice: 340,
+                stock: 35,
+                sku: "AYUR-MAD-100G"
+            },
+            {
+                id: "var-mad-60tab",
+                name: "60 Tablets Bottle",
+                size: "60 tab",
+                form: "tablet",
+                price: 380,
+                originalPrice: 450,
+                stock: 90,
+                sku: "AYUR-MAD-60TAB",
+                isDefault: true
+            },
+            {
+                id: "var-mad-120tab",
+                name: "120 Tablets Bottle",
+                size: "120 tab",
+                form: "tablet",
+                price: 690,
+                originalPrice: 820,
+                stock: 40,
+                sku: "AYUR-MAD-120TAB"
+            }
+        ]
     },
     {
         id: "prod-8",
@@ -296,11 +856,34 @@ export const INITIAL_PRODUCTS = [
         faqs: [
             { question: "How often can I apply this?", answer: "Apply 2-3 times daily, especially during morning stiffness and before sleeping." }
         ],
-        rating: 4.8,
-        featured: true,
+        rating: 4.4,
+        featured: false,
         bestSeller: false,
         lowStockAlertLimit: 10,
-        createdDate: "2026-06-02"
+        createdDate: "2026-05-15",
+        variants: [
+            {
+                id: "var-nir-100ml",
+                name: "100ml Bottle",
+                size: "100ml",
+                form: "oil",
+                price: 190,
+                originalPrice: 230,
+                stock: 30,
+                sku: "AYUR-NIR-100ML"
+            },
+            {
+                id: "var-nir-200ml",
+                name: "200ml Bottle",
+                size: "200ml",
+                form: "oil",
+                price: 340,
+                originalPrice: 390,
+                stock: 55,
+                sku: "AYUR-NIR-200ML",
+                isDefault: true
+            }
+        ]
     },
     {
         id: "prod-9",
@@ -590,3 +1173,74 @@ export const DEFAULT_SETTINGS = {
     baseShippingCharge: 50,
     freeShippingThreshold: 999 // Free shipping above 999 INR
 };
+export const INITIAL_DOCTORS = [
+    {
+        id: 'doc-1',
+        name: 'Dr. Rajeshwar Sharma',
+        title: 'Senior Ayurvedic Physician & Nadi Specialist',
+        qualification: 'BAMS, MD (Ayurveda), Gold Medalist',
+        experienceYears: 18,
+        specialties: ['Nadi Pariksha', 'Chronic Joint Care', 'Digestive Disorders', 'Rasayana Therapy'],
+        languages: ['Hindi', 'English', 'Sanskrit'],
+        fee: 499,
+        originalFee: 999,
+        rating: 4.9,
+        reviewsCount: 1420,
+        image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400',
+        bio: 'Over 18 years of clinical experience in root-cause diagnosis via classical Ayurvedic Pulse Examination (Nadi Pariksha) and Panchakarma therapies.',
+        availableDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        nextAvailable: 'Today, 04:30 PM'
+    },
+    {
+        id: 'doc-2',
+        name: 'Dr. Ananya Trivedi',
+        title: 'Ayurvedic Gut Health & Metabolic Specialist',
+        qualification: 'BAMS, PGD (Panchakarma & Dietetics)',
+        experienceYears: 12,
+        specialties: ['Gut & Digestion', 'Weight & Metabolism', 'Liver Detox', 'Thyroid Care'],
+        languages: ['Hindi', 'English', 'Gujarati'],
+        fee: 399,
+        originalFee: 799,
+        rating: 4.9,
+        reviewsCount: 980,
+        image: 'https://images.unsplash.com/photo-1594824813501-48995a93557e?auto=format&fit=crop&q=80&w=400',
+        bio: 'Specializes in reversing gut dysbiosis, IBS, chronic acidity, and restoring metabolic agni using targeted botanical extracts and customized diet charts.',
+        availableDays: ['Mon', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        nextAvailable: 'Tomorrow, 10:00 AM'
+    },
+    {
+        id: 'doc-3',
+        name: 'Dr. Devendra Shastri',
+        title: 'Kaya Chikitsa & Men\'s Wellness Vaidya',
+        qualification: 'BAMS, Fellowship in Rasayana & Vajikarana',
+        experienceYears: 15,
+        specialties: ['Men\'s Health & Stamina', 'Stress & Insomnia', 'Immunity Boost', 'Kaya Chikitsa'],
+        languages: ['Hindi', 'English', 'Marathi'],
+        fee: 499,
+        originalFee: 999,
+        rating: 4.8,
+        reviewsCount: 1150,
+        image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400',
+        bio: 'Dedicated practitioner of classical Rasayana and Vajikarana science, focusing on cellular rejuvenation, sleep cycles, and vital stamina.',
+        availableDays: ['Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        nextAvailable: 'Today, 06:00 PM'
+    },
+    {
+        id: 'doc-4',
+        name: 'Dr. Meenakshi Joshi',
+        title: 'Ayurvedic Dermatology & Women\'s Health',
+        qualification: 'BAMS, MD (Dravyaguna)',
+        experienceYears: 11,
+        specialties: ['Skin & Hair Alchemy', 'PCOS / Hormonal Balance', 'Anti-Aging', 'Post-Natal Care'],
+        languages: ['Hindi', 'English', 'Bengali'],
+        fee: 399,
+        originalFee: 799,
+        rating: 4.9,
+        reviewsCount: 890,
+        image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400',
+        bio: 'Expert in herbal cosmetology and female hormonal harmony, formulating individualized Kumkumadi and blood-purifying therapies.',
+        availableDays: ['Mon', 'Tue', 'Wed', 'Fri', 'Sat'],
+        nextAvailable: 'Tomorrow, 11:30 AM'
+    }
+];
+export const INITIAL_APPOINTMENTS = [];

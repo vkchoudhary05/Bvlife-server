@@ -7,13 +7,13 @@ import fs from 'fs';
 import path from 'path';
 import { 
   Product, Order, Blog, FAQ, Coupon, WebsiteSettings, User, Review, ActivityLog, Payment, Doctor, DoctorAppointment 
-} from './types';
+} from './types.js';
 import { 
   INITIAL_PRODUCTS, INITIAL_BLOGS, INITIAL_FAQS, INITIAL_COUPONS, DEFAULT_SETTINGS, INITIAL_DOCTORS, INITIAL_APPOINTMENTS 
-} from './initialData';
+} from './initialData.js';
 import { 
   isMysqlConfigured, initTables, query 
-} from './mysqlClient';
+} from './mysqlClient.js';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
@@ -1045,6 +1045,7 @@ class DBManager {
       consultationMode: appointmentData.consultationMode || 'video',
       healthConcern: appointmentData.healthConcern || 'General Wellness Consultation',
       previousHistory: appointmentData.previousHistory || '',
+      medicalReports: Array.isArray(appointmentData.medicalReports) ? appointmentData.medicalReports : [],
       fee: Number(appointmentData.fee) || 499,
       status: 'Confirmed',
       bookingDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),

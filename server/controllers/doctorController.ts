@@ -70,6 +70,7 @@ export const bookDoctorAppointment = async (req: Request, res: Response): Promis
       consultationMode,
       healthConcern,
       previousHistory,
+      medicalReports,
       fee
     } = req.body;
 
@@ -97,6 +98,7 @@ export const bookDoctorAppointment = async (req: Request, res: Response): Promis
       consultationMode: consultationMode || 'video',
       healthConcern: healthConcern || 'Holistic Ayurvedic Assessment',
       previousHistory: previousHistory || '',
+      medicalReports: Array.isArray(medicalReports) ? medicalReports : [],
       fee: Number(fee) || doctor?.fee || 499
     });
 

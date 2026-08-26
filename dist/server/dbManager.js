@@ -4,7 +4,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { INITIAL_PRODUCTS, INITIAL_BLOGS, INITIAL_FAQS, INITIAL_COUPONS, DEFAULT_SETTINGS } from './initialData.js';
+import { INITIAL_PRODUCTS, INITIAL_BLOGS, INITIAL_FAQS, INITIAL_COUPONS, DEFAULT_SETTINGS, INITIAL_DOCTORS, INITIAL_APPOINTMENTS } from './initialData.js';
 import { isMysqlConfigured, initTables, query } from './mysqlClient.js';
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
@@ -126,6 +126,8 @@ class DBManager {
                 ];
                 this.data.activityLogs = this.data.activityLogs || [];
                 this.data.payments = this.data.payments || [];
+                this.data.doctors = (this.data.doctors && this.data.doctors.length > 0) ? this.data.doctors : [...INITIAL_DOCTORS];
+                this.data.doctorAppointments = this.data.doctorAppointments || [...INITIAL_APPOINTMENTS];
             }
             else {
                 // Seed default database
@@ -136,6 +138,8 @@ class DBManager {
                     faqs: [...INITIAL_FAQS],
                     coupons: [...INITIAL_COUPONS],
                     settings: { ...DEFAULT_SETTINGS },
+                    doctors: [...INITIAL_DOCTORS],
+                    doctorAppointments: [...INITIAL_APPOINTMENTS],
                     users: [
                         {
                             email: "admin@gramslife.com",
@@ -219,6 +223,8 @@ class DBManager {
                 faqs: [...INITIAL_FAQS],
                 coupons: [...INITIAL_COUPONS],
                 settings: { ...DEFAULT_SETTINGS },
+                doctors: [...INITIAL_DOCTORS],
+                doctorAppointments: [],
                 users: [],
                 reviews: [],
                 activityLogs: [],
@@ -900,6 +906,64 @@ class DBManager {
                 console.error("Failed to save activity log to MySQL async:", err);
             });
         }
+    }
+    // --- DOCTOR CONSULTATIONS & APPOINTMENTS ---
+    getDoctors() {
+        return this.data.doctors || [...INITIAL_DOCTORS];
+    }
+    getDoctorById(id) {
+        return (this.data.doctors || []).find(d => d.id === id);
+    }
+    getDoctorAppointments() {
+        return this.data.doctorAppointments || [];
+    }
+    getDoctorAppointmentsByUser(email) {
+        const normalizedEmail = (email || '').toLowerCase().trim();
+        return (this.data.doctorAppointments || []).filter(app => (app.patientEmail || '').toLowerCase().trim() === normalizedEmail);
+    }
+    bookDoctorAppointment(appointmentData) {
+        const appointmentId = `APT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        const newAppointment = {
+            id: appointmentId,
+            doctorId: appointmentData.doctorId || 'doc-1',
+            doctorName: appointmentData.doctorName || 'Dr. Rajeshwar Sharma',
+            doctorSpecialty: appointmentData.doctorSpecialty || 'Ayurvedic Specialist',
+            doctorImage: appointmentData.doctorImage || 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400',
+            doctorQualification: appointmentData.doctorQualification || 'BAMS, MD (Ayurveda)',
+            patientName: appointmentData.patientName || 'Ayurveda Seeker',
+            patientAge: Number(appointmentData.patientAge) || 30,
+            patientGender: appointmentData.patientGender || 'Other',
+            patientPhone: appointmentData.patientPhone || '',
+            patientEmail: (appointmentData.patientEmail || '').toLowerCase().trim(),
+            date: appointmentData.date || new Date().toISOString().split('T')[0],
+            timeSlot: appointmentData.timeSlot || '10:00 AM',
+            consultationMode: appointmentData.consultationMode || 'video',
+            healthConcern: appointmentData.healthConcern || 'General Wellness Consultation',
+            previousHistory: appointmentData.previousHistory || '',
+            medicalReports: Array.isArray(appointmentData.medicalReports) ? appointmentData.medicalReports : [],
+            fee: Number(appointmentData.fee) || 499,
+            status: 'Confirmed',
+            bookingDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            meetingLink: appointmentData.consultationMode === 'video' ? `https://meet.jit.si/BVLife-Consult-${appointmentId}` : undefined
+        };
+        this.data.doctorAppointments = this.data.doctorAppointments || [];
+        this.data.doctorAppointments.unshift(newAppointment);
+        this.save();
+        return newAppointment;
+    }
+    updateDoctorAppointmentStatus(id, status) {
+        this.data.doctorAppointments = this.data.doctorAppointments || [];
+        const index = this.data.doctorAppointments.findIndex(a => a.id === id);
+        if (index !== -1) {
+            this.data.doctorAppointments[index].status = status;
+            this.save();
+            return this.data.doctorAppointments[index];
+        }
+        return null;
+    }
+    cancelDoctorAppointment(id) {
+        const updated = this.updateDoctorAppointmentStatus(id, 'Cancelled');
+        return !!updated;
     }
     // --- CHAT HISTORIES ---
     getChatHistory(email) {

@@ -8,7 +8,7 @@ export function generateToken(user) {
     const payload = {
         email: user.email.toLowerCase(),
         role: user.role || "customer",
-        fullName: user.fullName || "Grams Life User"
+        fullName: user.fullName || "Bv Life User"
     };
     return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });
 }

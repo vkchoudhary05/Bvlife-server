@@ -257,6 +257,14 @@ export interface Doctor {
   nextAvailable: string;
 }
 
+export interface MedicalReportFile {
+  name: string;
+  size: string;
+  type: string;
+  dataUrl?: string;
+  uploadedAt?: string;
+}
+
 export interface DoctorAppointment {
   id: string;
   doctorId: string;
@@ -274,6 +282,7 @@ export interface DoctorAppointment {
   consultationMode: 'video' | 'audio' | 'clinic' | 'chat';
   healthConcern: string;
   previousHistory?: string;
+  medicalReports?: MedicalReportFile[];
   fee: number;
   status: 'Confirmed' | 'Completed' | 'Cancelled';
   bookingDate: string;
