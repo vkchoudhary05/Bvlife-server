@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import { Router } from "express";
-import { getOrders, getOrdersByUser, placeOrder, updateOrder, getPayments, updatePayment, trackOrder, createRazorpayOrder, verifyRazorpayPayment } from "../controllers/orderController.js";
+import { getOrders, getOrdersByUser, placeOrder, updateOrder, trackOrder } from "../controllers/orderController.js";
+import { getPayments, updatePayment, createRazorpayOrder, verifyRazorpayPayment } from "../controllers/paymentController.js";
 import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware.js";
 import { validateOrder } from "../middleware/validationMiddleware.js";
 export const orderRouter = Router();

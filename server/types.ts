@@ -265,6 +265,36 @@ export interface MedicalReportFile {
   uploadedAt?: string;
 }
 
+export interface PrescribedMedicine {
+  id?: string;
+  name: string;
+  dosage: string;
+  frequency: string;
+  timing: string;
+  duration: string;
+  instructions?: string;
+}
+
+export interface DoctorPrescription {
+  id: string;
+  appointmentId: string;
+  doctorId?: string;
+  doctorName: string;
+  doctorQualification: string;
+  patientName: string;
+  patientAge: number;
+  patientGender: string;
+  date: string;
+  diagnosis: string;
+  doshaPrakriti?: string;
+  dietRecommendations: string[];
+  lifestyleAdvice: string[];
+  medicines: PrescribedMedicine[];
+  doctorNotes?: string;
+  followUpDate?: string;
+  signedAt: string;
+}
+
 export interface DoctorAppointment {
   id: string;
   doctorId: string;
@@ -287,4 +317,8 @@ export interface DoctorAppointment {
   status: 'Confirmed' | 'Completed' | 'Cancelled';
   bookingDate: string;
   meetingLink?: string;
+  meetingPlatform?: 'jitsi' | 'google-meet';
+  prescription?: DoctorPrescription;
+  doctorNotes?: string;
+  roomStatus?: 'waiting' | 'in-progress' | 'completed';
 }

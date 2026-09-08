@@ -9,12 +9,14 @@ import {
   getOrdersByUser, 
   placeOrder, 
   updateOrder, 
+  trackOrder
+} from "../controllers/orderController.js";
+import {
   getPayments, 
   updatePayment,
-  trackOrder,
   createRazorpayOrder,
   verifyRazorpayPayment
-} from "../controllers/orderController.js";
+} from "../controllers/paymentController.js";
 import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../middleware/authMiddleware.js";
 import { validateOrder } from "../middleware/validationMiddleware.js";
 

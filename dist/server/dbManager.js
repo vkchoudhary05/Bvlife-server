@@ -98,8 +98,28 @@ class DBManager {
                                 isDefault: true
                             }
                         ]
+                    },
+                    {
+                        email: "doctor@gramslife.com",
+                        fullName: "Dr. Arundhati Sharma",
+                        role: "admin",
+                        phone: "9876543210",
+                        password: "123123123",
+                        addresses: []
                     }
                 ];
+                // Ensure doctor user is always present even if db.json was previously created
+                if (this.data.users && !this.data.users.some(u => u.email?.toLowerCase() === 'doctor@gramslife.com')) {
+                    this.data.users.push({
+                        email: "doctor@gramslife.com",
+                        fullName: "Dr. Arundhati Sharma",
+                        role: "admin",
+                        phone: "9876543210",
+                        password: "123123123",
+                        addresses: []
+                    });
+                    fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
+                }
                 this.data.reviews = this.data.reviews || [
                     {
                         id: "rev-1",
@@ -454,6 +474,76 @@ class DBManager {
                     await this.savePaymentToMysql(p);
                 }
             }
+            // --- 11. DOCTORS SYNC ---
+            const mysqlDoctors = await query("SELECT * FROM doctors");
+            if (mysqlDoctors && mysqlDoctors.length > 0) {
+                this.data.doctors = mysqlDoctors.map((d) => ({
+                    id: d.id,
+                    name: d.name,
+                    title: d.title,
+                    qualification: d.qualification,
+                    experienceYears: Number(d.experienceYears),
+                    specialties: JSON.parse(d.specialties || '[]'),
+                    languages: JSON.parse(d.languages || '[]'),
+                    fee: Number(d.fee),
+                    originalFee: d.originalFee ? Number(d.originalFee) : undefined,
+                    rating: Number(d.rating),
+                    reviewsCount: Number(d.reviewsCount),
+                    image: d.image || '',
+                    bio: d.bio || '',
+                    availableDays: JSON.parse(d.availableDays || '[]'),
+                    nextAvailable: d.nextAvailable || 'Today, 04:30 PM'
+                }));
+            }
+            else {
+                const initialDocs = (this.data.doctors && this.data.doctors.length > 0) ? this.data.doctors : INITIAL_DOCTORS;
+                for (const d of initialDocs) {
+                    await this.saveDoctorToMysql(d);
+                }
+            }
+            // --- 12. DOCTOR APPOINTMENTS SYNC ---
+            let mysqlAppointments = [];
+            try {
+                mysqlAppointments = await query("SELECT * FROM doctor_appointments");
+            }
+            catch {
+                try {
+                    mysqlAppointments = await query("SELECT * FROM doctorAppointments");
+                }
+                catch {
+                    mysqlAppointments = [];
+                }
+            }
+            if (mysqlAppointments && mysqlAppointments.length > 0) {
+                this.data.doctorAppointments = mysqlAppointments.map((a) => ({
+                    id: a.id,
+                    doctorId: a.doctorId,
+                    doctorName: a.doctorName,
+                    doctorSpecialty: a.doctorSpecialty,
+                    doctorImage: a.doctorImage || '',
+                    doctorQualification: a.doctorQualification || '',
+                    patientName: a.patientName,
+                    patientAge: Number(a.patientAge),
+                    patientGender: a.patientGender,
+                    patientPhone: a.patientPhone,
+                    patientEmail: a.patientEmail,
+                    date: a.date,
+                    timeSlot: a.timeSlot,
+                    consultationMode: a.consultationMode,
+                    healthConcern: a.healthConcern || '',
+                    previousHistory: a.previousHistory || '',
+                    medicalReports: JSON.parse(a.medicalReports || '[]'),
+                    fee: Number(a.fee),
+                    status: a.status,
+                    bookingDate: a.bookingDate,
+                    meetingLink: a.meetingLink || undefined
+                }));
+            }
+            else if (this.data.doctorAppointments && this.data.doctorAppointments.length > 0) {
+                for (const a of this.data.doctorAppointments) {
+                    await this.saveDoctorAppointmentToMysql(a);
+                }
+            }
             console.log("Successfully synchronized offline catalog cache with live MySQL database.");
         }
         catch (err) {
@@ -603,6 +693,83 @@ class DBManager {
     `;
         await query(sql, [l.id, l.timestamp, l.userEmail, l.action, l.details]);
     }
+    async saveDoctorToMysql(d) {
+        const sql = `
+      INSERT INTO doctors (
+        id, name, title, qualification, experienceYears, specialties, 
+        languages, fee, originalFee, rating, reviewsCount, image, bio, 
+        availableDays, nextAvailable
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE 
+        name = VALUES(name), title = VALUES(title), qualification = VALUES(qualification),
+        experienceYears = VALUES(experienceYears), specialties = VALUES(specialties),
+        languages = VALUES(languages), fee = VALUES(fee), originalFee = VALUES(originalFee),
+        rating = VALUES(rating), reviewsCount = VALUES(reviewsCount), image = VALUES(image),
+        bio = VALUES(bio), availableDays = VALUES(availableDays), nextAvailable = VALUES(nextAvailable);
+    `;
+        await query(sql, [
+            d.id, d.name, d.title, d.qualification, d.experienceYears,
+            JSON.stringify(d.specialties || []), JSON.stringify(d.languages || []),
+            d.fee, d.originalFee || null, d.rating, d.reviewsCount,
+            d.image, d.bio, JSON.stringify(d.availableDays || []), d.nextAvailable
+        ]);
+    }
+    async deleteDoctorFromMysql(id) {
+        await query("DELETE FROM doctors WHERE id = ?", [id]);
+    }
+    async saveDoctorAppointmentToMysql(a) {
+        const sql = `
+      INSERT INTO doctor_appointments (
+        id, doctorId, doctorName, doctorSpecialty, doctorImage, doctorQualification,
+        patientName, patientAge, patientGender, patientPhone, patientEmail,
+        date, timeSlot, consultationMode, healthConcern, previousHistory,
+        medicalReports, fee, status, bookingDate, meetingLink
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE 
+        doctorName = VALUES(doctorName), doctorSpecialty = VALUES(doctorSpecialty),
+        doctorImage = VALUES(doctorImage), doctorQualification = VALUES(doctorQualification),
+        patientName = VALUES(patientName), patientAge = VALUES(patientAge),
+        patientGender = VALUES(patientGender), patientPhone = VALUES(patientPhone),
+        patientEmail = VALUES(patientEmail), date = VALUES(date), timeSlot = VALUES(timeSlot),
+        consultationMode = VALUES(consultationMode), healthConcern = VALUES(healthConcern),
+        previousHistory = VALUES(previousHistory), medicalReports = VALUES(medicalReports),
+        fee = VALUES(fee), status = VALUES(status), meetingLink = VALUES(meetingLink);
+    `;
+        await query(sql, [
+            a.id, a.doctorId, a.doctorName, a.doctorSpecialty, a.doctorImage || null, a.doctorQualification || null,
+            a.patientName, a.patientAge, a.patientGender, a.patientPhone, a.patientEmail.toLowerCase(),
+            a.date, a.timeSlot, a.consultationMode, a.healthConcern || null, a.previousHistory || null,
+            JSON.stringify(a.medicalReports || []), a.fee, a.status, a.bookingDate, a.meetingLink || null
+        ]);
+        // Also sync to alias table if exists
+        try {
+            await query(`
+        INSERT INTO doctorAppointments (
+          id, doctorId, doctorName, doctorSpecialty, doctorImage, doctorQualification,
+          patientName, patientAge, patientGender, patientPhone, patientEmail,
+          date, timeSlot, consultationMode, healthConcern, previousHistory,
+          medicalReports, fee, status, bookingDate, meetingLink
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE 
+          status = VALUES(status), meetingLink = VALUES(meetingLink);
+      `, [
+                a.id, a.doctorId, a.doctorName, a.doctorSpecialty, a.doctorImage || null, a.doctorQualification || null,
+                a.patientName, a.patientAge, a.patientGender, a.patientPhone, a.patientEmail.toLowerCase(),
+                a.date, a.timeSlot, a.consultationMode, a.healthConcern || null, a.previousHistory || null,
+                JSON.stringify(a.medicalReports || []), a.fee, a.status, a.bookingDate, a.meetingLink || null
+            ]);
+        }
+        catch {
+            // ignore alias table error if not present
+        }
+    }
+    async deleteDoctorAppointmentFromMysql(id) {
+        await query("DELETE FROM doctor_appointments WHERE id = ?", [id]);
+        try {
+            await query("DELETE FROM doctorAppointments WHERE id = ?", [id]);
+        }
+        catch { }
+    }
     // --- PRODUCTS ---
     getProducts() {
         return this.data.products;
@@ -707,7 +874,27 @@ class DBManager {
         return this.data.users;
     }
     getUserByEmail(email) {
-        return this.data.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        if (!email)
+            return undefined;
+        let cleanEmail = email.trim().toLowerCase();
+        cleanEmail = cleanEmail.replace(/^(doctor\s*id\s*[:\-]?\s*|email\s*[:\-]?\s*|id\s*[:\-]?\s*)/i, '').trim();
+        if (cleanEmail.includes('doctor@gramslife.com') || cleanEmail === 'doctor') {
+            cleanEmail = 'doctor@gramslife.com';
+        }
+        let user = this.data.users.find(u => u.email.toLowerCase() === cleanEmail);
+        if (!user && cleanEmail === 'doctor@gramslife.com') {
+            user = {
+                email: "doctor@gramslife.com",
+                fullName: "Dr. Arundhati Sharma",
+                role: "admin",
+                phone: "9876543210",
+                addresses: [],
+                password: "123123123"
+            };
+            this.data.users.push(user);
+            this.save();
+        }
+        return user;
     }
     getUserByPhone(phone) {
         if (!phone)
@@ -914,6 +1101,38 @@ class DBManager {
     getDoctorById(id) {
         return (this.data.doctors || []).find(d => d.id === id);
     }
+    saveDoctor(doctor) {
+        this.data.doctors = this.data.doctors || [];
+        const idx = this.data.doctors.findIndex(d => d.id === doctor.id);
+        if (idx > -1) {
+            this.data.doctors[idx] = doctor;
+        }
+        else {
+            this.data.doctors.push(doctor);
+        }
+        this.save();
+        if (isMysqlConfigured()) {
+            this.saveDoctorToMysql(doctor).catch(err => {
+                console.error("Failed to save doctor to MySQL async:", err);
+            });
+        }
+        return doctor;
+    }
+    deleteDoctor(id) {
+        this.data.doctors = this.data.doctors || [];
+        const lengthBefore = this.data.doctors.length;
+        this.data.doctors = this.data.doctors.filter(d => d.id !== id);
+        if (this.data.doctors.length !== lengthBefore) {
+            this.save();
+            if (isMysqlConfigured()) {
+                this.deleteDoctorFromMysql(id).catch(err => {
+                    console.error("Failed to delete doctor from MySQL async:", err);
+                });
+            }
+            return true;
+        }
+        return false;
+    }
     getDoctorAppointments() {
         return this.data.doctorAppointments || [];
     }
@@ -949,6 +1168,11 @@ class DBManager {
         this.data.doctorAppointments = this.data.doctorAppointments || [];
         this.data.doctorAppointments.unshift(newAppointment);
         this.save();
+        if (isMysqlConfigured()) {
+            this.saveDoctorAppointmentToMysql(newAppointment).catch(err => {
+                console.error("Failed to save doctor appointment to MySQL async:", err);
+            });
+        }
         return newAppointment;
     }
     updateDoctorAppointmentStatus(id, status) {
@@ -957,6 +1181,11 @@ class DBManager {
         if (index !== -1) {
             this.data.doctorAppointments[index].status = status;
             this.save();
+            if (isMysqlConfigured()) {
+                this.saveDoctorAppointmentToMysql(this.data.doctorAppointments[index]).catch(err => {
+                    console.error("Failed to update doctor appointment in MySQL async:", err);
+                });
+            }
             return this.data.doctorAppointments[index];
         }
         return null;
@@ -964,6 +1193,41 @@ class DBManager {
     cancelDoctorAppointment(id) {
         const updated = this.updateDoctorAppointmentStatus(id, 'Cancelled');
         return !!updated;
+    }
+    saveDoctorPrescription(id, prescription) {
+        this.data.doctorAppointments = this.data.doctorAppointments || [];
+        const index = this.data.doctorAppointments.findIndex(a => a.id === id);
+        if (index !== -1) {
+            this.data.doctorAppointments[index].prescription = prescription;
+            this.data.doctorAppointments[index].status = 'Completed';
+            this.data.doctorAppointments[index].roomStatus = 'completed';
+            this.save();
+            return this.data.doctorAppointments[index];
+        }
+        return null;
+    }
+    updateAppointmentMeetingLink(id, meetingLink, meetingPlatform) {
+        this.data.doctorAppointments = this.data.doctorAppointments || [];
+        const index = this.data.doctorAppointments.findIndex(a => a.id === id);
+        if (index !== -1) {
+            this.data.doctorAppointments[index].meetingLink = meetingLink;
+            if (meetingPlatform) {
+                this.data.doctorAppointments[index].meetingPlatform = meetingPlatform;
+            }
+            this.save();
+            return this.data.doctorAppointments[index];
+        }
+        return null;
+    }
+    updateAppointmentRoomStatus(id, roomStatus) {
+        this.data.doctorAppointments = this.data.doctorAppointments || [];
+        const index = this.data.doctorAppointments.findIndex(a => a.id === id);
+        if (index !== -1) {
+            this.data.doctorAppointments[index].roomStatus = roomStatus;
+            this.save();
+            return this.data.doctorAppointments[index];
+        }
+        return null;
     }
     // --- CHAT HISTORIES ---
     getChatHistory(email) {

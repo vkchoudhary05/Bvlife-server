@@ -9,9 +9,10 @@ import { db } from "../dbManager.js";
 
 export const ADMIN_EMAILS = [
   'iamvivekbaliyan07@gmail.com',
-  // 'vkchoudhary050607@gmail.com',
-  // 'admin@gramslife.com',
-  // 'care@gramslife.com'
+  'vkchoudhary050607@gmail.com',
+  'admin@gramslife.com',
+  'care@gramslife.com',
+  'doctor@gramslife.com'
 ];
 
 export interface AuthenticatedRequest extends Request {

@@ -217,6 +217,78 @@ export async function initTables() {
         createdAt VARCHAR(100) NOT NULL
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
+        // 11. Doctors Table
+        await query(`
+      CREATE TABLE IF NOT EXISTS doctors (
+        id VARCHAR(255) PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        qualification VARCHAR(255) NOT NULL,
+        experienceYears INT NOT NULL,
+        specialties TEXT,
+        languages TEXT,
+        fee DECIMAL(10,2) NOT NULL,
+        originalFee DECIMAL(10,2),
+        rating DECIMAL(3,2) NOT NULL,
+        reviewsCount INT NOT NULL,
+        image TEXT,
+        bio TEXT,
+        availableDays TEXT,
+        nextAvailable VARCHAR(100)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+        // 12. Doctor Appointments Table
+        await query(`
+      CREATE TABLE IF NOT EXISTS doctor_appointments (
+        id VARCHAR(255) PRIMARY KEY,
+        doctorId VARCHAR(255) NOT NULL,
+        doctorName VARCHAR(255) NOT NULL,
+        doctorSpecialty VARCHAR(255) NOT NULL,
+        doctorImage TEXT,
+        doctorQualification VARCHAR(255),
+        patientName VARCHAR(255) NOT NULL,
+        patientAge INT NOT NULL,
+        patientGender VARCHAR(50) NOT NULL,
+        patientPhone VARCHAR(50) NOT NULL,
+        patientEmail VARCHAR(255) NOT NULL,
+        date VARCHAR(50) NOT NULL,
+        timeSlot VARCHAR(50) NOT NULL,
+        consultationMode VARCHAR(50) NOT NULL,
+        healthConcern TEXT,
+        previousHistory TEXT,
+        medicalReports MEDIUMTEXT,
+        fee DECIMAL(10,2) NOT NULL,
+        status VARCHAR(50) NOT NULL,
+        bookingDate VARCHAR(50) NOT NULL,
+        meetingLink TEXT
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+        // Also ensure doctorAppointments table exists for compatibility
+        await query(`
+      CREATE TABLE IF NOT EXISTS doctorAppointments (
+        id VARCHAR(255) PRIMARY KEY,
+        doctorId VARCHAR(255) NOT NULL,
+        doctorName VARCHAR(255) NOT NULL,
+        doctorSpecialty VARCHAR(255) NOT NULL,
+        doctorImage TEXT,
+        doctorQualification VARCHAR(255),
+        patientName VARCHAR(255) NOT NULL,
+        patientAge INT NOT NULL,
+        patientGender VARCHAR(50) NOT NULL,
+        patientPhone VARCHAR(50) NOT NULL,
+        patientEmail VARCHAR(255) NOT NULL,
+        date VARCHAR(50) NOT NULL,
+        timeSlot VARCHAR(50) NOT NULL,
+        consultationMode VARCHAR(50) NOT NULL,
+        healthConcern TEXT,
+        previousHistory TEXT,
+        medicalReports MEDIUMTEXT,
+        fee DECIMAL(10,2) NOT NULL,
+        status VARCHAR(50) NOT NULL,
+        bookingDate VARCHAR(50) NOT NULL,
+        meetingLink TEXT
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
         console.log('MySQL Database Tables verified/created successfully!');
     }
     catch (error) {

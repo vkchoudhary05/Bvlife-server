@@ -6,7 +6,7 @@
       "sku": "Bv-002",
       "price": 199,
       "originalPrice": 230,
-      "stock": 18,
+      "stock": 17,
       "category": "Immunity",
       "subcategory": "Tablet",
       "brand": "Bv Life",
@@ -6882,6 +6882,49 @@
           "comment": "Your organic wellbeing order has been received and is waiting for validation."
         }
       ]
+    },
+    {
+      "id": "GL-592170-30",
+      "userEmail": "vivek2@gmail.com",
+      "userName": "shubham",
+      "shippingAddress": {
+        "id": "addr-1784712777174",
+        "fullName": "shubham",
+        "addressLine1": "52/7",
+        "addressLine2": "",
+        "city": "Panchkula",
+        "state": "Rajasthan",
+        "zipCode": "160101",
+        "phone": "+919783788884",
+        "isDefault": false
+      },
+      "items": [
+        {
+          "productId": "prod-1787140413595",
+          "productName": "Ashwagandha Tablet",
+          "price": 199,
+          "quantity": 1,
+          "mainImage": "https://zpcbrsrfnlaxlnketoie.supabase.co/storage/v1/object/public/product-images/1778668190591-Ashwagandha%20Tablet%20-%20BV%20Life.webp",
+          "sku": "Bv-002"
+        }
+      ],
+      "subtotal": 199,
+      "tax": 24,
+      "shippingCharge": 50,
+      "discount": 0,
+      "finalTotal": 273,
+      "status": "Pending",
+      "paymentMethod": "Cash on Delivery",
+      "paymentStatus": "Pending",
+      "orderDate": "2026-09-08T04:59:52.170Z",
+      "trackingNumber": "GLTRK102504",
+      "trackingUpdates": [
+        {
+          "status": "Pending",
+          "date": "2026-09-08T04:59:52.170Z",
+          "comment": "Your organic wellbeing order has been received and is waiting for validation."
+        }
+      ]
     }
   ],
   "blogs": [
@@ -7305,6 +7348,14 @@
           "isDefault": false
         }
       ]
+    },
+    {
+      "email": "doctor@gramslife.com",
+      "fullName": "Dr. Arundhati Sharma",
+      "role": "admin",
+      "phone": "9876543210",
+      "password": "123123123",
+      "addresses": []
     }
   ],
   "reviews": [
@@ -7354,6 +7405,90 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1788843592294-3uth",
+      "timestamp": "2026-09-08T04:59:52.294Z",
+      "userEmail": "+919783788884",
+      "action": "[SMS] Payment",
+      "details": "Grams Life Payment: ₹273 received for Order #GL-592170-30 via Cash on Delivery. Your order is confirmed."
+    },
+    {
+      "id": "log-1788843592280-2c10",
+      "timestamp": "2026-09-08T04:59:52.280Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "[EMAIL] Invoice",
+      "details": "Order Invoice #GL-592170-30 (₹273) dispatched to vivek2@gmail.com."
+    },
+    {
+      "id": "log-1788843592201-b44g",
+      "timestamp": "2026-09-08T04:59:52.201Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "Order Placed",
+      "details": "Placed order #GL-592170-30 for amount ₹273"
+    },
+    {
+      "id": "log-1788843556635-cbl2",
+      "timestamp": "2026-09-08T04:59:16.635Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1788843359914-2jyp",
+      "timestamp": "2026-09-08T04:55:59.914Z",
+      "userEmail": "patient@bvlife.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1788843359902-4885 with Dr. Rajeshwar Sharma for 2026-09-08 at 11:00 AM"
+    },
+    {
+      "id": "log-1788843306585-rqs2",
+      "timestamp": "2026-09-08T04:55:06.585Z",
+      "userEmail": "patient@bvlife.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1788843306574-8198 with Dr. Rajeshwar Sharma for 2026-09-08 at 11:00 AM"
+    },
+    {
+      "id": "log-1788843248263-h23w",
+      "timestamp": "2026-09-08T04:54:08.263Z",
+      "userEmail": "patient@bvlife.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1788843248215-4663 with Dr. Rajeshwar Sharma for 2026-09-08 at 11:00 AM"
+    },
+    {
+      "id": "log-1788780517242-9iei",
+      "timestamp": "2026-09-07T11:28:37.242Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1788763757789-8pai",
+      "timestamp": "2026-09-07T06:49:17.789Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1788763757777-5632 with Dr. Rajeshwar Sharma for 2026-09-09 at 11:00 AM"
+    },
+    {
+      "id": "log-1788762418627-bynu",
+      "timestamp": "2026-09-07T06:26:58.627Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1788762264869-btub",
+      "timestamp": "2026-09-07T06:24:24.869Z",
+      "userEmail": "patient@bvlife.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1788762264848-1199 with Dr. Rajeshwar Sharma for 2026-09-07 at 07:30 PM"
+    },
+    {
+      "id": "log-1788756837852-l1q9",
+      "timestamp": "2026-09-07T04:53:57.852Z",
+      "userEmail": "iamvivekbaliyan07@gmail.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1788756837807-7951 with Dr. Rajeshwar Sharma for 2026-09-08 at 11:45 AM"
+    },
     {
       "id": "log-1787556288153-i76o",
       "timestamp": "2026-08-24T07:24:48.153Z",
@@ -8669,90 +8804,6 @@
       "userEmail": "+919425011088",
       "action": "OTP Dispatched (Login)",
       "details": "Secure authentication OTP generated for +919425011088."
-    },
-    {
-      "id": "log-1787116457130-hcn0",
-      "timestamp": "2026-08-19T05:14:17.130Z",
-      "userEmail": "+919425011088",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787116456869_16fc5."
-    },
-    {
-      "id": "log-1787115333383-iazo",
-      "timestamp": "2026-08-19T04:55:33.383Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1787113452355-08qi",
-      "timestamp": "2026-08-19T04:24:12.355Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1787113043758-7qaz",
-      "timestamp": "2026-08-19T04:17:23.758Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1787066592245-c761",
-      "timestamp": "2026-08-18T15:23:12.245Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1787052582150-b28m",
-      "timestamp": "2026-08-18T11:29:42.150Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1787052370082-g39d",
-      "timestamp": "2026-08-18T11:26:10.082Z",
-      "userEmail": "admin",
-      "action": "Create Product",
-      "details": "Added product Amla"
-    },
-    {
-      "id": "log-1787052278450-88mp",
-      "timestamp": "2026-08-18T11:24:38.450Z",
-      "userEmail": "vkchoudhary050607@gmail.com",
-      "action": "User Login",
-      "details": "Logged in successfully."
-    },
-    {
-      "id": "log-1787047860413-ibyg",
-      "timestamp": "2026-08-18T10:11:00.413Z",
-      "userEmail": "+919690941439",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +919690941439."
-    },
-    {
-      "id": "log-1787047860410-qy27",
-      "timestamp": "2026-08-18T10:11:00.410Z",
-      "userEmail": "+919690941439",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787047860410_bv3nk."
-    },
-    {
-      "id": "log-1787047707509-4ten",
-      "timestamp": "2026-08-18T10:08:27.509Z",
-      "userEmail": "heythere@gmail.com",
-      "action": "OTP Login",
-      "details": "Logged in via unified SMS OTP authentication."
-    },
-    {
-      "id": "log-1787047688673-c88t",
-      "timestamp": "2026-08-18T10:08:08.673Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
     }
   ],
   "payments": [
@@ -10015,6 +10066,16 @@
       "transactionReference": "COD-PENDING-GL-999536-33",
       "status": "Pending",
       "createdAt": "2026-07-22T07:06:39.543Z"
+    },
+    {
+      "id": "PAY-592193",
+      "orderId": "GL-592170-30",
+      "userEmail": "vivek2@gmail.com",
+      "amount": 273,
+      "paymentMethod": "Cash on Delivery",
+      "transactionReference": "COD_PENDING",
+      "status": "Pending",
+      "createdAt": "2026-09-08T04:59:52.193Z"
     }
   ],
   "chatHistories": {
@@ -10056,5 +10117,276 @@
         "content": "Welcome to BV Life AI Wellness Guide! To help me suggest the most suitable Ayurvedic products, could you tell me your age and gender?"
       }
     ]
-  }
+  },
+  "doctors": [
+    {
+      "id": "doc-1",
+      "name": "Dr. Rajeshwar Sharma",
+      "title": "Senior Ayurvedic Physician & Nadi Specialist",
+      "qualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "experienceYears": 18,
+      "specialties": [
+        "Nadi Pariksha",
+        "Chronic Joint Care",
+        "Digestive Disorders",
+        "Rasayana Therapy"
+      ],
+      "languages": [
+        "Hindi",
+        "English",
+        "Sanskrit"
+      ],
+      "fee": 499,
+      "originalFee": 999,
+      "rating": 4.9,
+      "reviewsCount": 1420,
+      "image": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "bio": "Over 18 years of clinical experience in root-cause diagnosis via classical Ayurvedic Pulse Examination (Nadi Pariksha) and Panchakarma therapies.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ],
+      "nextAvailable": "Today, 04:30 PM"
+    },
+    {
+      "id": "doc-2",
+      "name": "Dr. Ananya Trivedi",
+      "title": "Ayurvedic Gut Health & Metabolic Specialist",
+      "qualification": "BAMS, PGD (Panchakarma & Dietetics)",
+      "experienceYears": 12,
+      "specialties": [
+        "Gut & Digestion",
+        "Weight & Metabolism",
+        "Liver Detox",
+        "Thyroid Care"
+      ],
+      "languages": [
+        "Hindi",
+        "English",
+        "Gujarati"
+      ],
+      "fee": 399,
+      "originalFee": 799,
+      "rating": 4.9,
+      "reviewsCount": 980,
+      "image": "https://images.unsplash.com/photo-1594824813501-48995a93557e?auto=format&fit=crop&q=80&w=400",
+      "bio": "Specializes in reversing gut dysbiosis, IBS, chronic acidity, and restoring metabolic agni using targeted botanical extracts and customized diet charts.",
+      "availableDays": [
+        "Mon",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+      ],
+      "nextAvailable": "Tomorrow, 10:00 AM"
+    },
+    {
+      "id": "doc-3",
+      "name": "Dr. Devendra Shastri",
+      "title": "Kaya Chikitsa & Men's Wellness Vaidya",
+      "qualification": "BAMS, Fellowship in Rasayana & Vajikarana",
+      "experienceYears": 15,
+      "specialties": [
+        "Men's Health & Stamina",
+        "Stress & Insomnia",
+        "Immunity Boost",
+        "Kaya Chikitsa"
+      ],
+      "languages": [
+        "Hindi",
+        "English",
+        "Marathi"
+      ],
+      "fee": 499,
+      "originalFee": 999,
+      "rating": 4.8,
+      "reviewsCount": 1150,
+      "image": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400",
+      "bio": "Dedicated practitioner of classical Rasayana and Vajikarana science, focusing on cellular rejuvenation, sleep cycles, and vital stamina.",
+      "availableDays": [
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ],
+      "nextAvailable": "Today, 06:00 PM"
+    },
+    {
+      "id": "doc-4",
+      "name": "Dr. Meenakshi Joshi",
+      "title": "Ayurvedic Dermatology & Women's Health",
+      "qualification": "BAMS, MD (Dravyaguna)",
+      "experienceYears": 11,
+      "specialties": [
+        "Skin & Hair Alchemy",
+        "PCOS / Hormonal Balance",
+        "Anti-Aging",
+        "Post-Natal Care"
+      ],
+      "languages": [
+        "Hindi",
+        "English",
+        "Bengali"
+      ],
+      "fee": 399,
+      "originalFee": 799,
+      "rating": 4.9,
+      "reviewsCount": 890,
+      "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400",
+      "bio": "Expert in herbal cosmetology and female hormonal harmony, formulating individualized Kumkumadi and blood-purifying therapies.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Fri",
+        "Sat"
+      ],
+      "nextAvailable": "Tomorrow, 11:30 AM"
+    }
+  ],
+  "doctorAppointments": [
+    {
+      "id": "APT-1788843359902-4885",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "subham",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "8787878765",
+      "patientEmail": "patient@bvlife.com",
+      "date": "2026-09-08",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "clinic",
+      "healthConcern": "Metabolism & Weight",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 8, 2026"
+    },
+    {
+      "id": "APT-1788843306574-8198",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "subham",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "8787878765",
+      "patientEmail": "patient@bvlife.com",
+      "date": "2026-09-08",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "audio",
+      "healthConcern": "Metabolism & Weight",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 8, 2026"
+    },
+    {
+      "id": "APT-1788843248215-4663",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "subham",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "8787878765",
+      "patientEmail": "patient@bvlife.com",
+      "date": "2026-09-08",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "video",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 8, 2026",
+      "meetingLink": "https://meet.jit.si/BVLife-Consult-APT-1788843248215-4663",
+      "roomStatus": "in-progress"
+    },
+    {
+      "id": "APT-1788763757777-5632",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "shubham",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "+919783788884",
+      "patientEmail": "vivek2@gmail.com",
+      "date": "2026-09-09",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "video",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 7, 2026",
+      "meetingLink": "https://meet.jit.si/BVLife-Consult-APT-1788763757777-5632"
+    },
+    {
+      "id": "APT-1788762264848-1199",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "Vivek",
+      "patientAge": 34,
+      "patientGender": "Male",
+      "patientPhone": "8673456786",
+      "patientEmail": "patient@bvlife.com",
+      "date": "2026-09-07",
+      "timeSlot": "07:30 PM",
+      "consultationMode": "video",
+      "healthConcern": "General Wellness",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 7, 2026",
+      "meetingLink": "https://meet.jit.si/BVLife-Consult-APT-1788762264848-1199"
+    },
+    {
+      "id": "APT-1788756837807-7951",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "Vivek",
+      "patientAge": 23,
+      "patientGender": "Male",
+      "patientPhone": "7451050607",
+      "patientEmail": "iamvivekbaliyan07@gmail.com",
+      "date": "2026-09-08",
+      "timeSlot": "11:45 AM",
+      "consultationMode": "video",
+      "healthConcern": "Chronic Digestion / Acidity & Bloating",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Cancelled",
+      "bookingDate": "Sep 7, 2026",
+      "meetingLink": "https://meet.jit.si/BVLife-Consult-APT-1788756837807-7951"
+    }
+  ]
 }

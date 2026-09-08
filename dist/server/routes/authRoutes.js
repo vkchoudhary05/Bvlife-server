@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import { Router } from "express";
-import { register, login, getMe, updateMe, getUserByEmail, updateUserByEmail, getCustomers, getActivityLogs, sendOtp, verifyOtp, verifyMsg91Token, getMsg91Config, checkAccount, resetPassword, otpLogin, adminCheckCredentials, changeMobile, changeEmail, getGoogleAuthUrl, getFacebookAuthUrl, handleGoogleCallback, handleFacebookCallback } from "../controllers/authController.js";
+import { register, login, getMe, updateMe, getUserByEmail, updateUserByEmail, getCustomers, checkAccount, resetPassword, adminCheckCredentials } from "../controllers/authController.js";
+import { sendOtp, verifyOtp, verifyMsg91Token, getMsg91Config, otpLogin, changeMobile, changeEmail } from "../controllers/otpController.js";
+import { getGoogleAuthUrl, getFacebookAuthUrl, handleGoogleCallback, handleFacebookCallback } from "../controllers/oauthController.js";
+import { getActivityLogs } from "../controllers/contentController.js";
 import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
 import { validateRegister, validateLogin, validateResetPassword } from "../middleware/validationMiddleware.js";
 import { rateLimiter } from "../middleware/rateLimitMiddleware.js";
@@ -29,8 +32,8 @@ authRouter.post("/api/auth/verify-msg91-token", rateLimiter(20), verifyMsg91Toke
 authRouter.get("/api/auth/msg91-config", getMsg91Config);
 authRouter.post("/api/auth/check-account", checkAccount);
 authRouter.post("/api/auth/reset-password", rateLimiter(10), validateResetPassword, resetPassword);
-// OAuth Routes
+// OAuth Endpoints (Google & Facebook)
 authRouter.get("/api/auth/google/url", getGoogleAuthUrl);
+authRouter.get("/auth/google/callback", handleGoogleCallback);
 authRouter.get("/api/auth/facebook/url", getFacebookAuthUrl);
-authRouter.get(["/auth/google/callback", "/auth/google/callback/"], handleGoogleCallback);
-authRouter.get(["/auth/facebook/callback", "/auth/facebook/callback/"], handleFacebookCallback);
+authRouter.get("/auth/facebook/callback", handleFacebookCallback);
