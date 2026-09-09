@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import { doctorService } from "../services/doctorService.js";
+import { db } from "../dbManager.js";
 export const getDoctors = async (req, res) => {
     try {
+        // Single Source of Truth: ensure fresh data is fetched directly from MySQL
+        await db.refreshFromMysql(true);
         const doctors = doctorService.getDoctors();
         res.json(doctors);
     }
@@ -15,6 +18,7 @@ export const getDoctors = async (req, res) => {
 };
 export const getDoctorById = async (req, res) => {
     try {
+        await db.refreshFromMysql(true);
         const { id } = req.params;
         const doctor = doctorService.getDoctorById(id);
         res.json(doctor);

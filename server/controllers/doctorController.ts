@@ -5,9 +5,12 @@
 
 import { Request, Response } from "express";
 import { doctorService } from "../services/doctorService.js";
+import { db } from "../dbManager.js";
 
 export const getDoctors = async (req: Request, res: Response): Promise<void> => {
   try {
+    // Single Source of Truth: ensure fresh data is fetched directly from MySQL
+    await db.refreshFromMysql(true);
     const doctors = doctorService.getDoctors();
     res.json(doctors);
   } catch (error) {
@@ -18,6 +21,7 @@ export const getDoctors = async (req: Request, res: Response): Promise<void> => 
 
 export const getDoctorById = async (req: Request, res: Response): Promise<void> => {
   try {
+    await db.refreshFromMysql(true);
     const { id } = req.params;
     const doctor = doctorService.getDoctorById(id);
     res.json(doctor);

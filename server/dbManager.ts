@@ -18,6 +18,98 @@ import {
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
 
+const INITIAL_ADMIN_USERS: User[] = [
+  {
+    email: "iamvivekbaliyan07@gmail.com",
+    fullName: "Vivek Baliyan",
+    role: "admin",
+    phone: "7451050607",
+    password: "123123123",
+    addresses: [
+      {
+        id: "addr-admin-vivek",
+        fullName: "Vivek Baliyan",
+        addressLine1: "Grams Life Administrative Headquarters",
+        addressLine2: "Civil Lines",
+        city: "Meerut",
+        state: "Uttar Pradesh",
+        zipCode: "250001",
+        phone: "7451050607",
+        isDefault: true
+      }
+    ]
+  },
+  {
+    email: "admin@gramslife.com",
+    fullName: "Aacharya Dhanvantari",
+    role: "admin",
+    phone: "9425011088",
+    password: "123123123",
+    addresses: []
+  },
+  {
+    email: "care@gramslife.com",
+    fullName: "Grams Life Support",
+    role: "admin",
+    phone: "9425011088",
+    password: "123123123",
+    addresses: []
+  },
+  {
+    email: "vkchoudhary050607@gmail.com",
+    fullName: "Vipin Choudhary",
+    role: "admin",
+    phone: "9425011088",
+    password: "123123123",
+    addresses: [
+      {
+        id: "addr-1",
+        fullName: "Vipin Choudhary",
+        addressLine1: "108 Lotus Lotus Lane",
+        addressLine2: "Ayur Vihar, Sector 4",
+        city: "New Delhi",
+        state: "Delhi",
+        zipCode: "110001",
+        phone: "9425011088",
+        isDefault: true
+      }
+    ]
+  },
+  {
+    email: "doctor@gramslife.com",
+    fullName: "Dr. Arundhati Sharma",
+    role: "admin",
+    phone: "9876543210",
+    password: "123123123",
+    addresses: []
+  }
+];
+
+const INITIAL_REVIEWS: Review[] = [
+  {
+    id: "rev-1",
+    productId: "prod-1",
+    productName: "Golden Chyawanprash - Saffron & Wild Honey",
+    userName: "Amit Patel",
+    userEmail: "amit.patel@gmail.com",
+    rating: 5,
+    comment: "This is the finest Chyawanprash I have ever tasted! It smells of rich saffron and pure honey. It has been 3 weeks and my morning fatigue has completely vanished.",
+    isApproved: true,
+    date: "2026-06-18"
+  },
+  {
+    id: "rev-2",
+    productId: "prod-3",
+    productName: "Kumkumadi Night Elixir Serum",
+    userName: "Meera Nair",
+    userEmail: "meera.n@yahoo.com",
+    rating: 5,
+    comment: "Absolutely in love with this Kumkumadi oil. Yes, it is premium priced, but the results speak for themselves. My hyperpigmentation is fading rapidly, and it leaves an incredibly radiant golden glow when I wake up.",
+    isApproved: true,
+    date: "2026-06-25"
+  }
+];
+
 interface Schema {
   products: Product[];
   orders: Order[];
@@ -34,21 +126,92 @@ interface Schema {
   chatHistories?: { [email: string]: { role: 'user' | 'assistant'; content: string }[] };
 }
 
+// Safe JSON parsing helper to ensure malformed or plain string MySQL columns never crash database synchronization
+function safeJsonParse<T>(val: any, fallback: T): T {
+  if (val === null || val === undefined) return fallback;
+  if (typeof val === 'object') return val;
+  if (typeof val === 'string') {
+    const trimmed = val.trim();
+    if (!trimmed) return fallback;
+    try {
+      return JSON.parse(trimmed);
+    } catch {
+      if (Array.isArray(fallback)) {
+        return trimmed.split(',').map((s: string) => s.trim()).filter(Boolean) as unknown as T;
+      }
+      return fallback;
+    }
+  }
+  return fallback;
+}
+
 class DBManager {
   private data!: Schema;
+  private lastMysqlSyncTime = 0;
+  private syncInProgress = false;
 
   constructor() {
     this.init();
     if (isMysqlConfigured()) {
-      console.log("MySQL configuration detected! Initiating async sync...");
-      this.syncWithMysql().catch(err => {
-        console.error("Async MySQL synchronization failed:", err);
+      console.log("[Approach 1: Single Source of Truth] MySQL detected. Initiating immediate synchronization...");
+      this.refreshFromMysql(true).catch(err => {
+        console.error("[Approach 1] Initial MySQL synchronization failed:", err);
       });
+    }
+  }
+
+  /**
+   * Refresh in-memory cache directly from live MySQL database.
+   * In Approach 1: Single Source of Truth, all queries fetch directly from MySQL.
+   */
+  public async refreshFromMysql(force = false): Promise<boolean> {
+    if (!isMysqlConfigured()) return false;
+    const now = Date.now();
+    if (!force && (now - this.lastMysqlSyncTime < 250)) {
+      return true;
+    }
+    if (this.syncInProgress) {
+      return true;
+    }
+    this.syncInProgress = true;
+    try {
+      await this.syncWithMysql();
+      this.lastMysqlSyncTime = Date.now();
+      return true;
+    } catch (err) {
+      console.error("[Approach 1] Error refreshing directly from MySQL:", err);
+      return false;
+    } finally {
+      this.syncInProgress = false;
     }
   }
 
   private init() {
     try {
+      // APPROACH 1: SINGLE SOURCE OF TRUTH (DATABASE-FIRST ARCHITECTURE)
+      // When MySQL is configured, data/db.json is completely bypassed.
+      // All data will be loaded directly from MySQL tables.
+      if (isMysqlConfigured()) {
+        console.log("[Approach 1: Single Source of Truth] MySQL detected. data/db.json is completely bypassed.");
+        this.data = {
+          products: [],
+          orders: [],
+          blogs: [],
+          faqs: [],
+          coupons: [],
+          settings: { ...DEFAULT_SETTINGS },
+          doctors: [],
+          doctorAppointments: [],
+          users: [...INITIAL_ADMIN_USERS],
+          reviews: [...INITIAL_REVIEWS],
+          activityLogs: [],
+          payments: [],
+          chatHistories: {}
+        };
+        return;
+      }
+
+      console.log("[DBManager] MySQL environment variables not set. Using local offline fallback (data/db.json).");
       if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
@@ -284,10 +447,15 @@ class DBManager {
   }
 
   private save() {
+    // APPROACH 1: SINGLE SOURCE OF TRUTH (DATABASE-FIRST ARCHITECTURE)
+    // When MySQL is configured, data/db.json is completely bypassed and never written.
+    if (isMysqlConfigured()) {
+      return;
+    }
     try {
       fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
     } catch (e) {
-      console.error("Failed to write database file.", e);
+      console.error("Failed to write fallback database file.", e);
     }
   }
 
@@ -327,7 +495,7 @@ class DBManager {
           fullName: u.fullName,
           role: u.role,
           phone: u.phone || undefined,
-          addresses: JSON.parse(u.addresses || '[]'),
+          addresses: safeJsonParse(u.addresses, []),
           password: u.password || undefined
         }));
       } else {
@@ -351,12 +519,12 @@ class DBManager {
           brand: p.brand,
           description: p.description,
           mainImage: p.mainImage,
-          images: JSON.parse(p.images || '[]'),
-          ingredients: JSON.parse(p.ingredients || '[]'),
-          benefits: JSON.parse(p.benefits || '[]'),
+          images: safeJsonParse(p.images, []),
+          ingredients: safeJsonParse(p.ingredients, []),
+          benefits: safeJsonParse(p.benefits, []),
           dosage: p.dosage,
           usageInstructions: p.usageInstructions,
-          faqs: JSON.parse(p.faqs || '[]'),
+          faqs: safeJsonParse(p.faqs, []),
           rating: Number(p.rating),
           featured: Boolean(p.featured),
           bestSeller: Boolean(p.bestSeller),
@@ -376,8 +544,8 @@ class DBManager {
           id: o.id,
           userEmail: o.userEmail,
           userName: o.userName,
-          shippingAddress: JSON.parse(o.shippingAddress || '{}'),
-          items: JSON.parse(o.items || '[]'),
+          shippingAddress: safeJsonParse(o.shippingAddress, {}),
+          items: safeJsonParse(o.items, []),
           subtotal: Number(o.subtotal),
           tax: Number(o.tax),
           shippingCharge: Number(o.shippingCharge),
@@ -388,7 +556,7 @@ class DBManager {
           paymentStatus: o.paymentStatus,
           orderDate: o.orderDate,
           trackingNumber: o.trackingNumber || undefined,
-          trackingUpdates: JSON.parse(o.trackingUpdates || '[]')
+          trackingUpdates: safeJsonParse(o.trackingUpdates, [])
         }));
       } else {
         for (const o of this.data.orders) {
@@ -428,7 +596,7 @@ class DBManager {
           image: b.image || '',
           author: b.author,
           date: b.date,
-          categories: JSON.parse(b.categories || '[]'),
+          categories: safeJsonParse(b.categories, []),
           readTime: b.readTime
         }));
       } else {
@@ -514,15 +682,15 @@ class DBManager {
           title: d.title,
           qualification: d.qualification,
           experienceYears: Number(d.experienceYears),
-          specialties: JSON.parse(d.specialties || '[]'),
-          languages: JSON.parse(d.languages || '[]'),
+          specialties: safeJsonParse(d.specialties, []),
+          languages: safeJsonParse(d.languages, []),
           fee: Number(d.fee),
           originalFee: d.originalFee ? Number(d.originalFee) : undefined,
           rating: Number(d.rating),
           reviewsCount: Number(d.reviewsCount),
           image: d.image || '',
           bio: d.bio || '',
-          availableDays: JSON.parse(d.availableDays || '[]'),
+          availableDays: safeJsonParse(d.availableDays, []),
           nextAvailable: d.nextAvailable || 'Today, 04:30 PM'
         }));
       } else {
@@ -562,7 +730,7 @@ class DBManager {
           consultationMode: a.consultationMode,
           healthConcern: a.healthConcern || '',
           previousHistory: a.previousHistory || '',
-          medicalReports: JSON.parse(a.medicalReports || '[]'),
+          medicalReports: safeJsonParse(a.medicalReports, []),
           fee: Number(a.fee),
           status: a.status,
           bookingDate: a.bookingDate,
@@ -574,9 +742,11 @@ class DBManager {
         }
       }
 
-      console.log("Successfully synchronized offline catalog cache with live MySQL database.");
+      // Approach 1: Single Source of Truth (Database-First Architecture)
+      // data/db.json is completely bypassed; MySQL tables are the sole authoritative state.
+      console.log("[Approach 1: Single Source of Truth] MySQL live state successfully synchronized. db.json is bypassed.");
     } catch (err) {
-      console.error("Database connection configuration found, but couldn't sync with MySQL. Falling back to local db.json safely.", err);
+      console.error("[Approach 1] Database connection error during MySQL sync:", err);
     }
   }
 

@@ -16,6 +16,8 @@ import { productRouter } from "./server/routes/productRoutes.js";
 import { orderRouter } from "./server/routes/orderRoutes.js";
 import { aiRouter } from "./server/routes/aiRoutes.js";
 import { doctorRouter } from "./server/routes/doctorRoutes.js";
+import { db } from "./server/dbManager.js";
+import { isMysqlConfigured, getMysqlConfig } from "./server/mysqlClient.js";
 
 const app = express();
 const PORT = 5000; // Standalone port
@@ -29,9 +31,62 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(requestLogger);
 
+// =========================================================================
+// APPROACH 1: DATABASE-FIRST / SINGLE SOURCE OF TRUTH MIDDLEWARE
+// =========================================================================
+// Ensures that whenever an API request is received, any external updates directly
+// made to the MySQL database (e.g. via phpMyAdmin, Workbench, CLI, etc.)
+// are immediately fetched directly from MySQL without relying on data/db.json!
+app.use(async (req, res, next) => {
+  if (req.path.startsWith("/api") && req.path !== "/api/health") {
+    try {
+      if (isMysqlConfigured()) {
+        await db.refreshFromMysql(true);
+      }
+    } catch (err) {
+      console.warn("MySQL live fetch check warning:", err);
+    }
+  }
+  next();
+});
+
 // Health check route
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+// Database status check
+app.get("/api/db/status", (req, res) => {
+  const configured = isMysqlConfigured();
+  const config = configured ? getMysqlConfig() : null;
+  res.json({
+    mode: configured ? "mysql" : "local_file",
+    mysqlConfigured: configured,
+    architecture: "Approach 1: Single Source of Truth (Database-First Architecture)",
+    dataSource: configured ? "Live MySQL Database" : "Local JSON Fallback (data/db.json)",
+    bypassedFile: configured ? "data/db.json is completely bypassed" : "using fallback data/db.json because MySQL environment variables are not set",
+    databaseHost: config?.host || null,
+    databaseName: config?.database || null,
+    databasePort: config?.port || null,
+    singleSourceOfTruth: true,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Manual instant sync endpoint
+app.post("/api/db/sync-now", async (req, res) => {
+  try {
+    const success = await db.refreshFromMysql(true);
+    res.json({
+      success,
+      message: success 
+        ? "Successfully refreshed data directly from live MySQL database!" 
+        : "MySQL credentials not configured or database unreachable. Using local file store.",
+      timestamp: new Date().toISOString()
+    });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || "Failed to synchronize from MySQL" });
+  }
 });
 
 // Mount modular API routes
