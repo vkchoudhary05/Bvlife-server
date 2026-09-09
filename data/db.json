@@ -7406,6 +7406,13 @@
   ],
   "activityLogs": [
     {
+      "id": "log-1788868214316-06zs",
+      "timestamp": "2026-09-08T11:50:14.316Z",
+      "userEmail": "vivek2@gmail.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1788868214269-4294 with Dr. Rajeshwar Sharma for 2026-09-08 at 11:00 AM"
+    },
+    {
       "id": "log-1788843592294-3uth",
       "timestamp": "2026-09-08T04:59:52.294Z",
       "userEmail": "+919783788884",
@@ -8797,13 +8804,6 @@
       "userEmail": "+917451050607",
       "action": "[OTP] Login",
       "details": "Verification OTP dispatched for Login. Security Token ID: req_1787117490999_7e6v8."
-    },
-    {
-      "id": "log-1787116457138-jn4e",
-      "timestamp": "2026-08-19T05:14:17.138Z",
-      "userEmail": "+919425011088",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +919425011088."
     }
   ],
   "payments": [
@@ -10252,6 +10252,29 @@
   ],
   "doctorAppointments": [
     {
+      "id": "APT-1788868214269-4294",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "shubham",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "+919783788884",
+      "patientEmail": "vivek2@gmail.com",
+      "date": "2026-09-08",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "video",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 8, 2026",
+      "meetingLink": "https://meet.jit.si/BVLife-Consult-APT-1788868214269-4294"
+    },
+    {
       "id": "APT-1788843359902-4885",
       "doctorId": "doc-1",
       "doctorName": "Dr. Rajeshwar Sharma",
@@ -10293,7 +10316,8 @@
       "medicalReports": [],
       "fee": 499,
       "status": "Confirmed",
-      "bookingDate": "Sep 8, 2026"
+      "bookingDate": "Sep 8, 2026",
+      "roomStatus": "in-progress"
     },
     {
       "id": "APT-1788843248215-4663",

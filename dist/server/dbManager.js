@@ -1163,7 +1163,12 @@ class DBManager {
             fee: Number(appointmentData.fee) || 499,
             status: 'Confirmed',
             bookingDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-            meetingLink: appointmentData.consultationMode === 'video' ? `https://meet.jit.si/BVLife-Consult-${appointmentId}` : undefined
+            meetingLink: appointmentData.consultationMode === 'video' ? `https://meet.jit.si/BVLife-Consult-${appointmentId}` : undefined,
+            paymentMethod: appointmentData.paymentMethod || 'Razorpay',
+            paymentStatus: appointmentData.paymentStatus || 'Paid',
+            paymentId: appointmentData.paymentId || '',
+            razorpayOrderId: appointmentData.razorpayOrderId || '',
+            razorpayPaymentId: appointmentData.razorpayPaymentId || ''
         };
         this.data.doctorAppointments = this.data.doctorAppointments || [];
         this.data.doctorAppointments.unshift(newAppointment);
