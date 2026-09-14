@@ -7084,7 +7084,7 @@
     {
       "email": "heythere@gmail.com",
       "fullName": "vivek",
-      "role": "customer",
+      "role": "admin",
       "phone": "+917451050607",
       "addresses": [
         {
@@ -7183,7 +7183,7 @@
     {
       "email": "iamvivekbaliyan07@gmail.com",
       "fullName": "Iamvivekbaliyan07",
-      "role": "customer",
+      "role": "admin",
       "addresses": []
     },
     {
@@ -7405,6 +7405,181 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1789202141661-8yf8",
+      "timestamp": "2026-09-12T08:35:41.661Z",
+      "userEmail": "917451050607",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🌿 *Grams Life Clinic - Consultation Confirmed* 🌿\n\nNamaste *Iamvivekbaliyan07*,\nYour Ayurvedic consultation with *Dr. Rajeshwar Sharma* has been officially confirmed!\n\n📋 *Appointment Details:*\n• *Appointment ID:* #APT-1789202141633-3725\n• *Doctor:* Dr. Rajeshwar Sharma (Nadi Pariksha)\n• *Date:* 2026-09-12\n• *Time Slot:* 11:00 AM\n• *Format:* AUDIO\n• *Payment Status:* Verified Paid (₹499)\n\n📞 *Telephone Call:*\nDoctor will initiate a direct call to your mobile (+91 7451050607) at 11:00 AM.\n\nFor any questions or rescheduling, reply directly to this WhatsApp message or call our care desk at +91 9425011088.\n\nWarm regards,\n*Grams Life Care Desk*\n📞 +91 9425011088"
+    },
+    {
+      "id": "log-1789202141652-5h61",
+      "timestamp": "2026-09-12T08:35:41.652Z",
+      "userEmail": "919425011088",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🚨 *NEW DOCTOR BOOKING RECEIVED* 🚨\n\nNamaste Doctor / Clinic Desk,\nA new consultation has just been booked and confirmed on Grams Life:\n\n📋 *Booking Details:*\n• *Appointment ID:* #APT-1789202141633-3725\n• *Patient Name:* Iamvivekbaliyan07 (Age: 28, Female)\n• *Patient Phone:* +91 7451050607\n• *Patient Email:* iamvivekbaliyan07@gmail.com\n\n🩺 *Consultation Info:*\n• *Assigned Doctor:* Dr. Rajeshwar Sharma\n• *Date:* 2026-09-12\n• *Time Slot:* 11:00 AM\n• *Mode:* AUDIO\n• *Fee Paid:* ₹499 (Paid)\n• *Chief Health Concern:* Digestion & Acidity\n\nOpen your Doctor Dashboard to manage the session or view patient history:\nhttps://gramslife.com/doctor-dashboard\n\n*Grams Life Automated Care Desk*"
+    },
+    {
+      "id": "log-1789202141643-fxs9",
+      "timestamp": "2026-09-12T08:35:41.643Z",
+      "userEmail": "iamvivekbaliyan07@gmail.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1789202141633-3725 with Dr. Rajeshwar Sharma for 2026-09-12 at 11:00 AM"
+    },
+    {
+      "id": "log-1789202085108-emjs",
+      "timestamp": "2026-09-12T08:34:45.108Z",
+      "userEmail": "iamvivekbaliyan07@gmail.com",
+      "action": "User Login",
+      "details": "Logged in successfully."
+    },
+    {
+      "id": "log-1789192729147-oknw",
+      "timestamp": "2026-09-12T05:58:49.147Z",
+      "userEmail": "917451050607",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🌿 *Grams Life Clinic - Consultation Confirmed* 🌿\n\nNamaste *vivek*,\nYour Ayurvedic consultation with *Dr. Rajeshwar Sharma* has been officially confirmed!\n\n📋 *Appointment Details:*\n• *Appointment ID:* #APT-1789192729082-5183\n• *Doctor:* Dr. Rajeshwar Sharma (Nadi Pariksha)\n• *Date:* 2026-09-12\n• *Time Slot:* 11:00 AM\n• *Format:* CHAT\n• *Payment Status:* Verified Paid (₹499)\n\nFor any questions or rescheduling, reply directly to this WhatsApp message or call our care desk at +91 9425011088.\n\nWarm regards,\n*Grams Life Care Desk*\n📞 +91 9425011088"
+    },
+    {
+      "id": "log-1789192729137-nj1a",
+      "timestamp": "2026-09-12T05:58:49.138Z",
+      "userEmail": "919425011088",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🚨 *NEW DOCTOR BOOKING RECEIVED* 🚨\n\nNamaste Doctor / Clinic Desk,\nA new consultation has just been booked and confirmed on Grams Life:\n\n📋 *Booking Details:*\n• *Appointment ID:* #APT-1789192729082-5183\n• *Patient Name:* vivek (Age: 28, Female)\n• *Patient Phone:* +91 7451050607\n• *Patient Email:* heythere@gmail.com\n\n🩺 *Consultation Info:*\n• *Assigned Doctor:* Dr. Rajeshwar Sharma\n• *Date:* 2026-09-12\n• *Time Slot:* 11:00 AM\n• *Mode:* CHAT\n• *Fee Paid:* ₹499 (Paid)\n• *Chief Health Concern:* Digestion & Acidity\n\nOpen your Doctor Dashboard to manage the session or view patient history:\nhttps://gramslife.com/doctor-dashboard\n\n*Grams Life Automated Care Desk*"
+    },
+    {
+      "id": "log-1789192729126-qktb",
+      "timestamp": "2026-09-12T05:58:49.126Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1789192729082-5183 with Dr. Rajeshwar Sharma for 2026-09-12 at 11:00 AM"
+    },
+    {
+      "id": "log-1789192502424-14k7",
+      "timestamp": "2026-09-12T05:55:02.424Z",
+      "userEmail": "917451050607",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🌿 *Grams Life Clinic - Consultation Confirmed* 🌿\n\nNamaste *vivek*,\nYour Ayurvedic consultation with *Dr. Rajeshwar Sharma* has been officially confirmed!\n\n📋 *Appointment Details:*\n• *Appointment ID:* #APT-1789192502402-8896\n• *Doctor:* Dr. Rajeshwar Sharma (Nadi Pariksha)\n• *Date:* 2026-09-12\n• *Time Slot:* 11:00 AM\n• *Format:* AUDIO\n• *Payment Status:* Verified Paid (₹499)\n\n📞 *Telephone Call:*\nDoctor will initiate a direct call to your mobile (+91 7451050607) at 11:00 AM.\n\nFor any questions or rescheduling, reply directly to this WhatsApp message or call our care desk at +91 9425011088.\n\nWarm regards,\n*Grams Life Care Desk*\n📞 +91 9425011088"
+    },
+    {
+      "id": "log-1789192502417-0hgl",
+      "timestamp": "2026-09-12T05:55:02.417Z",
+      "userEmail": "919425011088",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🚨 *NEW DOCTOR BOOKING RECEIVED* 🚨\n\nNamaste Doctor / Clinic Desk,\nA new consultation has just been booked and confirmed on Grams Life:\n\n📋 *Booking Details:*\n• *Appointment ID:* #APT-1789192502402-8896\n• *Patient Name:* vivek (Age: 28, Female)\n• *Patient Phone:* +91 7451050607\n• *Patient Email:* heythere@gmail.com\n\n🩺 *Consultation Info:*\n• *Assigned Doctor:* Dr. Rajeshwar Sharma\n• *Date:* 2026-09-12\n• *Time Slot:* 11:00 AM\n• *Mode:* AUDIO\n• *Fee Paid:* ₹499 (Paid)\n• *Chief Health Concern:* Digestion & Acidity\n\nOpen your Doctor Dashboard to manage the session or view patient history:\nhttps://gramslife.com/doctor-dashboard\n\n*Grams Life Automated Care Desk*"
+    },
+    {
+      "id": "log-1789192502410-kusz",
+      "timestamp": "2026-09-12T05:55:02.410Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1789192502402-8896 with Dr. Rajeshwar Sharma for 2026-09-12 at 11:00 AM"
+    },
+    {
+      "id": "log-1789192196565-ainx",
+      "timestamp": "2026-09-12T05:49:56.565Z",
+      "userEmail": "917451050607",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🌿 *Grams Life Clinic - Consultation Confirmed* 🌿\n\nNamaste *vivek*,\nYour Ayurvedic consultation with *Dr. Rajeshwar Sharma* has been officially confirmed!\n\n📋 *Appointment Details:*\n• *Appointment ID:* #APT-1789192196512-5616\n• *Doctor:* Dr. Rajeshwar Sharma (Nadi Pariksha)\n• *Date:* 2026-09-12\n• *Time Slot:* 11:00 AM\n• *Format:* VIDEO\n• *Payment Status:* Verified Paid (₹499)\n\n📹 *Direct Video Consultation Link:*\nhttps://meet.jit.si/BVLife-Consult-APT-1789192196512-5616\n(No app download required. Open on phone or laptop 5 minutes prior to slot.)\n\nFor any questions or rescheduling, reply directly to this WhatsApp message or call our care desk at +91 9425011088.\n\nWarm regards,\n*Grams Life Care Desk*\n📞 +91 9425011088"
+    },
+    {
+      "id": "log-1789192196559-olxy",
+      "timestamp": "2026-09-12T05:49:56.559Z",
+      "userEmail": "919425011088",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🚨 *NEW DOCTOR BOOKING RECEIVED* 🚨\n\nNamaste Doctor / Clinic Desk,\nA new consultation has just been booked and confirmed on Grams Life:\n\n📋 *Booking Details:*\n• *Appointment ID:* #APT-1789192196512-5616\n• *Patient Name:* vivek (Age: 28, Female)\n• *Patient Phone:* +91 7451050607\n• *Patient Email:* heythere@gmail.com\n\n🩺 *Consultation Info:*\n• *Assigned Doctor:* Dr. Rajeshwar Sharma\n• *Date:* 2026-09-12\n• *Time Slot:* 11:00 AM\n• *Mode:* VIDEO\n• *Fee Paid:* ₹499 (Paid)\n• *Chief Health Concern:* Digestion & Acidity\n\n📹 *Video Room Link:*\nhttps://meet.jit.si/BVLife-Consult-APT-1789192196512-5616\n\nOpen your Doctor Dashboard to manage the session or view patient history:\nhttps://gramslife.com/doctor-dashboard\n\n*Grams Life Automated Care Desk*"
+    },
+    {
+      "id": "log-1789192196547-rre0",
+      "timestamp": "2026-09-12T05:49:56.547Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1789192196512-5616 with Dr. Rajeshwar Sharma for 2026-09-12 at 11:00 AM"
+    },
+    {
+      "id": "log-1789020736778-wbay",
+      "timestamp": "2026-09-10T06:12:16.778Z",
+      "userEmail": "917451050607",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🌿 *Grams Life Clinic - Consultation Confirmed* 🌿\n\nNamaste *vivek*,\nYour Ayurvedic consultation with *Dr. Rajeshwar Sharma* has been officially confirmed!\n\n📋 *Appointment Details:*\n• *Appointment ID:* #APT-1789020736749-5341\n• *Doctor:* Dr. Rajeshwar Sharma (Nadi Pariksha)\n• *Date:* 2026-09-10\n• *Time Slot:* 11:00 AM\n• *Format:* AUDIO\n• *Payment Status:* Verified Paid (₹499)\n\n📞 *Telephone Call:*\nDoctor will initiate a direct call to your mobile (+91 7451050607) at 11:00 AM.\n\nFor any questions or rescheduling, reply directly to this WhatsApp message or call our care desk at +91 9425011088.\n\nWarm regards,\n*Grams Life Care Desk*\n📞 +91 9425011088"
+    },
+    {
+      "id": "log-1789020736768-8u3m",
+      "timestamp": "2026-09-10T06:12:16.768Z",
+      "userEmail": "919425011088",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🚨 *NEW DOCTOR BOOKING RECEIVED* 🚨\n\nNamaste Doctor / Clinic Desk,\nA new consultation has just been booked and confirmed on Grams Life:\n\n📋 *Booking Details:*\n• *Appointment ID:* #APT-1789020736749-5341\n• *Patient Name:* vivek (Age: 28, Female)\n• *Patient Phone:* +91 7451050607\n• *Patient Email:* heythere@gmail.com\n\n🩺 *Consultation Info:*\n• *Assigned Doctor:* Dr. Rajeshwar Sharma\n• *Date:* 2026-09-10\n• *Time Slot:* 11:00 AM\n• *Mode:* AUDIO\n• *Fee Paid:* ₹499 (Paid)\n• *Chief Health Concern:* Metabolism & Weight\n\nOpen your Doctor Dashboard to manage the session or view patient history:\nhttps://gramslife.com/doctor-dashboard\n\n*Grams Life Automated Care Desk*"
+    },
+    {
+      "id": "log-1789020736759-wkmx",
+      "timestamp": "2026-09-10T06:12:16.759Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1789020736749-5341 with Dr. Rajeshwar Sharma for 2026-09-10 at 11:00 AM"
+    },
+    {
+      "id": "log-1789020704067-3b6b",
+      "timestamp": "2026-09-10T06:11:44.067Z",
+      "userEmail": "heythere@gmail.com",
+      "action": "OTP Login",
+      "details": "Logged in via unified SMS OTP authentication."
+    },
+    {
+      "id": "log-1789020670808-xjnj",
+      "timestamp": "2026-09-10T06:11:10.808Z",
+      "userEmail": "+917451050607",
+      "action": "OTP Dispatched (Login)",
+      "details": "Secure authentication OTP generated for +917451050607."
+    },
+    {
+      "id": "log-1789020670800-ahgk",
+      "timestamp": "2026-09-10T06:11:10.800Z",
+      "userEmail": "+917451050607",
+      "action": "[OTP] Login",
+      "details": "Verification OTP dispatched for Login. Security Token ID: req_1789020670800_v81c9."
+    },
+    {
+      "id": "log-1789020508065-ouvl",
+      "timestamp": "2026-09-10T06:08:28.065Z",
+      "userEmail": "919485678342",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🌿 *Grams Life Clinic - Consultation Confirmed* 🌿\n\nNamaste *vishal*,\nYour Ayurvedic consultation with *Dr. Rajeshwar Sharma* has been officially confirmed!\n\n📋 *Appointment Details:*\n• *Appointment ID:* #APT-1789020508033-8756\n• *Doctor:* Dr. Rajeshwar Sharma (Nadi Pariksha)\n• *Date:* 2026-09-10\n• *Time Slot:* 11:00 AM\n• *Format:* AUDIO\n• *Payment Status:* Verified Paid (₹499)\n\n📞 *Telephone Call:*\nDoctor will initiate a direct call to your mobile (+91 9485678342) at 11:00 AM.\n\nFor any questions or rescheduling, reply directly to this WhatsApp message or call our care desk at +91 9425011088.\n\nWarm regards,\n*Grams Life Care Desk*\n📞 +91 9425011088"
+    },
+    {
+      "id": "log-1789020508054-oc7x",
+      "timestamp": "2026-09-10T06:08:28.054Z",
+      "userEmail": "919425011088",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🚨 *NEW DOCTOR BOOKING RECEIVED* 🚨\n\nNamaste Doctor / Clinic Desk,\nA new consultation has just been booked and confirmed on Grams Life:\n\n📋 *Booking Details:*\n• *Appointment ID:* #APT-1789020508033-8756\n• *Patient Name:* vishal (Age: 28, Female)\n• *Patient Phone:* +91 9485678342\n• *Patient Email:* patient@bvlife.com\n\n🩺 *Consultation Info:*\n• *Assigned Doctor:* Dr. Rajeshwar Sharma\n• *Date:* 2026-09-10\n• *Time Slot:* 11:00 AM\n• *Mode:* AUDIO\n• *Fee Paid:* ₹499 (Paid)\n• *Chief Health Concern:* Digestion & Acidity\n\nOpen your Doctor Dashboard to manage the session or view patient history:\nhttps://gramslife.com/doctor-dashboard\n\n*Grams Life Automated Care Desk*"
+    },
+    {
+      "id": "log-1789020508043-wg2n",
+      "timestamp": "2026-09-10T06:08:28.043Z",
+      "userEmail": "patient@bvlife.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1789020508033-8756 with Dr. Rajeshwar Sharma for 2026-09-10 at 11:00 AM"
+    },
+    {
+      "id": "log-1789020460903-3gwk",
+      "timestamp": "2026-09-10T06:07:40.903Z",
+      "userEmail": "919485678342",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🌿 *Grams Life Clinic - Consultation Confirmed* 🌿\n\nNamaste *vishal*,\nYour Ayurvedic consultation with *Dr. Rajeshwar Sharma* has been officially confirmed!\n\n📋 *Appointment Details:*\n• *Appointment ID:* #APT-1789020460825-8986\n• *Doctor:* Dr. Rajeshwar Sharma (Nadi Pariksha)\n• *Date:* 2026-09-10\n• *Time Slot:* 11:00 AM\n• *Format:* VIDEO\n• *Payment Status:* Verified Paid (₹499)\n\n📹 *Direct Video Consultation Link:*\nhttps://meet.jit.si/BVLife-Consult-APT-1789020460825-8986\n(No app download required. Open on phone or laptop 5 minutes prior to slot.)\n\nFor any questions or rescheduling, reply directly to this WhatsApp message or call our care desk at +91 9425011088.\n\nWarm regards,\n*Grams Life Care Desk*\n📞 +91 9425011088"
+    },
+    {
+      "id": "log-1789020460894-ttz5",
+      "timestamp": "2026-09-10T06:07:40.894Z",
+      "userEmail": "919425011088",
+      "action": "[WHATSAPP] DoctorAppointment",
+      "details": "🚨 *NEW DOCTOR BOOKING RECEIVED* 🚨\n\nNamaste Doctor / Clinic Desk,\nA new consultation has just been booked and confirmed on Grams Life:\n\n📋 *Booking Details:*\n• *Appointment ID:* #APT-1789020460825-8986\n• *Patient Name:* vishal (Age: 28, Female)\n• *Patient Phone:* +91 9485678342\n• *Patient Email:* patient@bvlife.com\n\n🩺 *Consultation Info:*\n• *Assigned Doctor:* Dr. Rajeshwar Sharma\n• *Date:* 2026-09-10\n• *Time Slot:* 11:00 AM\n• *Mode:* VIDEO\n• *Fee Paid:* ₹499 (Paid)\n• *Chief Health Concern:* Digestion & Acidity\n\n📹 *Video Room Link:*\nhttps://meet.jit.si/BVLife-Consult-APT-1789020460825-8986\n\nOpen your Doctor Dashboard to manage the session or view patient history:\nhttps://gramslife.com/doctor-dashboard\n\n*Grams Life Automated Care Desk*"
+    },
+    {
+      "id": "log-1789020460882-nplw",
+      "timestamp": "2026-09-10T06:07:40.882Z",
+      "userEmail": "patient@bvlife.com",
+      "action": "Booked Doctor Appointment",
+      "details": "Booked appointment APT-1789020460825-8986 with Dr. Rajeshwar Sharma for 2026-09-10 at 11:00 AM"
+    },
     {
       "id": "log-1788868214316-06zs",
       "timestamp": "2026-09-08T11:50:14.316Z",
@@ -8629,181 +8804,6 @@
       "userEmail": "+919425011088",
       "action": "[OTP] Login",
       "details": "Verification OTP dispatched for Login. Security Token ID: req_1787132039535_57pr4."
-    },
-    {
-      "id": "log-1787131452591-sa79",
-      "timestamp": "2026-08-19T09:24:12.591Z",
-      "userEmail": "heythere@gmail.com",
-      "action": "OTP Login",
-      "details": "Logged in via unified SMS OTP authentication."
-    },
-    {
-      "id": "log-1787131431654-44n4",
-      "timestamp": "2026-08-19T09:23:51.654Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787131431649-595g",
-      "timestamp": "2026-08-19T09:23:51.649Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787131431502_u99hi."
-    },
-    {
-      "id": "log-1787131378125-7m42",
-      "timestamp": "2026-08-19T09:22:58.125Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787131378117-4lpa",
-      "timestamp": "2026-08-19T09:22:58.117Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787131377978_2u46r."
-    },
-    {
-      "id": "log-1787131346826-1szw",
-      "timestamp": "2026-08-19T09:22:26.826Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787131346821-nels",
-      "timestamp": "2026-08-19T09:22:26.821Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787131346680_frkuh."
-    },
-    {
-      "id": "log-1787130767278-vxdm",
-      "timestamp": "2026-08-19T09:12:47.278Z",
-      "userEmail": "heythere@gmail.com",
-      "action": "OTP Login",
-      "details": "Logged in via unified SMS OTP authentication."
-    },
-    {
-      "id": "log-1787130744675-h0cv",
-      "timestamp": "2026-08-19T09:12:24.675Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787130744671-6cni",
-      "timestamp": "2026-08-19T09:12:24.671Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787130744538_rvorp."
-    },
-    {
-      "id": "log-1787130711208-t4r5",
-      "timestamp": "2026-08-19T09:11:51.208Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787130711200-z9u2",
-      "timestamp": "2026-08-19T09:11:51.200Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787130711052_x482g."
-    },
-    {
-      "id": "log-1787130655348-4ptt",
-      "timestamp": "2026-08-19T09:10:55.348Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787130655340-p9jf",
-      "timestamp": "2026-08-19T09:10:55.340Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787130655193_gg22y."
-    },
-    {
-      "id": "log-1787130544831-rgkj",
-      "timestamp": "2026-08-19T09:09:04.831Z",
-      "userEmail": "+919425011088",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +919425011088."
-    },
-    {
-      "id": "log-1787130544825-00l1",
-      "timestamp": "2026-08-19T09:09:04.825Z",
-      "userEmail": "+919425011088",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787130544504_lrb0y."
-    },
-    {
-      "id": "log-1787118026405-1e6j",
-      "timestamp": "2026-08-19T05:40:26.405Z",
-      "userEmail": "heythere@gmail.com",
-      "action": "OTP Login",
-      "details": "Logged in via unified SMS OTP authentication."
-    },
-    {
-      "id": "log-1787118000531-cc6x",
-      "timestamp": "2026-08-19T05:40:00.531Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787118000522-p260",
-      "timestamp": "2026-08-19T05:40:00.522Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787118000336_l0w46."
-    },
-    {
-      "id": "log-1787117933959-zcgx",
-      "timestamp": "2026-08-19T05:38:53.959Z",
-      "userEmail": "+919425011088",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +919425011088."
-    },
-    {
-      "id": "log-1787117933951-u6ux",
-      "timestamp": "2026-08-19T05:38:53.951Z",
-      "userEmail": "+919425011088",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787117933681_bforl."
-    },
-    {
-      "id": "log-1787117523637-fpqo",
-      "timestamp": "2026-08-19T05:32:03.637Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787117523627-ho9a",
-      "timestamp": "2026-08-19T05:32:03.627Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787117523469_yk608."
-    },
-    {
-      "id": "log-1787117491226-q46u",
-      "timestamp": "2026-08-19T05:31:31.226Z",
-      "userEmail": "+917451050607",
-      "action": "OTP Dispatched (Login)",
-      "details": "Secure authentication OTP generated for +917451050607."
-    },
-    {
-      "id": "log-1787117491218-fn9o",
-      "timestamp": "2026-08-19T05:31:31.218Z",
-      "userEmail": "+917451050607",
-      "action": "[OTP] Login",
-      "details": "Verification OTP dispatched for Login. Security Token ID: req_1787117490999_7e6v8."
     }
   ],
   "payments": [
@@ -10251,6 +10251,200 @@
     }
   ],
   "doctorAppointments": [
+    {
+      "id": "APT-1789202141633-3725",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "Iamvivekbaliyan07",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "7451050607",
+      "patientEmail": "iamvivekbaliyan07@gmail.com",
+      "date": "2026-09-12",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "audio",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 12, 2026",
+      "paymentMethod": "Razorpay",
+      "paymentStatus": "Paid",
+      "paymentId": "",
+      "razorpayOrderId": "",
+      "razorpayPaymentId": ""
+    },
+    {
+      "id": "APT-1789192729082-5183",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "vivek",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "+917451050607",
+      "patientEmail": "heythere@gmail.com",
+      "date": "2026-09-12",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "chat",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 12, 2026",
+      "paymentMethod": "Razorpay",
+      "paymentStatus": "Paid",
+      "paymentId": "",
+      "razorpayOrderId": "",
+      "razorpayPaymentId": ""
+    },
+    {
+      "id": "APT-1789192502402-8896",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "vivek",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "+917451050607",
+      "patientEmail": "heythere@gmail.com",
+      "date": "2026-09-12",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "audio",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 12, 2026",
+      "paymentMethod": "Razorpay",
+      "paymentStatus": "Paid",
+      "paymentId": "",
+      "razorpayOrderId": "",
+      "razorpayPaymentId": ""
+    },
+    {
+      "id": "APT-1789192196512-5616",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "vivek",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "+917451050607",
+      "patientEmail": "heythere@gmail.com",
+      "date": "2026-09-12",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "video",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 12, 2026",
+      "meetingLink": "https://meet.jit.si/BVLife-Consult-APT-1789192196512-5616",
+      "paymentMethod": "Razorpay",
+      "paymentStatus": "Paid",
+      "paymentId": "",
+      "razorpayOrderId": "",
+      "razorpayPaymentId": ""
+    },
+    {
+      "id": "APT-1789020736749-5341",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "vivek",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "+917451050607",
+      "patientEmail": "heythere@gmail.com",
+      "date": "2026-09-10",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "audio",
+      "healthConcern": "Metabolism & Weight",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 10, 2026",
+      "paymentMethod": "Razorpay",
+      "paymentStatus": "Paid",
+      "paymentId": "",
+      "razorpayOrderId": "",
+      "razorpayPaymentId": "",
+      "whatsappConfirmationSent": true,
+      "whatsappConfirmationSentAt": "2026-09-10T06:15:37.344Z",
+      "roomStatus": "in-progress"
+    },
+    {
+      "id": "APT-1789020508033-8756",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "vishal",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "9485678342",
+      "patientEmail": "patient@bvlife.com",
+      "date": "2026-09-10",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "audio",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 10, 2026",
+      "paymentMethod": "Razorpay",
+      "paymentStatus": "Paid",
+      "paymentId": "",
+      "razorpayOrderId": "",
+      "razorpayPaymentId": ""
+    },
+    {
+      "id": "APT-1789020460825-8986",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Rajeshwar Sharma",
+      "doctorSpecialty": "Nadi Pariksha",
+      "doctorImage": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      "doctorQualification": "BAMS, MD (Ayurveda), Gold Medalist",
+      "patientName": "vishal",
+      "patientAge": 28,
+      "patientGender": "Female",
+      "patientPhone": "9485678342",
+      "patientEmail": "patient@bvlife.com",
+      "date": "2026-09-10",
+      "timeSlot": "11:00 AM",
+      "consultationMode": "video",
+      "healthConcern": "Digestion & Acidity",
+      "previousHistory": "",
+      "medicalReports": [],
+      "fee": 499,
+      "status": "Confirmed",
+      "bookingDate": "Sep 10, 2026",
+      "meetingLink": "https://meet.jit.si/BVLife-Consult-APT-1789020460825-8986",
+      "paymentMethod": "Razorpay",
+      "paymentStatus": "Paid",
+      "paymentId": "",
+      "razorpayOrderId": "",
+      "razorpayPaymentId": ""
+    },
     {
       "id": "APT-1788868214269-4294",
       "doctorId": "doc-1",

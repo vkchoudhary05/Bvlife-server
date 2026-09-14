@@ -4,6 +4,7 @@
  */
 
 import { db } from "../dbManager.js";
+import { communicationService } from "./communicationService.js";
 
 export class AppointmentService {
   /**
@@ -69,6 +70,7 @@ export class AppointmentService {
       healthConcern: healthConcern || 'Holistic Ayurvedic Assessment',
       previousHistory: previousHistory || '',
       medicalReports: Array.isArray(medicalReports) ? medicalReports : [],
+      patientPhoto: data.patientPhoto || '',
       fee: Number(fee) || doctor?.fee || 499
     });
 
@@ -77,6 +79,17 @@ export class AppointmentService {
       "Booked Doctor Appointment",
       `Booked appointment ${appointment.id} with ${appointment.doctorName} for ${appointment.date} at ${appointment.timeSlot}`
     );
+
+    // Asynchronously dispatch automated MSG91 Email & WhatsApp notification to clinic desk and patient
+    Promise.allSettled([
+      communicationService.sendDoctorBookingMsg91Email(appointment),
+      communicationService.sendDoctorBookingAlertToClinic(appointment),
+      communicationService.sendPatientBookingConfirmationWhatsApp(appointment)
+    ]).then(results => {
+      console.log(`[Auto Dispatch (Email & WhatsApp)] Completed for Appointment #${appointment.id}:`, results);
+    }).catch(err => {
+      console.warn(`[Auto Dispatch] Non-blocking warning:`, err);
+    });
 
     return appointment;
   }
@@ -144,6 +157,28 @@ export class AppointmentService {
       throw { status: 404, message: "Appointment not found" };
     }
     return updated;
+  }
+
+  /**
+   * Mark WhatsApp confirmation as dispatched
+   */
+  updateWhatsAppConfirmationStatus(id: string, sent: boolean = true) {
+    const updated = db.updateAppointmentWhatsAppStatus(id, sent);
+    if (!updated) {
+      throw { status: 404, message: "Appointment not found" };
+    }
+    return updated;
+  }
+
+  /**
+   * Dispatch automated WhatsApp alerts to clinic desk and patient via MSG91
+   */
+  async dispatchWhatsAppAlerts(appointment: any) {
+    const [clinicResult, patientResult] = await Promise.allSettled([
+      communicationService.sendDoctorBookingAlertToClinic(appointment),
+      communicationService.sendPatientBookingConfirmationWhatsApp(appointment)
+    ]);
+    return { clinicResult, patientResult };
   }
 }
 

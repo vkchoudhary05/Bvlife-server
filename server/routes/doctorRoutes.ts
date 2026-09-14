@@ -19,7 +19,9 @@ import {
   cancelDoctorAppointment,
   saveDoctorPrescription,
   updateAppointmentMeetingLink,
-  updateAppointmentRoomStatus
+  updateAppointmentRoomStatus,
+  updateAppointmentWhatsAppStatus,
+  resendAppointmentWhatsAppAlert
 } from "../controllers/appointmentController.js";
 import { optionalAuthenticateToken, authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
 
@@ -36,8 +38,10 @@ doctorRouter.delete("/api/doctors/:id", authenticateToken, requireAdmin, deleteD
 doctorRouter.get("/api/doctor-appointments", optionalAuthenticateToken, getDoctorAppointments);
 doctorRouter.get("/api/doctor-appointments/user/:email", optionalAuthenticateToken, getDoctorAppointmentsByUser);
 doctorRouter.post("/api/doctor-appointments", optionalAuthenticateToken, bookDoctorAppointment);
+doctorRouter.post("/api/doctor-appointments/:id/resend-whatsapp", optionalAuthenticateToken, resendAppointmentWhatsAppAlert);
 doctorRouter.put("/api/doctor-appointments/:id/status", optionalAuthenticateToken, updateDoctorAppointmentStatus);
 doctorRouter.put("/api/doctor-appointments/:id/prescription", optionalAuthenticateToken, saveDoctorPrescription);
 doctorRouter.put("/api/doctor-appointments/:id/meeting-link", optionalAuthenticateToken, updateAppointmentMeetingLink);
 doctorRouter.put("/api/doctor-appointments/:id/room-status", optionalAuthenticateToken, updateAppointmentRoomStatus);
+doctorRouter.put("/api/doctor-appointments/:id/whatsapp-confirmation", optionalAuthenticateToken, updateAppointmentWhatsAppStatus);
 doctorRouter.delete("/api/doctor-appointments/:id", optionalAuthenticateToken, cancelDoctorAppointment);

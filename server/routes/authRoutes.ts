@@ -31,7 +31,11 @@ import {
   handleGoogleCallback, 
   handleFacebookCallback 
 } from "../controllers/oauthController.js";
-import { getActivityLogs } from "../controllers/contentController.js";
+import { 
+  getActivityLogs, 
+  getCommunicationLogs, 
+  testMsg91EmailDispatch 
+} from "../controllers/contentController.js";
 import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
 import { validateRegister, validateLogin, validateResetPassword } from "../middleware/validationMiddleware.js";
 import { rateLimiter } from "../middleware/rateLimitMiddleware.js";
@@ -52,6 +56,8 @@ authRouter.get("/api/users/:email", authenticateToken, getUserByEmail);
 authRouter.put("/api/users/:email", authenticateToken, updateUserByEmail);
 authRouter.get("/api/customers", authenticateToken, requireAdmin, getCustomers);
 authRouter.get("/api/logs", getActivityLogs);
+authRouter.get("/api/communication/logs", getCommunicationLogs);
+authRouter.post("/api/communication/test-email", testMsg91EmailDispatch);
 
 // Security & Recovery Routes
 authRouter.post("/api/auth/admin-check-credentials", rateLimiter(20), adminCheckCredentials);

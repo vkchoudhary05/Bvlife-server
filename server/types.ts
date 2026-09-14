@@ -218,6 +218,7 @@ export interface User {
   phone?: string;
   addresses: Address[];
   password?: string;
+  createdAt?: string;
 }
 
 export interface ActivityLog {
@@ -313,6 +314,7 @@ export interface DoctorAppointment {
   healthConcern: string;
   previousHistory?: string;
   medicalReports?: MedicalReportFile[];
+  patientPhoto?: string;
   fee: number;
   status: 'Confirmed' | 'Completed' | 'Cancelled';
   bookingDate: string;
@@ -326,4 +328,6 @@ export interface DoctorAppointment {
   paymentId?: string;
   razorpayOrderId?: string;
   razorpayPaymentId?: string;
+  whatsappConfirmationSent?: boolean;
+  whatsappConfirmationSentAt?: string;
 }

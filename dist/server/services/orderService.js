@@ -97,7 +97,10 @@ export class OrderService {
         };
         db.savePayment(newPayment);
         db.logActivity(emailToUse, "Order Placed", `Placed order #${newOrder.id} for amount ₹${newOrder.finalTotal}`);
-        // Asynchronous communication triggers
+        // Asynchronous communication triggers: MSG91 Order Confirmation Template Email & PDF/HTML Invoice
+        communicationService.sendOrderConfirmationMsg91Email(newOrder).catch(err => {
+            console.warn('[MSG91 Order Confirmation Email] Notice:', err);
+        });
         communicationService.sendOrderInvoiceEmail(newOrder).catch(err => {
             console.warn('[Order Invoice Email] Notice:', err);
         });

@@ -5,6 +5,7 @@
 
 import { Request, Response } from "express";
 import { contentService } from "../services/contentService.js";
+import { communicationService } from "../services/communicationService.js";
 
 // Blogs
 export const getBlogs = (req: Request, res: Response) => {
@@ -84,5 +85,85 @@ export const getActivityLogs = (req: Request, res: Response) => {
     res.json(contentService.getActivityLogs());
   } catch (err: any) {
     res.status(500).json({ error: "Failed to fetch activity logs." });
+  }
+};
+
+// Separated Communication Channels Logs (OTP, Email, WhatsApp, SMS)
+export const getCommunicationLogs = (req: Request, res: Response) => {
+  try {
+    const { channel, recipient, category } = req.query;
+    const logs = communicationService.getLogs({
+      channel: channel as any,
+      recipient: recipient as string,
+      category: category as string
+    });
+    res.json(logs);
+  } catch (err: any) {
+    res.status(500).json({ error: "Failed to fetch communication logs." });
+  }
+};
+
+// Admin Test Dispatch for MSG91 Email Templates
+export const testMsg91EmailDispatch = async (req: Request, res: Response) => {
+  try {
+    const { templateType, targetEmail, targetName } = req.body;
+    const recipientEmail = targetEmail || 'care@bvlife.in';
+    const recipientName = targetName || 'Valued Seeker';
+
+    if (templateType === 'order') {
+      const dummyOrder: any = {
+        id: `TEST-${Date.now().toString().slice(-6)}`,
+        userEmail: recipientEmail,
+        userName: recipientName,
+        orderDate: new Date().toISOString(),
+        items: [{ productName: 'Authentic Ashwagandha Rasayana', quantity: 2, price: 499 }],
+        subtotal: 998,
+        tax: 49,
+        shippingCharge: 0,
+        discount: 100,
+        finalTotal: 947,
+        paymentMethod: 'Razorpay UPI',
+        trackingNumber: `GLTRK-${Date.now().toString().slice(-6)}`,
+        shippingAddress: {
+          fullName: recipientName,
+          addressLine1: 'Vedic Care Bhavan, Ayur Marg',
+          city: 'New Delhi',
+          state: 'Delhi',
+          zipCode: '110001',
+          phone: '9425011088'
+        }
+      };
+      const result = await communicationService.sendOrderConfirmationMsg91Email(dummyOrder);
+      if (!result.success) {
+        return res.status(400).json({ success: false, error: result.error || 'Failed to dispatch Order confirmation email via MSG91', result });
+      }
+      return res.json({ success: true, message: 'MSG91 Order confirmation email dispatched successfully', result });
+    } else if (templateType === 'booking') {
+      const dummyBooking: any = {
+        id: `APT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`,
+        patientName: recipientName,
+        patientEmail: recipientEmail,
+        patientPhone: '9425011088',
+        doctorName: 'Dr. Arundhati Sharma',
+        doctorSpecialty: 'Senior Ayurvedic Specialist',
+        doctorQualification: 'BAMS, MD (Ayurveda)',
+        date: new Date().toISOString().split('T')[0],
+        timeSlot: '11:00 AM',
+        consultationMode: 'video',
+        healthConcern: 'Holistic Ayurvedic Assessment',
+        fee: 499,
+        paymentStatus: 'Paid',
+        bookingDate: new Date().toLocaleDateString('en-IN')
+      };
+      const result = await communicationService.sendDoctorBookingMsg91Email(dummyBooking);
+      if (!result.success) {
+        return res.status(400).json({ success: false, error: result.error || 'Failed to dispatch Doctor booking email via MSG91', result });
+      }
+      return res.json({ success: true, message: 'MSG91 Doctor booking confirmation email dispatched successfully', result });
+    } else {
+      return res.status(400).json({ error: "Invalid templateType. Must be 'order' or 'booking'." });
+    }
+  } catch (err: any) {
+    return res.status(500).json({ error: err.message || 'Failed to dispatch test email' });
   }
 };

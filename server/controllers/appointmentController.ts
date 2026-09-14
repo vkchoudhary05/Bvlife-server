@@ -116,3 +116,41 @@ export const updateAppointmentRoomStatus = async (req: Request, res: Response): 
     res.status(error.status || 500).json({ error: error.message || "Failed to update room status" });
   }
 };
+
+export const updateAppointmentWhatsAppStatus = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { sent } = req.body;
+    const updated = appointmentService.updateWhatsAppConfirmationStatus(id, sent !== false);
+    res.json({
+      success: true,
+      message: "WhatsApp confirmation status updated",
+      appointment: updated
+    });
+  } catch (error: any) {
+    console.error("Error updating WhatsApp confirmation status:", error);
+    res.status(error.status || 500).json({ error: error.message || "Failed to update WhatsApp status" });
+  }
+};
+
+export const resendAppointmentWhatsAppAlert = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const appointment = appointmentService.getAppointments().find(a => a.id === id);
+    if (!appointment) {
+      res.status(404).json({ error: "Appointment not found" });
+      return;
+    }
+    const clinicResult = await appointmentService.dispatchWhatsAppAlerts(appointment);
+    res.json({
+      success: true,
+      message: "Automated WhatsApp alert triggered successfully via MSG91",
+      result: clinicResult
+    });
+  } catch (error: any) {
+    console.error("Error resending automated WhatsApp alert:", error);
+    res.status(500).json({ error: error.message || "Failed to dispatch WhatsApp alert" });
+  }
+};
+
+

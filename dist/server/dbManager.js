@@ -1332,6 +1332,7 @@ class DBManager {
             healthConcern: appointmentData.healthConcern || 'General Wellness Consultation',
             previousHistory: appointmentData.previousHistory || '',
             medicalReports: Array.isArray(appointmentData.medicalReports) ? appointmentData.medicalReports : [],
+            patientPhoto: appointmentData.patientPhoto || '',
             fee: Number(appointmentData.fee) || 499,
             status: 'Confirmed',
             bookingDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
@@ -1401,6 +1402,17 @@ class DBManager {
         const index = this.data.doctorAppointments.findIndex(a => a.id === id);
         if (index !== -1) {
             this.data.doctorAppointments[index].roomStatus = roomStatus;
+            this.save();
+            return this.data.doctorAppointments[index];
+        }
+        return null;
+    }
+    updateAppointmentWhatsAppStatus(id, sent = true) {
+        this.data.doctorAppointments = this.data.doctorAppointments || [];
+        const index = this.data.doctorAppointments.findIndex(a => a.id === id);
+        if (index !== -1) {
+            this.data.doctorAppointments[index].whatsappConfirmationSent = sent;
+            this.data.doctorAppointments[index].whatsappConfirmationSentAt = new Date().toISOString();
             this.save();
             return this.data.doctorAppointments[index];
         }

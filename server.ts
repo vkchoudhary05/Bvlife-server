@@ -3,6 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import dotenv from "dotenv";
+dotenv.config();
+
+if (!process.env.MSG91_AUTH_KEY) {
+  process.env.MSG91_AUTH_KEY = "555226ACqXDRqJuY6a69ae3dP1";
+}
+
 import express from "express";
 import path from "path";
 import cors from "cors";
