@@ -7380,6 +7380,14 @@
       "phone": "9876543210",
       "password": "123123123",
       "addresses": []
+    },
+    {
+      "email": "doctor@Bvlife.com",
+      "fullName": "Dr. Arundhati Sharma",
+      "role": "admin",
+      "phone": "9876543210",
+      "password": "123123123",
+      "addresses": []
     }
   ],
   "reviews": [

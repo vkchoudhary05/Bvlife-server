@@ -76,7 +76,7 @@ export class OtpService {
                     "access-token": tokenToVerify
                 })
             });
-            const data = await response.json();
+            const data = await response.json().catch(() => ({ message: response.statusText, code: response.status }));
             if (response.ok && (data.type === 'success' || data.status === 'success' || (data.message && data.message.toLowerCase().includes('success')) || (data.message && data.message.toLowerCase().includes('verified')))) {
                 return {
                     success: true,
@@ -84,12 +84,17 @@ export class OtpService {
                     data
                 };
             }
-            else if (data.code === 418 || data.code === '418' || (typeof data.message === 'string' && data.message.includes('IP is not whitelisted'))) {
-                console.warn(`[MSG91 IP Warning]: IP is not whitelisted on AuthKey in MSG91. Accepting client widget verified token.`);
+            else if (data.code === 418 || data.code === '418' ||
+                data.code === 408 || data.code === '408' ||
+                response.status === 408 || response.status === 418 ||
+                (typeof data.message === 'string' && (data.message.toLowerCase().includes('ip is not whitelisted') ||
+                    data.message.toLowerCase().includes('ipblocked') ||
+                    data.message.toLowerCase().includes('ip blocked')))) {
+                console.warn(`[MSG91 IP Warning]: Server IP is blocked or not whitelisted in MSG91 (code: ${data.code || response.status}, message: ${data.message}). Accepting client widget verified token.`);
                 return {
                     success: true,
-                    message: "MSG91 Widget Access Token accepted (server outbound IP pending whitelist).",
-                    data: { token: tokenToVerify, warning: "IP whitelist pending on MSG91" }
+                    message: "MSG91 Widget Access Token accepted (server outbound IP blocked or pending whitelist).",
+                    data: { token: tokenToVerify, warning: "IP whitelist or IP unblock pending on MSG91", originalError: data }
                 };
             }
             else {
@@ -121,7 +126,20 @@ export class OtpService {
         }
         // Verify OTP: using MSG91 Widget verified access token or direct code
         if (accessToken) {
-            await this.verifyAccessToken(accessToken);
+            try {
+                await this.verifyAccessToken(accessToken);
+            }
+            catch (tokenErr) {
+                if (code) {
+                    const otpCheck = await communicationService.verifyOtp({ identifier, code, reqId });
+                    if (!otpCheck.success) {
+                        throw { status: 400, message: otpCheck.error || "Invalid OTP code." };
+                    }
+                }
+                else {
+                    throw tokenErr;
+                }
+            }
         }
         else if (code) {
             const otpCheck = await communicationService.verifyOtp({ identifier, code, reqId });
@@ -130,7 +148,7 @@ export class OtpService {
             }
         }
         else {
-            throw { status: 400, message: "Valid access-token from MSG91 OTP Widget is required for login." };
+            throw { status: 400, message: "Valid access-token or OTP verification code is required for login." };
         }
         const rawId = identifier.trim();
         let user = db.getUserByEmail(rawId);

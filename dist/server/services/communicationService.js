@@ -401,8 +401,11 @@ export class CommunicationService {
                 if (!errorMsg) {
                     errorMsg = resData?.message || `HTTP error ${response.status}`;
                 }
-                if (resData?.apiError === '418' || resData?.code === '418' || String(errorMsg).toLowerCase().includes('ip is not whitelisted')) {
-                    errorMsg = `MSG91 Error 418: Server IP (34.34.244.74) is not whitelisted on this AuthKey. In MSG91 Dashboard -> AuthKey -> Whitelist IP, disable IP restriction or whitelist this IP.`;
+                if (resData?.apiError === '418' || resData?.code === '418' ||
+                    resData?.apiError === '408' || resData?.code === '408' ||
+                    String(errorMsg).toLowerCase().includes('ip is not whitelisted') ||
+                    String(errorMsg).toLowerCase().includes('ipblocked')) {
+                    errorMsg = `MSG91 IP Notice (${resData?.code || '408'}): Server IP is blocked or restricted on this AuthKey. In MSG91 Dashboard -> AuthKey -> Whitelist IP, disable IP restriction or whitelist this IP.`;
                 }
                 else if (errorMsg.includes('is not registered') || errorMsg.includes('Invalid From email')) {
                     errorMsg = `MSG91 Domain Error: The domain '${emailDomain}' is not registered/verified in your MSG91 account. To fix: 1) Add '${emailDomain}' under MSG91 Dashboard → Email → Domains and add the DNS records, or 2) Update the Sending Domain & Sender Email in Settings to match your verified MSG91 domain.`;
@@ -984,6 +987,56 @@ Warm regards,
                 doctor_name: docName,
                 date: appointment.date,
                 time_slot: appointment.timeSlot
+            }
+        });
+    }
+    /**
+     * Automatically sends an instant Order Confirmation WhatsApp receipt to the customer
+     */
+    async sendOrderConfirmationWhatsApp(order) {
+        const phone = order.shippingAddress?.phone || order.userPhone;
+        if (!phone)
+            return { success: false, message: "No customer phone provided" };
+        const customerName = order.shippingAddress?.fullName || 'Valued Patron';
+        const itemsList = (order.items || []).map(i => `• ${i.productName} (Qty: ${i.quantity}) - ₹${i.price * i.quantity}`).join('\n');
+        const trackingNum = order.trackingNumber || `GLTRK-${order.id.slice(-6).toUpperCase()}`;
+        const orderSlip = `🌿 *Grams Life Sanctuary - Order Confirmed!* 🌿
+
+Namaste *${customerName}*,
+Thank you for your order! Your authentic Ayurvedic formulations have been confirmed and are being prepared for dispatch.
+
+📦 *Order Summary:*
+• *Order ID:* #${order.id}
+• *Items:*
+${itemsList}
+
+💰 *Payment Breakdown:*
+• *Subtotal:* ₹${order.subtotal}
+• *Shipping:* ${order.shippingCharge === 0 ? 'FREE' : '₹' + order.shippingCharge}
+• *Total Amount:* ₹${order.finalTotal}
+• *Payment Method:* ${order.paymentMethod}
+• *Status:* ${order.paymentStatus || 'Confirmed'}
+
+🚚 *Delivery Address:*
+${order.shippingAddress.addressLine1}, ${order.shippingAddress.city}, ${order.shippingAddress.state} - ${order.shippingAddress.zipCode}
+• *Tracking Code:* ${trackingNum}
+
+We will notify you with courier tracking links once your package is dispatched.
+For assistance, reply directly to this WhatsApp message or call our help desk at +91 9425011088.
+
+Warm regards,
+*Grams Life Botanical Sanctuary*
+🌿 Pure Wellness • Authentic Ayurveda`;
+        return await this.sendWhatsAppMessage({
+            recipientPhone: phone,
+            messageText: orderSlip,
+            templateId: process.env.MSG91_WHATSAPP_ORDER_TEMPLATE_ID,
+            variables: {
+                customer_name: customerName,
+                order_id: order.id,
+                total_amount: `₹${order.finalTotal}`,
+                payment_method: order.paymentMethod,
+                tracking_number: trackingNum
             }
         });
     }
