@@ -140,7 +140,7 @@ async function startServer() {
   const portToUse = process.env.PORT ? parseInt(process.env.PORT, 10) : PORT;
 
   app.listen(portToUse, "0.0.0.0", () => {
-    console.log(`[Grams Life Backend] Production-grade server is running on host 0.0.0.0 and port ${portToUse}`);
+    console.log(`[Bv Life Backend] Production-grade server is running on host 0.0.0.0 and port ${portToUse}`);
   });
 }
 

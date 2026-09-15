@@ -26,7 +26,7 @@ export class ContentService {
       summary: data.summary || "",
       content: data.content || "",
       image: data.image || "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600",
-      author: data.author || "Grams Life Aacharya",
+      author: data.author || "Bv Life Aacharya",
       date: new Date().toISOString().split('T')[0],
       categories: data.categories || ["Ayurveda"],
       readTime: data.readTime || "5 mins read"
@@ -88,14 +88,14 @@ export class ContentService {
       {
         id: "log-init-1",
         timestamp: new Date().toISOString(),
-        userEmail: "system@gramslife.com",
+        userEmail: "system@Bvlife.com",
         action: "System Initialization",
         details: "Cryptographic security ledger online. SSL TLS 1.3 active."
       },
       {
         id: "log-init-2",
         timestamp: new Date(Date.now() - 3600000).toISOString(),
-        userEmail: "admin@gramslife.com",
+        userEmail: "admin@Bvlife.com",
         action: "Admin Access",
         details: "Apothecary Director authenticated via JWT secure session."
       }

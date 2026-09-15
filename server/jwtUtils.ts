@@ -5,7 +5,7 @@
 
 import jwt from "jsonwebtoken";
 
-export const JWT_SECRET = process.env.JWT_SECRET || "gramslife_production_jwt_secret_key_2026_dhanvantari";
+export const JWT_SECRET = process.env.JWT_SECRET || "Bvlife_production_jwt_secret_key_2026_dhanvantari";
 
 export interface JwtPayload {
   email: string;

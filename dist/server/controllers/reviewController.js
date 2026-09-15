@@ -14,7 +14,7 @@ export const getReviews = (req, res) => {
 };
 export const createReview = (req, res) => {
     try {
-        const activeEmail = req.body.userEmail || req.user?.email || "customer@gramslife.com";
+        const activeEmail = req.body.userEmail || req.user?.email || "customer@Bvlife.com";
         const activeName = req.body.userName || req.user?.fullName || "Verified Customer";
         const review = reviewService.createReview({
             ...req.body,

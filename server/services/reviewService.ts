@@ -35,7 +35,7 @@ export class ReviewService {
       productId,
       productName: productName || "Ayurvedic Product",
       userName: userName || "Verified Customer",
-      userEmail: (userEmail || "customer@gramslife.com").toLowerCase(),
+      userEmail: (userEmail || "customer@Bvlife.com").toLowerCase(),
       rating: Number(rating),
       comment: comment || "",
       isApproved: true,

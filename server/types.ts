@@ -331,3 +331,11 @@ export interface DoctorAppointment {
   whatsappConfirmationSent?: boolean;
   whatsappConfirmationSentAt?: string;
 }
+
+export interface OTPRecord {
+  code: string;
+  identifier: string; // phone or email
+  purpose: string;
+  expiresAt: number;
+  reqId?: string;
+}

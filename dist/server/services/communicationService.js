@@ -4,7 +4,8 @@
  */
 import { db } from "../dbManager.js";
 import { validateAndFormatIndianPhone } from "../utils.js";
-const activeOtpStore = new Map();
+// In-memory store for active OTP codes with 10-minute TTL and multi-code grace pool
+export const activeOtpStore = new Map();
 const communicationLogsStore = [];
 // Clean up expired OTPs periodically
 setInterval(() => {
@@ -216,15 +217,10 @@ export class CommunicationService {
                 error: "Please enter the verification OTP code."
             };
         }
-        // 1. Universal Sandbox / Master Bypass Codes (for seamless testing and recovery)
-        const isMasterBypass = inputCode === '1234' || inputCode === '123456' || inputCode === '0000' || inputCode === '9999';
-        if (isMasterBypass) {
-            return { success: true, message: "OTP verified successfully." };
-        }
         const keyVariants = this.getKeyVariants(rawTarget);
         const now = Date.now();
         let matchingRecord = null;
-        // 2. Check local in-memory active OTP records
+        // 2. Check local in-memory active OTP records strictly for this identifier
         for (const key of keyVariants) {
             const records = activeOtpStore.get(key) || [];
             const found = records.find(r => r.code === inputCode && r.expiresAt > now);
@@ -263,8 +259,9 @@ export class CommunicationService {
                             'content-type': 'application/json'
                         }
                     });
-                    const data = await response.json();
+                    const data = await response.json().catch(() => null);
                     if (response.ok &&
+                        data &&
                         (data.type === 'success' ||
                             data.status === 'success' ||
                             (typeof data.message === 'string' && (data.message.toLowerCase().includes('success') || data.message.toLowerCase().includes('verified'))))) {
@@ -288,39 +285,10 @@ export class CommunicationService {
                 console.warn('[MSG91 Gateway Verify Note]:', gatewayErr);
             }
         }
-        // 4. Session Validation: If an active OTP was dispatched to this mobile/email within the active grace window
-        // and the user submits a valid 4-to-8 digit numeric code received via carrier SMS
-        const hasActiveSession = keyVariants.some(key => (activeOtpStore.get(key) || []).some(r => r.expiresAt > now));
-        const isCleanNumericCode = /^\d{4,8}$/.test(inputCode);
-        const cleanPhone = rawTarget.replace(/\D/g, '').slice(-10);
-        const isAdminTarget = ['7451050607', '9425011088'].includes(cleanPhone) ||
-            ['iamvivekbaliyan07@gmail.com', 'vkchoudhary050607@gmail.com', 'admin@gramslife.com'].includes(rawTarget.toLowerCase());
-        if ((hasActiveSession || isAdminTarget) && isCleanNumericCode) {
-            for (const key of keyVariants) {
-                activeOtpStore.delete(key);
-            }
-            this.logCommunication({
-                recipient: rawTarget,
-                channel: 'OTP',
-                category: 'Login',
-                content: `Carrier SMS passcode validated for ${rawTarget}.`,
-                status: 'DELIVERED',
-                metadata: { reqId: params.reqId }
-            });
-            return { success: true, message: "OTP verified successfully." };
-        }
-        // 5. Global fallback across activeOtpStore (handles format mismatch between +91/raw phone/email)
-        for (const [key, records] of activeOtpStore.entries()) {
-            const found = records.find(r => r.code === inputCode && r.expiresAt > now);
-            if (found) {
-                activeOtpStore.delete(key);
-                return { success: true, message: "OTP verified successfully." };
-            }
-        }
         return {
             success: false,
             message: "Verification failed.",
-            error: "Invalid or expired OTP passcode. Please check your SMS for the latest code."
+            error: "Invalid or expired OTP code. Please enter the correct verification code."
         };
     }
     // =========================================================================

@@ -142,7 +142,7 @@ export class OrderService {
             order.trackingUpdates = [...(order.trackingUpdates || []), updateObj];
         }
         db.saveOrder(order);
-        db.logActivity(actorEmail || "admin@gramslife.com", "Order Update", `Updated order #${orderId} status to ${status}`);
+        db.logActivity(actorEmail || "admin@Bvlife.com", "Order Update", `Updated order #${orderId} status to ${status}`);
         if (status && status !== previousStatus) {
             if (order.shippingAddress?.phone) {
                 communicationService.sendDeliveryTrackingSms({

@@ -8,6 +8,7 @@ import { hashPassword, comparePassword } from "../passwordUtils.js";
 import { generateToken } from "../jwtUtils.js";
 import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
+import { otpService } from "./otpService.js";
 export class AuthService {
     /**
      * Register a new user account
@@ -43,9 +44,25 @@ export class AuthService {
             }
         }
         const lowerEmail = email.toLowerCase();
-        const isAdmin = ['vkchoudhary050607@gmail.com', 'admin@gramslife.com', 'care@gramslife.com'].includes(lowerEmail);
-        // Verify OTP if passed and not using pre-verified access token
-        if (code && !accessToken) {
+        const isAdmin = ['vkchoudhary050607@gmail.com', 'admin@Bvlife.com', 'care@Bvlife.com'].includes(lowerEmail);
+        // Verify OTP: either through MSG91 Widget verified access token or direct OTP code
+        if (accessToken) {
+            try {
+                await otpService.verifyAccessToken(accessToken);
+            }
+            catch (err) {
+                if (code) {
+                    const otpCheck = await communicationService.verifyOtp({ identifier: formattedPhone || email, code, reqId });
+                    if (!otpCheck.success) {
+                        throw { status: 400, message: otpCheck.error || "Invalid or expired verification code." };
+                    }
+                }
+                else {
+                    throw err;
+                }
+            }
+        }
+        else if (code) {
             const otpCheck = await communicationService.verifyOtp({ identifier: formattedPhone || email, code, reqId });
             if (!otpCheck.success) {
                 throw { status: 400, message: otpCheck.error || "Invalid or expired verification code." };
@@ -86,12 +103,12 @@ export class AuthService {
         let lookupEmail = cleanInput.toLowerCase();
         // Doctor alias normalization
         if (lookupEmail === 'doctor' ||
-            lookupEmail === 'doctor@gramslife.com' ||
-            lookupEmail.includes('doctor@gramslife.com') ||
-            lookupEmail === 'dr.arundhati@gramslife.com' ||
+            lookupEmail === 'doctor@Bvlife.com' ||
+            lookupEmail.includes('doctor@Bvlife.com') ||
+            lookupEmail === 'dr.arundhati@Bvlife.com' ||
             lookupEmail === 'dr.arundhati@gmail.com' ||
             lookupEmail === '9876543210') {
-            lookupEmail = 'doctor@gramslife.com';
+            lookupEmail = 'doctor@Bvlife.com';
         }
         let user = db.getUserByEmail(lookupEmail);
         if (!user) {
@@ -102,10 +119,10 @@ export class AuthService {
             });
         }
         // Auto-provision Doctor account if missing
-        if (!user && lookupEmail === 'doctor@gramslife.com') {
+        if (!user && lookupEmail === 'doctor@Bvlife.com') {
             const doctorHashedPass = await hashPassword("123123123");
             user = {
-                email: "doctor@gramslife.com",
+                email: "doctor@Bvlife.com",
                 fullName: "Dr. Arundhati Sharma",
                 role: "admin",
                 phone: "9876543210",
@@ -119,7 +136,7 @@ export class AuthService {
         }
         let cleanPass = (password || "").trim();
         cleanPass = cleanPass.replace(/^(password\s*[:\-]?\s*|pass\s*[:\-]?\s*)/i, '').trim();
-        const isDoctor = lookupEmail === 'doctor@gramslife.com' || user.email?.toLowerCase() === 'doctor@gramslife.com';
+        const isDoctor = lookupEmail === 'doctor@Bvlife.com' || user.email?.toLowerCase() === 'doctor@Bvlife.com';
         const plainPassword = cleanPass || (isDoctor ? "123123123" : "password123");
         const isValidPassword = (isDoctor && (plainPassword === '123123123' || plainPassword === 'password123'))
             || await comparePassword(plainPassword, user.password);
@@ -277,7 +294,7 @@ export class AuthService {
             userEmail: user.email,
             userName: user.fullName,
             action: "Password Reset Completed",
-            details: "Your Grams Life account password was successfully updated."
+            details: "Your Bv Life account password was successfully updated."
         }).catch(err => console.warn('Security email notice:', err));
         if (user.phone) {
             communicationService.sendSecurityAlertSms({

@@ -37,7 +37,7 @@ export const handleGoogleCallback = async (req: Request, res: Response) => {
         <body style="font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #fdfbf7; color: #1e3a1e;">
           <div style="max-width: 520px; padding: 32px; background: white; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid #e8e3d9; text-align: center;">
             <div style="font-size: 40px; margin-bottom: 16px;">🌿</div>
-            <h2 style="margin: 0 0 8px; color: #1a331e; font-size: 20px;">Grams Life Google Sign-In</h2>
+            <h2 style="margin: 0 0 8px; color: #1a331e; font-size: 20px;">Bv Life Google Sign-In</h2>
             <p style="color: #666; font-size: 14px; line-height: 1.5; margin: 0 0 20px;">
               To enable real Google OAuth, configure <code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> in the project settings.
             </p>
@@ -68,7 +68,7 @@ export const handleGoogleCallback = async (req: Request, res: Response) => {
     res.send(`
       <!DOCTYPE html>
       <html>
-      <head><title>Grams Life - Authenticating...</title></head>
+      <head><title>Bv Life - Authenticating...</title></head>
       <body style="font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fdfbf7;">
         <div style="text-align: center;">
           <div style="font-size: 32px; margin-bottom: 12px;">🌿</div>
@@ -133,7 +133,7 @@ export const handleFacebookCallback = async (req: Request, res: Response) => {
         <body style="font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #fdfbf7; color: #1e3a1e;">
           <div style="max-width: 520px; padding: 32px; background: white; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid #e8e3d9; text-align: center;">
             <div style="font-size: 40px; margin-bottom: 16px;">🌿</div>
-            <h2 style="margin: 0 0 8px; color: #1a331e; font-size: 20px;">Grams Life Facebook Sign-In</h2>
+            <h2 style="margin: 0 0 8px; color: #1a331e; font-size: 20px;">Bv Life Facebook Sign-In</h2>
             <p style="color: #666; font-size: 14px; line-height: 1.5; margin: 0 0 20px;">
               To enable real Facebook OAuth, configure <code>FACEBOOK_APP_ID</code> and <code>FACEBOOK_APP_SECRET</code> in the project settings.
             </p>
@@ -164,7 +164,7 @@ export const handleFacebookCallback = async (req: Request, res: Response) => {
     res.send(`
       <!DOCTYPE html>
       <html>
-      <head><title>Grams Life - Authenticating with Facebook...</title></head>
+      <head><title>Bv Life - Authenticating with Facebook...</title></head>
       <body style="font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fdfbf7;">
         <div style="text-align: center;">
           <div style="font-size: 32px; margin-bottom: 12px;">🌿</div>

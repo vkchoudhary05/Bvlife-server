@@ -12,7 +12,7 @@ export const INITIAL_PRODUCTS = [
         stock: 130,
         category: "Immunity",
         subcategory: "Tablets",
-        brand: "Grams Life Organics",
+        brand: "Bv Life Organics",
         familyGroup: "amla-family",
         baseHerb: "Amla",
         formulation: "tablet",
@@ -89,7 +89,7 @@ export const INITIAL_PRODUCTS = [
         stock: 110,
         category: "Hair Care",
         subcategory: "Oils",
-        brand: "Grams Life Beauty",
+        brand: "Bv Life Beauty",
         familyGroup: "amla-family",
         baseHerb: "Amla",
         formulation: "oil",
@@ -167,7 +167,7 @@ export const INITIAL_PRODUCTS = [
         stock: 200,
         category: "Immunity",
         subcategory: "Churna",
-        brand: "Grams Life Organics",
+        brand: "Bv Life Organics",
         familyGroup: "amla-family",
         baseHerb: "Amla",
         formulation: "churna",
@@ -259,12 +259,12 @@ export const INITIAL_PRODUCTS = [
         stock: 45,
         category: "Immunity",
         subcategory: "Syrup",
-        brand: "Grams Life Organics",
+        brand: "Bv Life Organics",
         familyGroup: "chyawanprash-family",
         baseHerb: "Chyawanprash",
         formulation: "paste",
         formLabel: "Avaleha / Paste",
-        description: "An ancient, powerful blend of 45+ premium Ayurvedic herbs, enriched with handpicked Kashmiri saffron, wild forest honey, and organic ghee. Grams Life Chyawanprash acts as a natural immunity shield, restoring youthful energy, boosting stamina, and improving respiratory function.",
+        description: "An ancient, powerful blend of 45+ premium Ayurvedic herbs, enriched with handpicked Kashmiri saffron, wild forest honey, and organic ghee. Bv Life Chyawanprash acts as a natural immunity shield, restoring youthful energy, boosting stamina, and improving respiratory function.",
         mainImage: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
         images: [
             "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
@@ -349,7 +349,7 @@ export const INITIAL_PRODUCTS = [
         stock: 305,
         category: "Immunity",
         subcategory: "Capsules",
-        brand: "Grams Life Wellness",
+        brand: "Bv Life Wellness",
         familyGroup: "ashwagandha-family",
         baseHerb: "Ashwagandha",
         formulation: "churna",
@@ -476,7 +476,7 @@ export const INITIAL_PRODUCTS = [
         stock: 35,
         category: "Skin Care",
         subcategory: "Oils",
-        brand: "Grams Life Beauty",
+        brand: "Bv Life Beauty",
         description: "An opulent, highly prized face oil made with pure saffron, sandalwood, and 26 precious Ayurvedic botanicals. This fast-absorbing golden elixir is prepared using traditional taila pak vidhi to overnight illuminate your skin, remove pigmentation, and cure fine lines.",
         mainImage: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -547,7 +547,7 @@ export const INITIAL_PRODUCTS = [
         stock: 8,
         category: "Hair Care",
         subcategory: "Oils",
-        brand: "Grams Life Beauty",
+        brand: "Bv Life Beauty",
         familyGroup: "brahmi-family",
         baseHerb: "Brahmi",
         formulation: "oil",
@@ -612,7 +612,7 @@ export const INITIAL_PRODUCTS = [
         stock: 150,
         category: "Digestion",
         subcategory: "Churna",
-        brand: "Grams Life Organics",
+        brand: "Bv Life Organics",
         familyGroup: "triphala-family",
         baseHerb: "Triphala",
         formulation: "churna",
@@ -696,8 +696,8 @@ export const INITIAL_PRODUCTS = [
         stock: 65,
         category: "Women's Health",
         subcategory: "Capsules",
-        brand: "Grams Life Wellness",
-        description: "Shatavari is revered in Ayurveda as the ultimate rejuvenating tonic for women. Grams Life uses concentrated Shatavari root extract to balance estrogen naturally, reduce PMS cramps, regulate cycles, and support breast lactation and energy levels.",
+        brand: "Bv Life Wellness",
+        description: "Shatavari is revered in Ayurveda as the ultimate rejuvenating tonic for women. Bv Life uses concentrated Shatavari root extract to balance estrogen naturally, reduce PMS cramps, regulate cycles, and support breast lactation and energy levels.",
         mainImage: "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600",
         images: [
             "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600"
@@ -764,7 +764,7 @@ export const INITIAL_PRODUCTS = [
         stock: 90,
         category: "Diabetes",
         subcategory: "Tablets",
-        brand: "Grams Life Wellness",
+        brand: "Bv Life Wellness",
         description: "A clinical Ayurvedic herbal formula featuring Gudmar (literally meaning sugar destroyer), Karela, Jamun seed, and Methi. It helps regenerate pancreatic cells, increases active insulin sensitivity, and controls sweet cravings.",
         mainImage: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -834,7 +834,7 @@ export const INITIAL_PRODUCTS = [
         stock: 55,
         category: "Joint Care",
         subcategory: "Oils",
-        brand: "Grams Life Wellness",
+        brand: "Bv Life Wellness",
         description: "An instant pain-relieving therapeutic joint oil. Rich in Nirgundi, Shallaki, and Eucalyptus oils. Massaging this oil deeply warms tissues, clears congested fluid, and repairs stiff muscles and inflamed joints.",
         mainImage: "https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -894,7 +894,7 @@ export const INITIAL_PRODUCTS = [
         stock: 40,
         category: "Brain & Memory",
         subcategory: "Capsules",
-        brand: "Grams Life Wellness",
+        brand: "Bv Life Wellness",
         description: "A premium brain tonic designed to boost cognitive function, memory recall, and mental clarity. Infused with organic Brahmi and Shankhpushpi to naturally reduce mental fatigue and support peak focus.",
         mainImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -929,7 +929,7 @@ export const INITIAL_PRODUCTS = [
         stock: 30,
         category: "Sleep & Stress",
         subcategory: "Tablets",
-        brand: "Grams Life Wellness",
+        brand: "Bv Life Wellness",
         description: "Formulated with precious Tagar (Indian Valerian) and Sarpagandha to naturally soothe the central nervous system, lower stress levels, and restore normal sleep cycles without grogginess.",
         mainImage: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -964,7 +964,7 @@ export const INITIAL_PRODUCTS = [
         stock: 25,
         category: "Sexual Wellness",
         subcategory: "Resin",
-        brand: "Grams Life Organics",
+        brand: "Bv Life Organics",
         description: "100% pure Himalayan Shilajit resin, purified using traditional Ayurvedic Shodhana methods and infused with 24K Swarna Bhasma (Gold) and Safed Musli. Naturally increases stamina, cellular energy, and daily physical vitality.",
         mainImage: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -1000,7 +1000,7 @@ export const INITIAL_PRODUCTS = [
         stock: 60,
         category: "Liver & Detox",
         subcategory: "Capsules",
-        brand: "Grams Life Wellness",
+        brand: "Bv Life Wellness",
         description: "A powerful hepatoprotective formula that naturally detoxifies the liver, stimulates bile secretion, and protects liver cells from damage. Rich in organic Kalmegh (King of Bitters) and Bhumi Amla.",
         mainImage: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -1035,7 +1035,7 @@ export const INITIAL_PRODUCTS = [
         stock: 50,
         category: "Heart Health",
         subcategory: "Capsules",
-        brand: "Grams Life Wellness",
+        brand: "Bv Life Wellness",
         description: "Made from pure extract of the Arjuna tree bark, a legendary Ayurvedic cardioprotective herb. Supports healthy blood pressure, strengthens cardiovascular muscles, and regulates daily blood circulation.",
         mainImage: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -1069,7 +1069,7 @@ export const INITIAL_PRODUCTS = [
         stock: 75,
         category: "Respiratory Care",
         subcategory: "Syrup",
-        brand: "Grams Life Organics",
+        brand: "Bv Life Organics",
         description: "A comforting herbal syrup that clears bronchial passages, eases congestion, and soothes dry coughs. Infused with Vasaka (Malabar Nut) and Pippali (Long Pepper) for robust respiratory health.",
         mainImage: "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=600",
         images: [
@@ -1132,7 +1132,7 @@ export const INITIAL_FAQS = [
     {
         id: "faq-2",
         category: "Product Usage",
-        question: "Are Grams Life Ayurvedic products completely safe and lab-tested?",
+        question: "Are Bv Life Ayurvedic products completely safe and lab-tested?",
         answer: "Absolutely. All our products are manufactured in GMP-certified, AYUSH-approved facilities. We rigorously lab-test every single batch for heavy metals, pesticides, and microbial contamination to guarantee the highest safety, purity, and clinical efficacy."
     },
     {
@@ -1162,13 +1162,13 @@ export const INITIAL_COUPONS = [
     }
 ];
 export const DEFAULT_SETTINGS = {
-    logoName: "Grams Life",
-    contactEmail: "care@gramslife.com",
+    logoName: "Bv Life",
+    contactEmail: "care@Bvlife.com",
     contactPhone: "+1 (800) 555-GRAM",
-    address: "Grams Life Herbals, Green Valley, Silicon City, CA 94016",
-    facebook: "facebook.com/gramslife",
-    instagram: "instagram.com/gramslife.ayur",
-    twitter: "twitter.com/gramslife",
+    address: "Bv Life Herbals, Green Valley, Silicon City, CA 94016",
+    facebook: "facebook.com/Bvlife",
+    instagram: "instagram.com/Bvlife.ayur",
+    twitter: "twitter.com/Bvlife",
     defaultTaxPercentage: 12, // 12% GST/tax for Ayurvedic goods
     baseShippingCharge: 50,
     freeShippingThreshold: 999 // Free shipping above 999 INR

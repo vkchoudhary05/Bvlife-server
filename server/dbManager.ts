@@ -29,7 +29,7 @@ const INITIAL_ADMIN_USERS: User[] = [
       {
         id: "addr-admin-vivek",
         fullName: "Vivek Baliyan",
-        addressLine1: "Grams Life Administrative Headquarters",
+        addressLine1: "Bv Life Administrative Headquarters",
         addressLine2: "Civil Lines",
         city: "Meerut",
         state: "Uttar Pradesh",
@@ -40,7 +40,7 @@ const INITIAL_ADMIN_USERS: User[] = [
     ]
   },
   {
-    email: "admin@gramslife.com",
+    email: "admin@Bvlife.com",
     fullName: "Aacharya Dhanvantari",
     role: "admin",
     phone: "9425011088",
@@ -48,8 +48,8 @@ const INITIAL_ADMIN_USERS: User[] = [
     addresses: []
   },
   {
-    email: "care@gramslife.com",
-    fullName: "Grams Life Support",
+    email: "care@Bvlife.com",
+    fullName: "Bv Life Support",
     role: "admin",
     phone: "9425011088",
     password: "123123123",
@@ -76,7 +76,7 @@ const INITIAL_ADMIN_USERS: User[] = [
     ]
   },
   {
-    email: "doctor@gramslife.com",
+    email: "doctor@Bvlife.com",
     fullName: "Dr. Arundhati Sharma",
     role: "admin",
     phone: "9876543210",
@@ -246,7 +246,7 @@ class DBManager {
               {
                 id: "addr-admin-vivek",
                 fullName: "Vivek Baliyan",
-                addressLine1: "Grams Life Administrative Headquarters",
+                addressLine1: "Bv Life Administrative Headquarters",
                 addressLine2: "Civil Lines",
                 city: "Meerut",
                 state: "Uttar Pradesh",
@@ -257,7 +257,7 @@ class DBManager {
             ]
           },
           {
-            email: "admin@gramslife.com",
+            email: "admin@Bvlife.com",
             fullName: "Aacharya Dhanvantari",
             role: "admin",
             phone: "9425011088",
@@ -265,8 +265,8 @@ class DBManager {
             addresses: []
           },
           {
-            email: "care@gramslife.com",
-            fullName: "Grams Life Support",
+            email: "care@Bvlife.com",
+            fullName: "Bv Life Support",
             role: "admin",
             phone: "9425011088",
             password: "123123123",
@@ -293,7 +293,7 @@ class DBManager {
             ]
           },
           {
-            email: "doctor@gramslife.com",
+            email: "doctor@Bvlife.com",
             fullName: "Dr. Arundhati Sharma",
             role: "admin",
             phone: "9876543210",
@@ -303,9 +303,9 @@ class DBManager {
         ];
 
         // Ensure doctor user is always present even if db.json was previously created
-        if (this.data.users && !this.data.users.some(u => u.email?.toLowerCase() === 'doctor@gramslife.com')) {
+        if (this.data.users && !this.data.users.some(u => u.email?.toLowerCase() === 'doctor@Bvlife.com')) {
           this.data.users.push({
-            email: "doctor@gramslife.com",
+            email: "doctor@Bvlife.com",
             fullName: "Dr. Arundhati Sharma",
             role: "admin",
             phone: "9876543210",
@@ -355,15 +355,15 @@ class DBManager {
           doctorAppointments: [...INITIAL_APPOINTMENTS],
           users: [
             {
-              email: "admin@gramslife.com",
+              email: "admin@Bvlife.com",
               fullName: "Aacharya Dhanvantari",
               role: "admin",
               phone: "+1 (800) 555-GRAM",
               addresses: []
             },
             {
-              email: "care@gramslife.com",
-              fullName: "Grams Life Support",
+              email: "care@Bvlife.com",
+              fullName: "Bv Life Support",
               role: "admin",
               phone: "+1 (800) 555-GRAM",
               addresses: []
@@ -418,7 +418,7 @@ class DBManager {
               timestamp: new Date().toISOString(),
               userEmail: "system",
               action: "Database Seeding",
-              details: "Prepopulated Grams Life database with standard premium Ayurvedic components."
+              details: "Prepopulated Bv Life database with standard premium Ayurvedic components."
             }
           ],
           payments: [],
@@ -1116,13 +1116,13 @@ class DBManager {
     if (!email) return undefined;
     let cleanEmail = email.trim().toLowerCase();
     cleanEmail = cleanEmail.replace(/^(doctor\s*id\s*[:\-]?\s*|email\s*[:\-]?\s*|id\s*[:\-]?\s*)/i, '').trim();
-    if (cleanEmail.includes('doctor@gramslife.com') || cleanEmail === 'doctor') {
-      cleanEmail = 'doctor@gramslife.com';
+    if (cleanEmail.includes('doctor@Bvlife.com') || cleanEmail === 'doctor') {
+      cleanEmail = 'doctor@Bvlife.com';
     }
     let user = this.data.users.find(u => u.email.toLowerCase() === cleanEmail);
-    if (!user && cleanEmail === 'doctor@gramslife.com') {
+    if (!user && cleanEmail === 'doctor@Bvlife.com') {
       user = {
-        email: "doctor@gramslife.com",
+        email: "doctor@Bvlife.com",
         fullName: "Dr. Arundhati Sharma",
         role: "admin",
         phone: "9876543210",

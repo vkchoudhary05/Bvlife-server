@@ -7,9 +7,9 @@ import { db } from "../dbManager.js";
 export const ADMIN_EMAILS = [
     'iamvivekbaliyan07@gmail.com',
     'vkchoudhary050607@gmail.com',
-    'admin@gramslife.com',
-    'care@gramslife.com',
-    'doctor@gramslife.com'
+    'admin@Bvlife.com',
+    'care@Bvlife.com',
+    'doctor@Bvlife.com'
 ];
 /**
  * Authentication Middleware:
