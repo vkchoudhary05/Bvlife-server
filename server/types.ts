@@ -211,6 +211,16 @@ export interface WebsiteSettings {
   freeShippingThreshold: number;
 }
 
+export interface UserMembership {
+  tier: '1 Year' | '3 Years' | '5 Years' | '10 Years' | 'Lifetime';
+  cardNumber: string;
+  startDate: string;
+  expiryDate: string;
+  pricePaid: number;
+  discountPercentage?: number;
+  status: 'active' | 'expired';
+}
+
 export interface User {
   email: string;
   fullName: string;
@@ -219,6 +229,7 @@ export interface User {
   addresses: Address[];
   password?: string;
   createdAt?: string;
+  membership?: UserMembership;
 }
 
 export interface ActivityLog {

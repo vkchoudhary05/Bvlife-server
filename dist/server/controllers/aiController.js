@@ -22,11 +22,7 @@ export const consult = async (req, res) => {
 export const chat = async (req, res) => {
     try {
         const { messages, lang } = req.body;
-        const authHeader = req.headers.authorization;
-        let userEmail = null;
-        if (authHeader && authHeader.startsWith("Bearer ")) {
-            userEmail = authHeader.split(" ")[1]?.toLowerCase();
-        }
+        const userEmail = req.user?.email || null;
         const result = await aiService.chat(messages, lang, userEmail);
         res.json(result);
     }
@@ -39,23 +35,19 @@ export const chat = async (req, res) => {
  * Get chat history for user
  */
 export const getHistory = (req, res) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!req.user?.email) {
         return res.status(401).json({ error: "Unauthorized" });
     }
-    const email = authHeader.split(" ")[1]?.toLowerCase();
-    const messages = aiService.getChatHistory(email);
+    const messages = aiService.getChatHistory(req.user.email);
     res.json({ messages });
 };
 /**
  * Clear chat history for user
  */
 export const clearHistory = (req, res) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!req.user?.email) {
         return res.status(401).json({ error: "Unauthorized" });
     }
-    const email = authHeader.split(" ")[1]?.toLowerCase();
-    aiService.clearChatHistory(email);
+    aiService.clearChatHistory(req.user.email);
     res.json({ message: "Chat history cleared successfully." });
 };

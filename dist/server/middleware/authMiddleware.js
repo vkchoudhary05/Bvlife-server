@@ -4,13 +4,14 @@
  */
 import { verifyToken } from "../jwtUtils.js";
 import { db } from "../dbManager.js";
-export const ADMIN_EMAILS = [
-    'iamvivekbaliyan07@gmail.com',
-    'vkchoudhary050607@gmail.com',
-    'admin@Bvlife.com',
-    'care@Bvlife.com',
-    'doctor@Bvlife.com'
-];
+export const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
+    .split(',')
+    .map((email) => email.trim().toLowerCase())
+    .filter(Boolean);
+export const ADMIN_PHONES = (process.env.ADMIN_PHONES || '')
+    .split(',')
+    .map((phone) => phone.replace(/\D/g, '').slice(-10))
+    .filter((phone) => phone.length === 10);
 /**
  * Authentication Middleware:
  * Verifies JWT token from Authorization header (Bearer <token>).

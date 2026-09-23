@@ -27,6 +27,16 @@ export const login = async (req, res) => {
         res.status(err.status || 500).json({ error: err.message || "Login failed." });
     }
 };
+/** Mobile-only, no-OTP welcome flow for first-time BV Life visitors. */
+export const quickMobileLogin = async (req, res) => {
+    try {
+        const result = await authService.quickMobileLogin(req.body.phone);
+        res.json(result);
+    }
+    catch (err) {
+        res.status(err.status || 500).json({ error: err.message || "Unable to start mobile session." });
+    }
+};
 /**
  * Get current authenticated user profile
  */
@@ -55,6 +65,40 @@ export const updateMe = (req, res) => {
     }
     catch (err) {
         res.status(err.status || 500).json({ error: err.message || "Failed to update profile." });
+    }
+};
+/**
+ * Upgrade / enroll in BV Life Membership
+ */
+export const upgradeMembership = (req, res) => {
+    return res.status(410).json({
+        error: "Direct membership activation is disabled. Create and confirm a Razorpay membership payment instead."
+    });
+};
+/** Create a Razorpay order for a membership plan. */
+export const createMembershipPayment = async (req, res) => {
+    try {
+        const email = req.user?.email;
+        if (!email)
+            return res.status(401).json({ error: "Unauthorized" });
+        const result = await authService.createMembershipPayment(email, req.body.tier);
+        res.json(result);
+    }
+    catch (err) {
+        res.status(err.status || 500).json({ error: err.message || "Failed to create membership payment." });
+    }
+};
+/** Verify a successful Razorpay payment and activate the membership. */
+export const confirmMembershipPayment = (req, res) => {
+    try {
+        const email = req.user?.email;
+        if (!email)
+            return res.status(401).json({ error: "Unauthorized" });
+        const result = authService.confirmMembershipPayment(email, req.body);
+        res.json(result);
+    }
+    catch (err) {
+        res.status(err.status || 400).json({ error: err.message || "Membership payment verification failed." });
     }
 };
 /**

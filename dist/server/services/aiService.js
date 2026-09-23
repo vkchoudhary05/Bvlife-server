@@ -90,12 +90,12 @@ export class AIService {
 #### 🧘 Traditional Guidance & Observations
 Hello, beloved wellness seeker. Your symptoms point to a mild imbalance in your body's vital bio-elements. ${advice}
 
-#### 📦 Custom Wellness Recommendations (Bv Life Pharmacy)
+#### 📦 Custom Wellness Recommendations (BV Life Pharmacy)
 1. **Golden Chyawanprash** (For Immunity & Stamina support)
 2. **Triphala Organic Digestive Cleanse** (For cleansing digestive Agni and removing toxins)
 3. **Pure Ashwagandha KSM-66** (To reduce daily fatigue and eliminate cellular stress)
 
-*Disclaimer: Bv Life Ayurvedic insights are traditional observations. Please consult your personal physician for clinical diagnostics.*
+*Disclaimer: BV Life Ayurvedic insights are traditional observations. Please consult your personal physician for clinical diagnostics.*
       `;
             return { consultation: fallbackResponse.trim() };
         }

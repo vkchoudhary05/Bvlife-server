@@ -33,11 +33,12 @@ export class AppointmentService {
         }
         const doctor = doctorId ? db.getDoctorById(doctorId) : undefined;
         const appointment = db.bookDoctorAppointment({
-            doctorId: doctor?.id || doctorId || 'doc-1',
-            doctorName: doctor?.name || data.doctorName || 'Dr. Rajeshwar Sharma',
-            doctorSpecialty: doctor?.specialties?.[0] || data.doctorSpecialty || 'Senior Ayurvedic Specialist',
-            doctorImage: doctor?.image || data.doctorImage,
-            doctorQualification: doctor?.qualification || data.doctorQualification,
+            id: data.id,
+            doctorId: doctor?.id || doctorId || 'doc-legend-1',
+            doctorName: doctor?.name || data.doctorName || 'Dr. Sanjeev Rastogi',
+            doctorSpecialty: doctor?.specialties?.[0] || data.doctorSpecialty || 'Chief Ayurvedic Physician & Master Nadi Vaidya',
+            doctorImage: doctor?.image || data.doctorImage || '/images/DrSanjeev.png',
+            doctorQualification: doctor?.qualification || data.doctorQualification || 'Ph.D, MD (Ayurveda), Banaras Hindu University (BHU)',
             patientName,
             patientAge: Number(patientAge) || 30,
             patientGender: patientGender || 'Other',
@@ -50,12 +51,14 @@ export class AppointmentService {
             previousHistory: previousHistory || '',
             medicalReports: Array.isArray(medicalReports) ? medicalReports : [],
             patientPhoto: data.patientPhoto || '',
-            fee: Number(fee) || doctor?.fee || 499
+            fee: Number(fee) || doctor?.fee || 499,
+            meetingLink: data.meetingLink
         });
         db.logActivity(patientEmail, "Booked Doctor Appointment", `Booked appointment ${appointment.id} with ${appointment.doctorName} for ${appointment.date} at ${appointment.timeSlot}`);
-        // Asynchronously dispatch automated MSG91 Email & WhatsApp notification to clinic desk and patient
+        // Asynchronously dispatch automated MSG91 Email & WhatsApp notification to doctor desk and patient
         Promise.allSettled([
             communicationService.sendDoctorBookingMsg91Email(appointment),
+            communicationService.sendDoctorBookingAlertEmailToClinic(appointment),
             communicationService.sendDoctorBookingAlertToClinic(appointment),
             communicationService.sendPatientBookingConfirmationWhatsApp(appointment)
         ]).then(results => {

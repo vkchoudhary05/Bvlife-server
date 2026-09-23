@@ -4,6 +4,7 @@
  */
 
 import { Request, Response } from "express";
+import { AuthenticatedRequest } from "../middleware/authMiddleware.js";
 import { aiService } from "../services/aiService.js";
 
 /**
@@ -22,14 +23,10 @@ export const consult = async (req: Request, res: Response) => {
 /**
  * Interactive Conversational AI Chat
  */
-export const chat = async (req: Request, res: Response) => {
+export const chat = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { messages, lang } = req.body;
-    const authHeader = req.headers.authorization;
-    let userEmail: string | null = null;
-    if (authHeader && authHeader.startsWith("Bearer ")) {
-      userEmail = authHeader.split(" ")[1]?.toLowerCase();
-    }
+    const userEmail = req.user?.email || null;
 
     const result = await aiService.chat(messages, lang, userEmail);
     res.json(result);
@@ -42,25 +39,21 @@ export const chat = async (req: Request, res: Response) => {
 /**
  * Get chat history for user
  */
-export const getHistory = (req: Request, res: Response) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+export const getHistory = (req: AuthenticatedRequest, res: Response) => {
+  if (!req.user?.email) {
     return res.status(401).json({ error: "Unauthorized" });
   }
-  const email = authHeader.split(" ")[1]?.toLowerCase();
-  const messages = aiService.getChatHistory(email);
+  const messages = aiService.getChatHistory(req.user.email);
   res.json({ messages });
 };
 
 /**
  * Clear chat history for user
  */
-export const clearHistory = (req: Request, res: Response) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+export const clearHistory = (req: AuthenticatedRequest, res: Response) => {
+  if (!req.user?.email) {
     return res.status(401).json({ error: "Unauthorized" });
   }
-  const email = authHeader.split(" ")[1]?.toLowerCase();
-  aiService.clearChatHistory(email);
+  aiService.clearChatHistory(req.user.email);
   res.json({ message: "Chat history cleared successfully." });
 };

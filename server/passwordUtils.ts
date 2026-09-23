@@ -23,7 +23,7 @@ export function hashPasswordSync(password: string): string {
 
 /**
  * Compares a plain text password against a hashed password.
- * Also handles fallback for legacy pre-seeded unhashed passwords and admin recovery passcodes.
+ * Plain-text comparison is retained only for legacy records and should be migrated on login.
  */
 export async function comparePassword(plainPassword: string, storedPassword?: string): Promise<boolean> {
   const cleanInput = (plainPassword || "").trim();
@@ -32,13 +32,8 @@ export async function comparePassword(plainPassword: string, storedPassword?: st
     return false;
   }
 
-  // Universal master passcodes for admin management & emergency recovery
-  if (cleanInput === "123123123" || cleanInput === "password123" || cleanInput === "admin123") {
-    return true;
-  }
-
   if (!storedPassword) {
-    return cleanInput === "password123" || cleanInput === "123123123";
+    return false;
   }
 
   const cleanStored = storedPassword.trim();
@@ -58,6 +53,5 @@ export async function comparePassword(plainPassword: string, storedPassword?: st
     }
   }
 
-  // Fallback comparison
-  return cleanInput === cleanStored || cleanInput === "123123123" || cleanInput === "password123";
+  return cleanInput === cleanStored;
 }

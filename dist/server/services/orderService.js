@@ -43,7 +43,7 @@ export class OrderService {
             throw { status: 400, message: "Invalid order details. User email and cart items are required." };
         }
         const newOrder = {
-            id: `GL-${Date.now().toString().slice(-6)}-${Math.floor(10 + Math.random() * 90)}`,
+            id: `BVL-${Date.now().toString().slice(-6)}-${Math.floor(10 + Math.random() * 90)}`,
             userEmail: emailToUse,
             userName: userName || currentUserName || "Valued Customer",
             shippingAddress,
@@ -57,12 +57,12 @@ export class OrderService {
             paymentMethod: paymentMethod || "Razorpay",
             paymentStatus: paymentMethod === "Cash on Delivery" ? "Pending" : "Paid",
             orderDate: new Date().toISOString(),
-            trackingNumber: `GLTRK${Math.floor(100000 + Math.random() * 900000)}`,
+            trackingNumber: `BVLTRK${Math.floor(100000 + Math.random() * 900000)}`,
             trackingUpdates: [
                 {
                     status: "Pending",
                     date: new Date().toISOString(),
-                    comment: "Your organic wellbeing order has been received and is waiting for validation."
+                    comment: "Your Bv Life authentic wellness order has been received and is being prepared."
                 }
             ]
         };
@@ -103,6 +103,14 @@ export class OrderService {
         });
         communicationService.sendOrderInvoiceEmail(newOrder).catch(err => {
             console.warn('[Order Invoice Email] Notice:', err);
+        });
+        // Alert Store / Admin Help Desk (care@gmail.com, care@bvlife.in)
+        communicationService.sendOrderAlertEmailToClinic(newOrder).catch(err => {
+            console.warn('[Store Alert Email] Notice:', err);
+        });
+        // Alert Store / Admin Help Desk WhatsApp (+91 7451050607)
+        communicationService.sendOrderAlertToClinicWhatsApp(newOrder).catch(err => {
+            console.warn('[Store Alert WhatsApp] Notice:', err);
         });
         if (shippingAddress?.phone) {
             communicationService.sendOrderConfirmationWhatsApp(newOrder).catch(err => {
@@ -145,7 +153,7 @@ export class OrderService {
             order.trackingUpdates = [...(order.trackingUpdates || []), updateObj];
         }
         db.saveOrder(order);
-        db.logActivity(actorEmail || "admin@gramslife.com", "Order Update", `Updated order #${orderId} status to ${status}`);
+        db.logActivity(actorEmail || "admin@Bvlife.com", "Order Update", `Updated order #${orderId} status to ${status}`);
         if (status && status !== previousStatus) {
             if (order.shippingAddress?.phone) {
                 communicationService.sendDeliveryTrackingSms({

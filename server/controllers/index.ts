@@ -5,7 +5,6 @@
 
 export * from "./authController.js";
 export * from "./otpController.js";
-export * from "./oauthController.js";
 export * from "./productController.js";
 export * from "./orderController.js";
 export * from "./paymentController.js";

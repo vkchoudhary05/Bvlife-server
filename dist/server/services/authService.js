@@ -6,10 +6,47 @@ import { db } from "../dbManager.js";
 import { validateAndFormatIndianPhone } from "../utils.js";
 import { hashPassword, comparePassword } from "../passwordUtils.js";
 import { generateToken } from "../jwtUtils.js";
-import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
+import { ADMIN_EMAILS, ADMIN_PHONES } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
 import { otpService } from "./otpService.js";
+import { paymentService } from "./paymentService.js";
+const MEMBERSHIP_PRICES = {
+    '1 Year': 2500,
+    '3 Years': 4000,
+    '5 Years': 5000,
+    '10 Years': 10000,
+    'Lifetime': 15000
+};
 export class AuthService {
+    /**
+     * Low-friction BV Life entry: identifies a customer by mobile number without
+     * an OTP step. This is deliberately limited to a customer profile/session;
+     * sensitive changes and checkout verification remain separate flows.
+     */
+    async quickMobileLogin(phone) {
+        const formattedPhone = validateAndFormatIndianPhone(phone);
+        if (!formattedPhone) {
+            throw { status: 400, message: "Please enter a valid 10-digit Indian mobile number." };
+        }
+        let user = db.getUsers().find(candidate => {
+            const candidatePhone = validateAndFormatIndianPhone(candidate.phone) || candidate.phone;
+            return candidatePhone === formattedPhone;
+        });
+        if (!user) {
+            const digits = formattedPhone.replace(/\D/g, '').slice(-10);
+            user = {
+                email: `mobile-${digits}@bvlife.local`,
+                fullName: "BV Life Member",
+                role: "customer",
+                phone: formattedPhone,
+                addresses: [],
+                password: await hashPassword(`mobile-${digits}-${Date.now()}`)
+            };
+            db.saveUser(user);
+            db.logActivity(user.email, "Quick Mobile Entry", `Created mobile session for ${formattedPhone}`);
+        }
+        return { message: "Welcome to BV Life.", user, token: generateToken(user) };
+    }
     /**
      * Register a new user account
      */
@@ -44,7 +81,7 @@ export class AuthService {
             }
         }
         const lowerEmail = email.toLowerCase();
-        const isAdmin = ['vkchoudhary050607@gmail.com', 'admin@Bvlife.com', 'care@Bvlife.com'].includes(lowerEmail);
+        const isAdmin = ADMIN_EMAILS.includes(lowerEmail);
         // Verify OTP: either through MSG91 Widget verified access token or direct OTP code
         if (accessToken) {
             try {
@@ -68,7 +105,10 @@ export class AuthService {
                 throw { status: 400, message: otpCheck.error || "Invalid or expired verification code." };
             }
         }
-        const plainPassword = password || "password123";
+        const plainPassword = (password || '').trim();
+        if (!plainPassword) {
+            throw { status: 400, message: "A password is required to create an account." };
+        }
         const hashedPassword = await hashPassword(plainPassword);
         const newUser = {
             email: lowerEmail,
@@ -118,14 +158,14 @@ export class AuthService {
                 return dbPhone && (dbPhone === cleanInput || dbPhone === formattedPhoneInput);
             });
         }
-        // Auto-provision Doctor account if missing
-        if (!user && lookupEmail === 'doctor@Bvlife.com') {
+        // Auto-provision Doctor account if missing (supports doctor@bvlife.in and doctor@Bvlife.com)
+        if (!user && (lookupEmail === 'doctor@bvlife.in' || lookupEmail === 'doctor@Bvlife.com')) {
             const doctorHashedPass = await hashPassword("123123123");
             user = {
-                email: "doctor@Bvlife.com",
-                fullName: "Dr. Arundhati Sharma",
+                email: lookupEmail,
+                fullName: "Dr. Sanjeev Rastogi",
                 role: "admin",
-                phone: "9876543210",
+                phone: "7451050607",
                 addresses: [],
                 password: doctorHashedPass
             };
@@ -191,6 +231,123 @@ export class AuthService {
         return user;
     }
     /**
+     * Upgrade / Enroll in BV Life Wellness Club Membership
+     */
+    upgradeMembership(email, params) {
+        const user = db.getUserByEmail(email);
+        if (!user) {
+            throw { status: 404, message: "User not found." };
+        }
+        const { tier, pricePaid } = params;
+        if (!(tier in MEMBERSHIP_PRICES)) {
+            throw { status: 400, message: "Please select a valid membership plan." };
+        }
+        const now = new Date();
+        const startDate = now.toISOString();
+        // Calculate expiry date
+        let expiryDate = '';
+        let discountPercentage = 0;
+        let standardPrice = MEMBERSHIP_PRICES[tier];
+        if (tier === '1 Year') {
+            const exp = new Date(now);
+            exp.setFullYear(exp.getFullYear() + 1);
+            expiryDate = exp.toISOString();
+            discountPercentage = 30; // 30% discount as requested
+        }
+        else if (tier === '3 Years') {
+            const exp = new Date(now);
+            exp.setFullYear(exp.getFullYear() + 3);
+            expiryDate = exp.toISOString();
+        }
+        else if (tier === '5 Years') {
+            const exp = new Date(now);
+            exp.setFullYear(exp.getFullYear() + 5);
+            expiryDate = exp.toISOString();
+        }
+        else if (tier === '10 Years') {
+            const exp = new Date(now);
+            exp.setFullYear(exp.getFullYear() + 10);
+            expiryDate = exp.toISOString();
+        }
+        else if (tier === 'Lifetime') {
+            expiryDate = 'Lifetime';
+        }
+        const randomSuffix1 = Math.floor(1000 + Math.random() * 9000);
+        const randomSuffix2 = Math.floor(1000 + Math.random() * 9000);
+        const generatedCardNumber = params.cardNumber || `BVL-MEM-${randomSuffix1}-${randomSuffix2}`;
+        user.membership = {
+            tier,
+            cardNumber: generatedCardNumber,
+            startDate,
+            expiryDate,
+            pricePaid: pricePaid || standardPrice,
+            discountPercentage,
+            status: 'active'
+        };
+        db.saveUser(user);
+        db.logActivity(user.email, "Membership Upgrade", `Enrolled into BV Life ${tier} Membership with Card No ${generatedCardNumber}.`);
+        return {
+            success: true,
+            message: `Congratulations! Your BV Life ${tier} Membership is activated.`,
+            membership: user.membership,
+            user
+        };
+    }
+    async createMembershipPayment(email, tier) {
+        const user = db.getUserByEmail(email);
+        if (!user)
+            throw { status: 404, message: "User not found." };
+        if (!(tier in MEMBERSHIP_PRICES))
+            throw { status: 400, message: "Please select a valid membership plan." };
+        const paymentId = `membership_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+        const receipt = `mem_${paymentId.slice(-24)}`;
+        const razorpayOrder = await paymentService.createRazorpayOrder({
+            amount: MEMBERSHIP_PRICES[tier],
+            currency: "INR",
+            receipt
+        });
+        const payment = {
+            id: paymentId,
+            orderId: razorpayOrder.orderId,
+            userEmail: user.email.toLowerCase(),
+            amount: MEMBERSHIP_PRICES[tier],
+            paymentMethod: "Razorpay Membership",
+            transactionReference: razorpayOrder.orderId,
+            status: "Pending",
+            createdAt: new Date().toISOString()
+        };
+        db.savePayment(payment);
+        return { ...razorpayOrder, paymentId, tier, amount: razorpayOrder.amount };
+    }
+    confirmMembershipPayment(email, params) {
+        const user = db.getUserByEmail(email);
+        if (!user)
+            throw { status: 404, message: "User not found." };
+        const payment = db.getPayments().find(p => p.id === params.paymentId && p.userEmail.toLowerCase() === user.email.toLowerCase());
+        if (!payment)
+            throw { status: 404, message: "Membership payment session not found." };
+        if (payment.status === "Paid")
+            throw { status: 409, message: "This membership payment was already processed." };
+        if (!params.tier || !(params.tier in MEMBERSHIP_PRICES))
+            throw { status: 400, message: "Please select a valid membership plan." };
+        if (payment.amount !== MEMBERSHIP_PRICES[params.tier])
+            throw { status: 400, message: "Membership payment amount does not match the selected plan." };
+        if (!params.razorpay_order_id || params.razorpay_order_id !== payment.orderId)
+            throw { status: 400, message: "Razorpay order does not match the membership payment session." };
+        const verification = paymentService.verifyRazorpayPayment(params);
+        if (!verification.success)
+            throw { status: 400, message: "Razorpay payment verification failed." };
+        payment.status = "Paid";
+        payment.transactionReference = verification.paymentId || params.razorpay_payment_id || payment.orderId;
+        db.savePayment(payment);
+        const result = this.upgradeMembership(user.email, {
+            tier: params.tier,
+            pricePaid: payment.amount
+        });
+        db.logActivity(user.email, "Membership Payment", `Razorpay payment ${payment.transactionReference} verified for ${params.tier} membership.`);
+        return { ...result, payment };
+    }
+    /**
      * Lookup account by query (email or phone)
      */
     checkAccount(params) {
@@ -239,6 +396,16 @@ export class AuthService {
             throw { status: 400, message: "Email or mobile number query is required." };
         }
         const queryStr = query.trim();
+        const configuredAdminPhone = queryStr.replace(/\D/g, '').slice(-10);
+        if (ADMIN_PHONES.includes(configuredAdminPhone)) {
+            return {
+                exists: true,
+                isAdmin: true,
+                email: ADMIN_EMAILS[0] || '',
+                phone: configuredAdminPhone,
+                fullName: 'Administrator'
+            };
+        }
         let user = db.getUserByEmail(queryStr);
         if (!user) {
             const formattedPhoneInput = validateAndFormatIndianPhone(queryStr);
@@ -248,8 +415,10 @@ export class AuthService {
             });
         }
         if (user) {
+            const userPhone = (user.phone || '').replace(/\D/g, '').slice(-10);
             return {
                 exists: true,
+                isAdmin: user.role === 'admin' || ADMIN_EMAILS.includes(user.email.toLowerCase()) || ADMIN_PHONES.includes(userPhone),
                 email: user.email,
                 fullName: user.fullName,
                 phone: user.phone,
@@ -294,7 +463,7 @@ export class AuthService {
             userEmail: user.email,
             userName: user.fullName,
             action: "Password Reset Completed",
-            details: "Your Bv Life account password was successfully updated."
+            details: "Your BV Life account password was successfully updated."
         }).catch(err => console.warn('Security email notice:', err));
         if (user.phone) {
             communicationService.sendSecurityAlertSms({

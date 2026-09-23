@@ -136,17 +136,18 @@ export const testMsg91EmailDispatch = async (req, res) => {
             return res.json({ success: true, message: 'MSG91 Order confirmation email dispatched successfully', result });
         }
         else if (templateType === 'booking') {
+            const mode = (req.body.consultationMode || 'video').toLowerCase();
             const dummyBooking = {
-                id: `APT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`,
+                id: `APT-${Date.now().toString().slice(-4)}-${Math.floor(100 + Math.random() * 900)}`,
                 patientName: recipientName,
                 patientEmail: recipientEmail,
                 patientPhone: '9425011088',
-                doctorName: 'Dr. Arundhati Sharma',
-                doctorSpecialty: 'Senior Ayurvedic Specialist',
-                doctorQualification: 'BAMS, MD (Ayurveda)',
+                doctorName: 'Dr. Sanjeev Rastogi',
+                doctorSpecialty: 'Chief Ayurvedic Physician & Master Nadi Vaidya',
+                doctorQualification: 'Ph.D, MD (Ayurveda) - BHU',
                 date: new Date().toISOString().split('T')[0],
                 timeSlot: '11:00 AM',
-                consultationMode: 'video',
+                consultationMode: mode,
                 healthConcern: 'Holistic Ayurvedic Assessment',
                 fee: 499,
                 paymentStatus: 'Paid',
@@ -156,7 +157,7 @@ export const testMsg91EmailDispatch = async (req, res) => {
             if (!result.success) {
                 return res.status(400).json({ success: false, error: result.error || 'Failed to dispatch Doctor booking email via MSG91', result });
             }
-            return res.json({ success: true, message: 'MSG91 Doctor booking confirmation email dispatched successfully', result });
+            return res.json({ success: true, message: `MSG91 Doctor booking confirmation email (${mode.toUpperCase()}) dispatched successfully`, result });
         }
         else {
             return res.status(400).json({ error: "Invalid templateType. Must be 'order' or 'booking'." });

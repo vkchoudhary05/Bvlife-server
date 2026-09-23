@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise';
+import './env.js';
 
 let pool: mysql.Pool | null = null;
 
@@ -69,9 +70,19 @@ export async function initTables(): Promise<void> {
         role VARCHAR(50) NOT NULL,
         phone VARCHAR(50),
         addresses TEXT,
-        password VARCHAR(255)
+        password VARCHAR(255),
+        membership MEDIUMTEXT
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
+
+    try {
+      const membershipColumn = await query("SHOW COLUMNS FROM users LIKE 'membership'");
+      if (!membershipColumn || membershipColumn.length === 0) {
+        await query("ALTER TABLE users ADD COLUMN membership MEDIUMTEXT AFTER password");
+      }
+    } catch (colErr) {
+      console.warn("Failed to add users.membership column:", colErr);
+    }
 
     // 2. Products Table
     await query(`
@@ -86,8 +97,8 @@ export async function initTables(): Promise<void> {
         subcategory VARCHAR(255),
         brand VARCHAR(255) NOT NULL,
         description TEXT,
-        mainImage TEXT,
-        images TEXT,
+        mainImage MEDIUMTEXT,
+        images MEDIUMTEXT,
         ingredients TEXT,
         benefits TEXT,
         dosage TEXT,
@@ -100,6 +111,11 @@ export async function initTables(): Promise<void> {
         createdDate VARCHAR(50) NOT NULL
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
+
+    // Product photos may be stored as Base64 data URLs. TEXT is limited to
+    // 64KB, so widen existing installations as well as newly created tables.
+    await query("ALTER TABLE products MODIFY COLUMN mainImage MEDIUMTEXT");
+    await query("ALTER TABLE products MODIFY COLUMN images MEDIUMTEXT");
 
     // 3. Orders Table
     await query(`
@@ -275,6 +291,7 @@ export async function initTables(): Promise<void> {
         healthConcern TEXT,
         previousHistory TEXT,
         medicalReports MEDIUMTEXT,
+        patientPhoto MEDIUMTEXT,
         fee DECIMAL(10,2) NOT NULL,
         status VARCHAR(50) NOT NULL,
         bookingDate VARCHAR(50) NOT NULL,
@@ -282,32 +299,25 @@ export async function initTables(): Promise<void> {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
 
-    // Also ensure doctorAppointments table exists for compatibility
-    await query(`
-      CREATE TABLE IF NOT EXISTS doctorAppointments (
-        id VARCHAR(255) PRIMARY KEY,
-        doctorId VARCHAR(255) NOT NULL,
-        doctorName VARCHAR(255) NOT NULL,
-        doctorSpecialty VARCHAR(255) NOT NULL,
-        doctorImage TEXT,
-        doctorQualification VARCHAR(255),
-        patientName VARCHAR(255) NOT NULL,
-        patientAge INT NOT NULL,
-        patientGender VARCHAR(50) NOT NULL,
-        patientPhone VARCHAR(50) NOT NULL,
-        patientEmail VARCHAR(255) NOT NULL,
-        date VARCHAR(50) NOT NULL,
-        timeSlot VARCHAR(50) NOT NULL,
-        consultationMode VARCHAR(50) NOT NULL,
-        healthConcern TEXT,
-        previousHistory TEXT,
-        medicalReports MEDIUMTEXT,
-        fee DECIMAL(10,2) NOT NULL,
-        status VARCHAR(50) NOT NULL,
-        bookingDate VARCHAR(50) NOT NULL,
-        meetingLink TEXT
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    `);
+    // Ensure columns in doctor_appointments table for existing deployments
+    try {
+      const docAppCols = await query("SHOW COLUMNS FROM doctor_appointments LIKE 'patientPhoto'");
+      if (!docAppCols || docAppCols.length === 0) {
+        await query("ALTER TABLE doctor_appointments ADD COLUMN patientPhoto MEDIUMTEXT AFTER medicalReports");
+      }
+    } catch {}
+    try {
+      const docImgCols = await query("SHOW COLUMNS FROM doctor_appointments LIKE 'doctorImage'");
+      if (!docImgCols || docImgCols.length === 0) {
+        await query("ALTER TABLE doctor_appointments ADD COLUMN doctorImage TEXT AFTER doctorSpecialty");
+      }
+    } catch {}
+    try {
+      const docQualCols = await query("SHOW COLUMNS FROM doctor_appointments LIKE 'doctorQualification'");
+      if (!docQualCols || docQualCols.length === 0) {
+        await query("ALTER TABLE doctor_appointments ADD COLUMN doctorQualification VARCHAR(255) AFTER doctorImage");
+      }
+    } catch {}
 
     console.log('MySQL Database Tables verified/created successfully!');
   } catch (error) {

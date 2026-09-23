@@ -7000,7 +7000,7 @@
   ],
   "settings": {
     "logoName": "BV Life",
-    "contactEmail": "care@BVlife.com",
+    "contactEmail": "care@bvlife.in",
     "contactPhone": "+917451050607",
     "address": "BV Life Herbals, Green Valley, Silicon City, CA 94016",
     "facebook": "facebook.com/BVlife",
@@ -7039,7 +7039,7 @@
       "addresses": []
     },
     {
-      "email": "care@bvlife.com",
+      "email": "care@bvlife.in",
       "fullName": "BV Life Support",
       "role": "customer",
       "phone": "+1 (800) 555-GRAM",
@@ -7386,6 +7386,22 @@
       "fullName": "Dr. Arundhati Sharma",
       "role": "admin",
       "phone": "9876543210",
+      "password": "123123123",
+      "addresses": []
+    },
+    {
+      "email": "doctor@Bvlife.com",
+      "fullName": "Dr. Arundhati Sharma",
+      "role": "admin",
+      "phone": "9876543210",
+      "password": "123123123",
+      "addresses": []
+    },
+    {
+      "email": "doctor@bvlife.in",
+      "fullName": "Dr. Sanjeev Rastogi",
+      "role": "admin",
+      "phone": "7451050607",
       "password": "123123123",
       "addresses": []
     }

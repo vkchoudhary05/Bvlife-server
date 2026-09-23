@@ -7,8 +7,12 @@ import { Router } from "express";
 import { 
   register, 
   login, 
+  quickMobileLogin,
   getMe, 
   updateMe, 
+  upgradeMembership,
+  createMembershipPayment,
+  confirmMembershipPayment,
   getUserByEmail, 
   updateUserByEmail, 
   getCustomers, 
@@ -17,20 +21,13 @@ import {
   adminCheckCredentials 
 } from "../controllers/authController.js";
 import { 
-  sendOtp, 
-  verifyOtp, 
   verifyMsg91Token, 
   getMsg91Config, 
   otpLogin, 
   changeMobile, 
   changeEmail 
 } from "../controllers/otpController.js";
-import { 
-  getGoogleAuthUrl, 
-  getFacebookAuthUrl, 
-  handleGoogleCallback, 
-  handleFacebookCallback 
-} from "../controllers/oauthController.js";
+
 import { 
   getActivityLogs, 
   getCommunicationLogs, 
@@ -45,9 +42,13 @@ export const authRouter = Router();
 // Auth Endpoints with validation & rate limiting
 authRouter.post("/api/auth/register", rateLimiter(20), validateRegister, register);
 authRouter.post("/api/auth/login", rateLimiter(30), validateLogin, login);
+authRouter.post("/api/auth/quick-mobile-login", rateLimiter(20), quickMobileLogin);
 authRouter.post("/api/auth/otp-login", rateLimiter(30), otpLogin);
 authRouter.get("/api/auth/me", authenticateToken, getMe);
 authRouter.put("/api/auth/me", authenticateToken, updateMe);
+authRouter.post("/api/auth/membership/upgrade", authenticateToken, upgradeMembership);
+authRouter.post("/api/auth/membership/create-payment", authenticateToken, createMembershipPayment);
+authRouter.post("/api/auth/membership/confirm-payment", authenticateToken, confirmMembershipPayment);
 authRouter.post("/api/auth/change-mobile", authenticateToken, rateLimiter(10), changeMobile);
 authRouter.post("/api/auth/change-email", authenticateToken, rateLimiter(10), changeEmail);
 
@@ -61,15 +62,7 @@ authRouter.post("/api/communication/test-email", testMsg91EmailDispatch);
 
 // Security & Recovery Routes
 authRouter.post("/api/auth/admin-check-credentials", rateLimiter(20), adminCheckCredentials);
-authRouter.post("/api/auth/otp", rateLimiter(15), sendOtp);
-authRouter.post("/api/auth/verify-otp", rateLimiter(20), verifyOtp);
 authRouter.post("/api/auth/verify-msg91-token", rateLimiter(20), verifyMsg91Token);
 authRouter.get("/api/auth/msg91-config", getMsg91Config);
 authRouter.post("/api/auth/check-account", checkAccount);
 authRouter.post("/api/auth/reset-password", rateLimiter(10), validateResetPassword, resetPassword);
-
-// OAuth Endpoints (Google & Facebook)
-authRouter.get("/api/auth/google/url", getGoogleAuthUrl);
-authRouter.get("/auth/google/callback", handleGoogleCallback);
-authRouter.get("/api/auth/facebook/url", getFacebookAuthUrl);
-authRouter.get("/auth/facebook/callback", handleFacebookCallback);

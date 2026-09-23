@@ -5,170 +5,128 @@
 import { db } from "../dbManager.js";
 import { validateAndFormatIndianPhone } from "../utils.js";
 import { generateToken } from "../jwtUtils.js";
-import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
+import { ADMIN_EMAILS, ADMIN_PHONES } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
 export class OtpService {
     /**
-     * Dispatch OTP to mobile number or email
-     */
-    async sendOtp(params) {
-        const { identifier, purpose, channel } = params;
-        if (!identifier) {
-            throw { status: 400, message: "Mobile number or email identifier is required." };
-        }
-        const result = await communicationService.sendOtp({
-            identifier,
-            purpose: purpose || 'Login',
-            channel: channel || 'SMS'
-        });
-        return {
-            success: true,
-            message: result.message,
-            reqId: result.reqId,
-            otp: result.otp, // undefined in production
-            formattedPhone: result.identifier
-        };
-    }
-    /**
-     * Verify an entered OTP
-     */
-    async verifyOtp(params) {
-        const { identifier, code, reqId } = params;
-        if (!identifier || !code) {
-            throw { status: 400, message: "Identifier and OTP code are required." };
-        }
-        const result = await communicationService.verifyOtp({
-            identifier,
-            code: String(code).trim(),
-            reqId
-        });
-        if (!result.success) {
-            throw { status: 400, message: result.error || "OTP verification failed." };
-        }
-        return { success: true, message: result.message };
-    }
-    /**
      * Verify MSG91 Widget Access Token
      */
-    async verifyMsg91Token(tokenToVerify, authKeyOverride) {
-        if (!tokenToVerify) {
-            throw { status: 400, message: "Access token (JWT) from MSG91 OTP Widget is required." };
+    async verifyMsg91Token(tokenToVerify) {
+        if (!tokenToVerify || typeof tokenToVerify !== 'string' || !tokenToVerify.trim()) {
+            throw { status: 400, message: "Valid access-token (JWT) from MSG91 OTP Widget is required." };
         }
-        // Direct server-verified session token
-        if (tokenToVerify === 'server_verified_otp_session' || tokenToVerify.startsWith('server_')) {
-            return {
-                success: true,
-                message: "Server verified OTP session token accepted.",
-                data: { token: tokenToVerify }
-            };
+        const authKey = (process.env.MSG91_AUTH_KEY || '').trim();
+        if (!authKey) {
+            throw { status: 500, message: "MSG91_AUTH_KEY is required to verify login tokens." };
         }
-        const authKey = (process.env.MSG91_AUTH_KEY || authKeyOverride || '555226ACqXDRqJuY6a69ae3dP1').trim();
-        if (authKey && authKey !== '') {
-            const url = new URL('https://control.msg91.com/api/v5/widget/verifyAccessToken');
-            const response = await fetch(url, {
+        try {
+            const response = await fetch('https://control.msg91.com/api/v5/widget/verifyAccessToken', {
                 method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-                body: JSON.stringify({
-                    authkey: authKey,
-                    "access-token": tokenToVerify
-                })
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify({ authkey: authKey, "access-token": tokenToVerify.trim() })
             });
-            const data = await response.json().catch(() => ({ message: response.statusText, code: response.status }));
-            if (response.ok && (data.type === 'success' || data.status === 'success' || (data.message && data.message.toLowerCase().includes('success')) || (data.message && data.message.toLowerCase().includes('verified')))) {
-                return {
-                    success: true,
-                    message: "MSG91 Widget Access Token verified successfully.",
-                    data
-                };
+            const data = await response.json().catch(() => ({ message: response.statusText }));
+            const verified = response.ok && (data.type === 'success' || data.status === 'success' ||
+                (typeof data.message === 'string' && /success|verified/i.test(data.message)));
+            if (!verified) {
+                throw { status: 400, message: data.message || "MSG91 access-token verification failed.", details: data };
             }
-            else if (data.code === 418 || data.code === '418' ||
-                data.code === 408 || data.code === '408' ||
-                response.status === 408 || response.status === 418 ||
-                (typeof data.message === 'string' && (data.message.toLowerCase().includes('ip is not whitelisted') ||
-                    data.message.toLowerCase().includes('ipblocked') ||
-                    data.message.toLowerCase().includes('ip blocked')))) {
-                console.warn(`[MSG91 IP Warning]: Server IP is blocked or not whitelisted in MSG91 (code: ${data.code || response.status}, message: ${data.message}). Accepting client widget verified token.`);
-                return {
-                    success: true,
-                    message: "MSG91 Widget Access Token accepted (server outbound IP blocked or pending whitelist).",
-                    data: { token: tokenToVerify, warning: "IP whitelist or IP unblock pending on MSG91", originalError: data }
-                };
-            }
-            else {
-                throw {
-                    status: 400,
-                    message: data.message || "MSG91 Widget Access Token verification failed.",
-                    details: data
-                };
-            }
+            return { success: true, message: "MSG91 access token verified successfully.", data };
         }
-        else {
-            return {
-                success: true,
-                message: "MSG91 Access Token accepted.",
-                data: { token: tokenToVerify }
-            };
+        catch (error) {
+            if (error?.status)
+                throw error;
+            throw { status: 502, message: "Unable to verify the MSG91 access token.", details: error?.message };
         }
     }
-    async verifyAccessToken(tokenToVerify, authKeyOverride) {
-        return this.verifyMsg91Token(tokenToVerify, authKeyOverride);
+    async verifyAccessToken(tokenToVerify) {
+        return this.verifyMsg91Token(tokenToVerify);
     }
     /**
-     * Unified OTP Login with Phone or Email
+     * Unified Single OTP Login with Phone or Email
      */
     async otpLogin(params) {
-        const { identifier, code, reqId, accessToken, fullName, email: providedEmail, autoCreate } = params;
+        const { identifier, accessToken, fullName, email: providedEmail, autoCreate } = params;
         if (!identifier) {
             throw { status: 400, message: "Mobile number or Email address is required." };
         }
-        // Verify OTP: using MSG91 Widget verified access token or direct code
-        if (accessToken) {
-            try {
-                await this.verifyAccessToken(accessToken);
-            }
-            catch (tokenErr) {
-                if (code) {
-                    const otpCheck = await communicationService.verifyOtp({ identifier, code, reqId });
-                    if (!otpCheck.success) {
-                        throw { status: 400, message: otpCheck.error || "Invalid OTP code." };
-                    }
-                }
-                else {
-                    throw tokenErr;
-                }
-            }
+        // The frontend is the single OTP authority: it sends and verifies through
+        // the MSG91 widget. The backend accepts only the resulting access token.
+        if (!accessToken) {
+            throw { status: 400, message: "A verified MSG91 access token is required for login." };
         }
-        else if (code) {
-            const otpCheck = await communicationService.verifyOtp({ identifier, code, reqId });
-            if (!otpCheck.success) {
-                throw { status: 400, message: otpCheck.error || "Invalid OTP code." };
-            }
-        }
-        else {
-            throw { status: 400, message: "Valid access-token or OTP verification code is required for login." };
-        }
+        await this.verifyAccessToken(accessToken);
         const rawId = identifier.trim();
         let user = db.getUserByEmail(rawId);
         if (!user) {
             user = db.getUserByPhone(rawId);
         }
         if (!user) {
-            const formattedPhone = validateAndFormatIndianPhone(rawId);
-            user = db.getUsers().find(u => {
-                const uPhone = validateAndFormatIndianPhone(u.phone || '') || u.phone;
-                return uPhone && (uPhone === rawId || uPhone === formattedPhone);
-            });
+            const clean10 = rawId.replace(/\D/g, '').slice(-10);
+            if (clean10.length === 10) {
+                user = db.getUsers().find(u => {
+                    const uPhone = (u.phone || '').replace(/\D/g, '').slice(-10);
+                    return uPhone === clean10;
+                });
+            }
         }
         if (!user) {
-            if (autoCreate || fullName) {
+            const cleanPhone10 = rawId.replace(/\D/g, '').slice(-10);
+            // A configured admin mobile is allowed to create its admin profile only
+            // after its MSG91 access token has been verified above.
+            if (ADMIN_PHONES.includes(cleanPhone10)) {
+                const adminEmail = ADMIN_EMAILS[0];
+                if (!adminEmail) {
+                    throw { status: 500, message: "ADMIN_EMAILS must be configured for the admin mobile login." };
+                }
+                user = db.getUserByEmail(adminEmail);
+                if (user) {
+                    user.phone = validateAndFormatIndianPhone(rawId) || rawId;
+                    user.role = 'admin';
+                    db.saveUser(user);
+                }
+                else {
+                    user = db.saveUser({
+                        email: adminEmail,
+                        fullName: 'Administrator',
+                        phone: validateAndFormatIndianPhone(rawId) || rawId,
+                        role: 'admin',
+                        password: 'otp-only-admin-account',
+                        addresses: [],
+                        createdAt: new Date().toISOString()
+                    });
+                }
+            }
+            if (!user && fullName && fullName.trim()) {
                 const formattedPhone = validateAndFormatIndianPhone(rawId) || rawId;
-                const autoEmail = providedEmail?.trim().toLowerCase() || (rawId.includes('@') ? rawId.toLowerCase() : `${rawId.replace(/\D/g, '')}@gramslife.com`);
+                const cleanEmail = providedEmail?.trim().toLowerCase();
+                // Check duplicate email
+                if (cleanEmail) {
+                    const existingEmailUser = db.getUserByEmail(cleanEmail);
+                    if (existingEmailUser) {
+                        throw {
+                            status: 400,
+                            message: "This email address is already registered. Please sign in or use another email."
+                        };
+                    }
+                }
+                else {
+                    throw { status: 400, message: "Email address is required to complete registration." };
+                }
+                // Check duplicate mobile
+                const cleanPhone10 = rawId.replace(/\D/g, '').slice(-10);
+                if (cleanPhone10.length === 10) {
+                    const existingPhoneUser = db.getUsers().find(u => (u.phone || '').replace(/\D/g, '').slice(-10) === cleanPhone10);
+                    if (existingPhoneUser) {
+                        throw {
+                            status: 400,
+                            message: "This mobile number is already registered. Please sign in instead."
+                        };
+                    }
+                }
                 user = db.saveUser({
-                    email: autoEmail,
-                    fullName: fullName?.trim() || 'Ayurveda Patient',
+                    email: cleanEmail,
+                    fullName: fullName.trim(),
                     phone: formattedPhone,
                     role: 'customer',
                     password: 'password123',
@@ -176,22 +134,45 @@ export class OtpService {
                     createdAt: new Date().toISOString()
                 });
             }
-            else {
-                throw { status: 404, message: "This mobile number is not registered. Please register first." };
+            else if (!user && autoCreate) {
+                const formattedPhone = validateAndFormatIndianPhone(rawId) || rawId;
+                const autoEmail = providedEmail?.trim().toLowerCase() || (rawId.includes('@') ? rawId.toLowerCase() : `${rawId.replace(/\D/g, '')}@Bvlife.com`);
+                user = db.saveUser({
+                    email: autoEmail,
+                    fullName: 'Ayurveda Patient',
+                    phone: formattedPhone,
+                    role: 'customer',
+                    password: 'password123',
+                    addresses: [],
+                    createdAt: new Date().toISOString()
+                });
+            }
+            else if (!user) {
+                // Return verified status indicating user needs to provide Name & Email to complete registration
+                return {
+                    success: true,
+                    verified: true,
+                    isNewUser: true,
+                    message: "Mobile verified successfully. Please enter your name and email to complete registration.",
+                    identifier: rawId,
+                    accessToken: accessToken || ''
+                };
             }
         }
         // Promote to admin if configured
         const lowerEmail = user.email.toLowerCase();
         const cleanPhone = (user.phone || '').replace(/\D/g, '').slice(-10);
-        if (ADMIN_EMAILS.includes(lowerEmail) || ['7451050607', '9425011088'].includes(cleanPhone)) {
+        if (ADMIN_EMAILS.includes(lowerEmail) || ADMIN_PHONES.includes(cleanPhone)) {
             user.role = 'admin';
         }
         const token = generateToken(user);
-        db.logActivity(user.email, "OTP Login", "Logged in via unified SMS OTP authentication.");
+        db.logActivity(user.email, "OTP Auth", "Authenticated via unified Mobile SMS OTP.");
         return {
+            success: true,
             message: "Authenticated successfully!",
             user,
-            token
+            token,
+            isNewUser: false
         };
     }
     /**
@@ -228,7 +209,7 @@ export class OtpService {
         communicationService.sendSecurityAlertSms({
             phone: formattedNewPhone,
             action: "Mobile Number Linked",
-            details: `Your Grams Life profile is now linked to this mobile number.`
+            details: `Your BV Life profile is now linked to this mobile number.`
         }).catch(err => console.warn('Security SMS notice:', err));
         db.logActivity(user.email, "Mobile Number Change", `Updated mobile from ${oldPhone} to ${formattedNewPhone}`);
         return user;

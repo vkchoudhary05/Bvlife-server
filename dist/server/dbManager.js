@@ -19,7 +19,7 @@ const INITIAL_ADMIN_USERS = [
             {
                 id: "addr-admin-vivek",
                 fullName: "Vivek Baliyan",
-                addressLine1: "Bv Life Administrative Headquarters",
+                addressLine1: "BV Life Administrative Headquarters",
                 addressLine2: "Civil Lines",
                 city: "Meerut",
                 state: "Uttar Pradesh",
@@ -30,7 +30,7 @@ const INITIAL_ADMIN_USERS = [
         ]
     },
     {
-        email: "admin@Bvlife.com",
+        email: "admin@bvlife.in",
         fullName: "Aacharya Dhanvantari",
         role: "admin",
         phone: "9425011088",
@@ -38,8 +38,8 @@ const INITIAL_ADMIN_USERS = [
         addresses: []
     },
     {
-        email: "care@Bvlife.com",
-        fullName: "Bv Life Support",
+        email: "care@bvlife.in",
+        fullName: "BV Life Support",
         role: "admin",
         phone: "9425011088",
         password: "123123123",
@@ -66,10 +66,18 @@ const INITIAL_ADMIN_USERS = [
         ]
     },
     {
-        email: "doctor@Bvlife.com",
-        fullName: "Dr. Arundhati Sharma",
+        email: "doctor@bvlife.in",
+        fullName: "Dr. Sanjeev Rastogi",
         role: "admin",
-        phone: "9876543210",
+        phone: "7451050607",
+        password: "123123123",
+        addresses: []
+    },
+    {
+        email: "doctor@Bvlife.com",
+        fullName: "Dr. Sanjeev Rastogi",
+        role: "admin",
+        phone: "7451050607",
         password: "123123123",
         addresses: []
     }
@@ -218,7 +226,7 @@ class DBManager {
                             {
                                 id: "addr-admin-vivek",
                                 fullName: "Vivek Baliyan",
-                                addressLine1: "Bv Life Administrative Headquarters",
+                                addressLine1: "BV Life Administrative Headquarters",
                                 addressLine2: "Civil Lines",
                                 city: "Meerut",
                                 state: "Uttar Pradesh",
@@ -229,7 +237,7 @@ class DBManager {
                         ]
                     },
                     {
-                        email: "admin@Bvlife.com",
+                        email: "admin@bvlife.in",
                         fullName: "Aacharya Dhanvantari",
                         role: "admin",
                         phone: "9425011088",
@@ -237,8 +245,8 @@ class DBManager {
                         addresses: []
                     },
                     {
-                        email: "care@Bvlife.com",
-                        fullName: "Bv Life Support",
+                        email: "care@bvlife.in",
+                        fullName: "BV Life Support",
                         role: "admin",
                         phone: "9425011088",
                         password: "123123123",
@@ -265,24 +273,38 @@ class DBManager {
                         ]
                     },
                     {
-                        email: "doctor@Bvlife.com",
-                        fullName: "Dr. Arundhati Sharma",
+                        email: "doctor@bvlife.in",
+                        fullName: "Dr. Sanjeev Rastogi",
                         role: "admin",
-                        phone: "9876543210",
+                        phone: "7451050607",
+                        password: "123123123",
+                        addresses: []
+                    },
+                    {
+                        email: "doctor@Bvlife.com",
+                        fullName: "Dr. Sanjeev Rastogi",
+                        role: "admin",
+                        phone: "7451050607",
                         password: "123123123",
                         addresses: []
                     }
                 ];
                 // Ensure doctor user is always present even if db.json was previously created
-                if (this.data.users && !this.data.users.some(u => u.email?.toLowerCase() === 'doctor@Bvlife.com')) {
-                    this.data.users.push({
-                        email: "doctor@Bvlife.com",
-                        fullName: "Dr. Arundhati Sharma",
-                        role: "admin",
-                        phone: "9876543210",
-                        password: "123123123",
-                        addresses: []
+                if (this.data.users) {
+                    const docUsers = this.data.users.filter(u => u.email?.toLowerCase() === 'doctor@Bvlife.com' || u.email?.toLowerCase() === 'doctor@bvlife.in');
+                    docUsers.forEach(u => {
+                        u.fullName = 'Dr. Sanjeev Rastogi';
                     });
+                    if (!this.data.users.some(u => u.email?.toLowerCase() === 'doctor@bvlife.in')) {
+                        this.data.users.push({
+                            email: "doctor@bvlife.in",
+                            fullName: "Dr. Sanjeev Rastogi",
+                            role: "admin",
+                            phone: "7451050607",
+                            password: "123123123",
+                            addresses: []
+                        });
+                    }
                     fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
                 }
                 this.data.reviews = this.data.reviews || [
@@ -327,17 +349,17 @@ class DBManager {
                     doctorAppointments: [...INITIAL_APPOINTMENTS],
                     users: [
                         {
-                            email: "admin@Bvlife.com",
+                            email: "admin@bvlife.in",
                             fullName: "Aacharya Dhanvantari",
                             role: "admin",
-                            phone: "+1 (800) 555-GRAM",
+                            phone: "+91 94250 11088",
                             addresses: []
                         },
                         {
-                            email: "care@Bvlife.com",
-                            fullName: "Bv Life Support",
+                            email: "care@bvlife.in",
+                            fullName: "BV Life Support",
                             role: "admin",
-                            phone: "+1 (800) 555-GRAM",
+                            phone: "+91 94250 11088",
                             addresses: []
                         },
                         {
@@ -390,7 +412,7 @@ class DBManager {
                             timestamp: new Date().toISOString(),
                             userEmail: "system",
                             action: "Database Seeding",
-                            details: "Prepopulated Bv Life database with standard premium Ayurvedic components."
+                            details: "Prepopulated BV Life database with standard premium Ayurvedic components."
                         }
                     ],
                     payments: [],
@@ -467,7 +489,8 @@ class DBManager {
                     role: u.role,
                     phone: u.phone || undefined,
                     addresses: safeJsonParse(u.addresses, []),
-                    password: u.password || undefined
+                    password: u.password || undefined,
+                    membership: safeJsonParse(u.membership, undefined)
                 }));
             }
             else {
@@ -677,12 +700,7 @@ class DBManager {
                 mysqlAppointments = await query("SELECT * FROM doctor_appointments");
             }
             catch {
-                try {
-                    mysqlAppointments = await query("SELECT * FROM doctorAppointments");
-                }
-                catch {
-                    mysqlAppointments = [];
-                }
+                mysqlAppointments = [];
             }
             if (mysqlAppointments && mysqlAppointments.length > 0) {
                 this.data.doctorAppointments = mysqlAppointments.map((a) => ({
@@ -703,6 +721,7 @@ class DBManager {
                     healthConcern: a.healthConcern || '',
                     previousHistory: a.previousHistory || '',
                     medicalReports: safeJsonParse(a.medicalReports, []),
+                    patientPhoto: a.patientPhoto || '',
                     fee: Number(a.fee),
                     status: a.status,
                     bookingDate: a.bookingDate,
@@ -760,14 +779,14 @@ class DBManager {
     }
     async saveUserToMysql(u) {
         const sql = `
-      INSERT INTO users (email, fullName, role, phone, addresses, password) 
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO users (email, fullName, role, phone, addresses, password, membership) 
+      VALUES (?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE 
         fullName = VALUES(fullName), role = VALUES(role), phone = VALUES(phone), 
-        addresses = VALUES(addresses), password = VALUES(password);
+        addresses = VALUES(addresses), password = VALUES(password), membership = VALUES(membership);
     `;
         await query(sql, [
-            u.email.toLowerCase(), u.fullName, u.role, u.phone || null, JSON.stringify(u.addresses || []), u.password || null
+            u.email.toLowerCase(), u.fullName, u.role, u.phone || null, JSON.stringify(u.addresses || []), u.password || null, JSON.stringify(u.membership || null)
         ]);
     }
     async saveOrderToMysql(o) {
@@ -895,8 +914,8 @@ class DBManager {
         id, doctorId, doctorName, doctorSpecialty, doctorImage, doctorQualification,
         patientName, patientAge, patientGender, patientPhone, patientEmail,
         date, timeSlot, consultationMode, healthConcern, previousHistory,
-        medicalReports, fee, status, bookingDate, meetingLink
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        medicalReports, patientPhoto, fee, status, bookingDate, meetingLink
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE 
         doctorName = VALUES(doctorName), doctorSpecialty = VALUES(doctorSpecialty),
         doctorImage = VALUES(doctorImage), doctorQualification = VALUES(doctorQualification),
@@ -905,42 +924,17 @@ class DBManager {
         patientEmail = VALUES(patientEmail), date = VALUES(date), timeSlot = VALUES(timeSlot),
         consultationMode = VALUES(consultationMode), healthConcern = VALUES(healthConcern),
         previousHistory = VALUES(previousHistory), medicalReports = VALUES(medicalReports),
-        fee = VALUES(fee), status = VALUES(status), meetingLink = VALUES(meetingLink);
+        patientPhoto = VALUES(patientPhoto), fee = VALUES(fee), status = VALUES(status), meetingLink = VALUES(meetingLink);
     `;
         await query(sql, [
             a.id, a.doctorId, a.doctorName, a.doctorSpecialty, a.doctorImage || null, a.doctorQualification || null,
             a.patientName, a.patientAge, a.patientGender, a.patientPhone, a.patientEmail.toLowerCase(),
             a.date, a.timeSlot, a.consultationMode, a.healthConcern || null, a.previousHistory || null,
-            JSON.stringify(a.medicalReports || []), a.fee, a.status, a.bookingDate, a.meetingLink || null
+            JSON.stringify(a.medicalReports || []), a.patientPhoto || null, a.fee, a.status, a.bookingDate, a.meetingLink || null
         ]);
-        // Also sync to alias table if exists
-        try {
-            await query(`
-        INSERT INTO doctorAppointments (
-          id, doctorId, doctorName, doctorSpecialty, doctorImage, doctorQualification,
-          patientName, patientAge, patientGender, patientPhone, patientEmail,
-          date, timeSlot, consultationMode, healthConcern, previousHistory,
-          medicalReports, fee, status, bookingDate, meetingLink
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ON DUPLICATE KEY UPDATE 
-          status = VALUES(status), meetingLink = VALUES(meetingLink);
-      `, [
-                a.id, a.doctorId, a.doctorName, a.doctorSpecialty, a.doctorImage || null, a.doctorQualification || null,
-                a.patientName, a.patientAge, a.patientGender, a.patientPhone, a.patientEmail.toLowerCase(),
-                a.date, a.timeSlot, a.consultationMode, a.healthConcern || null, a.previousHistory || null,
-                JSON.stringify(a.medicalReports || []), a.fee, a.status, a.bookingDate, a.meetingLink || null
-            ]);
-        }
-        catch {
-            // ignore alias table error if not present
-        }
     }
     async deleteDoctorAppointmentFromMysql(id) {
         await query("DELETE FROM doctor_appointments WHERE id = ?", [id]);
-        try {
-            await query("DELETE FROM doctorAppointments WHERE id = ?", [id]);
-        }
-        catch { }
     }
     // --- PRODUCTS ---
     getProducts() {
@@ -1001,27 +995,36 @@ class DBManager {
     }
     // --- ORDERS ---
     getOrders() {
-        return this.data.orders;
+        return [...(this.data.orders || [])].sort((a, b) => {
+            const timeA = new Date(a.orderDate || 0).getTime();
+            const timeB = new Date(b.orderDate || 0).getTime();
+            return timeB - timeA;
+        });
     }
     getOrderById(id) {
         return this.data.orders.find(o => o.id === id);
     }
     getOrdersByUser(identifier) {
         const term = identifier.toLowerCase().trim();
-        const cleanPhone = term.replace(/\D/g, '');
+        if (!term)
+            return [];
         // Look up user object by email or phone if available
         const user = this.getUserByEmail(term) || this.getUserByPhone(term);
-        const userEmail = user ? user.email.toLowerCase() : term;
-        const userPhoneClean = user?.phone ? user.phone.replace(/\D/g, '') : cleanPhone;
+        const userEmail = (user ? user.email : (term.includes('@') ? term : '')).toLowerCase().trim();
+        const rawDigits = (user?.phone || term).replace(/\D/g, '');
+        const userPhoneClean = rawDigits.length >= 10 ? rawDigits.slice(-10) : '';
         const userAddrPhones = (user?.addresses || [])
-            .map(a => a.phone ? a.phone.replace(/\D/g, '') : '')
-            .filter(p => p.length >= 7);
+            .map(a => a.phone ? a.phone.replace(/\D/g, '').slice(-10) : '')
+            .filter(p => p.length === 10);
         return this.data.orders.filter(o => {
-            const oEmail = (o.userEmail || '').toLowerCase();
-            const oPhone = o.shippingAddress?.phone ? o.shippingAddress.phone.replace(/\D/g, '') : '';
-            const emailMatch = !!(userEmail && (oEmail === userEmail || (oEmail && oEmail.includes(userEmail))));
-            const phoneMatch = !!(userPhoneClean && userPhoneClean.length >= 7 && oPhone.length >= 7 && oPhone.endsWith(userPhoneClean.slice(-10)));
-            const addrPhoneMatch = userAddrPhones.some(ap => ap.length >= 7 && oPhone.length >= 7 && oPhone.endsWith(ap.slice(-10)));
+            if (!o || typeof o !== 'object')
+                return false;
+            const oEmail = (o.userEmail || '').toLowerCase().trim();
+            const rawOPhone = o.shippingAddress?.phone ? o.shippingAddress.phone.replace(/\D/g, '') : '';
+            const oPhone = rawOPhone.length >= 10 ? rawOPhone.slice(-10) : '';
+            const emailMatch = Boolean(userEmail && oEmail && oEmail === userEmail);
+            const phoneMatch = Boolean(userPhoneClean && oPhone && oPhone === userPhoneClean);
+            const addrPhoneMatch = userAddrPhones.some(ap => ap && oPhone && ap === oPhone);
             return emailMatch || phoneMatch || addrPhoneMatch;
         });
     }
@@ -1050,16 +1053,16 @@ class DBManager {
             return undefined;
         let cleanEmail = email.trim().toLowerCase();
         cleanEmail = cleanEmail.replace(/^(doctor\s*id\s*[:\-]?\s*|email\s*[:\-]?\s*|id\s*[:\-]?\s*)/i, '').trim();
-        if (cleanEmail.includes('doctor@Bvlife.com') || cleanEmail === 'doctor') {
-            cleanEmail = 'doctor@Bvlife.com';
+        if (cleanEmail.includes('doctor@bvlife.in') || cleanEmail.includes('doctor@Bvlife.com') || cleanEmail === 'doctor') {
+            cleanEmail = cleanEmail.includes('Bvlife.com') ? 'doctor@Bvlife.com' : 'doctor@bvlife.in';
         }
         let user = this.data.users.find(u => u.email.toLowerCase() === cleanEmail);
-        if (!user && cleanEmail === 'doctor@Bvlife.com') {
+        if (!user && (cleanEmail === 'doctor@bvlife.in' || cleanEmail === 'doctor@Bvlife.com')) {
             user = {
-                email: "doctor@Bvlife.com",
-                fullName: "Dr. Arundhati Sharma",
+                email: cleanEmail,
+                fullName: "Dr. Sanjeev Rastogi",
                 role: "admin",
-                phone: "9876543210",
+                phone: "7451050607",
                 addresses: [],
                 password: "123123123"
             };
@@ -1306,21 +1309,25 @@ class DBManager {
         return false;
     }
     getDoctorAppointments() {
-        return this.data.doctorAppointments || [];
+        return [...(this.data.doctorAppointments || [])].sort((a, b) => {
+            const timeA = new Date(a.date ? `${a.date} ${a.timeSlot || '00:00'}` : a.bookingDate || 0).getTime();
+            const timeB = new Date(b.date ? `${b.date} ${b.timeSlot || '00:00'}` : b.bookingDate || 0).getTime();
+            return timeB - timeA;
+        });
     }
     getDoctorAppointmentsByUser(email) {
         const normalizedEmail = (email || '').toLowerCase().trim();
         return (this.data.doctorAppointments || []).filter(app => (app.patientEmail || '').toLowerCase().trim() === normalizedEmail);
     }
     bookDoctorAppointment(appointmentData) {
-        const appointmentId = `APT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        const appointmentId = appointmentData.id || `APT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
         const newAppointment = {
             id: appointmentId,
-            doctorId: appointmentData.doctorId || 'doc-1',
-            doctorName: appointmentData.doctorName || 'Dr. Rajeshwar Sharma',
-            doctorSpecialty: appointmentData.doctorSpecialty || 'Ayurvedic Specialist',
-            doctorImage: appointmentData.doctorImage || 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400',
-            doctorQualification: appointmentData.doctorQualification || 'BAMS, MD (Ayurveda)',
+            doctorId: appointmentData.doctorId || 'doc-legend-1',
+            doctorName: appointmentData.doctorName || 'Dr. Sanjeev Rastogi',
+            doctorSpecialty: appointmentData.doctorSpecialty || 'Chief Ayurvedic Physician & Master Nadi Vaidya',
+            doctorImage: appointmentData.doctorImage || '/images/DrSanjeev.png',
+            doctorQualification: appointmentData.doctorQualification || 'Ph.D, MD (Ayurveda), Banaras Hindu University (BHU)',
             patientName: appointmentData.patientName || 'Ayurveda Seeker',
             patientAge: Number(appointmentData.patientAge) || 30,
             patientGender: appointmentData.patientGender || 'Other',
@@ -1336,7 +1343,7 @@ class DBManager {
             fee: Number(appointmentData.fee) || 499,
             status: 'Confirmed',
             bookingDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-            meetingLink: appointmentData.consultationMode === 'video' ? `https://meet.jit.si/BVLife-Consult-${appointmentId}` : undefined,
+            meetingLink: appointmentData.meetingLink || (appointmentData.consultationMode === 'video' ? `https://meet.jit.si/BVLife-Consult-${appointmentId}` : undefined),
             paymentMethod: appointmentData.paymentMethod || 'Razorpay',
             paymentStatus: appointmentData.paymentStatus || 'Paid',
             paymentId: appointmentData.paymentId || '',

@@ -6,6 +6,7 @@ import { db } from "../dbManager.js";
 import { validateAndFormatIndianPhone } from "../utils.js";
 // In-memory store for active OTP codes with 10-minute TTL and multi-code grace pool
 export const activeOtpStore = new Map();
+export const activeOtpByReqIdStore = new Map();
 const communicationLogsStore = [];
 // Clean up expired OTPs periodically
 setInterval(() => {
@@ -19,17 +20,22 @@ setInterval(() => {
             activeOtpStore.set(key, valid);
         }
     }
+    for (const [reqId, record] of activeOtpByReqIdStore.entries()) {
+        if (record.expiresAt <= now) {
+            activeOtpByReqIdStore.delete(reqId);
+        }
+    }
 }, 60000);
 export class CommunicationService {
     static instance;
     commSettings = {
-        msg91AuthKey: (process.env.MSG91_AUTH_KEY || '555226ACqXDRqJuY6a69ae3dP1').trim().replace(/^["']|["']$/g, ''),
+        msg91AuthKey: (process.env.MSG91_AUTH_KEY || '').trim().replace(/^["']|["']$/g, ''),
         senderEmail: (process.env.MSG91_SENDER_EMAIL || process.env.MSG91_FROM_EMAIL || 'care@bvlife.in').trim().replace(/^["']|["']$/g, ''),
-        senderName: (process.env.MSG91_SENDER_NAME || 'Grams Life Care Desk').trim().replace(/^["']|["']$/g, ''),
+        senderName: (process.env.MSG91_SENDER_NAME || 'BV Life Care Desk').trim().replace(/^["']|["']$/g, ''),
         emailDomain: (process.env.MSG91_EMAIL_DOMAIN || 'bvlife.in').trim().replace(/^["']|["']$/g, ''),
         orderEmailTemplateId: (process.env.MSG91_ORDER_EMAIL_TEMPLATE_ID || process.env.MSG91_EMAIL_TEMPLATE_ID || '').trim().replace(/^["']|["']$/g, ''),
         bookingEmailTemplateId: (process.env.MSG91_BOOKING_EMAIL_TEMPLATE_ID || '').trim().replace(/^["']|["']$/g, ''),
-        clinicWhatsAppNumber: (process.env.CLINIC_WHATSAPP_NUMBER || '919425011088').trim().replace(/^["']|["']$/g, ''),
+        clinicWhatsAppNumber: (process.env.CLINIC_WHATSAPP_NUMBER || process.env.DOCTOR_HELPLINE_PHONE || '').trim().replace(/^["']|["']$/g, ''),
     };
     constructor() { }
     static getInstance() {
@@ -39,14 +45,22 @@ export class CommunicationService {
         return CommunicationService.instance;
     }
     getSettings() {
-        return { ...this.commSettings };
+        return {
+            msg91AuthKey: (process.env.MSG91_AUTH_KEY || this.commSettings.msg91AuthKey || '').trim().replace(/^["']|["']$/g, ''),
+            senderEmail: (process.env.MSG91_SENDER_EMAIL || process.env.MSG91_FROM_EMAIL || this.commSettings.senderEmail || 'care@bvlife.in').trim().replace(/^["']|["']$/g, ''),
+            senderName: (process.env.MSG91_SENDER_NAME || this.commSettings.senderName || 'BV Life Care Desk').trim().replace(/^["']|["']$/g, ''),
+            emailDomain: (process.env.MSG91_EMAIL_DOMAIN || this.commSettings.emailDomain || 'bvlife.in').trim().replace(/^["']|["']$/g, ''),
+            orderEmailTemplateId: (process.env.MSG91_ORDER_EMAIL_TEMPLATE_ID || process.env.MSG91_EMAIL_TEMPLATE_ID || this.commSettings.orderEmailTemplateId || '').trim().replace(/^["']|["']$/g, ''),
+            bookingEmailTemplateId: (process.env.MSG91_BOOKING_EMAIL_TEMPLATE_ID || this.commSettings.bookingEmailTemplateId || '').trim().replace(/^["']|["']$/g, ''),
+            clinicWhatsAppNumber: (process.env.CLINIC_WHATSAPP_NUMBER || process.env.DOCTOR_HELPLINE_PHONE || this.commSettings.clinicWhatsAppNumber || '').trim().replace(/^["']|["']$/g, ''),
+        };
     }
     updateSettings(newSettings) {
         this.commSettings = {
-            ...this.commSettings,
+            ...this.getSettings(),
             ...newSettings
         };
-        return { ...this.commSettings };
+        return this.getSettings();
     }
     // Helper to get all key variants for a phone/email
     getKeyVariants(identifier) {
@@ -58,19 +72,25 @@ export class CommunicationService {
         variants.add(raw);
         if (digits) {
             variants.add(digits);
-            if (digits.length === 10) {
-                variants.add(`91${digits}`);
-                variants.add(`+91${digits}`);
-            }
-            else if (digits.length === 12 && digits.startsWith('91')) {
-                variants.add(digits.slice(2));
-                variants.add(`+${digits}`);
+            const clean10 = digits.slice(-10);
+            if (clean10.length === 10) {
+                variants.add(clean10);
+                variants.add(`91${clean10}`);
+                variants.add(`+91${clean10}`);
+                variants.add(`0${clean10}`);
+                variants.add(`+91 ${clean10}`);
             }
         }
         const formatted = validateAndFormatIndianPhone(raw);
         if (formatted) {
             variants.add(formatted.toLowerCase());
             variants.add(formatted.replace('+', '').toLowerCase());
+            const clean10 = formatted.replace(/\D/g, '').slice(-10);
+            if (clean10.length === 10) {
+                variants.add(clean10);
+                variants.add(`91${clean10}`);
+                variants.add(`+91${clean10}`);
+            }
         }
         return Array.from(variants);
     }
@@ -90,7 +110,7 @@ export class CommunicationService {
             formattedTarget = formattedPhone;
         }
         // MSG91 REST AuthKey (only use if explicitly configured as valid API key)
-        const authKey = (this.commSettings.msg91AuthKey || process.env.MSG91_AUTH_KEY || '555226ACqXDRqJuY6a69ae3dP1').trim();
+        const authKey = (this.commSettings.msg91AuthKey || process.env.MSG91_AUTH_KEY || '').trim();
         const templateId = (process.env.MSG91_TEMPLATE_ID || '').trim();
         // Generate secure 4-digit OTP
         const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
@@ -110,6 +130,9 @@ export class CommunicationService {
             existing.push(newRecord);
             activeOtpStore.set(key, existing);
         }
+        if (reqId) {
+            activeOtpByReqIdStore.set(reqId, newRecord);
+        }
         console.log(`[OTP Engine] Generated active passcode [${generatedOtp}] for [${formattedTarget}] (Purpose: ${purpose}, ReqID: ${reqId})`);
         // Try MSG91 API dispatch if genuine REST authKey is present
         let dispatchedViaGateway = false;
@@ -119,11 +142,11 @@ export class CommunicationService {
                 try {
                     const emailResult = await this.sendMsg91Email({
                         recipients: [{ to: [{ email: formattedTarget }] }],
-                        subject: `Your Grams Life Verification Code: ${generatedOtp}`,
+                        subject: `Your BV Life Verification Code: ${generatedOtp}`,
                         body: `
               <div style="font-family: Georgia, serif; max-width: 540px; margin: 0 auto; background: #ffffff; padding: 28px; border: 1px solid #e0cda7; border-radius: 14px;">
                 <div style="text-align: center; border-bottom: 2px solid #143527; padding-bottom: 12px; margin-bottom: 18px;">
-                  <h2 style="color: #143527; margin: 0; font-size: 22px;">🌿 Grams Life Sanctuary</h2>
+                  <h2 style="color: #143527; margin: 0; font-size: 22px;">🌿 BV Life Healthcare</h2>
                   <p style="color: #bfa15f; margin: 4px 0 0 0; font-size: 12px; font-weight: bold; text-transform: uppercase;">Authentication & Verification</p>
                 </div>
                 <p style="color: #143527; font-size: 15px;">Namaste,</p>
@@ -137,7 +160,7 @@ export class CommunicationService {
 
                 <p style="color: #718096; font-size: 13px; text-align: center;">This passcode is valid for 15 minutes. For your security, never share this code with anyone.</p>
                 <div style="text-align: center; border-top: 1px solid #e2e8f0; padding-top: 14px; margin-top: 20px; font-size: 11px; color: #a0aec0;">
-                  © Grams Life Sanctuary • Authentic Ayurvedic Wellness
+                  © BV Life Healthcare • Authentic Ayurvedic Wellness
                 </div>
               </div>
             `
@@ -208,9 +231,9 @@ export class CommunicationService {
         };
     }
     async verifyOtp(params) {
-        const rawTarget = params.identifier.trim();
-        const inputCode = String(params.code || '').trim();
-        if (!inputCode) {
+        const rawTarget = (params.identifier || '').trim();
+        const cleanDigits = String(params.code || '').trim().replace(/\D/g, '');
+        if (!cleanDigits) {
             return {
                 success: false,
                 message: "Verification failed.",
@@ -220,19 +243,50 @@ export class CommunicationService {
         const keyVariants = this.getKeyVariants(rawTarget);
         const now = Date.now();
         let matchingRecord = null;
-        // 2. Check local in-memory active OTP records strictly for this identifier
-        for (const key of keyVariants) {
-            const records = activeOtpStore.get(key) || [];
-            const found = records.find(r => r.code === inputCode && r.expiresAt > now);
-            if (found) {
-                matchingRecord = found;
-                break;
+        // 1. Check by reqId first if provided
+        if (params.reqId && activeOtpByReqIdStore.has(params.reqId)) {
+            const rec = activeOtpByReqIdStore.get(params.reqId);
+            if (rec.expiresAt > now && rec.code.replace(/\D/g, '') === cleanDigits) {
+                matchingRecord = rec;
+            }
+        }
+        // 2. Check local in-memory active OTP records strictly across keyVariants
+        if (!matchingRecord) {
+            for (const key of keyVariants) {
+                const records = activeOtpStore.get(key) || [];
+                const found = records.find(r => r.code.replace(/\D/g, '') === cleanDigits && r.expiresAt > now);
+                if (found) {
+                    matchingRecord = found;
+                    break;
+                }
+            }
+        }
+        // 3. Resilient 10-digit mobile fallback across active unexpired pool
+        if (!matchingRecord) {
+            const cleanTarget10 = rawTarget.replace(/\D/g, '').slice(-10);
+            if (cleanTarget10.length === 10) {
+                for (const [key, records] of activeOtpStore.entries()) {
+                    const key10 = key.replace(/\D/g, '').slice(-10);
+                    if (key10 === cleanTarget10) {
+                        const found = records.find(r => r.code.replace(/\D/g, '') === cleanDigits && r.expiresAt > now);
+                        if (found) {
+                            matchingRecord = found;
+                            break;
+                        }
+                    }
+                }
             }
         }
         if (matchingRecord) {
-            // Invalidate all active OTPs for this identifier
+            // Invalidate all active OTPs for this identifier across all key variants and reqId
             for (const key of keyVariants) {
                 activeOtpStore.delete(key);
+            }
+            if (matchingRecord.reqId) {
+                activeOtpByReqIdStore.delete(matchingRecord.reqId);
+            }
+            if (params.reqId) {
+                activeOtpByReqIdStore.delete(params.reqId);
             }
             this.logCommunication({
                 recipient: rawTarget,
@@ -244,14 +298,14 @@ export class CommunicationService {
             });
             return { success: true, message: "OTP verified successfully." };
         }
-        // 3. MSG91 Live Gateway Verification (only when configured with valid REST API Auth Key)
-        const authKey = (this.commSettings.msg91AuthKey || process.env.MSG91_AUTH_KEY || '555226ACqXDRqJuY6a69ae3dP1').trim();
+        // 4. MSG91 Live Gateway Verification (when configured with valid REST API Auth Key)
+        const authKey = (this.commSettings.msg91AuthKey || process.env.MSG91_AUTH_KEY || '').trim();
         if (authKey && authKey.length >= 10) {
             try {
                 const cleanMobile = rawTarget.replace(/\D/g, '').slice(-10);
                 const mobileVariants = cleanMobile ? [`91${cleanMobile}`, cleanMobile, `+91${cleanMobile}`] : [rawTarget];
                 for (const mob of mobileVariants) {
-                    const verifyUrl = `https://control.msg91.com/api/v5/otp/verify?otp=${encodeURIComponent(inputCode)}&mobile=${encodeURIComponent(mob)}`;
+                    const verifyUrl = `https://control.msg91.com/api/v5/otp/verify?otp=${encodeURIComponent(cleanDigits)}&mobile=${encodeURIComponent(mob)}`;
                     const response = await fetch(verifyUrl, {
                         method: 'GET',
                         headers: {
@@ -268,6 +322,9 @@ export class CommunicationService {
                         // Invalidate local memory records
                         for (const key of keyVariants) {
                             activeOtpStore.delete(key);
+                        }
+                        if (params.reqId) {
+                            activeOtpByReqIdStore.delete(params.reqId);
                         }
                         this.logCommunication({
                             recipient: rawTarget,
@@ -295,17 +352,17 @@ export class CommunicationService {
     // 2. EMAIL SERVICE: Invoice, Order, Refund, Security, Welcome
     // =========================================================================
     async sendWelcomeEmail(user) {
-        const subject = `Welcome to Grams Life Organic Sanctuary, ${user.fullName}`;
+        const subject = `Welcome to BV Life Healthcare, ${user.fullName}`;
         const emailHtml = `
       <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; background: #fdfbf7; padding: 30px; border: 1px solid #d4af37; border-radius: 16px;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <div style="width: 50px; height: 50px; background: #1b3d2f; color: #fdfbf7; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; border: 2px solid #d4af37; line-height: 50px;">G</div>
-          <h2 style="color: #1b3d2f; margin: 10px 0 4px 0; font-size: 24px;">Grams Life</h2>
-          <p style="color: #8c7329; text-transform: uppercase; font-size: 11px; letter-spacing: 2px; margin: 0;">Ayurvedic Wellbeing Sanctuary</p>
+          <div style="width: 50px; height: 50px; background: #1b3d2f; color: #fdfbf7; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; border: 2px solid #d4af37; line-height: 50px;">B</div>
+          <h2 style="color: #1b3d2f; margin: 10px 0 4px 0; font-size: 24px;">BV Life</h2>
+          <p style="color: #8c7329; text-transform: uppercase; font-size: 11px; letter-spacing: 2px; margin: 0;">Authentic Ayurvedic Healthcare</p>
         </div>
         <p style="color: #1b3d2f; font-size: 15px; line-height: 1.6;">Namaste <strong>${user.fullName}</strong>,</p>
         <p style="color: #2d5543; font-size: 14px; line-height: 1.6;">
-          Thank you for joining Grams Life. Your account is now active and protected with dual-channel cryptographic security.
+          Thank you for joining BV Life. Your account is now active and protected with dual-channel cryptographic security.
         </p>
         <div style="background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid rgba(27,61,47,0.1); margin: 20px 0;">
           <h4 style="color: #1b3d2f; margin: 0 0 10px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Account Overview</h4>
@@ -314,7 +371,7 @@ export class CommunicationService {
           <p style="margin: 4px 0; font-size: 13px; color: #1b3d2f;">• <strong>Special Welcome Gift:</strong> Use code <strong style="color: #8c7329; font-family: monospace;">AYUR20</strong> for 20% off your first sanctuary order.</p>
         </div>
         <p style="color: #666; font-size: 12px; line-height: 1.5; text-align: center; border-top: 1px solid #eedcba; padding-top: 15px;">
-          Grams Life Sanctuary • Pure Vedic Formulas • 100% Certified Organic & Heavy-Metal Tested
+          BV Life • Pure Vedic Formulas • 100% Certified Organic & Heavy-Metal Tested
         </p>
       </div>
     `;
@@ -334,10 +391,10 @@ export class CommunicationService {
      * Dispatches MSG91 Transactional Email via https://control.msg91.com/api/v5/email/send
      */
     async sendMsg91Email(payload) {
-        const rawAuthKey = payload.authKey || this.commSettings.msg91AuthKey || (process.env.MSG91_AUTH_KEY || '555226ACqXDRqJuY6a69ae3dP1').trim().replace(/^["']|["']$/g, '');
+        const rawAuthKey = payload.authKey || this.commSettings.msg91AuthKey || (process.env.MSG91_AUTH_KEY || '').trim().replace(/^["']|["']$/g, '');
         const emailDomain = (payload.domain || this.commSettings.emailDomain || process.env.MSG91_EMAIL_DOMAIN || 'bvlife.in').trim();
         const senderEmail = (payload.from?.email || this.commSettings.senderEmail || process.env.MSG91_SENDER_EMAIL || process.env.MSG91_FROM_EMAIL || 'care@bvlife.in').trim();
-        const senderName = (payload.from?.name || this.commSettings.senderName || 'Grams Life Care Desk').trim();
+        const senderName = (payload.from?.name || this.commSettings.senderName || process.env.MSG91_SENDER_NAME || 'BV Life Care Desk').trim();
         const hasTemplateId = Boolean(payload.template_id && payload.template_id.trim().length > 0);
         const requestBody = {
             recipients: payload.recipients,
@@ -353,10 +410,10 @@ export class CommunicationService {
         }
         else {
             // MSG91 API rule: 'subject' and structured 'body' { type, data } are required if template_id is not present.
-            requestBody.subject = payload.subject || 'Notification from Grams Life Sanctuary';
+            requestBody.subject = payload.subject || 'Notification from BV Life Healthcare';
             requestBody.body = {
                 type: 'text/html',
-                data: payload.body || '<p>Notification from Grams Life Sanctuary</p>'
+                data: payload.body || '<p>Notification from BV Life Healthcare</p>'
             };
         }
         const firstRecipient = payload.recipients[0]?.to[0]?.email || 'Recipient';
@@ -400,6 +457,16 @@ export class CommunicationService {
                 }
                 if (!errorMsg) {
                     errorMsg = resData?.message || `HTTP error ${response.status}`;
+                }
+                // Automatic fallback: If template was invalid or missing in MSG91 and an HTML body exists, retry with direct HTML
+                if (hasTemplateId && payload.body && (response.status === 400 || response.status === 422 ||
+                    String(errorMsg).toLowerCase().includes('template') ||
+                    String(errorMsg).toLowerCase().includes('not found'))) {
+                    console.warn(`[MSG91 Email Gateway Fallback]: Template '${payload.template_id}' failed (${errorMsg}). Retrying immediately via direct HTML body dispatch...`);
+                    return await this.sendMsg91Email({
+                        ...payload,
+                        template_id: undefined
+                    });
                 }
                 if (resData?.apiError === '418' || resData?.code === '418' ||
                     resData?.apiError === '408' || resData?.code === '408' ||
@@ -445,7 +512,7 @@ export class CommunicationService {
             order_id: `#${order.id}`,
             order_date: formattedOrderDate,
             payment_method: String(order.paymentMethod).toUpperCase(),
-            tracking_number: order.trackingNumber || `GLTRK-${order.id.slice(-6).toUpperCase()}`,
+            tracking_number: order.trackingNumber || `BVLTRK-${order.id.slice(-6).toUpperCase()}`,
             product_name: productName,
             product_variant_or_weight: productVariant,
             quantity: itemQuantity,
@@ -461,11 +528,11 @@ export class CommunicationService {
         const htmlBody = `
       <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 28px; border: 1px solid #e0cda7; border-radius: 16px;">
         <div style="text-align: center; border-bottom: 2px solid #143527; padding-bottom: 16px; margin-bottom: 20px;">
-          <h1 style="color: #143527; margin: 0; font-size: 24px; letter-spacing: 0.5px;">🌿 Grams Life Sanctuary</h1>
+          <h1 style="color: #143527; margin: 0; font-size: 24px; letter-spacing: 0.5px;">🌿 BV Life Healthcare</h1>
           <p style="color: #bfa15f; margin: 4px 0 0 0; font-size: 13px; font-weight: bold; text-transform: uppercase;">Order Confirmed • Authentic Ayurvedic Care</p>
         </div>
         <p style="color: #143527; font-size: 15px;">Namaste <strong>${customerName}</strong>,</p>
-        <p style="color: #4a5568; font-size: 14px; line-height: 1.6;">Your sacred formulation order <strong>#${order.id}</strong> has been confirmed and placed with our botanical dispensary.</p>
+        <p style="color: #4a5568; font-size: 14px; line-height: 1.6;">Your Ayurvedic wellness formulation order <strong>#${order.id}</strong> has been confirmed and placed with our dispensary.</p>
         
         <div style="background: #fbf8f2; border: 1px solid #eedcba; border-radius: 12px; padding: 16px; margin: 20px 0;">
           <h3 style="margin: 0 0 10px 0; color: #143527; font-size: 14px; border-bottom: 1px dashed #d4af37; padding-bottom: 6px;">Order Summary</h3>
@@ -504,14 +571,14 @@ export class CommunicationService {
             },
             domain: this.commSettings.emailDomain,
             template_id: emailTemplateId || undefined,
-            subject: `Order Confirmed: #${order.id} - Grams Life Sanctuary`,
+            subject: `Order Confirmed: #${order.id} - BV Life Healthcare`,
             body: htmlBody
         });
         this.logCommunication({
             recipient: customerEmail,
             channel: 'EMAIL',
             category: 'Order Confirmation',
-            subject: `Order Confirmed: #${order.id} - Grams Life`,
+            subject: `Order Confirmed: #${order.id} - BV Life`,
             content: `MSG91 Order confirmation email sent to ${customerEmail} for Order #${order.id} (Amount: ₹${order.finalTotal}).`,
             status: result.success ? 'DELIVERED' : 'FAILED',
             metadata: { orderId: order.id, variables, gateway: result }
@@ -519,70 +586,194 @@ export class CommunicationService {
         return result;
     }
     /**
-     * Doctor Booking Email via MSG91 Template API
-     * Variables matched exactly to user's MSG91 email template specification
+     * Universal Bv Life Consultation Variable Preparation
+     * Maps consultationType strictly to VIDEO | PHONE | WHATSAPP
+     * Generates ONE consistent dictionary covering both MSG91 named keys and numbered variables (var1..var8)
+     */
+    prepareConsultationVariables(appointment) {
+        const rawMode = String(appointment.consultationMode || 'video').toLowerCase();
+        const consultationType = rawMode === 'audio' || rawMode === 'phone' ? 'PHONE' :
+            (rawMode === 'chat' || rawMode === 'whatsapp' ? 'WHATSAPP' : 'VIDEO');
+        const patientName = (appointment.patientName || 'Ayurveda Seeker').trim();
+        const docName = appointment.doctorName || 'Dr. Sanjeev Rastogi';
+        const docSpecialty = appointment.doctorSpecialty || 'Chief Ayurvedic Physician & Master Nadi Vaidya';
+        const docQual = appointment.doctorQualification || 'Ph.D, MD (Ayurveda), Banaras Hindu University (BHU)';
+        const meetUrl = appointment.meetingLink || `https://meet.jit.si/BVLife-Consult-${appointment.id}`;
+        const rawPhone = String(appointment.patientPhone || '').replace(/\D/g, '');
+        const cleanPhone = rawPhone.slice(-10);
+        let modeTitle = '1-on-1 HD Video Consultation';
+        let modeIcon = '📹';
+        let instructionsTitle = '📹 How to Join Your Video Consultation';
+        let instructionsBody = 'Please open your secure video consultation link 5 minutes prior to your time slot. The session runs directly in your phone or laptop browser without any app download required. Ensure camera and microphone permissions are allowed.';
+        let actionButtonText = '📹 Join Live Video Consultation Room';
+        let actionButtonUrl = meetUrl;
+        let detailsLabel = 'Video Room Link:';
+        let detailsValue = meetUrl;
+        if (consultationType === 'PHONE') {
+            modeTitle = 'Direct Phone Call Consultation';
+            modeIcon = '📞';
+            instructionsTitle = '📞 How Your Phone Consultation Works';
+            instructionsBody = `Our doctor will call you directly on your registered phone number (+91 ${cleanPhone}) at ${appointment.timeSlot}. Please keep your mobile phone reachable and stay in a quiet environment.`;
+            actionButtonText = '📞 Call Doctor Helpline (+91 7451050607)';
+            actionButtonUrl = 'tel:+917451050607';
+            detailsLabel = 'Doctor Will Call:';
+            detailsValue = `+91 ${cleanPhone}`;
+        }
+        else if (consultationType === 'WHATSAPP') {
+            modeTitle = 'WhatsApp Live Chat Consultation';
+            modeIcon = '💬';
+            instructionsTitle = '💬 How Your WhatsApp Chat Works';
+            instructionsBody = `Our doctor care desk will connect with you on WhatsApp at ${appointment.timeSlot}. You can exchange messages, voice notes, and share medical reports directly with the doctor.`;
+            actionButtonText = '💬 Open WhatsApp Doctor Desk (+91 7451050607)';
+            actionButtonUrl = `https://wa.me/917451050607?text=${encodeURIComponent(`Namaste Doctor, I have booked a WhatsApp consultation #${appointment.id} for ${patientName}`)}`;
+            detailsLabel = 'WhatsApp Doctor Desk:';
+            detailsValue = '+91 7451050607';
+        }
+        const variables = {
+            // Standard Named Keys
+            consultation_type: consultationType,
+            consultationType: consultationType,
+            mode: consultationType,
+            patient_name: patientName,
+            customer_name: patientName,
+            name: patientName,
+            doctor_name: docName,
+            doctor_specialty: docSpecialty,
+            specialization: docSpecialty,
+            qualification: docQual,
+            doctor_qualification: docQual,
+            date: appointment.date,
+            appointment_date: appointment.date,
+            booking_date: appointment.bookingDate || new Date().toLocaleDateString('en-IN'),
+            time_slot: appointment.timeSlot,
+            time: appointment.timeSlot,
+            booking_id: `#${appointment.id}`,
+            appointment_id: `#${appointment.id}`,
+            meeting_link: actionButtonUrl,
+            action_url: actionButtonUrl,
+            action_button_url: actionButtonUrl,
+            action_button_text: actionButtonText,
+            instructions: instructionsBody,
+            instructions_title: instructionsTitle,
+            instructions_body: instructionsBody,
+            details_label: detailsLabel,
+            details_value: detailsValue,
+            mode_title: modeTitle,
+            consultation_mode_title: modeTitle,
+            mode_badge: consultationType,
+            mode_icon: modeIcon,
+            patient_phone: `+91 ${cleanPhone}`,
+            phone: `+91 ${cleanPhone}`,
+            health_concern: appointment.healthConcern || 'Ayurvedic Assessment & Consultation',
+            fee: `₹${appointment.fee || 499}`,
+            consultation_fee: `₹${appointment.fee || 499}`,
+            amount: `₹${appointment.fee || 499}`,
+            payment_status: appointment.paymentStatus || 'Paid',
+            clinic_phone: '+91 7451050607',
+            helpline: '7451050607',
+            clinic_email: 'care@bvlife.in',
+            support_email: 'care@bvlife.in',
+            admin_email: 'care@gmail.com',
+            // Positional Keys (var1..var8 for MSG91 templates configured with ##varN##)
+            var1: patientName,
+            var2: docName,
+            var3: appointment.date,
+            var4: appointment.timeSlot,
+            var5: consultationType,
+            var6: actionButtonUrl,
+            var7: '7451050607',
+            var8: 'care@bvlife.in',
+            // Numeric Keys ("1".."8" for MSG91 templates configured with ##1##, ##2##)
+            "1": patientName,
+            "2": docName,
+            "3": appointment.date,
+            "4": appointment.timeSlot,
+            "5": consultationType,
+            "6": actionButtonUrl,
+            "7": '7451050607',
+            "8": 'care@bvlife.in'
+        };
+        return {
+            consultationType,
+            modeTitle,
+            modeIcon,
+            instructionsTitle,
+            instructionsBody,
+            actionButtonText,
+            actionButtonUrl,
+            detailsLabel,
+            detailsValue,
+            variables
+        };
+    }
+    /**
+     * Doctor Booking Email via MSG91 Template API (Single Adaptive Template)
+     * Dispatches according to consultationType (VIDEO | PHONE | WHATSAPP)
      */
     async sendDoctorBookingMsg91Email(appointment) {
-        const patientName = appointment.patientName || 'Ayurveda Seeker';
         const patientEmail = (appointment.patientEmail || '').trim();
         if (!patientEmail)
             return { success: false, error: 'Patient email is missing' };
-        const docName = appointment.doctorName || 'Dr. Arundhati Sharma';
-        const meetUrl = appointment.meetingLink || `https://meet.jit.si/BVLife-Consult-${appointment.id}`;
-        const emailTemplateId = this.commSettings.bookingEmailTemplateId || process.env.MSG91_BOOKING_EMAIL_TEMPLATE_ID || '';
-        const variables = {
-            customer_name: patientName,
-            booking_id: `#${appointment.id}`,
-            booking_date: appointment.bookingDate || new Date().toLocaleDateString('en-IN'),
-            doctor_name: docName,
-            specialization: appointment.doctorSpecialty || 'Senior Ayurvedic Vaidya',
-            qualification: appointment.doctorQualification || 'BAMS, MD (Ayurveda)',
-            appointment_date: appointment.date,
-            time_slot: appointment.timeSlot,
-            consultation_type: String(appointment.consultationMode).toUpperCase(),
-            patient_name: patientName,
-            patient_phone: `+91 ${String(appointment.patientPhone).replace(/\D/g, '').slice(-10)}`,
-            health_concern: appointment.healthConcern || 'Ayurvedic Assessment & Consultation',
-            meeting_link: appointment.consultationMode === 'video' ? meetUrl : 'Direct Phone/WhatsApp Call',
-            consultation_fee: `₹${appointment.fee}`,
-            payment_status: appointment.paymentStatus || 'Paid',
-            clinic_phone: `+${this.commSettings.clinicWhatsAppNumber}`,
-            clinic_email: this.commSettings.senderEmail
-        };
+        const prep = this.prepareConsultationVariables(appointment);
+        const { consultationType, modeTitle, instructionsTitle, instructionsBody, actionButtonText, actionButtonUrl, variables } = prep;
+        const patientName = variables.patient_name;
+        const docName = variables.doctor_name;
+        // Resolves master booking template ID from environment
+        const emailTemplateId = (process.env.MSG91_BOOKING_EMAIL_TEMPLATE_ID || this.commSettings.bookingEmailTemplateId || '').trim();
+        // Responsive, high-contrast HTML email body customized for BV Life
         const htmlBody = `
       <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 28px; border: 1px solid #e0cda7; border-radius: 16px;">
         <div style="text-align: center; border-bottom: 2px solid #143527; padding-bottom: 16px; margin-bottom: 20px;">
-          <h1 style="color: #143527; margin: 0; font-size: 24px; letter-spacing: 0.5px;">🌿 Grams Life Vaidya Desk</h1>
-          <p style="color: #bfa15f; margin: 4px 0 0 0; font-size: 13px; font-weight: bold; text-transform: uppercase;">Doctor Consultation Confirmed</p>
+          <h1 style="color: #143527; margin: 0; font-size: 24px; letter-spacing: 0.5px;">🌿 BV Life Doctor Desk</h1>
+          <p style="color: #bfa15f; margin: 4px 0 0 0; font-size: 13px; font-weight: bold; text-transform: uppercase;">Doctor Consultation Confirmed (${consultationType})</p>
         </div>
         <p style="color: #143527; font-size: 15px;">Namaste <strong>${patientName}</strong>,</p>
-        <p style="color: #4a5568; font-size: 14px; line-height: 1.6;">Your Ayurvedic consultation pass <strong>#${appointment.id}</strong> has been confirmed. Below are your appointment and meeting details:</p>
+        <p style="color: #4a5568; font-size: 14px; line-height: 1.6;">Your Ayurvedic consultation pass <strong>#${appointment.id}</strong> has been confirmed. Below are your consultation details and instructions:</p>
         
         <div style="background: #fbf8f2; border: 1px solid #eedcba; border-radius: 12px; padding: 18px; margin: 20px 0;">
-          <h3 style="margin: 0 0 12px 0; color: #143527; font-size: 15px; border-bottom: 1px dashed #d4af37; padding-bottom: 6px;">Consultation Schedule</h3>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #d4af37; padding-bottom: 8px; margin-bottom: 12px;">
+            <h3 style="margin: 0; color: #143527; font-size: 15px;">Consultation Schedule</h3>
+            <span style="background: #143527; color: #eedcba; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; font-family: sans-serif;">${consultationType}</span>
+          </div>
+
           <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Doctor:</strong> ${docName} (${variables.qualification})</p>
           <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Specialty:</strong> ${variables.specialization}</p>
-          <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Date & Slot:</strong> ${appointment.date} at ${appointment.timeSlot}</p>
-          <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Mode:</strong> ${variables.consultation_type}</p>
+          <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Date & Time Slot:</strong> ${appointment.date} at ${appointment.timeSlot}</p>
+          <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Consultation Format:</strong> ${modeTitle}</p>
           <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Health Concern:</strong> ${variables.health_concern}</p>
-          <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Fee:</strong> ${variables.consultation_fee} (${variables.payment_status})</p>
+          <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Consultation Fee:</strong> ${variables.consultation_fee} (${variables.payment_status})</p>
           
-          ${appointment.consultationMode === 'video' ? `
-            <div style="margin-top: 14px; padding: 12px; background: #e6f4ea; border-radius: 8px; text-align: center;">
-              <a href="${meetUrl}" style="background: #143527; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 13px; display: inline-block;">
-                📹 Join Video Consultation Room
+          <!-- Mode-Specific Action Container -->
+          ${consultationType === 'VIDEO' ? `
+            <div style="margin-top: 16px; padding: 14px; background: #e6f4ea; border: 1px solid #b7e1cd; border-radius: 10px; text-align: center;">
+              <p style="margin: 0 0 6px 0; font-size: 13px; font-weight: bold; color: #143527;">${instructionsTitle}</p>
+              <p style="margin: 0 0 12px 0; font-size: 12px; color: #2d3748; line-height: 1.5;">${instructionsBody}</p>
+              <a href="${actionButtonUrl}" style="background: #143527; color: #ffffff; text-decoration: none; padding: 11px 22px; border-radius: 8px; font-weight: bold; font-size: 13px; display: inline-block; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                ${actionButtonText}
               </a>
-              <p style="margin: 6px 0 0 0; font-size: 11px; color: #2d3748;">Link: ${meetUrl}</p>
+              <p style="margin: 8px 0 0 0; font-size: 11px; color: #4a5568;">Direct Room Link: <a href="${actionButtonUrl}" style="color: #143527; word-break: break-all;">${actionButtonUrl}</a></p>
+            </div>
+          ` : consultationType === 'PHONE' ? `
+            <div style="margin-top: 16px; padding: 14px; background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 10px; text-align: center;">
+              <p style="margin: 0 0 6px 0; font-size: 13px; font-weight: bold; color: #003a8c;">${instructionsTitle}</p>
+              <p style="margin: 0 0 10px 0; font-size: 12px; color: #2d3748; line-height: 1.5;">${instructionsBody}</p>
+              <div style="background: #ffffff; padding: 8px 14px; border-radius: 6px; display: inline-block; border: 1px solid #bae7ff; font-weight: bold; font-size: 13px; color: #0050b3;">
+                📞 Registered Mobile: ${variables.patient_phone}
+              </div>
             </div>
           ` : `
-            <div style="margin-top: 14px; padding: 10px; background: #e6f4ea; border-radius: 8px; text-align: center; font-size: 12px; color: #143527; font-weight: bold;">
-              📞 The doctor or clinic desk will connect with you via Phone/WhatsApp at your registered number: ${variables.patient_phone}
+            <div style="margin-top: 16px; padding: 14px; background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 10px; text-align: center;">
+              <p style="margin: 0 0 6px 0; font-size: 13px; font-weight: bold; color: #237804;">${instructionsTitle}</p>
+              <p style="margin: 0 0 10px 0; font-size: 12px; color: #2d3748; line-height: 1.5;">${instructionsBody}</p>
+              <a href="${actionButtonUrl}" style="background: #25D366; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 13px; display: inline-block;">
+                ${actionButtonText}
+              </a>
             </div>
           `}
         </div>
 
         <div style="text-align: center; border-top: 1px solid #e2e8f0; padding-top: 16px; font-size: 12px; color: #718096;">
-          <p style="margin: 2px 0;">Need to reschedule? Contact us at <a href="mailto:${this.commSettings.senderEmail}" style="color: #143527; font-weight: bold;">${this.commSettings.senderEmail}</a> or WhatsApp <a href="https://wa.me/${this.commSettings.clinicWhatsAppNumber}" style="color: #143527; font-weight: bold;">+${this.commSettings.clinicWhatsAppNumber}</a>.</p>
+          <p style="margin: 2px 0;">Need assistance? Contact our Doctor Helpline at <a href="mailto:care@gmail.com" style="color: #143527; font-weight: bold;">care@gmail.com</a> / <a href="mailto:care@bvlife.in" style="color: #143527; font-weight: bold;">care@bvlife.in</a> or Call/WhatsApp <a href="https://wa.me/917451050607" style="color: #143527; font-weight: bold;">+91 7451050607</a>.</p>
         </div>
       </div>
     `;
@@ -604,22 +795,87 @@ export class CommunicationService {
             },
             domain: this.commSettings.emailDomain,
             template_id: emailTemplateId || undefined,
-            subject: `Doctor Consultation Confirmed: #${appointment.id} with ${docName} - Grams Life`,
+            subject: `Doctor Consultation Confirmed (${consultationType}): #${appointment.id} with ${docName} - Bv Life`,
             body: htmlBody
         });
         this.logCommunication({
             recipient: patientEmail,
             channel: 'EMAIL',
             category: 'Doctor Booking',
-            subject: `Doctor Consultation Confirmed: #${appointment.id} with ${docName}`,
-            content: `MSG91 Doctor booking confirmation email sent to ${patientEmail} for Appointment #${appointment.id} on ${appointment.date} at ${appointment.timeSlot}.`,
+            subject: `Doctor Consultation Confirmed (${consultationType}): #${appointment.id} with ${docName}`,
+            content: `MSG91 Doctor booking confirmation email sent to ${patientEmail} for Appointment #${appointment.id} (${modeTitle}) on ${appointment.date} at ${appointment.timeSlot}.`,
             status: result.success ? 'DELIVERED' : 'FAILED',
-            metadata: { appointmentId: appointment.id, variables, gateway: result }
+            metadata: { appointmentId: appointment.id, consultationMode: consultationType, templateId: emailTemplateId, variables, gateway: result }
         });
         return result;
     }
+    /**
+     * Automatically notifies the clinic / doctor helpline email (care@gmail.com, care@bvlife.in)
+     * whenever a new doctor appointment is booked
+     */
+    async sendDoctorBookingAlertEmailToClinic(appointment) {
+        const rawEmails = process.env.DOCTOR_HELPLINE_EMAIL || 'care@gmail.com,care@bvlife.in';
+        const recipientEmails = rawEmails.split(',').map(e => e.trim()).filter(Boolean);
+        const docName = appointment.doctorName || 'Dr. Sanjeev Rastogi';
+        const modeBadge = String(appointment.consultationMode || 'video').toUpperCase();
+        const meetUrl = appointment.meetingLink || `https://meet.jit.si/BVLife-Consult-${appointment.id}`;
+        const recipients = recipientEmails.map(email => ({
+            to: [{ email, name: 'Bv Life Doctor Helpline' }],
+            variables: {
+                patient_name: appointment.patientName,
+                booking_id: `#${appointment.id}`,
+                doctor_name: docName,
+                appointment_date: appointment.date,
+                time_slot: appointment.timeSlot,
+                consultation_type: modeBadge,
+                patient_phone: String(appointment.patientPhone),
+                health_concern: appointment.healthConcern || 'Ayurvedic Assessment',
+                helpline: '7451050607'
+            }
+        }));
+        const alertHtml = `
+      <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 25px; border: 1px solid #c8dfd3; border-radius: 14px;">
+        <div style="border-bottom: 2px solid #143527; padding-bottom: 12px; margin-bottom: 16px;">
+          <h2 style="color: #143527; margin: 0; font-size: 20px;">🚨 New Doctor Consultation Booked - Bv Life</h2>
+          <p style="color: #666; margin: 4px 0 0 0; font-size: 12px;">Alert dispatched to Doctor Desk (${recipientEmails.join(', ')})</p>
+        </div>
+        <p style="font-size: 14px; color: #333;">A new patient consultation has just been booked and confirmed on <strong>Bv Life</strong>:</p>
+        
+        <div style="background: #f7faf8; padding: 15px; border-radius: 10px; border: 1px solid #d0e7dc; font-size: 13px; line-height: 1.6; margin: 15px 0;">
+          <p style="margin: 3px 0;"><strong>Appointment ID:</strong> #${appointment.id}</p>
+          <p style="margin: 3px 0;"><strong>Patient Name:</strong> ${appointment.patientName} (Age: ${appointment.patientAge || 'N/A'}, ${appointment.patientGender || 'N/A'})</p>
+          <p style="margin: 3px 0;"><strong>Patient Phone:</strong> ${appointment.patientPhone}</p>
+          <p style="margin: 3px 0;"><strong>Patient Email:</strong> ${appointment.patientEmail}</p>
+          <p style="margin: 3px 0;"><strong>Doctor:</strong> ${docName}</p>
+          <p style="margin: 3px 0;"><strong>Date & Time Slot:</strong> ${appointment.date} at ${appointment.timeSlot}</p>
+          <p style="margin: 3px 0;"><strong>Consultation Mode:</strong> <span style="background: #143527; color: #fff; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: bold;">${modeBadge}</span></p>
+          <p style="margin: 3px 0;"><strong>Fee Paid:</strong> ₹${appointment.fee || 499} (${appointment.paymentStatus || 'Paid'})</p>
+          <p style="margin: 3px 0;"><strong>Health Concern:</strong> ${appointment.healthConcern || 'General Ayurvedic Evaluation'}</p>
+          ${appointment.consultationMode === 'video' ? `<p style="margin: 6px 0;"><strong>Video Room Link:</strong> <a href="${meetUrl}" style="color: #143527; font-weight: bold;">${meetUrl}</a></p>` : ''}
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+          <a href="https://wa.me/${String(appointment.patientPhone).replace(/\D/g, '')}" style="background: #25D366; color: #ffffff; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; font-size: 12px; display: inline-block;">
+            💬 Open WhatsApp Chat with Patient
+          </a>
+        </div>
+      </div>
+    `;
+        const result = await this.sendMsg91Email({
+            recipients,
+            from: {
+                email: this.commSettings.senderEmail,
+                name: this.commSettings.senderName
+            },
+            domain: this.commSettings.emailDomain,
+            subject: `🚨 [Doctor Alert] #${appointment.id} Booked: ${appointment.patientName} (${modeBadge}) with ${docName} - Bv Life`,
+            body: alertHtml
+        });
+        console.log(`[Doctor Helpline Email Alert] Dispatched to ${recipientEmails.join(', ')} for #${appointment.id}`);
+        return result;
+    }
     async sendOrderInvoiceEmail(order) {
-        const subject = `Official Order Invoice & Receipt #${order.id} - Grams Life Sanctuary`;
+        const subject = `Official Order Invoice & Receipt #${order.id} - Bv Life Sanctuary`;
         const itemsRows = order.items.map(item => `
       <tr>
         <td style="padding: 10px 12px; border-bottom: 1px solid #eedcba; font-size: 13px; color: #1b3d2f;">${item.productName}</td>
@@ -632,11 +888,11 @@ export class CommunicationService {
       <div style="font-family: Georgia, serif; max-width: 650px; margin: 0 auto; background: #ffffff; padding: 30px; border: 1px solid #d4af37; border-radius: 16px;">
         <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #1b3d2f; padding-bottom: 15px; margin-bottom: 20px;">
           <div>
-            <h1 style="color: #1b3d2f; margin: 0; font-size: 24px;">Grams Life</h1>
+            <h1 style="color: #1b3d2f; margin: 0; font-size: 24px;">Bv Life</h1>
             <p style="color: #8c7329; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; margin: 2px 0 0 0;">Ayurvedic Sanctuary Invoice</p>
           </div>
           <div style="text-align: right;">
-            <p style="margin: 0; font-size: 12px; color: #666;"><strong>Invoice:</strong> GL-INV-${order.id.slice(-6).toUpperCase()}</p>
+            <p style="margin: 0; font-size: 12px; color: #666;"><strong>Invoice:</strong> BVL-INV-${order.id.slice(-6).toUpperCase()}</p>
             <p style="margin: 2px 0 0 0; font-size: 12px; color: #666;"><strong>Date:</strong> ${new Date(order.orderDate).toLocaleDateString('en-IN')}</p>
           </div>
         </div>
@@ -671,8 +927,8 @@ export class CommunicationService {
         </div>
 
         <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #eedcba; text-align: center; font-size: 12px; color: #666;">
-          <p style="margin: 0;">Tracking Number: <strong>${order.trackingNumber || 'GLTRK-EXP'}</strong></p>
-          <p style="margin: 4px 0 0 0;">Thank you for trusting Grams Life for your Ayurvedic wellness.</p>
+          <p style="margin: 0;">Tracking Number: <strong>${order.trackingNumber || 'BVLTRK-EXP'}</strong></p>
+          <p style="margin: 4px 0 0 0;">Thank you for trusting Bv Life for your authentic Ayurvedic wellness.</p>
         </div>
       </div>
     `;
@@ -689,7 +945,7 @@ export class CommunicationService {
         return true;
     }
     async sendRefundEmail(params) {
-        const subject = `Refund Processed for Order #${params.orderId} - Grams Life`;
+        const subject = `Refund Processed for Order #${params.orderId} - Bv Life`;
         console.log(`[Email Service] Dispatched Refund Notification for Order #${params.orderId} to ${params.userEmail} (Amount: ₹${params.amount})`);
         this.logCommunication({
             recipient: params.userEmail,
@@ -703,7 +959,7 @@ export class CommunicationService {
         return true;
     }
     async sendSecurityAlertEmail(params) {
-        const subject = `Security Alert: ${params.action} - Grams Life Account`;
+        const subject = `Security Alert: ${params.action} - Bv Life Account`;
         console.log(`[Email Service] Dispatched Security Alert to ${params.userEmail}: ${params.action}`);
         this.logCommunication({
             recipient: params.userEmail,
@@ -722,10 +978,10 @@ export class CommunicationService {
     async sendDeliveryTrackingSms(params) {
         const formattedPhone = validateAndFormatIndianPhone(params.phone) || params.phone;
         const cleanDigits = formattedPhone.replace(/\D/g, '');
-        const message = `Grams Life Update: Order #${params.orderId} status is now [${params.status}]. Tracking: ${params.trackingNumber || 'In Transit'}. ${params.comment || 'Thank you for choosing organic wellbeing.'}`;
+        const message = `Bv Life Update: Order #${params.orderId} status is now [${params.status}]. Tracking: ${params.trackingNumber || 'In Transit'}. ${params.comment || 'Thank you for choosing authentic Ayurvedic wellness.'}`;
         console.log(`[SMS Service] Dispatching Delivery Tracking SMS to +${cleanDigits}: ${message}`);
         // Call MSG91 transactional SMS API if configured
-        const authKey = (process.env.MSG91_AUTH_KEY || '555226ACqXDRqJuY6a69ae3dP1').trim();
+        const authKey = (process.env.MSG91_AUTH_KEY || '').trim();
         if (authKey && authKey.trim() !== '') {
             try {
                 await fetch('https://control.msg91.com/api/v5/flow/', {
@@ -762,7 +1018,7 @@ export class CommunicationService {
     }
     async sendPaymentConfirmationSms(params) {
         const formattedPhone = validateAndFormatIndianPhone(params.phone) || params.phone;
-        const message = `Grams Life Payment: ₹${params.amount} received for Order #${params.orderId} via ${params.paymentMethod}. Your order is confirmed.`;
+        const message = `Bv Life Payment: ₹${params.amount} received for Order #${params.orderId} via ${params.paymentMethod}. Your order is confirmed.`;
         console.log(`[SMS Service] Dispatching Payment Confirmation SMS to ${formattedPhone}: ${message}`);
         this.logCommunication({
             recipient: formattedPhone,
@@ -776,7 +1032,7 @@ export class CommunicationService {
     }
     async sendSecurityAlertSms(params) {
         const formattedPhone = validateAndFormatIndianPhone(params.phone) || params.phone;
-        const message = `Grams Life Security Notice: ${params.action} performed on your account. If this was not you, please contact care@gramslife.com immediately.`;
+        const message = `Bv Life Security Notice: ${params.action} performed on your account. If this was not you, please contact care@gmail.com or care@bvlife.in immediately.`;
         console.log(`[SMS Service] Dispatching Security Alert SMS to ${formattedPhone}: ${message}`);
         this.logCommunication({
             recipient: formattedPhone,
@@ -793,57 +1049,53 @@ export class CommunicationService {
     // =========================================================================
     /**
      * Dispatch an automated WhatsApp message via MSG91 WhatsApp API v5
-     * Supports both direct session outbound text and pre-approved template / flow IDs
+     * Supports clean separation between pre-approved Template ID and Free-Text sessions
      */
     async sendWhatsAppMessage(params) {
         const rawPhone = params.recipientPhone.replace(/\D/g, '');
         const recipientWithCountry = rawPhone.length === 10 ? `91${rawPhone}` : rawPhone;
-        const rawAuth = process.env.MSG91_AUTH_KEY || '555226ACqXDRqJuY6a69ae3dP1';
+        const rawAuth = process.env.MSG91_AUTH_KEY || '';
         const authKey = rawAuth.replace(/['";\s]/g, '').trim();
-        const integratedNumber = (process.env.MSG91_WHATSAPP_INTEGRATED_NUMBER || '919425011088').replace(/\D/g, '');
-        console.log(`[WhatsApp Gateway] Triggering automated WhatsApp dispatch to +${recipientWithCountry} (Key configured: ${Boolean(authKey)}, length: ${authKey.length})...`);
+        const integratedNumber = (process.env.MSG91_WHATSAPP_INTEGRATED_NUMBER || process.env.DOCTOR_HELPLINE_PHONE || '917451050607').replace(/\D/g, '');
+        console.log(`[WhatsApp Gateway] Triggering WhatsApp dispatch to +${recipientWithCountry} (Template: ${params.templateId || 'Free Text'}, Key configured: ${Boolean(authKey)})...`);
         let gatewaySuccess = false;
         let gatewayResponse = null;
         if (authKey && authKey.length > 5) {
-            // 1. Try MSG91 WhatsApp Outbound API (Direct or Template)
             try {
-                const payload = {
-                    integrated_number: integratedNumber,
-                    recipient_number: recipientWithCountry,
-                    content_type: 'text',
-                    text: params.messageText
-                };
-                if (params.templateId) {
-                    payload.template_id = params.templateId;
-                    if (params.variables) {
-                        payload.variables = params.variables;
+                // Build payload cleanly without mixing text and template
+                const isTemplateMode = Boolean(params.templateId && params.templateId.trim());
+                if (isTemplateMode) {
+                    // 1. Dedicated Template Dispatch via Outbound API
+                    const payload = {
+                        integrated_number: integratedNumber,
+                        recipient_number: recipientWithCountry,
+                        content_type: 'template',
+                        template_id: params.templateId,
+                        variables: params.variables || {}
+                    };
+                    const res = await fetch('https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/', {
+                        method: 'POST',
+                        headers: {
+                            'authkey': authKey,
+                            'content-type': 'application/json',
+                            'accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    const resText = await res.text();
+                    try {
+                        gatewayResponse = JSON.parse(resText);
                     }
-                }
-                const res = await fetch('https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/', {
-                    method: 'POST',
-                    headers: {
-                        'authkey': authKey,
-                        'content-type': 'application/json',
-                        'accept': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-                const resText = await res.text();
-                try {
-                    gatewayResponse = JSON.parse(resText);
-                }
-                catch {
-                    gatewayResponse = { raw: resText, httpStatus: res.status };
-                }
-                if (res.ok && (gatewayResponse?.status === 'success' || gatewayResponse?.type === 'success' || (typeof gatewayResponse?.message === 'string' && gatewayResponse.message.toLowerCase().includes('success')))) {
-                    gatewaySuccess = true;
-                    console.log(`[WhatsApp Gateway] Direct WhatsApp delivered to +${recipientWithCountry} via MSG91! Response:`, gatewayResponse);
-                }
-                else {
-                    console.warn(`[WhatsApp Gateway] MSG91 outbound endpoint returned HTTP ${res.status}:`, gatewayResponse);
-                    // 2. Fallback attempt via MSG91 Flow API if configured
-                    const flowId = params.templateId || process.env.MSG91_WHATSAPP_BOOKING_TEMPLATE_ID;
-                    if (flowId) {
+                    catch {
+                        gatewayResponse = { raw: resText, httpStatus: res.status };
+                    }
+                    if (res.ok && (gatewayResponse?.status === 'success' || gatewayResponse?.type === 'success' || (typeof gatewayResponse?.message === 'string' && gatewayResponse.message.toLowerCase().includes('success')))) {
+                        gatewaySuccess = true;
+                        console.log(`[WhatsApp Gateway] Template delivered to +${recipientWithCountry} via MSG91! Response:`, gatewayResponse);
+                    }
+                    else {
+                        console.warn(`[WhatsApp Gateway] Outbound template attempt note (${res.status}):`, gatewayResponse);
+                        // 2. Fallback attempt via MSG91 Flow API
                         try {
                             const flowRes = await fetch('https://control.msg91.com/api/v5/flow/', {
                                 method: 'POST',
@@ -852,7 +1104,7 @@ export class CommunicationService {
                                     'content-type': 'application/json'
                                 },
                                 body: JSON.stringify({
-                                    template_id: flowId,
+                                    template_id: params.templateId,
                                     short_url: '0',
                                     recipients: [{
                                             mobiles: recipientWithCountry,
@@ -878,14 +1130,70 @@ export class CommunicationService {
                             }
                         }
                         catch (flowErr) {
-                            console.warn(`[WhatsApp Gateway] Flow dispatch note:`, flowErr);
+                            console.warn(`[WhatsApp Gateway] Flow dispatch error:`, flowErr);
                             gatewayResponse = { outbound: gatewayResponse, flowError: flowErr?.message || String(flowErr) };
                         }
+                        // 3. Fallback: If template and flow both failed, attempt sending direct text message if text is present
+                        if (!gatewaySuccess && params.messageText) {
+                            try {
+                                const textRes = await fetch('https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/', {
+                                    method: 'POST',
+                                    headers: {
+                                        'authkey': authKey,
+                                        'content-type': 'application/json',
+                                        'accept': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        integrated_number: integratedNumber,
+                                        recipient_number: recipientWithCountry,
+                                        content_type: 'text',
+                                        text: params.messageText
+                                    })
+                                });
+                                const textData = await textRes.json().catch(() => null);
+                                if (textRes.ok && textData?.status !== 'fail') {
+                                    gatewaySuccess = true;
+                                    gatewayResponse = textData;
+                                    console.log(`[WhatsApp Gateway] Fallback text message delivered to +${recipientWithCountry}!`);
+                                }
+                            }
+                            catch (txtErr) {
+                                console.warn(`[WhatsApp Gateway] Fallback text attempt error:`, txtErr);
+                            }
+                        }
+                    }
+                }
+                else {
+                    // Free-text session message
+                    const payload = {
+                        integrated_number: integratedNumber,
+                        recipient_number: recipientWithCountry,
+                        content_type: 'text',
+                        text: params.messageText || 'Namaste from Bv Life Doctor Care Desk.'
+                    };
+                    const res = await fetch('https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/', {
+                        method: 'POST',
+                        headers: {
+                            'authkey': authKey,
+                            'content-type': 'application/json',
+                            'accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    const resText = await res.text();
+                    try {
+                        gatewayResponse = JSON.parse(resText);
+                    }
+                    catch {
+                        gatewayResponse = { raw: resText, httpStatus: res.status };
+                    }
+                    if (res.ok) {
+                        gatewaySuccess = true;
                     }
                 }
             }
             catch (err) {
-                console.warn(`[WhatsApp Gateway] Outbound connection note:`, err);
+                console.warn(`[WhatsApp Gateway] Connection note:`, err);
                 gatewayResponse = { error: err?.message || String(err) };
             }
         }
@@ -898,9 +1206,9 @@ export class CommunicationService {
             recipient: recipientWithCountry,
             channel: 'WHATSAPP',
             category: 'DoctorAppointment',
-            content: params.messageText,
+            content: params.messageText || `Template [${params.templateId}] dispatched to ${recipientWithCountry}`,
             status: gatewaySuccess ? 'DELIVERED' : 'SENT',
-            metadata: { gatewaySuccess, recipient: recipientWithCountry, gatewayResponse }
+            metadata: { gatewaySuccess, recipient: recipientWithCountry, gatewayResponse, templateId: params.templateId }
         });
         return {
             success: true,
@@ -909,47 +1217,44 @@ export class CommunicationService {
         };
     }
     /**
-     * Automatically notifies the clinic / doctor on WhatsApp when a user books an appointment
+     * Automatically notifies the clinic / doctor helpline on WhatsApp (+91 7451050607) when a user books an appointment
      */
     async sendDoctorBookingAlertToClinic(appointment) {
-        const clinicNumber = (process.env.CLINIC_WHATSAPP_NUMBER || '919425011088').replace(/\D/g, '');
-        const meetUrl = appointment.meetingLink || `https://meet.jit.si/BVLife-Consult-${appointment.id}`;
+        const clinicNumber = (process.env.CLINIC_WHATSAPP_NUMBER || process.env.DOCTOR_HELPLINE_PHONE || '917451050607').replace(/\D/g, '');
+        const prep = this.prepareConsultationVariables(appointment);
+        const { consultationType, actionButtonUrl, variables } = prep;
+        const docName = variables.doctor_name;
         const formattedAlert = `🚨 *NEW DOCTOR BOOKING RECEIVED* 🚨
 
-Namaste Doctor / Clinic Desk,
-A new consultation has just been booked and confirmed on Grams Life:
+Namaste Doctor / Helpline Desk,
+A new consultation has just been booked and confirmed on Bv Life:
 
 📋 *Booking Details:*
 • *Appointment ID:* #${appointment.id}
 • *Patient Name:* ${appointment.patientName} (Age: ${appointment.patientAge || 'N/A'}, ${appointment.patientGender || 'N/A'})
-• *Patient Phone:* +91 ${String(appointment.patientPhone).replace(/\D/g, '').slice(-10)}
+• *Patient Phone:* ${variables.patient_phone}
 • *Patient Email:* ${appointment.patientEmail}
 
 🩺 *Consultation Info:*
-• *Assigned Doctor:* ${appointment.doctorName || 'Dr. Arundhati Sharma'}
+• *Assigned Doctor:* ${docName}
 • *Date:* ${appointment.date}
 • *Time Slot:* ${appointment.timeSlot}
-• *Mode:* ${String(appointment.consultationMode).toUpperCase()}
-• *Fee Paid:* ₹${appointment.fee} (${appointment.paymentStatus || 'Paid'})
-• *Chief Health Concern:* ${appointment.healthConcern || 'Ayurvedic Assessment'}
-${appointment.consultationMode === 'video' ? `\n📹 *Video Room Link:*\n${meetUrl}\n` : ''}
-Open your Doctor Dashboard to manage the session or view patient history:
-${process.env.APP_URL || 'https://gramslife.com'}/doctor-dashboard
+• *Mode:* ${consultationType}
+• *Fee Paid:* ${variables.consultation_fee} (${variables.payment_status})
+• *Chief Health Concern:* ${variables.health_concern}
+${consultationType === 'VIDEO' ? `\n📹 *Video Room Link:*\n${actionButtonUrl}\n` : ''}
+Open your Doctor Dashboard to manage the session:
+${process.env.APP_URL || 'https://bvlife.in'}/doctor-dashboard
 
-*Grams Life Automated Care Desk*`;
+*Bv Life Doctor Care Desk*`;
+        const clinicAlertTemplateId = (process.env.MSG91_WHATSAPP_CLINIC_ALERT_TEMPLATE_ID || '').trim() || undefined;
         const result = await this.sendWhatsAppMessage({
             recipientPhone: clinicNumber,
             messageText: formattedAlert,
-            templateId: process.env.MSG91_WHATSAPP_BOOKING_TEMPLATE_ID,
-            variables: {
-                patient_name: appointment.patientName,
-                date: appointment.date,
-                time_slot: appointment.timeSlot,
-                mode: String(appointment.consultationMode).toUpperCase(),
-                phone: String(appointment.patientPhone)
-            }
+            templateId: clinicAlertTemplateId,
+            variables: prep.variables
         });
-        console.log(`[Automated WhatsApp Alert] Dispatched instant clinic alert to +${clinicNumber} for Appointment #${appointment.id}`);
+        console.log(`[Automated WhatsApp Alert] Dispatched instant doctor alert to +${clinicNumber} for Appointment #${appointment.id}`);
         return result;
     }
     /**
@@ -958,35 +1263,128 @@ ${process.env.APP_URL || 'https://gramslife.com'}/doctor-dashboard
     async sendPatientBookingConfirmationWhatsApp(appointment) {
         if (!appointment.patientPhone)
             return { success: false, message: "No patient phone provided" };
-        const meetUrl = appointment.meetingLink || `https://meet.jit.si/BVLife-Consult-${appointment.id}`;
-        const docName = appointment.doctorName || 'Dr. Arundhati Sharma';
-        const patientSlip = `🌿 *Grams Life Clinic - Consultation Confirmed* 🌿
+        const prep = this.prepareConsultationVariables(appointment);
+        const { consultationType, actionButtonUrl, variables } = prep;
+        const docName = variables.doctor_name;
+        const patientSlip = `🌿 *BV Life - Doctor Consultation Confirmed* 🌿
 
 Namaste *${appointment.patientName}*,
 Your Ayurvedic consultation with *${docName}* has been officially confirmed!
 
 📋 *Appointment Details:*
 • *Appointment ID:* #${appointment.id}
-• *Doctor:* ${docName} (${appointment.doctorSpecialty || 'Senior Vaidya'})
+• *Doctor:* ${docName} (${variables.qualification})
+• *Specialty:* ${variables.specialization}
 • *Date:* ${appointment.date}
 • *Time Slot:* ${appointment.timeSlot}
-• *Format:* ${String(appointment.consultationMode).toUpperCase()}
-• *Payment Status:* Verified Paid (₹${appointment.fee})
-${appointment.consultationMode === 'video' ? `\n📹 *Direct Video Consultation Link:*\n${meetUrl}\n(No app download required. Open on phone or laptop 5 minutes prior to slot.)\n` : ''}${appointment.consultationMode === 'audio' ? `\n📞 *Telephone Call:*\nDoctor will initiate a direct call to your mobile (+91 ${String(appointment.patientPhone).replace(/\D/g, '').slice(-10)}) at ${appointment.timeSlot}.\n` : ''}${appointment.consultationMode === 'clinic' ? `\n🏥 *Clinic Address:*\nGrams Life Ayurvedic Center, Chamber 102, Ground Floor, Ayur Marg, New Delhi.\n` : ''}
-For any questions or rescheduling, reply directly to this WhatsApp message or call our care desk at +91 9425011088.
+• *Format:* ${consultationType}
+• *Payment Status:* Verified Paid (${variables.consultation_fee})
+${consultationType === 'VIDEO' ? `\n📹 *Direct Video Consultation Link:*\n${actionButtonUrl}\n(No app download required. Open on phone or laptop 5 minutes prior to slot.)\n` : ''}${consultationType === 'PHONE' ? `\n📞 *Telephone Call:*\nDoctor will initiate a direct call to your mobile (${variables.patient_phone}) at ${appointment.timeSlot}.\n` : ''}${consultationType === 'WHATSAPP' ? `\n💬 *WhatsApp Consultation:*\nOur doctor team will connect with you on this WhatsApp number at ${appointment.timeSlot}.\n` : ''}
+For any questions or assistance, reply directly to this WhatsApp message, call our helpline at +91 7451050607, or email care@gmail.com / care@bvlife.in.
 
 Warm regards,
-*Grams Life Care Desk*
-📞 +91 9425011088`;
+*BV Life Doctor Care Desk*
+📞 +91 7451050607 | ✉️ care@bvlife.in`;
+        const whatsappTemplateId = (process.env.MSG91_WHATSAPP_BOOKING_TEMPLATE_ID || this.commSettings.whatsappBookingTemplateId || '').trim() || undefined;
         return await this.sendWhatsAppMessage({
             recipientPhone: appointment.patientPhone,
             messageText: patientSlip,
-            templateId: process.env.MSG91_WHATSAPP_BOOKING_TEMPLATE_ID,
+            templateId: whatsappTemplateId,
+            variables: prep.variables
+        });
+    }
+    /**
+     * Dispatches an instant Order Alert Email to the Store Helpline (care@gmail.com and care@bvlife.in)
+     */
+    async sendOrderAlertEmailToClinic(order) {
+        const rawEmails = process.env.STORE_HELPLINE_EMAIL || process.env.DOCTOR_HELPLINE_EMAIL || 'care@gmail.com,care@bvlife.in';
+        const recipientEmails = rawEmails.split(',').map(e => e.trim()).filter(Boolean);
+        const itemsSummary = (order.items || []).map(i => `• ${i.productName} (Qty: ${i.quantity}) - ₹${i.price * i.quantity}`).join('<br>');
+        const trackingCode = order.trackingNumber || `BVLTRK-${order.id.slice(-6).toUpperCase()}`;
+        const recipients = recipientEmails.map(email => ({
+            to: [{ email, name: 'Bv Life Store Desk' }],
             variables: {
-                patient_name: appointment.patientName,
-                doctor_name: docName,
-                date: appointment.date,
-                time_slot: appointment.timeSlot
+                order_id: `#${order.id}`,
+                customer_name: order.shippingAddress?.fullName || 'Customer',
+                customer_phone: order.shippingAddress?.phone || '',
+                customer_email: order.userEmail,
+                total_amount: `₹${order.finalTotal}`,
+                payment_method: order.paymentMethod,
+                payment_status: order.paymentStatus || 'Confirmed',
+                tracking_number: trackingCode,
+                helpline: '7451050607',
+                support_email: 'care@bvlife.in'
+            }
+        }));
+        const alertHtml = `
+      <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 25px; border: 1px solid #c8dfd3; border-radius: 14px;">
+        <div style="border-bottom: 2px solid #143527; padding-bottom: 12px; margin-bottom: 16px;">
+          <h2 style="color: #143527; margin: 0; font-size: 20px;">📦 New Order Placed - Bv Life Store</h2>
+          <p style="color: #666; margin: 4px 0 0 0; font-size: 12px;">Alert dispatched to Store Desk (${recipientEmails.join(', ')})</p>
+        </div>
+        <p style="font-size: 14px; color: #333;">A new product order has just been placed and confirmed on <strong>Bv Life</strong>:</p>
+        
+        <div style="background: #f7faf8; padding: 15px; border-radius: 10px; border: 1px solid #d0e7dc; font-size: 13px; line-height: 1.6; margin: 15px 0;">
+          <p style="margin: 3px 0;"><strong>Order ID:</strong> #${order.id}</p>
+          <p style="margin: 3px 0;"><strong>Customer Name:</strong> ${order.shippingAddress?.fullName}</p>
+          <p style="margin: 3px 0;"><strong>Customer Phone:</strong> ${order.shippingAddress?.phone}</p>
+          <p style="margin: 3px 0;"><strong>Customer Email:</strong> ${order.userEmail}</p>
+          <p style="margin: 3px 0;"><strong>Delivery Address:</strong> ${order.shippingAddress?.addressLine1}, ${order.shippingAddress?.city}, ${order.shippingAddress?.state} - ${order.shippingAddress?.zipCode}</p>
+          <p style="margin: 3px 0;"><strong>Total Amount:</strong> ₹${order.finalTotal} (${order.paymentMethod} - ${order.paymentStatus || 'Confirmed'})</p>
+          <p style="margin: 3px 0;"><strong>Tracking Code:</strong> ${trackingCode}</p>
+          <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #d0e7dc;">
+            <strong>Ordered Products:</strong><br>
+            ${itemsSummary}
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+          <a href="https://wa.me/${String(order.shippingAddress?.phone || '').replace(/\D/g, '')}" style="background: #25D366; color: #ffffff; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; font-size: 12px; display: inline-block;">
+            💬 Open WhatsApp Chat with Customer
+          </a>
+        </div>
+      </div>
+    `;
+        return await this.sendMsg91Email({
+            recipients,
+            from: {
+                email: this.commSettings.senderEmail,
+                name: this.commSettings.senderName
+            },
+            domain: this.commSettings.emailDomain,
+            subject: `📦 [Order Alert] #${order.id}: ₹${order.finalTotal} by ${order.shippingAddress?.fullName || 'Customer'} - Bv Life`,
+            body: alertHtml
+        });
+    }
+    /**
+     * Dispatches an instant WhatsApp Alert to the Store Helpline (+91 7451050607)
+     */
+    async sendOrderAlertToClinicWhatsApp(order) {
+        const helplineNumber = (process.env.STORE_HELPLINE_PHONE || process.env.DOCTOR_HELPLINE_PHONE || '917451050607').replace(/\D/g, '');
+        const customerName = order.shippingAddress?.fullName || 'Customer';
+        const itemsCount = (order.items || []).reduce((acc, i) => acc + i.quantity, 0);
+        const messageText = `📦 *NEW ORDER ALERT - Bv Life* 📦
+
+Namaste Store Desk,
+A new order has been received:
+
+• *Order ID:* #${order.id}
+• *Customer:* ${customerName} (+91 ${String(order.shippingAddress?.phone || '').replace(/\D/g, '').slice(-10)})
+• *Items:* ${itemsCount} items (₹${order.finalTotal})
+• *Payment:* ${order.paymentMethod} (${order.paymentStatus || 'Confirmed'})
+• *City:* ${order.shippingAddress?.city}, ${order.shippingAddress?.state}
+
+Check Admin Panel for order fulfillment details.`;
+        return await this.sendWhatsAppMessage({
+            recipientPhone: helplineNumber,
+            messageText,
+            templateId: process.env.MSG91_WHATSAPP_ORDER_ALERT_TEMPLATE_ID || 'bvlife_order_alert_whatsapp',
+            variables: {
+                order_id: `#${order.id}`,
+                customer_name: customerName,
+                total_amount: `₹${order.finalTotal}`,
+                items_count: String(itemsCount),
+                helpline: '7451050607'
             }
         });
     }
@@ -999,8 +1397,8 @@ Warm regards,
             return { success: false, message: "No customer phone provided" };
         const customerName = order.shippingAddress?.fullName || 'Valued Patron';
         const itemsList = (order.items || []).map(i => `• ${i.productName} (Qty: ${i.quantity}) - ₹${i.price * i.quantity}`).join('\n');
-        const trackingNum = order.trackingNumber || `GLTRK-${order.id.slice(-6).toUpperCase()}`;
-        const orderSlip = `🌿 *Grams Life Sanctuary - Order Confirmed!* 🌿
+        const trackingNum = order.trackingNumber || `BVLTRK-${order.id.slice(-6).toUpperCase()}`;
+        const orderSlip = `🌿 *Bv Life - Order Confirmed!* 🌿
 
 Namaste *${customerName}*,
 Thank you for your order! Your authentic Ayurvedic formulations have been confirmed and are being prepared for dispatch.
@@ -1022,10 +1420,10 @@ ${order.shippingAddress.addressLine1}, ${order.shippingAddress.city}, ${order.sh
 • *Tracking Code:* ${trackingNum}
 
 We will notify you with courier tracking links once your package is dispatched.
-For assistance, reply directly to this WhatsApp message or call our help desk at +91 9425011088.
+For assistance, reply directly to this WhatsApp message, call our helpline at +91 7451050607, or email care@bvlife.in.
 
 Warm regards,
-*Grams Life Botanical Sanctuary*
+*Bv Life Botanical Wellness*
 🌿 Pure Wellness • Authentic Ayurveda`;
         return await this.sendWhatsAppMessage({
             recipientPhone: phone,
@@ -1036,7 +1434,9 @@ Warm regards,
                 order_id: order.id,
                 total_amount: `₹${order.finalTotal}`,
                 payment_method: order.paymentMethod,
-                tracking_number: trackingNum
+                tracking_number: trackingNum,
+                helpline: '7451050607',
+                support_email: 'care@bvlife.in'
             }
         });
     }

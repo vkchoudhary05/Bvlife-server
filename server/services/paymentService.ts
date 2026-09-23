@@ -27,6 +27,10 @@ export class PaymentService {
     const key_secret = process.env.RAZORPAY_KEY_SECRET || "";
     const amountInPaise = Math.round(Number(amount) * 100);
 
+    if (process.env.NODE_ENV === "production" && (!key_id || !key_secret)) {
+      throw { status: 500, message: "Razorpay is not configured. Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET on the backend." };
+    }
+
     if (key_id && key_secret) {
       try {
         const razorpay = new Razorpay({ key_id, key_secret });
@@ -69,6 +73,10 @@ export class PaymentService {
   }) {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = params;
     const key_secret = process.env.RAZORPAY_KEY_SECRET || "";
+
+    if (process.env.NODE_ENV === "production" && !key_secret) {
+      throw { status: 500, message: "Razorpay payment verification is not configured on the backend." };
+    }
 
     if (key_secret && razorpay_signature && razorpay_order_id) {
       const body = razorpay_order_id + "|" + razorpay_payment_id;

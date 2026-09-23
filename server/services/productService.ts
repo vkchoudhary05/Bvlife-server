@@ -404,7 +404,7 @@ export class ProductService {
       stock: stockValue,
       category: data.category,
       subcategory: data.subcategory,
-      brand: data.brand || "Bv Life",
+      brand: data.brand || "BV Life",
       description: data.description || "",
       mainImage: data.mainImage || "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
       images: data.images || [],

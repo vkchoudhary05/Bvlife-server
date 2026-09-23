@@ -3,15 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import dotenv from "dotenv";
-dotenv.config();
-
-if (!process.env.MSG91_AUTH_KEY) {
-  process.env.MSG91_AUTH_KEY = "555226ACqXDRqJuY6a69ae3dP1";
-}
+import path from "path";
+import "./server/env.js";
 
 import express from "express";
-import path from "path";
 import cors from "cors";
 
 // Import custom middleware
@@ -27,7 +22,7 @@ import { db } from "./server/dbManager.js";
 import { isMysqlConfigured, getMysqlConfig } from "./server/mysqlClient.js";
 
 const app = express();
-const PORT = 5000; // Standalone port
+const PORT = Number(process.env.PORT || 5000);
 
 // Global Middleware
 app.use(cors({
@@ -48,7 +43,7 @@ app.use(async (req, res, next) => {
   if (req.path.startsWith("/api") && req.path !== "/api/health") {
     try {
       if (isMysqlConfigured()) {
-        await db.refreshFromMysql(true);
+        await db.refreshFromMysql(false);
       }
     } catch (err) {
       console.warn("MySQL live fetch check warning:", err);
@@ -140,7 +135,7 @@ async function startServer() {
   const portToUse = process.env.PORT ? parseInt(process.env.PORT, 10) : PORT;
 
   app.listen(portToUse, "0.0.0.0", () => {
-    console.log(`[Bv Life Backend] Production-grade server is running on host 0.0.0.0 and port ${portToUse}`);
+    console.log(`[BV Life Backend] Production-grade server is running on host 0.0.0.0 and port ${portToUse}`);
   });
 }
 

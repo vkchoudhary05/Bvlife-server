@@ -4,8 +4,15 @@
  */
 
 import jwt from "jsonwebtoken";
+import "./env.js";
 
-export const JWT_SECRET = process.env.JWT_SECRET || "Bvlife_production_jwt_secret_key_2026_dhanvantari";
+const configuredJwtSecret = process.env.JWT_SECRET?.trim();
+
+if (!configuredJwtSecret) {
+  throw new Error("JWT_SECRET must be set in the environment before the API can start.");
+}
+
+export const JWT_SECRET = configuredJwtSecret;
 
 export interface JwtPayload {
   email: string;
@@ -19,7 +26,7 @@ export function generateToken(user: { email: string; role?: string; fullName?: s
   const payload: JwtPayload = {
     email: user.email.toLowerCase(),
     role: user.role || "customer",
-    fullName: user.fullName || "Bv Life User"
+    fullName: user.fullName || "BV Life User"
   };
   
   return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });

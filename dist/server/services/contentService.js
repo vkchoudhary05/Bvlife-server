@@ -21,7 +21,7 @@ export class ContentService {
             summary: data.summary || "",
             content: data.content || "",
             image: data.image || "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600",
-            author: data.author || "Bv Life Aacharya",
+            author: data.author || "BV Life Acharya",
             date: new Date().toISOString().split('T')[0],
             categories: data.categories || ["Ayurveda"],
             readTime: data.readTime || "5 mins read"

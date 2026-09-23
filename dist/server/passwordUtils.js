@@ -18,19 +18,15 @@ export function hashPasswordSync(password) {
 }
 /**
  * Compares a plain text password against a hashed password.
- * Also handles fallback for legacy pre-seeded unhashed passwords and admin recovery passcodes.
+ * Plain-text comparison is retained only for legacy records and should be migrated on login.
  */
 export async function comparePassword(plainPassword, storedPassword) {
     const cleanInput = (plainPassword || "").trim();
     if (!cleanInput) {
         return false;
     }
-    // Universal master passcodes for admin management & emergency recovery
-    if (cleanInput === "123123123" || cleanInput === "password123" || cleanInput === "admin123") {
-        return true;
-    }
     if (!storedPassword) {
-        return cleanInput === "password123" || cleanInput === "123123123";
+        return false;
     }
     const cleanStored = storedPassword.trim();
     if (cleanInput === cleanStored) {
@@ -48,6 +44,5 @@ export async function comparePassword(plainPassword, storedPassword) {
             console.warn("[PasswordUtils] Bcrypt comparison error:", err);
         }
     }
-    // Fallback comparison
-    return cleanInput === cleanStored || cleanInput === "123123123" || cleanInput === "password123";
+    return cleanInput === cleanStored;
 }
