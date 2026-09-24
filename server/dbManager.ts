@@ -242,6 +242,11 @@ class DBManager {
         this.data.blogs = this.data.blogs || [...INITIAL_BLOGS];
         this.data.faqs = this.data.faqs || [...INITIAL_FAQS];
         this.data.coupons = this.data.coupons || [...INITIAL_COUPONS];
+        const welcomeCoupon = INITIAL_COUPONS.find(c => c.code === 'WELCOME10');
+        if (welcomeCoupon && !this.data.coupons.some(c => c.code.toUpperCase() === 'WELCOME10')) {
+          this.data.coupons.push(welcomeCoupon);
+          fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
+        }
         this.data.settings = this.data.settings || { ...DEFAULT_SETTINGS };
         this.data.users = this.data.users || [
           {
@@ -634,8 +639,7 @@ class DBManager {
 
       // --- 8. COUPONS SYNC ---
       const mysqlCoupons = await query("SELECT * FROM coupons");
-      if (mysqlCoupons && mysqlCoupons.length > 0) {
-        this.data.coupons = mysqlCoupons.map((c: any) => ({
+      const syncedCoupons: Coupon[] = (mysqlCoupons || []).map((c: any) => ({
           code: c.code,
           discountType: c.discountType,
           value: Number(c.value),
@@ -644,9 +648,13 @@ class DBManager {
           expiryDate: c.expiryDate,
           active: Boolean(c.active)
         }));
-      } else {
-        this.data.coupons = [];
+      const welcomeCoupon = INITIAL_COUPONS.find(c => c.code === 'WELCOME10');
+      const hasWelcomeCoupon = syncedCoupons.some(c => c.code.toUpperCase() === 'WELCOME10');
+      if (welcomeCoupon && !hasWelcomeCoupon) {
+        syncedCoupons.push(welcomeCoupon);
+        await this.saveCouponToMysql(welcomeCoupon);
       }
+      this.data.coupons = syncedCoupons;
 
       // --- 9. ACTIVITY LOGS SYNC ---
       const mysqlLogs = await query("SELECT * FROM activityLogs ORDER BY timestamp DESC LIMIT 200");

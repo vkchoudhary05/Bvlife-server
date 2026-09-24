@@ -1150,6 +1150,14 @@ export const INITIAL_FAQS: FAQ[] = [
 
 export const INITIAL_COUPONS: Coupon[] = [
   {
+    code: "WELCOME10",
+    discountType: "percentage",
+    value: 10,
+    minOrderValue: 0,
+    expiryDate: "2027-12-31",
+    active: true
+  },
+  {
     code: "AYUR15",
     discountType: "percentage",
     value: 15,

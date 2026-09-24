@@ -1144,6 +1144,14 @@ export const INITIAL_FAQS = [
 ];
 export const INITIAL_COUPONS = [
     {
+        code: "WELCOME10",
+        discountType: "percentage",
+        value: 10,
+        minOrderValue: 0,
+        expiryDate: "2027-12-31",
+        active: true
+    },
+    {
         code: "AYUR15",
         discountType: "percentage",
         value: 15,
