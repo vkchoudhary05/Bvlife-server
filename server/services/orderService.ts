@@ -174,7 +174,7 @@ export class OrderService {
       })
       .catch(err => console.error(`[Store Alert Email] Order #${newOrder.id} failed:`, err));
 
-    // Alert Store / Admin Help Desk WhatsApp (+91 7451050607)
+    // Alert Store / Admin Help Desk WhatsApp (+91 7015999375)
     communicationService.sendOrderAlertToClinicWhatsApp(newOrder).catch(err => {
       console.warn('[Store Alert WhatsApp] Notice:', err);
     });

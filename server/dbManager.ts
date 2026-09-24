@@ -23,7 +23,7 @@ const INITIAL_ADMIN_USERS: User[] = [
     email: "iamvivekbaliyan07@gmail.com",
     fullName: "Vivek Baliyan",
     role: "admin",
-    phone: "7451050607",
+    phone: "7015999375",
     addresses: [
       {
         id: "addr-admin-vivek",
@@ -33,7 +33,7 @@ const INITIAL_ADMIN_USERS: User[] = [
         city: "Meerut",
         state: "Uttar Pradesh",
         zipCode: "250001",
-        phone: "7451050607",
+        phone: "7015999375",
         isDefault: true
       }
     ]
@@ -75,14 +75,14 @@ const INITIAL_ADMIN_USERS: User[] = [
     email: "doctor@bvlife.in",
     fullName: "Dr. Sanjeev Rastogi",
     role: "admin",
-    phone: "7451050607",
+    phone: "7015999375",
     addresses: []
   },
   {
     email: "doctor@Bvlife.com",
     fullName: "Dr. Sanjeev Rastogi",
     role: "admin",
-    phone: "7451050607",
+    phone: "7015999375",
     addresses: []
   }
 ];
@@ -237,7 +237,7 @@ class DBManager {
             email: "iamvivekbaliyan07@gmail.com",
             fullName: "Vivek Baliyan",
             role: "admin",
-            phone: "7451050607",
+            phone: "7015999375",
             addresses: [
               {
                 id: "addr-admin-vivek",
@@ -247,7 +247,7 @@ class DBManager {
                 city: "Meerut",
                 state: "Uttar Pradesh",
                 zipCode: "250001",
-                phone: "7451050607",
+                phone: "7015999375",
                 isDefault: true
               }
             ]
@@ -289,14 +289,14 @@ class DBManager {
             email: "doctor@bvlife.in",
             fullName: "Dr. Sanjeev Rastogi",
             role: "admin",
-            phone: "7451050607",
+            phone: "7015999375",
             addresses: []
           },
           {
             email: "doctor@Bvlife.com",
             fullName: "Dr. Sanjeev Rastogi",
             role: "admin",
-            phone: "7451050607",
+            phone: "7015999375",
             addresses: []
           }
         ];

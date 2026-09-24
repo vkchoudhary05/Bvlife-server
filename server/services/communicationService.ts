@@ -765,8 +765,8 @@ export class CommunicationService {
       modeIcon = '📞';
       instructionsTitle = '📞 How Your Phone Consultation Works';
       instructionsBody = `Our doctor will call you directly on your registered phone number (+91 ${cleanPhone}) at ${appointment.timeSlot}. Please keep your mobile phone reachable and stay in a quiet environment.`;
-      actionButtonText = '📞 Call Doctor Helpline (+91 7451050607)';
-      actionButtonUrl = 'tel:+917451050607';
+      actionButtonText = '📞 Call Doctor Helpline (+91 7015999375)';
+      actionButtonUrl = 'tel:+917015999375';
       detailsLabel = 'Doctor Will Call:';
       detailsValue = `+91 ${cleanPhone}`;
     } else if (consultationType === 'WHATSAPP') {
@@ -774,10 +774,10 @@ export class CommunicationService {
       modeIcon = '💬';
       instructionsTitle = '💬 How Your WhatsApp Chat Works';
       instructionsBody = `Our doctor care desk will connect with you on WhatsApp at ${appointment.timeSlot}. You can exchange messages, voice notes, and share medical reports directly with the doctor.`;
-      actionButtonText = '💬 Open WhatsApp Doctor Desk (+91 7451050607)';
-      actionButtonUrl = `https://wa.me/917451050607?text=${encodeURIComponent(`Namaste Doctor, I have booked a WhatsApp consultation #${appointment.id} for ${patientName}`)}`;
+      actionButtonText = '💬 Open WhatsApp Doctor Desk (+91 7015999375)';
+      actionButtonUrl = `https://wa.me/917015999375?text=${encodeURIComponent(`Namaste Doctor, I have booked a WhatsApp consultation #${appointment.id} for ${patientName}`)}`;
       detailsLabel = 'WhatsApp Doctor Desk:';
-      detailsValue = '+91 7451050607';
+      detailsValue = '+91 7015999375';
     }
 
     const variables: Record<string, string> = {
@@ -820,8 +820,8 @@ export class CommunicationService {
       consultation_fee: `₹${appointment.fee || 499}`,
       amount: `₹${appointment.fee || 499}`,
       payment_status: appointment.paymentStatus || 'Paid',
-      clinic_phone: '+91 7451050607',
-      helpline: '7451050607',
+      clinic_phone: '+91 7015999375',
+      helpline: '7015999375',
       clinic_email: 'care@bvlife.in',
       support_email: 'care@bvlife.in',
       admin_email: 'care@gmail.com',
@@ -833,7 +833,7 @@ export class CommunicationService {
       var4: appointment.timeSlot,
       var5: consultationType,
       var6: actionButtonUrl,
-      var7: '7451050607',
+      var7: '7015999375',
       var8: 'care@bvlife.in',
 
       // Numeric Keys ("1".."8" for MSG91 templates configured with ##1##, ##2##)
@@ -843,7 +843,7 @@ export class CommunicationService {
       "4": appointment.timeSlot,
       "5": consultationType,
       "6": actionButtonUrl,
-      "7": '7451050607',
+      "7": '7015999375',
       "8": 'care@bvlife.in'
     };
 
@@ -930,7 +930,7 @@ export class CommunicationService {
         </div>
 
         <div style="text-align: center; border-top: 1px solid #e2e8f0; padding-top: 16px; font-size: 12px; color: #718096;">
-          <p style="margin: 2px 0;">Need assistance? Contact our Doctor Helpline at <a href="mailto:care@gmail.com" style="color: #143527; font-weight: bold;">care@gmail.com</a> / <a href="mailto:care@bvlife.in" style="color: #143527; font-weight: bold;">care@bvlife.in</a> or Call/WhatsApp <a href="https://wa.me/917451050607" style="color: #143527; font-weight: bold;">+91 7451050607</a>.</p>
+          <p style="margin: 2px 0;">Need assistance? Contact our Doctor Helpline at <a href="mailto:care@gmail.com" style="color: #143527; font-weight: bold;">care@gmail.com</a> / <a href="mailto:care@bvlife.in" style="color: #143527; font-weight: bold;">care@bvlife.in</a> or Call/WhatsApp <a href="https://wa.me/917015999375" style="color: #143527; font-weight: bold;">+91 7015999375</a>.</p>
         </div>
       </div>
     `;
@@ -993,7 +993,7 @@ export class CommunicationService {
         consultation_type: modeBadge,
         patient_phone: String(appointment.patientPhone),
         health_concern: appointment.healthConcern || 'Ayurvedic Assessment',
-        helpline: '7451050607'
+        helpline: '7015999375'
       }
     }));
 
@@ -1284,7 +1284,7 @@ export class CommunicationService {
     const recipientWithCountry = rawPhone.length === 10 ? `91${rawPhone}` : rawPhone;
     const rawAuth = process.env.MSG91_AUTH_KEY || '';
     const authKey = rawAuth.replace(/['";\s]/g, '').trim();
-    const integratedNumber = (process.env.MSG91_WHATSAPP_INTEGRATED_NUMBER || process.env.DOCTOR_HELPLINE_PHONE || '917451050607').replace(/\D/g, '');
+    const integratedNumber = (process.env.MSG91_WHATSAPP_INTEGRATED_NUMBER || process.env.DOCTOR_HELPLINE_PHONE || '917015999375').replace(/\D/g, '');
 
     console.log(`[WhatsApp Gateway] Triggering WhatsApp dispatch to +${recipientWithCountry} (Template: ${params.templateId || 'Free Text'}, Key configured: ${Boolean(authKey)})...`);
 
@@ -1448,10 +1448,10 @@ export class CommunicationService {
   }
 
   /**
-   * Automatically notifies the clinic / doctor helpline on WhatsApp (+91 7451050607) when a user books an appointment
+   * Automatically notifies the clinic / doctor helpline on WhatsApp (+91 7015999375) when a user books an appointment
    */
   public async sendDoctorBookingAlertToClinic(appointment: any): Promise<{ success: boolean; message: string }> {
-    const clinicNumber = (process.env.CLINIC_WHATSAPP_NUMBER || process.env.DOCTOR_HELPLINE_PHONE || '917451050607').replace(/\D/g, '');
+    const clinicNumber = (process.env.CLINIC_WHATSAPP_NUMBER || process.env.DOCTOR_HELPLINE_PHONE || '917015999375').replace(/\D/g, '');
     const prep = this.prepareConsultationVariables(appointment);
     const { consultationType, actionButtonUrl, variables } = prep;
     const docName = variables.doctor_name;
@@ -1519,11 +1519,11 @@ Your Ayurvedic consultation with *${docName}* has been officially confirmed!
 • *Format:* ${consultationType}
 • *Payment Status:* Verified Paid (${variables.consultation_fee})
 ${consultationType === 'VIDEO' ? `\n📹 *Direct Video Consultation Link:*\n${actionButtonUrl}\n(No app download required. Open on phone or laptop 5 minutes prior to slot.)\n` : ''}${consultationType === 'PHONE' ? `\n📞 *Telephone Call:*\nDoctor will initiate a direct call to your mobile (${variables.patient_phone}) at ${appointment.timeSlot}.\n` : ''}${consultationType === 'WHATSAPP' ? `\n💬 *WhatsApp Consultation:*\nOur doctor team will connect with you on this WhatsApp number at ${appointment.timeSlot}.\n` : ''}
-For any questions or assistance, reply directly to this WhatsApp message, call our helpline at +91 7451050607, or email care@gmail.com / care@bvlife.in.
+For any questions or assistance, reply directly to this WhatsApp message, call our helpline at +91 7015999375, or email care@gmail.com / care@bvlife.in.
 
 Warm regards,
 *BV Life Doctor Care Desk*
-📞 +91 7451050607 | ✉️ care@bvlife.in`;
+📞 +91 7015999375 | ✉️ care@bvlife.in`;
 
     const whatsappTemplateId = (process.env.MSG91_WHATSAPP_BOOKING_TEMPLATE_ID || (this.commSettings as any).whatsappBookingTemplateId || '').trim() || undefined;
 
@@ -1594,7 +1594,7 @@ Warm regards,
         payment_method: order.paymentMethod,
         payment_status: order.paymentStatus || 'Confirmed',
         tracking_number: trackingCode,
-        helpline: '7451050607',
+        helpline: '7015999375',
         support_email: 'care@bvlife.in'
       }
     }));
@@ -1643,10 +1643,10 @@ Warm regards,
   }
 
   /**
-   * Dispatches an instant WhatsApp Alert to the Store Helpline (+91 7451050607)
+   * Dispatches an instant WhatsApp Alert to the Store Helpline (+91 7015999375)
    */
   public async sendOrderAlertToClinicWhatsApp(order: Order): Promise<{ success: boolean; message: string }> {
-    const helplineNumber = (process.env.STORE_HELPLINE_PHONE || process.env.DOCTOR_HELPLINE_PHONE || '917451050607').replace(/\D/g, '');
+    const helplineNumber = (process.env.STORE_HELPLINE_PHONE || process.env.DOCTOR_HELPLINE_PHONE || '917015999375').replace(/\D/g, '');
     const customerName = order.shippingAddress?.fullName || 'Customer';
     const itemsCount = (order.items || []).reduce((acc, i) => acc + i.quantity, 0);
 
@@ -1673,7 +1673,7 @@ Check Admin Panel for order fulfillment details.`;
         customer_name: customerName,
         total_amount: `₹${order.finalTotal}`,
         items_count: String(itemsCount),
-        helpline: '7451050607'
+        helpline: '7015999375'
       }
     });
   }
@@ -1726,7 +1726,7 @@ ${order.shippingAddress.addressLine1}, ${order.shippingAddress.city}, ${order.sh
 • *Tracking Code:* ${trackingNum}
 
 We will notify you with courier tracking links once your package is dispatched.
-For assistance, reply directly to this WhatsApp message, call our helpline at +91 7451050607, or email care@bvlife.in.
+For assistance, reply directly to this WhatsApp message, call our helpline at +91 7015999375, or email care@bvlife.in.
 
 Warm regards,
 *Bv Life Botanical Wellness*
@@ -1743,7 +1743,7 @@ Warm regards,
         total_amount: `₹${order.finalTotal}`,
         payment_method: order.paymentMethod,
         tracking_number: trackingNum,
-        helpline: '7451050607',
+        helpline: '7015999375',
         support_email: 'care@bvlife.in'
       }
     });

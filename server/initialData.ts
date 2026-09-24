@@ -1179,7 +1179,7 @@ export const INITIAL_COUPONS: Coupon[] = [
 export const DEFAULT_SETTINGS: WebsiteSettings = {
   logoName: "BV Life",
   contactEmail: "care@bvlife.in",
-  contactPhone: "+91 7451050607",
+  contactPhone: "+91 7015999375",
   address: "BV Life Healthcare, Civil Lines, Meerut, Uttar Pradesh, India - 250001",
   facebook: "facebook.com/bvlife.official",
   instagram: "instagram.com/bvlife.official",
