@@ -596,7 +596,7 @@ export class CommunicationService {
     const productName = firstItem ? firstItem.productName : 'Ayurvedic Wellness Formulation';
     const productVariant = (firstItem as any)?.selectedVariant?.name || (firstItem as any)?.selectedVariant?.size || '100g Standard Pack';
     const itemQuantity = firstItem ? String(firstItem.quantity) : '1';
-    const itemTotal = firstItem ? `₹${firstItem.price * firstItem.quantity}` : `₹${order.subtotal}`;
+    const itemTotal = String(firstItem ? firstItem.price * firstItem.quantity : order.subtotal);
 
     const formattedOrderDate = new Date(order.orderDate).toLocaleDateString('en-IN', {
       day: 'numeric',
@@ -604,25 +604,55 @@ export class CommunicationService {
       year: 'numeric'
     });
 
-    const fullShippingAddress = `${order.shippingAddress.addressLine1}${order.shippingAddress.addressLine2 ? ', ' + order.shippingAddress.addressLine2 : ''}, ${order.shippingAddress.city}, ${order.shippingAddress.state} - ${order.shippingAddress.zipCode}`;
+    const shippingAddress: any = order.shippingAddress || {};
+    const addressLine1 = String(shippingAddress.addressLine1 || shippingAddress.street || shippingAddress.address || '').trim();
+    const addressLine2 = String(shippingAddress.addressLine2 || '').trim();
+    const city = String(shippingAddress.city || '').trim();
+    const state = String(shippingAddress.state || '').trim();
+    const zipCode = String(shippingAddress.zipCode || shippingAddress.pincode || shippingAddress.postalCode || shippingAddress.pinCode || '').trim();
+    const shippingPhone = String(shippingAddress.phone || shippingAddress.mobile || '').trim();
+    const streetAddress = [addressLine1, addressLine2].filter(Boolean).join(', ');
+    const cityAndState = [city, state].filter(Boolean).join(', ');
+    const fullShippingAddress = [streetAddress, cityAndState].filter(Boolean).join(', ') + (zipCode ? ` - ${zipCode}` : '');
+    const trackingNumber = order.trackingNumber || `BVLTRK-${order.id.slice(-6).toUpperCase()}`;
+    const siteUrl = (process.env.APP_URL || 'https://bvlife.in').trim().replace(/\/+$/, '');
+    const trackingUrl = `${siteUrl}/track-order?tracking=${encodeURIComponent(order.id)}`;
 
     const emailTemplateId = this.commSettings.orderEmailTemplateId || process.env.MSG91_ORDER_EMAIL_TEMPLATE_ID || process.env.MSG91_EMAIL_TEMPLATE_ID || '';
 
     const variables: Record<string, string> = {
       customer_name: customerName,
-      order_id: `#${order.id}`,
+      order_id: order.id,
       order_date: formattedOrderDate,
       payment_method: String(order.paymentMethod).toUpperCase(),
-      tracking_number: order.trackingNumber || `BVLTRK-${order.id.slice(-6).toUpperCase()}`,
+      tracking_number: trackingNumber,
       product_name: productName,
       product_variant_or_weight: productVariant,
       quantity: itemQuantity,
       item_total: itemTotal,
-      subtotal: `₹${order.subtotal}`,
+      subtotal: String(order.subtotal),
       shipping_charge: order.shippingCharge === 0 ? 'FREE' : `₹${order.shippingCharge}`,
-      final_amount: `₹${order.finalTotal}`,
-      shipping_name: order.shippingAddress.fullName || customerName,
+      final_amount: String(order.finalTotal),
+      shipping_name: shippingAddress.fullName || customerName,
       shipping_address: fullShippingAddress,
+      shipping_address_line1: addressLine1,
+      shipping_address_line2: addressLine2,
+      shipping_city: city,
+      shipping_state: state,
+      shipping_zip_code: zipCode,
+      shipping_pincode: zipCode,
+      shipping_phone: shippingPhone,
+      shipping_address_phone: shippingPhone,
+      address_line1: addressLine1,
+      address_line2: addressLine2,
+      address: addressLine1,
+      city,
+      state,
+      zip_code: zipCode,
+      pincode: zipCode,
+      postal_code: zipCode,
+      phone: shippingPhone,
+      tracking_url: trackingUrl,
       support_email: this.commSettings.senderEmail,
       support_phone: `+${this.commSettings.clinicWhatsAppNumber}`
     };
@@ -1248,6 +1278,7 @@ export class CommunicationService {
     messageText?: string;
     templateId?: string;
     variables?: Record<string, any>;
+    category?: CommunicationLog['category'];
   }): Promise<{ success: boolean; message: string; gatewayResponse?: any }> {
     const rawPhone = params.recipientPhone.replace(/\D/g, '');
     const recipientWithCountry = rawPhone.length === 10 ? `91${rawPhone}` : rawPhone;
@@ -1401,15 +1432,17 @@ export class CommunicationService {
     this.logCommunication({
       recipient: recipientWithCountry,
       channel: 'WHATSAPP',
-      category: 'DoctorAppointment',
+      category: params.category || 'DoctorAppointment',
       content: params.messageText || `Template [${params.templateId}] dispatched to ${recipientWithCountry}`,
-      status: gatewaySuccess ? 'DELIVERED' : 'SENT',
+      status: gatewaySuccess ? 'DELIVERED' : 'FAILED',
       metadata: { gatewaySuccess, recipient: recipientWithCountry, gatewayResponse, templateId: params.templateId }
     });
 
     return {
-      success: true,
-      message: `Automated WhatsApp notification processed for +${recipientWithCountry}`,
+      success: gatewaySuccess,
+      message: gatewaySuccess
+        ? `WhatsApp notification accepted by MSG91 for +${recipientWithCountry}`
+        : `WhatsApp notification was not accepted by MSG91 for +${recipientWithCountry}`,
       gatewayResponse
     };
   }
@@ -1506,8 +1539,24 @@ Warm regards,
    * Dispatches an instant Order Alert Email to the Store Helpline (care@gmail.com and care@bvlife.in)
    */
   public async sendOrderAlertEmailToClinic(order: Order): Promise<{ success: boolean; data?: any; error?: string }> {
+    const emailTemplateId = (process.env.MSG91_STORE_ALERT_EMAIL_TEMPLATE_ID || '').trim().replace(/^['"]|['"]$/g, '');
     const rawEmails = process.env.STORE_HELPLINE_EMAIL || process.env.DOCTOR_HELPLINE_EMAIL || 'care@gmail.com,care@bvlife.in';
     const recipientEmails = rawEmails.split(',').map(e => e.trim()).filter(Boolean);
+
+    if (!emailTemplateId) {
+      const error = 'MSG91_STORE_ALERT_EMAIL_TEMPLATE_ID is not configured; skipped the MSG91 store alert email.';
+      console.warn(`[MSG91 Order Alert Email] ${error}`);
+      this.logCommunication({
+        recipient: recipientEmails.join(', '),
+        channel: 'EMAIL',
+        category: 'Order',
+        subject: `Order Alert: #${order.id}`,
+        content: error,
+        status: 'FAILED',
+        metadata: { orderId: order.id, reason: 'missing_store_alert_template_id' }
+      });
+      return { success: false, error };
+    }
 
     const itemsSummary = (order.items || []).map(i => `• ${i.productName} (Qty: ${i.quantity}) - ₹${i.price * i.quantity}`).join('<br>');
     const trackingCode = order.trackingNumber || `BVLTRK-${order.id.slice(-6).toUpperCase()}`;
@@ -1565,6 +1614,7 @@ Warm regards,
         name: this.commSettings.senderName
       },
       domain: this.commSettings.emailDomain,
+      template_id: emailTemplateId,
       subject: `📦 [Order Alert] #${order.id}: ₹${order.finalTotal} by ${order.shippingAddress?.fullName || 'Customer'} - Bv Life`,
       body: alertHtml
     });
@@ -1612,6 +1662,20 @@ Check Admin Panel for order fulfillment details.`;
   public async sendOrderConfirmationWhatsApp(order: Order): Promise<{ success: boolean; message: string }> {
     const phone = order.shippingAddress?.phone || (order as any).userPhone;
     if (!phone) return { success: false, message: "No customer phone provided" };
+    const templateId = (process.env.MSG91_WHATSAPP_ORDER_TEMPLATE_ID || '').trim();
+    if (!templateId) {
+      const message = 'MSG91_WHATSAPP_ORDER_TEMPLATE_ID is not configured; customer order WhatsApp was not sent.';
+      console.warn(`[Order Confirmation WhatsApp] ${message}`);
+      this.logCommunication({
+        recipient: String(phone),
+        channel: 'WHATSAPP',
+        category: 'Order Confirmation',
+        content: message,
+        status: 'FAILED',
+        metadata: { orderId: order.id, reason: 'missing_template_id' }
+      });
+      return { success: false, message };
+    }
 
     const customerName = order.shippingAddress?.fullName || 'Valued Patron';
     const itemsList = (order.items || []).map(i => `• ${i.productName} (Qty: ${i.quantity}) - ₹${i.price * i.quantity}`).join('\n');
@@ -1649,7 +1713,8 @@ Warm regards,
     return await this.sendWhatsAppMessage({
       recipientPhone: phone,
       messageText: orderSlip,
-      templateId: process.env.MSG91_WHATSAPP_ORDER_TEMPLATE_ID,
+      templateId,
+      category: 'Order Confirmation',
       variables: {
         customer_name: customerName,
         order_id: order.id,

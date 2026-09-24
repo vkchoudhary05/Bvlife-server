@@ -11,8 +11,30 @@ import { productService } from "../services/productService.js";
  */
 export const getProducts = (req: Request, res: Response) => {
   try {
+    const isPaginated = req.query.page !== undefined || req.query.limit !== undefined;
+    if (isPaginated) {
+      const pageValue = Number(req.query.page ?? 1);
+      const limitValue = Number(req.query.limit ?? 24);
+      if (!Number.isFinite(pageValue) || !Number.isFinite(limitValue) || pageValue < 1 || limitValue < 1) {
+        return res.status(400).json({ error: "Page and limit must be positive numbers." });
+      }
+
+      const page = Math.floor(pageValue);
+      const limit = Math.min(Math.floor(limitValue), 100);
+      const result = productService.getProductsPage({
+        page,
+        limit,
+        category: typeof req.query.category === "string" ? req.query.category : undefined,
+        featured: req.query.featured === "true",
+        bestSeller: req.query.bestSeller === "true",
+        search: typeof req.query.search === "string" ? req.query.search : undefined,
+        sort: typeof req.query.sort === "string" ? req.query.sort : undefined
+      });
+      return res.json(result);
+    }
+
     const products = productService.getAllProducts();
-    res.json(products);
+    return res.json(products);
   } catch (err: any) {
     res.status(500).json({ error: "Failed to fetch products." });
   }

@@ -8,7 +8,7 @@ import { User } from "../types.js";
 import { validateAndFormatIndianPhone } from "../utils.js";
 import { hashPassword, comparePassword } from "../passwordUtils.js";
 import { generateToken } from "../jwtUtils.js";
-import { ADMIN_EMAILS, ADMIN_PHONES } from "../middleware/authMiddleware.js";
+import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
 import { otpService } from "./otpService.js";
 import { paymentService } from "./paymentService.js";
@@ -71,7 +71,7 @@ export class AuthService {
     reqId?: string;
     accessToken?: string;
   }) {
-    const { email, fullName, phone, role, password, code, reqId, accessToken } = params;
+    const { email, fullName, phone, password, code, reqId, accessToken } = params;
     if (!email || !fullName) {
       throw { status: 400, message: "Email and Full Name are required." };
     }
@@ -136,7 +136,7 @@ export class AuthService {
     const newUser: User = {
       email: lowerEmail,
       fullName,
-      role: isAdmin ? "admin" : ((role === 'admin' ? 'admin' : 'customer')),
+      role: isAdmin ? "admin" : "customer",
       phone: formattedPhone || "",
       addresses: [],
       password: hashedPassword
@@ -264,8 +264,6 @@ export class AuthService {
     if (updates.fullName !== undefined) user.fullName = updates.fullName;
     if (updates.phone !== undefined) user.phone = updates.phone;
     if (updates.addresses !== undefined) user.addresses = updates.addresses;
-    if (updates.role !== undefined) user.role = updates.role === 'admin' ? 'admin' : 'customer';
-
     db.saveUser(user);
     db.logActivity(user.email, "Profile Update", "Updated contact details/addresses.");
     return user;
@@ -452,17 +450,6 @@ export class AuthService {
     }
 
     const queryStr = query.trim();
-    const configuredAdminPhone = queryStr.replace(/\D/g, '').slice(-10);
-    if (ADMIN_PHONES.includes(configuredAdminPhone)) {
-      return {
-        exists: true,
-        isAdmin: true,
-        email: ADMIN_EMAILS[0] || '',
-        phone: configuredAdminPhone,
-        fullName: 'Administrator'
-      };
-    }
-
     let user = db.getUserByEmail(queryStr);
     if (!user) {
       const formattedPhoneInput = validateAndFormatIndianPhone(queryStr);
@@ -473,10 +460,9 @@ export class AuthService {
     }
 
     if (user) {
-      const userPhone = (user.phone || '').replace(/\D/g, '').slice(-10);
       return {
         exists: true,
-        isAdmin: user.role === 'admin' || ADMIN_EMAILS.includes(user.email.toLowerCase()) || ADMIN_PHONES.includes(userPhone),
+        isAdmin: user.role === 'admin' || ADMIN_EMAILS.includes(user.email.toLowerCase()),
         email: user.email,
         fullName: user.fullName,
         phone: user.phone,

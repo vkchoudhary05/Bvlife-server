@@ -478,7 +478,8 @@ class DBManager {
                 };
             }
             else {
-                await this.saveSettingsToMysql(this.data.settings);
+                // An empty live table is authoritative; do not recreate deleted settings from cache.
+                this.data.settings = { ...DEFAULT_SETTINGS };
             }
             // --- 2. USERS SYNC ---
             const mysqlUsers = await query("SELECT * FROM users");
@@ -494,9 +495,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const u of this.data.users) {
-                    await this.saveUserToMysql(u);
-                }
+                this.data.users = [];
             }
             // --- 3. PRODUCTS SYNC ---
             const mysqlProducts = await query("SELECT * FROM products");
@@ -527,9 +526,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const p of this.data.products) {
-                    await this.saveProductToMysql(p);
-                }
+                this.data.products = [];
             }
             // --- 4. ORDERS SYNC ---
             const mysqlOrders = await query("SELECT * FROM orders");
@@ -554,9 +551,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const o of this.data.orders) {
-                    await this.saveOrderToMysql(o);
-                }
+                this.data.orders = [];
             }
             // --- 5. REVIEWS SYNC ---
             const mysqlReviews = await query("SELECT * FROM reviews");
@@ -574,9 +569,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const r of this.data.reviews) {
-                    await this.saveReviewToMysql(r);
-                }
+                this.data.reviews = [];
             }
             // --- 6. BLOGS SYNC ---
             const mysqlBlogs = await query("SELECT * FROM blogs");
@@ -595,9 +588,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const b of this.data.blogs) {
-                    await this.saveBlogToMysql(b);
-                }
+                this.data.blogs = [];
             }
             // --- 7. FAQS SYNC ---
             const mysqlFAQs = await query("SELECT * FROM faqs");
@@ -610,9 +601,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const f of this.data.faqs) {
-                    await this.saveFAQToMysql(f);
-                }
+                this.data.faqs = [];
             }
             // --- 8. COUPONS SYNC ---
             const mysqlCoupons = await query("SELECT * FROM coupons");
@@ -628,9 +617,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const c of this.data.coupons) {
-                    await this.saveCouponToMysql(c);
-                }
+                this.data.coupons = [];
             }
             // --- 9. ACTIVITY LOGS SYNC ---
             const mysqlLogs = await query("SELECT * FROM activityLogs ORDER BY timestamp DESC LIMIT 200");
@@ -644,9 +631,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const l of this.data.activityLogs) {
-                    await this.saveActivityLogToMysql(l);
-                }
+                this.data.activityLogs = [];
             }
             // --- 10. PAYMENTS SYNC ---
             const mysqlPayments = await query("SELECT * FROM payments");
@@ -663,9 +648,7 @@ class DBManager {
                 }));
             }
             else {
-                for (const p of this.data.payments) {
-                    await this.savePaymentToMysql(p);
-                }
+                this.data.payments = [];
             }
             // --- 11. DOCTORS SYNC ---
             const mysqlDoctors = await query("SELECT * FROM doctors");
@@ -689,10 +672,7 @@ class DBManager {
                 }));
             }
             else {
-                const initialDocs = (this.data.doctors && this.data.doctors.length > 0) ? this.data.doctors : INITIAL_DOCTORS;
-                for (const d of initialDocs) {
-                    await this.saveDoctorToMysql(d);
-                }
+                this.data.doctors = [];
             }
             // --- 12. DOCTOR APPOINTMENTS SYNC ---
             let mysqlAppointments = [];
@@ -728,10 +708,8 @@ class DBManager {
                     meetingLink: a.meetingLink || undefined
                 }));
             }
-            else if (this.data.doctorAppointments && this.data.doctorAppointments.length > 0) {
-                for (const a of this.data.doctorAppointments) {
-                    await this.saveDoctorAppointmentToMysql(a);
-                }
+            else {
+                this.data.doctorAppointments = [];
             }
             // Approach 1: Single Source of Truth (Database-First Architecture)
             // data/db.json is completely bypassed; MySQL tables are the sole authoritative state.

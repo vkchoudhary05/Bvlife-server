@@ -32,21 +32,22 @@ function getFormIcon(form: string): string {
   return 'herbal';
 }
 
-export function enrichProductWithFamily(prod: Product, allProducts: Product[]): Product {
-  const familyGroup = prod.familyGroup || '';
-  const baseHerb = prod.baseHerb || (
-    prod.name.toLowerCase().includes('amla') ? 'Amla' :
-    prod.name.toLowerCase().includes('ashwagandha') ? 'Ashwagandha' :
-    prod.name.toLowerCase().includes('triphala') ? 'Triphala' :
-    prod.name.toLowerCase().includes('brahmi') ? 'Brahmi' :
-    prod.name.toLowerCase().includes('kumkumadi') ? 'Kumkumadi' :
-    prod.name.toLowerCase().includes('shatavari') ? 'Shatavari' :
-    prod.name.toLowerCase().includes('madhunashini') ? 'Madhunashini' :
-    prod.name.toLowerCase().includes('nirgundi') ? 'Nirgundi' :
-    prod.name.toLowerCase().includes('shilajit') ? 'Shilajit' : ''
-  );
+function inferBaseHerb(prod: Product): string {
+  if (prod.baseHerb) return prod.baseHerb;
+  const name = prod.name.toLowerCase();
+  return ['amla', 'ashwagandha', 'triphala', 'brahmi', 'kumkumadi', 'shatavari', 'madhunashini', 'nirgundi', 'shilajit']
+    .find(herb => name.includes(herb)) || '';
+}
 
-  const siblingProducts = allProducts.filter(p => {
+export function enrichProductWithFamily(
+  prod: Product,
+  allProducts: Product[],
+  indexedSiblings?: Product[]
+): Product {
+  const familyGroup = prod.familyGroup || '';
+  const baseHerb = inferBaseHerb(prod);
+
+  const siblingProducts = indexedSiblings || allProducts.filter(p => {
     if (familyGroup && p.familyGroup === familyGroup) return true;
     if (baseHerb && (p.baseHerb?.toLowerCase() === baseHerb.toLowerCase() || p.name.toLowerCase().includes(baseHerb.toLowerCase()))) return true;
     return false;
@@ -120,13 +121,83 @@ export function enrichProductWithFamily(prod: Product, allProducts: Product[]): 
   };
 }
 
+function enrichProductPage(pageProducts: Product[], allProducts: Product[]): Product[] {
+  const familyIndex = new Map<string, Product[]>();
+  const herbIndex = new Map<string, Product[]>();
+  const herbKeys = new Set([
+    'amla', 'ashwagandha', 'triphala', 'brahmi', 'kumkumadi', 'shatavari',
+    'madhunashini', 'nirgundi', 'shilajit',
+    ...allProducts.map(product => product.baseHerb?.trim().toLowerCase()).filter((value): value is string => Boolean(value))
+  ]);
+
+  for (const product of allProducts) {
+    if (product.familyGroup) {
+      const family = familyIndex.get(product.familyGroup) || [];
+      family.push(product);
+      familyIndex.set(product.familyGroup, family);
+    }
+
+    const name = product.name.toLowerCase();
+    const matchingHerbs = new Set<string>();
+    if (product.baseHerb) matchingHerbs.add(product.baseHerb.trim().toLowerCase());
+    for (const herb of herbKeys) if (name.includes(herb)) matchingHerbs.add(herb);
+    for (const herb of matchingHerbs) {
+      const group = herbIndex.get(herb) || [];
+      group.push(product);
+      herbIndex.set(herb, group);
+    }
+  }
+
+  return pageProducts.map(product => {
+    const siblings = new Map<string, Product>();
+    const family = product.familyGroup ? familyIndex.get(product.familyGroup) || [] : [];
+    const herb = inferBaseHerb(product).toLowerCase();
+    const sameHerb = herb ? herbIndex.get(herb) || [] : [];
+    for (const sibling of family) siblings.set(sibling.id, sibling);
+    for (const sibling of sameHerb) siblings.set(sibling.id, sibling);
+    return enrichProductWithFamily(product, allProducts, Array.from(siblings.values()));
+  });
+}
+
 export class ProductService {
   /**
    * Get all products enriched with family groups & formulations
    */
   getAllProducts() {
     const allProds = db.getProducts();
-    return allProds.map(p => enrichProductWithFamily(p, allProds));
+    return enrichProductPage(allProds, allProds);
+  }
+
+  getProductsPage(options: {
+    page: number;
+    limit: number;
+    category?: string;
+    featured?: boolean;
+    bestSeller?: boolean;
+    search?: string;
+    sort?: string;
+  }) {
+    const allProducts = db.getProducts();
+    let filtered = allProducts;
+    const search = options.search?.trim().toLowerCase();
+    if (options.category) filtered = filtered.filter(product => product.category === options.category);
+    if (options.featured) filtered = filtered.filter(product => product.featured);
+    if (options.bestSeller) filtered = filtered.filter(product => product.bestSeller);
+    if (search) filtered = filtered.filter(product =>
+      product.name.toLowerCase().includes(search) ||
+      product.category.toLowerCase().includes(search) ||
+      (product.description || '').toLowerCase().includes(search)
+    );
+
+    if (options.sort === 'price-low') filtered = [...filtered].sort((a, b) => a.price - b.price);
+    else if (options.sort === 'price-high') filtered = [...filtered].sort((a, b) => b.price - a.price);
+    else if (options.sort === 'rating') filtered = [...filtered].sort((a, b) => b.rating - a.rating);
+    else if (options.sort === 'alphabetical') filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+
+    const total = filtered.length;
+    const offset = (options.page - 1) * options.limit;
+    const products = enrichProductPage(filtered.slice(offset, offset + options.limit), allProducts);
+    return { products, total, page: options.page, limit: options.limit, totalPages: Math.ceil(total / options.limit) };
   }
 
   /**

@@ -506,7 +506,8 @@ class DBManager {
           freeShippingThreshold: Number(s.freeShippingThreshold)
         };
       } else {
-        await this.saveSettingsToMysql(this.data.settings);
+        // An empty live table is authoritative; do not recreate deleted settings from cache.
+        this.data.settings = { ...DEFAULT_SETTINGS };
       }
 
       // --- 2. USERS SYNC ---
@@ -522,9 +523,7 @@ class DBManager {
           membership: safeJsonParse(u.membership, undefined)
         }));
       } else {
-        for (const u of this.data.users) {
-          await this.saveUserToMysql(u);
-        }
+        this.data.users = [];
       }
 
       // --- 3. PRODUCTS SYNC ---
@@ -555,9 +554,7 @@ class DBManager {
           createdDate: p.createdDate
         }));
       } else {
-        for (const p of this.data.products) {
-          await this.saveProductToMysql(p);
-        }
+        this.data.products = [];
       }
 
       // --- 4. ORDERS SYNC ---
@@ -582,9 +579,7 @@ class DBManager {
           trackingUpdates: safeJsonParse(o.trackingUpdates, [])
         }));
       } else {
-        for (const o of this.data.orders) {
-          await this.saveOrderToMysql(o);
-        }
+        this.data.orders = [];
       }
 
       // --- 5. REVIEWS SYNC ---
@@ -602,9 +597,7 @@ class DBManager {
           date: r.date
         }));
       } else {
-        for (const r of this.data.reviews) {
-          await this.saveReviewToMysql(r);
-        }
+        this.data.reviews = [];
       }
 
       // --- 6. BLOGS SYNC ---
@@ -623,9 +616,7 @@ class DBManager {
           readTime: b.readTime
         }));
       } else {
-        for (const b of this.data.blogs) {
-          await this.saveBlogToMysql(b);
-        }
+        this.data.blogs = [];
       }
 
       // --- 7. FAQS SYNC ---
@@ -638,9 +629,7 @@ class DBManager {
           answer: f.answer
         }));
       } else {
-        for (const f of this.data.faqs) {
-          await this.saveFAQToMysql(f);
-        }
+        this.data.faqs = [];
       }
 
       // --- 8. COUPONS SYNC ---
@@ -656,9 +645,7 @@ class DBManager {
           active: Boolean(c.active)
         }));
       } else {
-        for (const c of this.data.coupons) {
-          await this.saveCouponToMysql(c);
-        }
+        this.data.coupons = [];
       }
 
       // --- 9. ACTIVITY LOGS SYNC ---
@@ -672,9 +659,7 @@ class DBManager {
           details: l.details
         }));
       } else {
-        for (const l of this.data.activityLogs) {
-          await this.saveActivityLogToMysql(l);
-        }
+        this.data.activityLogs = [];
       }
 
       // --- 10. PAYMENTS SYNC ---
@@ -691,9 +676,7 @@ class DBManager {
           createdAt: p.createdAt
         }));
       } else {
-        for (const p of this.data.payments) {
-          await this.savePaymentToMysql(p);
-        }
+        this.data.payments = [];
       }
 
       // --- 11. DOCTORS SYNC ---
@@ -717,10 +700,7 @@ class DBManager {
           nextAvailable: d.nextAvailable || 'Today, 04:30 PM'
         }));
       } else {
-        const initialDocs = (this.data.doctors && this.data.doctors.length > 0) ? this.data.doctors : INITIAL_DOCTORS;
-        for (const d of initialDocs) {
-          await this.saveDoctorToMysql(d);
-        }
+        this.data.doctors = [];
       }
 
       // --- 12. DOCTOR APPOINTMENTS SYNC ---
@@ -756,10 +736,8 @@ class DBManager {
           bookingDate: a.bookingDate,
           meetingLink: a.meetingLink || undefined
         }));
-      } else if (this.data.doctorAppointments && this.data.doctorAppointments.length > 0) {
-        for (const a of this.data.doctorAppointments) {
-          await this.saveDoctorAppointmentToMysql(a);
-        }
+      } else {
+        this.data.doctorAppointments = [];
       }
 
       // Approach 1: Single Source of Truth (Database-First Architecture)

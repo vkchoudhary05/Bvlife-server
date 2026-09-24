@@ -18,7 +18,7 @@ export const getReviews = (req: Request, res: Response) => {
 
 export const createReview = (req: AuthenticatedRequest, res: Response) => {
   try {
-    const activeEmail = req.body.userEmail || req.user?.email || "customer@Bvlife.com";
+    const activeEmail = req.user?.email || req.body.userEmail || "";
     const activeName = req.body.userName || req.user?.fullName || "Verified Customer";
     const review = reviewService.createReview({
       ...req.body,

@@ -42,11 +42,27 @@ export class OrderService {
         if (!emailToUse || !items || items.length === 0) {
             throw { status: 400, message: "Invalid order details. User email and cart items are required." };
         }
+        const rawAddress = shippingAddress || {};
+        const normalizedShippingAddress = {
+            ...rawAddress,
+            fullName: String(rawAddress.fullName || rawAddress.name || userName || currentUserName || '').trim(),
+            addressLine1: String(rawAddress.addressLine1 || rawAddress.street || rawAddress.address || '').trim(),
+            addressLine2: String(rawAddress.addressLine2 || '').trim(),
+            city: String(rawAddress.city || rawAddress.town || '').trim(),
+            state: String(rawAddress.state || rawAddress.region || '').trim(),
+            zipCode: String(rawAddress.zipCode || rawAddress.pincode || rawAddress.pinCode || rawAddress.postalCode || '').trim(),
+            phone: String(rawAddress.phone || rawAddress.mobile || '').trim()
+        };
+        if (!normalizedShippingAddress.fullName || !normalizedShippingAddress.addressLine1 ||
+            !normalizedShippingAddress.city || !normalizedShippingAddress.state ||
+            !normalizedShippingAddress.zipCode || !normalizedShippingAddress.phone) {
+            throw { status: 400, message: "Please provide a complete shipping address including street, city, state, PIN code, and phone number." };
+        }
         const newOrder = {
             id: `BVL-${Date.now().toString().slice(-6)}-${Math.floor(10 + Math.random() * 90)}`,
             userEmail: emailToUse,
             userName: userName || currentUserName || "Valued Customer",
-            shippingAddress,
+            shippingAddress: normalizedShippingAddress,
             items,
             subtotal: Number(subtotal),
             tax: Number(tax),
@@ -78,9 +94,9 @@ export class OrderService {
         // Save shipping address to user's saved addresses in DB
         const existingUser = db.getUserByEmail(emailToUse);
         if (existingUser) {
-            const hasAddress = existingUser.addresses?.some(a => a.addressLine1 === shippingAddress?.addressLine1 && a.zipCode === shippingAddress?.zipCode);
-            if (!hasAddress && shippingAddress) {
-                existingUser.addresses = [...(existingUser.addresses || []), shippingAddress];
+            const hasAddress = existingUser.addresses?.some(a => a.addressLine1 === normalizedShippingAddress.addressLine1 && a.zipCode === normalizedShippingAddress.zipCode);
+            if (!hasAddress) {
+                existingUser.addresses = [...(existingUser.addresses || []), normalizedShippingAddress];
                 db.saveUser(existingUser);
             }
         }
@@ -113,9 +129,12 @@ export class OrderService {
             console.warn('[Store Alert WhatsApp] Notice:', err);
         });
         if (shippingAddress?.phone) {
-            communicationService.sendOrderConfirmationWhatsApp(newOrder).catch(err => {
-                console.warn('[Order Confirmation WhatsApp] Notice:', err);
-            });
+            communicationService.sendOrderConfirmationWhatsApp(newOrder)
+                .then(result => {
+                if (!result.success)
+                    console.warn('[Order Confirmation WhatsApp] Notice:', result.message);
+            })
+                .catch(err => console.warn('[Order Confirmation WhatsApp] Notice:', err));
             communicationService.sendPaymentConfirmationSms({
                 phone: shippingAddress.phone,
                 orderId: newOrder.id,

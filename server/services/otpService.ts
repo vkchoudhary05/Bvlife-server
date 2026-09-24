@@ -6,7 +6,7 @@
 import { db } from "../dbManager.js";
 import { validateAndFormatIndianPhone } from "../utils.js";
 import { generateToken } from "../jwtUtils.js";
-import { ADMIN_EMAILS, ADMIN_PHONES } from "../middleware/authMiddleware.js";
+import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
 
 export class OtpService {
@@ -82,33 +82,6 @@ export class OtpService {
     }
 
     if (!user) {
-      const cleanPhone10 = rawId.replace(/\D/g, '').slice(-10);
-      // A configured admin mobile is allowed to create its admin profile only
-      // after its MSG91 access token has been verified above.
-      if (ADMIN_PHONES.includes(cleanPhone10)) {
-        const adminEmail = ADMIN_EMAILS[0];
-        if (!adminEmail) {
-          throw { status: 500, message: "ADMIN_EMAILS must be configured for the admin mobile login." };
-        }
-
-        user = db.getUserByEmail(adminEmail);
-        if (user) {
-          user.phone = validateAndFormatIndianPhone(rawId) || rawId;
-          user.role = 'admin';
-          db.saveUser(user);
-        } else {
-          user = db.saveUser({
-            email: adminEmail,
-            fullName: 'Administrator',
-            phone: validateAndFormatIndianPhone(rawId) || rawId,
-            role: 'admin',
-            password: 'otp-only-admin-account',
-            addresses: [],
-            createdAt: new Date().toISOString()
-          });
-        }
-      }
-
       if (!user && fullName && fullName.trim()) {
         const formattedPhone = validateAndFormatIndianPhone(rawId) || rawId;
         const cleanEmail = providedEmail?.trim().toLowerCase();
@@ -174,10 +147,12 @@ export class OtpService {
 
     // Promote to admin if configured
     const lowerEmail = user.email.toLowerCase();
-    const cleanPhone = (user.phone || '').replace(/\D/g, '').slice(-10);
-    if (ADMIN_EMAILS.includes(lowerEmail) || ADMIN_PHONES.includes(cleanPhone)) {
+    if (ADMIN_EMAILS.includes(lowerEmail)) {
       user.role = 'admin';
+    } else if (user.role !== 'admin') {
+      user.role = 'customer';
     }
+    db.saveUser(user);
 
     const token = generateToken(user);
     db.logActivity(user.email, "OTP Auth", "Authenticated via unified Mobile SMS OTP.");

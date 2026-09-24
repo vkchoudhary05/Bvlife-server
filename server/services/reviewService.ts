@@ -26,8 +26,25 @@ export class ReviewService {
     comment?: string;
   }) {
     const { productId, productName, userName, userEmail, rating, comment } = params;
-    if (!productId || !rating) {
-      throw { status: 400, message: "Product ID and Rating are required." };
+    const normalizedEmail = (userEmail || '').trim().toLowerCase();
+    if (!productId || !rating || !normalizedEmail) {
+      throw { status: 400, message: "Product, rating, and customer email are required." };
+    }
+
+    const hasDeliveredPurchase = db.getOrders().some(order =>
+      order.userEmail?.trim().toLowerCase() === normalizedEmail &&
+      String(order.status).trim().toLowerCase() === 'delivered' &&
+      order.items?.some(item => item.productId === productId)
+    );
+    if (!hasDeliveredPurchase) {
+      throw { status: 403, message: "You can review this product after your order has been marked delivered." };
+    }
+
+    const existingReview = db.getReviews().some(review =>
+      review.productId === productId && review.userEmail?.trim().toLowerCase() === normalizedEmail
+    );
+    if (existingReview) {
+      throw { status: 409, message: "You have already reviewed this product." };
     }
 
     const newReview: Review = {
@@ -35,7 +52,7 @@ export class ReviewService {
       productId,
       productName: productName || "Ayurvedic Product",
       userName: userName || "Verified Customer",
-      userEmail: (userEmail || "customer@Bvlife.com").toLowerCase(),
+      userEmail: normalizedEmail,
       rating: Number(rating),
       comment: comment || "",
       isApproved: true,

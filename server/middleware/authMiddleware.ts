@@ -12,11 +12,6 @@ export const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
   .map((email) => email.trim().toLowerCase())
   .filter(Boolean);
 
-export const ADMIN_PHONES = (process.env.ADMIN_PHONES || '')
-  .split(',')
-  .map((phone) => phone.replace(/\D/g, '').slice(-10))
-  .filter((phone) => phone.length === 10);
-
 export interface AuthenticatedRequest extends Request {
   user?: {
     email: string;
