@@ -21,16 +21,35 @@ import { rateLimiter } from "./server/middleware/rateLimitMiddleware.js";
 const app = express();
 const PORT = Number(process.env.PORT || 5000);
 // Global Middleware
-const allowedOrigins = (process.env.CORS_ORIGINS || '')
+const configuredOrigins = (process.env.CORS_ORIGINS || '')
     .split(',')
     .map(origin => origin.trim())
     .filter(Boolean);
+const allowedOrigins = new Set([
+    'https://bvlife.in',
+    'https://www.bvlife.in',
+    ...configuredOrigins
+]);
+try {
+    const appOrigin = process.env.APP_URL ? new URL(process.env.APP_URL).origin : '';
+    if (appOrigin && appOrigin !== 'null') {
+        allowedOrigins.add(appOrigin);
+        const appUrl = new URL(appOrigin);
+        if (appUrl.hostname === 'bvlife.in')
+            allowedOrigins.add(`${appUrl.protocol}//www.bvlife.in`);
+        if (appUrl.hostname === 'www.bvlife.in')
+            allowedOrigins.add(`${appUrl.protocol}//bvlife.in`);
+    }
+}
+catch {
+    console.warn('APP_URL is not a valid URL; CORS will use the configured origin allowlist.');
+}
 app.use(cors({
     origin(origin, callback) {
         if (!origin)
             return callback(null, true);
         const isLocalDevelopmentOrigin = process.env.NODE_ENV !== 'production' && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
-        callback(null, isLocalDevelopmentOrigin || allowedOrigins.includes(origin));
+        callback(null, isLocalDevelopmentOrigin || allowedOrigins.has(origin));
     },
     credentials: false
 }));
