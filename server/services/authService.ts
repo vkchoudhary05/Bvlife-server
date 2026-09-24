@@ -24,40 +24,12 @@ const MEMBERSHIP_PRICES = {
 
 type MembershipTier = keyof typeof MEMBERSHIP_PRICES;
 
+const toPublicUser = (user: User): Omit<User, 'password'> => {
+  const { password: _password, ...publicUser } = user;
+  return publicUser;
+};
+
 export class AuthService {
-  /**
-   * Low-friction BV Life entry: identifies a customer by mobile number without
-   * an OTP step. This is deliberately limited to a customer profile/session;
-   * sensitive changes and checkout verification remain separate flows.
-   */
-  async quickMobileLogin(phone: string) {
-    const formattedPhone = validateAndFormatIndianPhone(phone);
-    if (!formattedPhone) {
-      throw { status: 400, message: "Please enter a valid 10-digit Indian mobile number." };
-    }
-
-    let user = db.getUsers().find(candidate => {
-      const candidatePhone = validateAndFormatIndianPhone(candidate.phone) || candidate.phone;
-      return candidatePhone === formattedPhone;
-    });
-
-    if (!user) {
-      const digits = formattedPhone.replace(/\D/g, '').slice(-10);
-      user = {
-        email: `mobile-${digits}@bvlife.local`,
-        fullName: "BV Life Member",
-        role: "customer",
-        phone: formattedPhone,
-        addresses: [],
-        password: await hashPassword(`mobile-${digits}-${Date.now()}`)
-      };
-      db.saveUser(user);
-      db.logActivity(user.email, "Quick Mobile Entry", `Created mobile session for ${formattedPhone}`);
-    }
-
-    return { message: "Welcome to BV Life.", user, token: generateToken(user) };
-  }
-
   /**
    * Register a new user account
    */
@@ -86,6 +58,10 @@ export class AuthService {
       };
     }
 
+    if (!accessToken && (!code || !reqId)) {
+      throw { status: 400, message: "Verify your mobile number with an OTP before creating an account." };
+    }
+
     // Format and validate phone
     const formattedPhone = validateAndFormatIndianPhone(phone) || phone;
     if (phone) {
@@ -109,7 +85,7 @@ export class AuthService {
     // Verify OTP: either through MSG91 Widget verified access token or direct OTP code
     if (accessToken) {
       try {
-        await otpService.verifyAccessToken(accessToken);
+        await otpService.verifyAccessTokenForIdentifier(accessToken, formattedPhone || email);
       } catch (err: any) {
         if (code) {
           const otpCheck = await communicationService.verifyOtp({ identifier: formattedPhone || email, code, reqId });
@@ -153,7 +129,7 @@ export class AuthService {
     }).catch(err => console.warn('[CommunicationService] Welcome email dispatch notice:', err));
 
     const token = generateToken(newUser);
-    return { message: "Registration successful!", user: newUser, token };
+    return { message: "Registration successful!", user: toPublicUser(newUser), token };
   }
 
   /**
@@ -161,27 +137,12 @@ export class AuthService {
    */
   async login(params: { email?: string; password?: string }) {
     const { email, password } = params;
-    if (!email) {
-      throw { status: 400, message: "Email or Phone Number is required." };
+    if (!email || !password || !password.trim()) {
+      throw { status: 400, message: "Email or Phone Number and password are required." };
     }
 
-    let cleanInput = (email || "").trim();
-    // Strip common labels/prefixes if user copied full text
-    cleanInput = cleanInput.replace(/^(doctor\s*id\s*[:\-]?\s*|email\s*[:\-]?\s*|id\s*[:\-]?\s*|username\s*[:\-]?\s*)/i, '').trim();
-    let lookupEmail = cleanInput.toLowerCase();
-
-    // Doctor alias normalization
-    if (
-      lookupEmail === 'doctor' || 
-      lookupEmail === 'doctor@Bvlife.com' || 
-      lookupEmail.includes('doctor@Bvlife.com') ||
-      lookupEmail === 'dr.arundhati@Bvlife.com' ||
-      lookupEmail === 'dr.arundhati@gmail.com' ||
-      lookupEmail === '9876543210'
-    ) {
-      lookupEmail = 'doctor@Bvlife.com';
-    }
-
+    const cleanInput = email.trim();
+    const lookupEmail = cleanInput.toLowerCase();
     let user = db.getUserByEmail(lookupEmail);
     if (!user) {
       const formattedPhoneInput = validateAndFormatIndianPhone(cleanInput);
@@ -191,31 +152,15 @@ export class AuthService {
       });
     }
 
-    // Auto-provision Doctor account if missing (supports doctor@bvlife.in and doctor@Bvlife.com)
-    if (!user && (lookupEmail === 'doctor@bvlife.in' || lookupEmail === 'doctor@Bvlife.com')) {
-      const doctorHashedPass = await hashPassword("123123123");
-      user = {
-        email: lookupEmail,
-        fullName: "Dr. Sanjeev Rastogi",
-        role: "admin",
-        phone: "7451050607",
-        addresses: [],
-        password: doctorHashedPass
-      };
-      db.saveUser(user);
-    }
-
     if (!user) {
       throw { status: 401, message: "No account found with this email or mobile number. Please register first." };
     }
 
-    let cleanPass = (password || "").trim();
-    cleanPass = cleanPass.replace(/^(password\s*[:\-]?\s*|pass\s*[:\-]?\s*)/i, '').trim();
-    const isDoctor = lookupEmail === 'doctor@Bvlife.com' || user.email?.toLowerCase() === 'doctor@Bvlife.com';
-    const plainPassword = cleanPass || (isDoctor ? "123123123" : "password123");
-
-    const isValidPassword = (isDoctor && (plainPassword === '123123123' || plainPassword === 'password123'))
-      || await comparePassword(plainPassword, user.password);
+    if (user.role === 'admin' || ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+      throw { status: 403, message: "Administrator accounts must sign in with the verified OTP flow." };
+    }
+    const plainPassword = password.trim();
+    const isValidPassword = await comparePassword(plainPassword, user.password);
 
     if (!isValidPassword) {
       throw { status: 401, message: "Incorrect password. Please verify and try again." };
@@ -234,7 +179,7 @@ export class AuthService {
 
     db.logActivity(user.email, "User Login", "Logged in successfully.");
     const token = generateToken(user);
-    return { message: "Login successful!", user, token };
+    return { message: "Login successful!", user: toPublicUser(user), token };
   }
 
   /**
@@ -249,7 +194,7 @@ export class AuthService {
     if (ADMIN_EMAILS.includes(lowerEmail)) {
       user.role = 'admin';
     }
-    return user;
+    return toPublicUser(user);
   }
 
   /**
@@ -266,7 +211,7 @@ export class AuthService {
     if (updates.addresses !== undefined) user.addresses = updates.addresses;
     db.saveUser(user);
     db.logActivity(user.email, "Profile Update", "Updated contact details/addresses.");
-    return user;
+    return toPublicUser(user);
   }
 
   /**
@@ -287,14 +232,13 @@ export class AuthService {
     
     // Calculate expiry date
     let expiryDate = '';
-    let discountPercentage = 0;
+    let discountPercentage = 30;
     let standardPrice = MEMBERSHIP_PRICES[tier];
 
     if (tier === '1 Year') {
       const exp = new Date(now);
       exp.setFullYear(exp.getFullYear() + 1);
       expiryDate = exp.toISOString();
-      discountPercentage = 30; // 30% discount as requested
     } else if (tier === '3 Years') {
       const exp = new Date(now);
       exp.setFullYear(exp.getFullYear() + 3);
@@ -332,7 +276,7 @@ export class AuthService {
       success: true,
       message: `Congratulations! Your BV Life ${tier} Membership is activated.`,
       membership: user.membership,
-      user
+      user: toPublicUser(user)
     };
   }
 
@@ -481,8 +425,8 @@ export class AuthService {
    */
   async resetPassword(params: { query: string; newPassword: string; code?: string; reqId?: string }) {
     const { query, newPassword, code, reqId } = params;
-    if (!query || !newPassword) {
-      throw { status: 400, message: "Registered email/phone and new password are required." };
+    if (!query || !newPassword || !code || !reqId) {
+      throw { status: 400, message: "Registered email/phone, new password, and a verified OTP are required." };
     }
 
     const queryStr = query.trim();
@@ -499,11 +443,9 @@ export class AuthService {
       throw { status: 404, message: "No account found registered with this email or mobile number." };
     }
 
-    if (code) {
-      const otpCheck = await communicationService.verifyOtp({ identifier: queryStr, code, reqId });
-      if (!otpCheck.success) {
-        throw { status: 400, message: otpCheck.error || "Invalid OTP code for password reset." };
-      }
+    const otpCheck = await communicationService.verifyOtp({ identifier: queryStr, code, reqId });
+    if (!otpCheck.success) {
+      throw { status: 400, message: otpCheck.error || "Invalid OTP code for password reset." };
     }
 
     user.password = await hashPassword(newPassword);
@@ -558,6 +500,12 @@ export class AuthService {
       throw { status: 403, message: "Access Denied: Account lacks administrative privileges." };
     }
 
+    const usesKnownSeedPassword = await comparePassword('123123123', user.password) ||
+      await comparePassword('password123', user.password);
+    if (usesKnownSeedPassword) {
+      throw { status: 403, message: "The old seeded administrator password is disabled. Use mobile OTP sign-in." };
+    }
+
     const isValidPassword = await comparePassword(password, user.password);
     if (!isValidPassword) {
       throw { status: 401, message: "Invalid admin security passcode. Please check your credentials." };
@@ -580,7 +528,7 @@ export class AuthService {
    * Fetch all customers (Admin only)
    */
   getCustomers() {
-    return db.getUsers().filter(u => u.role === "customer");
+    return db.getUsers().filter(u => u.role === "customer").map(toPublicUser);
   }
 
   /**
@@ -591,7 +539,7 @@ export class AuthService {
     if (!user) {
       throw { status: 404, message: "User not found." };
     }
-    return user;
+    return toPublicUser(user);
   }
 
   /**
@@ -610,7 +558,7 @@ export class AuthService {
 
     db.saveUser(existing);
     db.logActivity(existing.email, "Profile Update", "Updated contact details/addresses.");
-    return existing;
+    return toPublicUser(existing);
   }
 }
 

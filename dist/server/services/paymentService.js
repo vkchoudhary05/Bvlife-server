@@ -10,13 +10,17 @@ export class PaymentService {
      * Create Razorpay Order
      */
     async createRazorpayOrder(params) {
-        const { amount, currency = "INR", receipt, customKeyId } = params;
-        if (!amount || Number(amount) <= 0) {
+        const { amount, currency = "INR", receipt } = params;
+        const normalizedAmount = Number(amount);
+        if (!Number.isFinite(normalizedAmount) || normalizedAmount <= 0 || normalizedAmount > 10_000_000) {
             throw { status: 400, message: "Invalid amount specified for Razorpay order." };
         }
-        const key_id = customKeyId?.trim() || process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || "";
+        if (currency.toUpperCase() !== 'INR') {
+            throw { status: 400, message: "Only INR payments are supported." };
+        }
+        const key_id = process.env.RAZORPAY_KEY_ID || "";
         const key_secret = process.env.RAZORPAY_KEY_SECRET || "";
-        const amountInPaise = Math.round(Number(amount) * 100);
+        const amountInPaise = Math.round(normalizedAmount * 100);
         if (process.env.NODE_ENV === "production" && (!key_id || !key_secret)) {
             throw { status: 500, message: "Razorpay is not configured. Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET on the backend." };
         }
@@ -38,7 +42,13 @@ export class PaymentService {
             }
             catch (rpErr) {
                 console.error("Razorpay API order creation error:", rpErr);
+                if (process.env.NODE_ENV === "production") {
+                    throw { status: 502, message: "Unable to create a payment order. Please try again." };
+                }
             }
+        }
+        if (process.env.NODE_ENV === "production") {
+            throw { status: 500, message: "Razorpay is not configured on the server." };
         }
         // Fallback sandbox test order
         const simOrderId = `order_rp_${Date.now()}_${Math.floor(100 + Math.random() * 900)}`;
@@ -59,13 +69,18 @@ export class PaymentService {
         if (process.env.NODE_ENV === "production" && !key_secret) {
             throw { status: 500, message: "Razorpay payment verification is not configured on the backend." };
         }
-        if (key_secret && razorpay_signature && razorpay_order_id) {
+        if (key_secret) {
+            if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !/^[a-f0-9]{64}$/i.test(razorpay_signature)) {
+                throw { status: 400, message: "Complete Razorpay payment verification details are required." };
+            }
             const body = razorpay_order_id + "|" + razorpay_payment_id;
             const expectedSignature = crypto
                 .createHmac("sha256", key_secret)
                 .update(body.toString())
                 .digest("hex");
-            if (expectedSignature === razorpay_signature) {
+            const expected = Buffer.from(expectedSignature, 'hex');
+            const received = Buffer.from(razorpay_signature, 'hex');
+            if (expected.length === received.length && crypto.timingSafeEqual(expected, received)) {
                 return {
                     success: true,
                     message: "Razorpay payment verified successfully",
@@ -78,6 +93,9 @@ export class PaymentService {
                     message: "Razorpay payment signature verification failed"
                 };
             }
+        }
+        if (process.env.NODE_ENV === "production") {
+            throw { status: 400, message: "Razorpay payment signature is required." };
         }
         return {
             success: true,

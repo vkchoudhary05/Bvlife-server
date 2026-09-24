@@ -15,7 +15,12 @@ export const getDoctorAppointments = async (req, res) => {
 };
 export const getDoctorAppointmentsByUser = async (req, res) => {
     try {
-        const email = req.params.email;
+        const email = req.params.email.toLowerCase().trim();
+        const isAdmin = req.user?.role === 'admin';
+        if (!req.user || (!isAdmin && req.user.email.toLowerCase() !== email)) {
+            res.status(403).json({ error: "You may only view your own appointments." });
+            return;
+        }
         const appointments = appointmentService.getAppointmentsByUser(email);
         res.json(appointments);
     }
@@ -26,7 +31,8 @@ export const getDoctorAppointmentsByUser = async (req, res) => {
 };
 export const bookDoctorAppointment = async (req, res) => {
     try {
-        const appointment = appointmentService.bookAppointment(req.body);
+        const bookingDetails = req.user ? { ...req.body, patientEmail: req.user.email } : req.body;
+        const appointment = appointmentService.bookAppointment(bookingDetails);
         res.status(201).json({
             success: true,
             message: "Doctor consultation booked successfully!",

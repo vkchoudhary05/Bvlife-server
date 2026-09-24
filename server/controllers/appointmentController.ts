@@ -4,6 +4,7 @@
  */
 
 import { Request, Response } from "express";
+import { AuthenticatedRequest } from "../middleware/authMiddleware.js";
 import { appointmentService } from "../services/appointmentService.js";
 
 export const getDoctorAppointments = async (req: Request, res: Response): Promise<void> => {
@@ -16,9 +17,14 @@ export const getDoctorAppointments = async (req: Request, res: Response): Promis
   }
 };
 
-export const getDoctorAppointmentsByUser = async (req: Request, res: Response): Promise<void> => {
+export const getDoctorAppointmentsByUser = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
-    const email = req.params.email;
+    const email = req.params.email.toLowerCase().trim();
+    const isAdmin = req.user?.role === 'admin';
+    if (!req.user || (!isAdmin && req.user.email.toLowerCase() !== email)) {
+      res.status(403).json({ error: "You may only view your own appointments." });
+      return;
+    }
     const appointments = appointmentService.getAppointmentsByUser(email);
     res.json(appointments);
   } catch (error: any) {
@@ -27,9 +33,10 @@ export const getDoctorAppointmentsByUser = async (req: Request, res: Response): 
   }
 };
 
-export const bookDoctorAppointment = async (req: Request, res: Response): Promise<void> => {
+export const bookDoctorAppointment = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
-    const appointment = appointmentService.bookAppointment(req.body);
+    const bookingDetails = req.user ? { ...req.body, patientEmail: req.user.email } : req.body;
+    const appointment = appointmentService.bookAppointment(bookingDetails);
     res.status(201).json({
       success: true,
       message: "Doctor consultation booked successfully!",
@@ -152,5 +159,4 @@ export const resendAppointmentWhatsAppAlert = async (req: Request, res: Response
     res.status(500).json({ error: error.message || "Failed to dispatch WhatsApp alert" });
   }
 };
-
 

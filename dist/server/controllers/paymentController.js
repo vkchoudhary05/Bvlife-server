@@ -8,12 +8,11 @@ import { paymentService } from "../services/paymentService.js";
  */
 export const createRazorpayOrder = async (req, res) => {
     try {
-        const { amount, currency, receipt, key_id } = req.body;
+        const { amount, currency, receipt } = req.body;
         const result = await paymentService.createRazorpayOrder({
             amount,
             currency,
-            receipt,
-            customKeyId: key_id
+            receipt
         });
         res.json(result);
     }

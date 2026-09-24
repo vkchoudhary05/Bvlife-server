@@ -8,6 +8,46 @@ import { generateToken } from "../jwtUtils.js";
 import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
 export class OtpService {
+    assertVerifiedIdentifier(data, requestedIdentifier) {
+        const verifiedContacts = [];
+        const visit = (value, key = '') => {
+            if (!value)
+                return;
+            // MSG91 response fields vary by widget/account configuration. Only
+            // values under contact-like keys can be used for identity binding.
+            if (typeof value === 'string' || typeof value === 'number') {
+                if (/(mobile|phone|email|identifier|contact|recipient|destination)/i.test(key)) {
+                    verifiedContacts.push(String(value).trim());
+                }
+                return;
+            }
+            if (Array.isArray(value)) {
+                value.forEach(item => visit(item, key));
+                return;
+            }
+            if (typeof value === 'object') {
+                Object.entries(value).forEach(([childKey, childValue]) => visit(childValue, childKey));
+            }
+        };
+        visit(data, '');
+        // MSG91 token verification is authoritative. Some standard widget
+        // configurations return only a success result and omit the identifier;
+        // in that case there is no contact claim to compare. Keep the additional
+        // binding check when MSG91 does provide a contact value.
+        if (verifiedContacts.length === 0)
+            return;
+        const requestedEmail = requestedIdentifier.includes('@') ? requestedIdentifier.trim().toLowerCase() : '';
+        const requestedPhone = requestedEmail ? '' : requestedIdentifier.replace(/\D/g, '').slice(-10);
+        const matches = verifiedContacts.some(contact => requestedEmail
+            ? contact.trim().toLowerCase() === requestedEmail
+            : requestedPhone.length === 10 && contact.replace(/\D/g, '').slice(-10) === requestedPhone);
+        // A valid MSG91 token must belong to the identifier being authenticated.
+        // Otherwise a token verified for one phone could be replayed to log in as
+        // another account by changing the request body.
+        if (!matches) {
+            throw { status: 401, message: "The verified OTP identity does not match this account." };
+        }
+    }
     /**
      * Verify MSG91 Widget Access Token
      */
@@ -42,6 +82,21 @@ export class OtpService {
     async verifyAccessToken(tokenToVerify) {
         return this.verifyMsg91Token(tokenToVerify);
     }
+    async verifyAccessTokenForIdentifier(tokenToVerify, identifier) {
+        const result = await this.verifyAccessToken(tokenToVerify);
+        let tokenClaims = {};
+        try {
+            const payload = tokenToVerify.split('.')[1];
+            if (payload)
+                tokenClaims = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+        }
+        catch {
+            // Some MSG91 deployments may return a non-JWT token; the verified API
+            // response remains the source of identity claims in that case.
+        }
+        this.assertVerifiedIdentifier({ response: result.data, tokenClaims }, identifier);
+        return result;
+    }
     /**
      * Unified Single OTP Login with Phone or Email
      */
@@ -55,7 +110,7 @@ export class OtpService {
         if (!accessToken) {
             throw { status: 400, message: "A verified MSG91 access token is required for login." };
         }
-        await this.verifyAccessToken(accessToken);
+        await this.verifyAccessTokenForIdentifier(accessToken, identifier);
         const rawId = identifier.trim();
         let user = db.getUserByEmail(rawId);
         if (!user) {
@@ -103,7 +158,6 @@ export class OtpService {
                     fullName: fullName.trim(),
                     phone: formattedPhone,
                     role: 'customer',
-                    password: 'password123',
                     addresses: [],
                     createdAt: new Date().toISOString()
                 });
@@ -116,7 +170,6 @@ export class OtpService {
                     fullName: 'Ayurveda Patient',
                     phone: formattedPhone,
                     role: 'customer',
-                    password: 'password123',
                     addresses: [],
                     createdAt: new Date().toISOString()
                 });
@@ -144,10 +197,11 @@ export class OtpService {
         db.saveUser(user);
         const token = generateToken(user);
         db.logActivity(user.email, "OTP Auth", "Authenticated via unified Mobile SMS OTP.");
+        const { password: _password, ...publicUser } = user;
         return {
             success: true,
             message: "Authenticated successfully!",
-            user,
+            user: publicUser,
             token,
             isNewUser: false
         };
@@ -164,11 +218,12 @@ export class OtpService {
         if (!formattedNewPhone) {
             throw { status: 400, message: "Invalid mobile number. Please provide a valid 10-digit Indian phone number." };
         }
-        if (code) {
-            const otpCheck = await communicationService.verifyOtp({ identifier: formattedNewPhone, code, reqId });
-            if (!otpCheck.success) {
-                throw { status: 400, message: otpCheck.error || "OTP verification failed for new mobile number." };
-            }
+        if (!code || !reqId) {
+            throw { status: 400, message: "A verified OTP for the new mobile number is required." };
+        }
+        const otpCheck = await communicationService.verifyOtp({ identifier: formattedNewPhone, code, reqId });
+        if (!otpCheck.success) {
+            throw { status: 400, message: otpCheck.error || "OTP verification failed for new mobile number." };
         }
         const user = db.getUserByEmail(email);
         if (!user) {
@@ -189,7 +244,8 @@ export class OtpService {
             details: `Your BV Life profile is now linked to this mobile number.`
         }).catch(err => console.warn('Security SMS notice:', err));
         db.logActivity(user.email, "Mobile Number Change", `Updated mobile from ${oldPhone} to ${formattedNewPhone}`);
-        return user;
+        const { password: _password, ...publicUser } = user;
+        return publicUser;
     }
     /**
      * Change user email address with OTP check
@@ -204,11 +260,12 @@ export class OtpService {
         if (existing && existing.email.toLowerCase() !== currentEmail.toLowerCase()) {
             throw { status: 400, message: "An account already exists with this new email address." };
         }
-        if (code) {
-            const otpCheck = await communicationService.verifyOtp({ identifier: formattedNewEmail, code, reqId });
-            if (!otpCheck.success) {
-                throw { status: 400, message: otpCheck.error || "OTP verification failed for new email address." };
-            }
+        if (!code || !reqId) {
+            throw { status: 400, message: "A verified OTP for the new email address is required." };
+        }
+        const otpCheck = await communicationService.verifyOtp({ identifier: formattedNewEmail, code, reqId });
+        if (!otpCheck.success) {
+            throw { status: 400, message: otpCheck.error || "OTP verification failed for new email address." };
         }
         const user = db.getUserByEmail(currentEmail);
         if (!user) {
@@ -231,7 +288,8 @@ export class OtpService {
         }
         const token = generateToken(user);
         db.logActivity(formattedNewEmail, "Email Address Change", `Changed email from ${currentEmail} to ${formattedNewEmail}`);
-        return { user, token };
+        const { password: _password, ...publicUser } = user;
+        return { user: publicUser, token };
     }
 }
 export const otpService = new OtpService();

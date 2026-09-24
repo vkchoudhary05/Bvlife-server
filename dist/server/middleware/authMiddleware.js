@@ -11,7 +11,8 @@ export const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
 /**
  * Authentication Middleware:
  * Verifies JWT token from Authorization header (Bearer <token>).
- * Falls back safely to email token for backwards compatibility during migration.
+ * Requires a signed JWT and a current user record. Legacy plain-email tokens
+ * are intentionally rejected because they let anyone impersonate a user.
  */
 export const authenticateToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -25,24 +26,16 @@ export const authenticateToken = (req, res, next) => {
     // First try verifying as JWT
     const decoded = verifyToken(token);
     if (decoded) {
-        const user = db.getUserByEmail(decoded.email);
-        const role = user?.role || decoded.role || "customer";
-        const isAdmin = ADMIN_EMAILS.includes(decoded.email.toLowerCase());
+        const normalizedEmail = typeof decoded.email === "string" ? decoded.email.toLowerCase() : "";
+        const user = normalizedEmail ? db.getUserByEmail(normalizedEmail) : undefined;
+        if (!user) {
+            return res.status(401).json({ error: "Account is no longer active. Please sign in again." });
+        }
+        const isAdmin = ADMIN_EMAILS.includes(normalizedEmail) || user.role === "admin";
         req.user = {
-            email: decoded.email.toLowerCase(),
-            role: isAdmin ? "admin" : role,
-            fullName: user?.fullName || decoded.fullName || "User"
-        };
-        return next();
-    }
-    // Backwards compatibility fallback for plain email tokens
-    const fallbackUser = db.getUserByEmail(token.toLowerCase());
-    if (fallbackUser) {
-        const isAdmin = ADMIN_EMAILS.includes(fallbackUser.email.toLowerCase());
-        req.user = {
-            email: fallbackUser.email.toLowerCase(),
-            role: isAdmin ? "admin" : (fallbackUser.role || "customer"),
-            fullName: fallbackUser.fullName
+            email: normalizedEmail,
+            role: isAdmin ? "admin" : "customer",
+            fullName: user.fullName || "User"
         };
         return next();
     }
@@ -62,23 +55,14 @@ export const optionalAuthenticateToken = (req, res, next) => {
         return next();
     const decoded = verifyToken(token);
     if (decoded) {
-        const user = db.getUserByEmail(decoded.email);
-        const role = user?.role || decoded.role || "customer";
-        const isAdmin = ADMIN_EMAILS.includes(decoded.email.toLowerCase());
-        req.user = {
-            email: decoded.email.toLowerCase(),
-            role: isAdmin ? "admin" : role,
-            fullName: user?.fullName || decoded.fullName || "User"
-        };
-    }
-    else {
-        const fallbackUser = db.getUserByEmail(token.toLowerCase());
-        if (fallbackUser) {
-            const isAdmin = ADMIN_EMAILS.includes(fallbackUser.email.toLowerCase());
+        const normalizedEmail = typeof decoded.email === "string" ? decoded.email.toLowerCase() : "";
+        const user = normalizedEmail ? db.getUserByEmail(normalizedEmail) : undefined;
+        if (user) {
+            const isAdmin = ADMIN_EMAILS.includes(normalizedEmail) || user.role === "admin";
             req.user = {
-                email: fallbackUser.email.toLowerCase(),
-                role: isAdmin ? "admin" : (fallbackUser.role || "customer"),
-                fullName: fallbackUser.fullName
+                email: normalizedEmail,
+                role: isAdmin ? "admin" : "customer",
+                fullName: user.fullName || "User"
             };
         }
     }

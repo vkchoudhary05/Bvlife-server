@@ -15,7 +15,7 @@ export const register = async (req: Request, res: Response) => {
     const result = await authService.register(req.body);
     res.json(result);
   } catch (err: any) {
-    res.status(err.status || 500).json({ error: err.message || "Registration failed.", ...err });
+    res.status(err.status || 500).json({ error: err.message || "Registration failed." });
   }
 };
 
@@ -28,16 +28,6 @@ export const login = async (req: Request, res: Response) => {
     res.json(result);
   } catch (err: any) {
     res.status(err.status || 500).json({ error: err.message || "Login failed." });
-  }
-};
-
-/** Mobile-only, no-OTP welcome flow for first-time BV Life visitors. */
-export const quickMobileLogin = async (req: Request, res: Response) => {
-  try {
-    const result = await authService.quickMobileLogin(req.body.phone);
-    res.json(result);
-  } catch (err: any) {
-    res.status(err.status || 500).json({ error: err.message || "Unable to start mobile session." });
   }
 };
 
@@ -154,8 +144,12 @@ export const getCustomers = (req: Request, res: Response) => {
 /**
  * Get user by email
  */
-export const getUserByEmail = (req: Request, res: Response) => {
+export const getUserByEmail = (req: AuthenticatedRequest, res: Response) => {
   try {
+    const requestedEmail = req.params.email.toLowerCase();
+    if (req.user?.role !== 'admin' && req.user?.email.toLowerCase() !== requestedEmail) {
+      return res.status(403).json({ error: "You may only access your own account." });
+    }
     const user = authService.getUserByEmail(req.params.email);
     res.json(user);
   } catch (err: any) {
@@ -166,8 +160,15 @@ export const getUserByEmail = (req: Request, res: Response) => {
 /**
  * Update user by email
  */
-export const updateUserByEmail = (req: Request, res: Response) => {
+export const updateUserByEmail = (req: AuthenticatedRequest, res: Response) => {
   try {
+    const requestedEmail = req.params.email.toLowerCase();
+    if (req.user?.role !== 'admin' && req.user?.email.toLowerCase() !== requestedEmail) {
+      return res.status(403).json({ error: "You may only update your own account." });
+    }
+    if (req.body?.role !== undefined && req.user?.role !== 'admin') {
+      return res.status(403).json({ error: "Only administrators can change account roles." });
+    }
     const user = authService.updateUserByEmail(req.params.email, req.body);
     res.json({ message: "Profile updated successfully.", user });
   } catch (err: any) {

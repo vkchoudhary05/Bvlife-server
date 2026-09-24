@@ -24,6 +24,7 @@ import {
   resendAppointmentWhatsAppAlert
 } from "../controllers/appointmentController.js";
 import { optionalAuthenticateToken, authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
+import { rateLimiter } from "../middleware/rateLimitMiddleware.js";
 
 export const doctorRouter = Router();
 
@@ -35,13 +36,13 @@ doctorRouter.put("/api/doctors/:id", authenticateToken, requireAdmin, updateDoct
 doctorRouter.delete("/api/doctors/:id", authenticateToken, requireAdmin, deleteDoctor);
 
 // Appointment Endpoints
-doctorRouter.get("/api/doctor-appointments", optionalAuthenticateToken, getDoctorAppointments);
-doctorRouter.get("/api/doctor-appointments/user/:email", optionalAuthenticateToken, getDoctorAppointmentsByUser);
-doctorRouter.post("/api/doctor-appointments", optionalAuthenticateToken, bookDoctorAppointment);
-doctorRouter.post("/api/doctor-appointments/:id/resend-whatsapp", optionalAuthenticateToken, resendAppointmentWhatsAppAlert);
-doctorRouter.put("/api/doctor-appointments/:id/status", optionalAuthenticateToken, updateDoctorAppointmentStatus);
-doctorRouter.put("/api/doctor-appointments/:id/prescription", optionalAuthenticateToken, saveDoctorPrescription);
-doctorRouter.put("/api/doctor-appointments/:id/meeting-link", optionalAuthenticateToken, updateAppointmentMeetingLink);
-doctorRouter.put("/api/doctor-appointments/:id/room-status", optionalAuthenticateToken, updateAppointmentRoomStatus);
-doctorRouter.put("/api/doctor-appointments/:id/whatsapp-confirmation", optionalAuthenticateToken, updateAppointmentWhatsAppStatus);
-doctorRouter.delete("/api/doctor-appointments/:id", optionalAuthenticateToken, cancelDoctorAppointment);
+doctorRouter.get("/api/doctor-appointments", authenticateToken, requireAdmin, getDoctorAppointments);
+doctorRouter.get("/api/doctor-appointments/user/:email", authenticateToken, getDoctorAppointmentsByUser);
+doctorRouter.post("/api/doctor-appointments", rateLimiter(10), optionalAuthenticateToken, bookDoctorAppointment);
+doctorRouter.post("/api/doctor-appointments/:id/resend-whatsapp", authenticateToken, requireAdmin, rateLimiter(3, 60_000), resendAppointmentWhatsAppAlert);
+doctorRouter.put("/api/doctor-appointments/:id/status", authenticateToken, requireAdmin, updateDoctorAppointmentStatus);
+doctorRouter.put("/api/doctor-appointments/:id/prescription", authenticateToken, requireAdmin, saveDoctorPrescription);
+doctorRouter.put("/api/doctor-appointments/:id/meeting-link", authenticateToken, requireAdmin, updateAppointmentMeetingLink);
+doctorRouter.put("/api/doctor-appointments/:id/room-status", authenticateToken, requireAdmin, updateAppointmentRoomStatus);
+doctorRouter.put("/api/doctor-appointments/:id/whatsapp-confirmation", authenticateToken, requireAdmin, updateAppointmentWhatsAppStatus);
+doctorRouter.delete("/api/doctor-appointments/:id", authenticateToken, requireAdmin, cancelDoctorAppointment);

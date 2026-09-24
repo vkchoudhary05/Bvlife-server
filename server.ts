@@ -20,17 +20,27 @@ import { aiRouter } from "./server/routes/aiRoutes.js";
 import { doctorRouter } from "./server/routes/doctorRoutes.js";
 import { db } from "./server/dbManager.js";
 import { isMysqlConfigured, getMysqlConfig } from "./server/mysqlClient.js";
+import { authenticateToken, requireAdmin } from "./server/middleware/authMiddleware.js";
+import { rateLimiter } from "./server/middleware/rateLimitMiddleware.js";
 
 const app = express();
 const PORT = Number(process.env.PORT || 5000);
 
 // Global Middleware
+const allowedOrigins = (process.env.CORS_ORIGINS || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
 app.use(cors({
-  origin: true,
-  credentials: true
+  origin(origin, callback) {
+    if (!origin) return callback(null, true);
+    const isLocalDevelopmentOrigin = process.env.NODE_ENV !== 'production' && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+    callback(null, isLocalDevelopmentOrigin || allowedOrigins.includes(origin));
+  },
+  credentials: false
 }));
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '1mb', extended: true }));
 app.use(requestLogger);
 
 // =========================================================================
@@ -57,8 +67,25 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
+// Keep the sitemap current with products and articles managed in the store.
+app.get("/sitemap.xml", (req, res) => {
+  const configuredSiteUrl = (process.env.APP_URL || "https://bvlife.in").trim();
+  const siteUrl = /^https?:\/\//i.test(configuredSiteUrl) && !configuredSiteUrl.includes("your-domain.example")
+    ? configuredSiteUrl.replace(/\/+$/, "")
+    : "https://bvlife.in";
+  const escapeXml = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&apos;");
+  const staticPaths = ["/", "/shop", "/about", "/contact", "/blog", "/faqs", "/shipping", "/refund", "/privacy", "/terms"];
+  const productPaths = db.getProducts().map(product => `/product?id=${encodeURIComponent(product.id)}`);
+  const blogPaths = db.getBlogs().map(blog => `/blog-post?id=${encodeURIComponent(blog.id)}`);
+  const urls = [...staticPaths, ...productPaths, ...blogPaths]
+    .map(route => `  <url><loc>${escapeXml(`${siteUrl}${route}`)}</loc></url>`)
+    .join("\n");
+
+  res.type("application/xml").send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`);
+});
+
 // Database status check
-app.get("/api/db/status", (req, res) => {
+app.get("/api/db/status", authenticateToken, requireAdmin, (req, res) => {
   const configured = isMysqlConfigured();
   const config = configured ? getMysqlConfig() : null;
   res.json({
@@ -76,7 +103,7 @@ app.get("/api/db/status", (req, res) => {
 });
 
 // Manual instant sync endpoint
-app.post("/api/db/sync-now", async (req, res) => {
+app.post("/api/db/sync-now", authenticateToken, requireAdmin, rateLimiter(3, 60_000), async (req, res) => {
   try {
     const success = await db.refreshFromMysql(true);
     res.json({
@@ -106,7 +133,7 @@ app.use(errorHandler);
 // ==========================================
 
 async function startServer() {
-  const isStandaloneApi = process.env.STANDALONE_API === "true" || true; // Default to standalone API for separate backend
+  const isStandaloneApi = process.env.STANDALONE_API === "true";
 
   if (isStandaloneApi) {
     console.log("Starting server in Standalone API-only mode (No Vite or static frontend serving)...");

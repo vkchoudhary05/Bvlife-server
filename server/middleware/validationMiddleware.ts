@@ -54,7 +54,7 @@ export const validateLogin = (req: Request, res: Response, next: NextFunction) =
  * Validates password reset input fields.
  */
 export const validateResetPassword = (req: Request, res: Response, next: NextFunction) => {
-  const { query, newPassword } = req.body;
+  const { query, newPassword, code, reqId } = req.body;
 
   if (!query || typeof query !== "string" || !query.trim()) {
     return res.status(400).json({ error: "Registered email address or mobile number is required." });
@@ -62,6 +62,10 @@ export const validateResetPassword = (req: Request, res: Response, next: NextFun
 
   if (!newPassword || typeof newPassword !== "string" || newPassword.length < 6) {
     return res.status(400).json({ error: "New password must be at least 6 characters long." });
+  }
+
+  if (!code || typeof code !== "string" || !reqId || typeof reqId !== "string") {
+    return res.status(400).json({ error: "A verified OTP is required to reset the password." });
   }
 
   next();

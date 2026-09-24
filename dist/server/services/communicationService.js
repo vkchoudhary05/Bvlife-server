@@ -1330,10 +1330,16 @@ Warm regards,
      */
     async sendOrderAlertEmailToClinic(order) {
         const emailTemplateId = (process.env.MSG91_STORE_ALERT_EMAIL_TEMPLATE_ID || '').trim().replace(/^['"]|['"]$/g, '');
-        const rawEmails = process.env.STORE_HELPLINE_EMAIL || process.env.DOCTOR_HELPLINE_EMAIL || 'care@gmail.com,care@bvlife.in';
-        const recipientEmails = rawEmails.split(',').map(e => e.trim()).filter(Boolean);
-        if (!emailTemplateId) {
-            const error = 'MSG91_STORE_ALERT_EMAIL_TEMPLATE_ID is not configured; skipped the MSG91 store alert email.';
+        const configuredEmails = [
+            process.env.ORDER_ADMIN_EMAIL,
+            process.env.STORE_HELPLINE_EMAIL,
+            process.env.ADMIN_EMAILS,
+            process.env.DOCTOR_HELPLINE_EMAIL
+        ].filter(Boolean).join(',');
+        const rawEmails = configuredEmails || db.getSettings().contactEmail || 'care@bvlife.in';
+        const recipientEmails = [...new Set(rawEmails.split(',').map(e => e.trim()).filter(Boolean))];
+        if (recipientEmails.length === 0) {
+            const error = 'No store/admin email recipient is configured; skipped the MSG91 store alert email.';
             console.warn(`[MSG91 Order Alert Email] ${error}`);
             this.logCommunication({
                 recipient: recipientEmails.join(', '),
@@ -1342,7 +1348,22 @@ Warm regards,
                 subject: `Order Alert: #${order.id}`,
                 content: error,
                 status: 'FAILED',
-                metadata: { orderId: order.id, reason: 'missing_store_alert_template_id' }
+                metadata: { orderId: order.id, reason: 'missing_store_alert_recipient' }
+            });
+            return { success: false, error };
+        }
+        const authKey = (this.commSettings.msg91AuthKey || process.env.MSG91_AUTH_KEY || '').trim().replace(/^['"]|['"]$/g, '');
+        if (!authKey) {
+            const error = 'MSG91_AUTH_KEY is not configured; the new-order email was not sent.';
+            console.error(`[MSG91 Order Alert Email] ${error} Recipient(s): ${recipientEmails.join(', ')}`);
+            this.logCommunication({
+                recipient: recipientEmails.join(', '),
+                channel: 'EMAIL',
+                category: 'Order',
+                subject: `Order Alert: #${order.id}`,
+                content: error,
+                status: 'FAILED',
+                metadata: { orderId: order.id, reason: 'missing_msg91_auth_key' }
             });
             return { success: false, error };
         }
@@ -1399,7 +1420,7 @@ Warm regards,
                 name: this.commSettings.senderName
             },
             domain: this.commSettings.emailDomain,
-            template_id: emailTemplateId,
+            template_id: emailTemplateId || undefined,
             subject: `📦 [Order Alert] #${order.id}: ₹${order.finalTotal} by ${order.shippingAddress?.fullName || 'Customer'} - Bv Life`,
             body: alertHtml
         });

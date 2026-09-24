@@ -12,7 +12,7 @@ export const register = async (req, res) => {
         res.json(result);
     }
     catch (err) {
-        res.status(err.status || 500).json({ error: err.message || "Registration failed.", ...err });
+        res.status(err.status || 500).json({ error: err.message || "Registration failed." });
     }
 };
 /**
@@ -25,16 +25,6 @@ export const login = async (req, res) => {
     }
     catch (err) {
         res.status(err.status || 500).json({ error: err.message || "Login failed." });
-    }
-};
-/** Mobile-only, no-OTP welcome flow for first-time BV Life visitors. */
-export const quickMobileLogin = async (req, res) => {
-    try {
-        const result = await authService.quickMobileLogin(req.body.phone);
-        res.json(result);
-    }
-    catch (err) {
-        res.status(err.status || 500).json({ error: err.message || "Unable to start mobile session." });
     }
 };
 /**
@@ -155,6 +145,10 @@ export const getCustomers = (req, res) => {
  */
 export const getUserByEmail = (req, res) => {
     try {
+        const requestedEmail = req.params.email.toLowerCase();
+        if (req.user?.role !== 'admin' && req.user?.email.toLowerCase() !== requestedEmail) {
+            return res.status(403).json({ error: "You may only access your own account." });
+        }
         const user = authService.getUserByEmail(req.params.email);
         res.json(user);
     }
@@ -167,6 +161,13 @@ export const getUserByEmail = (req, res) => {
  */
 export const updateUserByEmail = (req, res) => {
     try {
+        const requestedEmail = req.params.email.toLowerCase();
+        if (req.user?.role !== 'admin' && req.user?.email.toLowerCase() !== requestedEmail) {
+            return res.status(403).json({ error: "You may only update your own account." });
+        }
+        if (req.body?.role !== undefined && req.user?.role !== 'admin') {
+            return res.status(403).json({ error: "Only administrators can change account roles." });
+        }
         const user = authService.updateUserByEmail(req.params.email, req.body);
         res.json({ message: "Profile updated successfully.", user });
     }

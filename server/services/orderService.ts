@@ -167,10 +167,12 @@ export class OrderService {
       console.warn('[Order Invoice Email] Notice:', err);
     });
 
-    // Alert Store / Admin Help Desk (care@gmail.com, care@bvlife.in)
-    communicationService.sendOrderAlertEmailToClinic(newOrder).catch(err => {
-      console.warn('[Store Alert Email] Notice:', err);
-    });
+    // Alert the configured order inbox; log both transport and provider failures.
+    communicationService.sendOrderAlertEmailToClinic(newOrder)
+      .then(result => {
+        if (!result.success) console.error(`[Store Alert Email] Order #${newOrder.id} was not sent: ${result.error || 'Unknown email provider error'}`);
+      })
+      .catch(err => console.error(`[Store Alert Email] Order #${newOrder.id} failed:`, err));
 
     // Alert Store / Admin Help Desk WhatsApp (+91 7451050607)
     communicationService.sendOrderAlertToClinicWhatsApp(newOrder).catch(err => {
@@ -273,7 +275,13 @@ export class OrderService {
 
     const isReqUserAdmin = !!(reqUser && (ADMIN_EMAILS.includes(reqUser.email.toLowerCase()) || reqUser.role === 'admin'));
 
-    const matchingOrders = allOrders.filter(o => {
+    const searchableOrders = !reqUser
+      ? allOrders
+      : isReqUserAdmin
+        ? allOrders
+        : allOrders.filter(order => order.userEmail.toLowerCase() === reqUser.email.toLowerCase());
+
+    const matchingOrders = searchableOrders.filter(o => {
       const oId = (o.id || "").toLowerCase();
       const oIdClean = oId.replace(/[^a-z0-9]/g, '');
       const oTrk = (o.trackingNumber || "").toLowerCase();
@@ -283,9 +291,12 @@ export class OrderService {
 
       const exactIdMatch = oId === lowerId || oTrk === lowerId;
       const cleanExactIdMatch = cleanId.length >= 6 && (oIdClean === cleanId || oTrkClean === cleanId);
-      const emailMatch = oEmail === lowerId;
-      const phoneMatch = cleanPhone.length >= 10 && oPhone.endsWith(cleanPhone.slice(-10));
+      const canSearchContact = Boolean(reqUser);
+      const emailMatch = canSearchContact && oEmail === lowerId;
+      const phoneMatch = canSearchContact && cleanPhone.length >= 10 && oPhone.endsWith(cleanPhone.slice(-10));
 
+      // Anonymous users must supply one exact order/tracking reference. Contact
+      // search returns other orders and address/phone data, so require sign-in.
       return exactIdMatch || cleanExactIdMatch || emailMatch || phoneMatch;
     });
 
@@ -304,7 +315,7 @@ export class OrderService {
     } else if (reqUser) {
       userOrders = db.getOrdersByUser(reqUser.email);
     } else if (isSearchByEmailOrPhone) {
-      userOrders = matchingOrders;
+      userOrders = reqUser ? matchingOrders : [primaryOrder];
     } else {
       userOrders = [primaryOrder];
     }

@@ -5,14 +5,13 @@
 
 import { Request, Response, NextFunction } from "express";
 
-interface RateLimitStore {
-  [ip: string]: {
+interface RateLimitEntry {
     count: number;
     resetTime: number;
-  };
 }
 
-const store: RateLimitStore = {};
+const store = new Map<string, RateLimitEntry>();
+const MAX_RATE_LIMIT_KEYS = 50_000;
 
 /**
  * Creates an in-memory rate limiting middleware.
@@ -21,21 +20,36 @@ const store: RateLimitStore = {};
  */
 export const rateLimiter = (maxRequests: number = 30, windowMs: number = 15 * 60 * 1000) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const ip = req.ip || req.headers["x-forwarded-for"] as string || req.socket.remoteAddress || "127.0.0.1";
+    // Do not trust X-Forwarded-For here: unless Express is explicitly
+    // configured with a trusted proxy, clients can forge it to evade limits.
+    const ip = req.ip || req.socket.remoteAddress || "unknown";
     const now = Date.now();
+    let entry = store.get(ip);
 
-    if (!store[ip] || now > store[ip].resetTime) {
-      store[ip] = {
+    if (!entry || now > entry.resetTime) {
+      entry = {
         count: 1,
         resetTime: now + windowMs
       };
+      store.set(ip, entry);
+
+      // Keep this process-local store bounded under high-cardinality traffic.
+      if (store.size > MAX_RATE_LIMIT_KEYS) {
+        for (const [key, value] of store) {
+          if (now > value.resetTime) store.delete(key);
+        }
+        if (store.size > MAX_RATE_LIMIT_KEYS) {
+          const oldestKey = store.keys().next().value;
+          if (oldestKey !== undefined) store.delete(oldestKey);
+        }
+      }
       return next();
     }
 
-    store[ip].count++;
+    entry.count++;
 
-    if (store[ip].count > maxRequests) {
-      const retryAfterSeconds = Math.ceil((store[ip].resetTime - now) / 1000);
+    if (entry.count > maxRequests) {
+      const retryAfterSeconds = Math.ceil((entry.resetTime - now) / 1000);
       res.setHeader("Retry-After", retryAfterSeconds);
       return res.status(429).json({
         error: `Too many requests from this IP. Please try again after ${retryAfterSeconds} seconds.`

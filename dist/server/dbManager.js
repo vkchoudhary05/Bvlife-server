@@ -14,7 +14,6 @@ const INITIAL_ADMIN_USERS = [
         fullName: "Vivek Baliyan",
         role: "admin",
         phone: "7451050607",
-        password: "123123123",
         addresses: [
             {
                 id: "addr-admin-vivek",
@@ -34,7 +33,6 @@ const INITIAL_ADMIN_USERS = [
         fullName: "Aacharya Dhanvantari",
         role: "admin",
         phone: "9425011088",
-        password: "123123123",
         addresses: []
     },
     {
@@ -42,7 +40,6 @@ const INITIAL_ADMIN_USERS = [
         fullName: "BV Life Support",
         role: "admin",
         phone: "9425011088",
-        password: "123123123",
         addresses: []
     },
     {
@@ -50,7 +47,6 @@ const INITIAL_ADMIN_USERS = [
         fullName: "Vipin Choudhary",
         role: "admin",
         phone: "9425011088",
-        password: "123123123",
         addresses: [
             {
                 id: "addr-1",
@@ -70,7 +66,6 @@ const INITIAL_ADMIN_USERS = [
         fullName: "Dr. Sanjeev Rastogi",
         role: "admin",
         phone: "7451050607",
-        password: "123123123",
         addresses: []
     },
     {
@@ -78,7 +73,6 @@ const INITIAL_ADMIN_USERS = [
         fullName: "Dr. Sanjeev Rastogi",
         role: "admin",
         phone: "7451050607",
-        password: "123123123",
         addresses: []
     }
 ];
@@ -149,7 +143,9 @@ class DBManager {
         if (!isMysqlConfigured())
             return false;
         const now = Date.now();
-        if (!force && (now - this.lastMysqlSyncTime < 250)) {
+        // Avoid a full-table MySQL read for every few API requests. Admins can
+        // still force a fresh pull through the protected sync endpoint.
+        if (!force && (now - this.lastMysqlSyncTime < 5_000)) {
             return true;
         }
         if (this.syncInProgress) {
@@ -202,23 +198,12 @@ class DBManager {
                 this.data = JSON.parse(fileContent);
                 // Ensure all top-level keys exist in loaded data
                 this.data.products = this.data.products || [];
-                // Sync products: append any missing products from INITIAL_PRODUCTS
-                const existingProductIds = new Set(this.data.products.map(p => p.id));
-                const missingProducts = INITIAL_PRODUCTS.filter(p => !existingProductIds.has(p.id));
-                if (missingProducts.length > 0) {
-                    this.data.products.push(...missingProducts);
-                    fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
-                }
+                this.data.products = this.data.products || [];
                 this.data.orders = this.data.orders || [];
                 this.data.chatHistories = this.data.chatHistories || {};
                 this.data.blogs = this.data.blogs || [...INITIAL_BLOGS];
                 this.data.faqs = this.data.faqs || [...INITIAL_FAQS];
                 this.data.coupons = this.data.coupons || [...INITIAL_COUPONS];
-                const welcomeCoupon = INITIAL_COUPONS.find(c => c.code === 'WELCOME10');
-                if (welcomeCoupon && !this.data.coupons.some(c => c.code.toUpperCase() === 'WELCOME10')) {
-                    this.data.coupons.push(welcomeCoupon);
-                    fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
-                }
                 this.data.settings = this.data.settings || { ...DEFAULT_SETTINGS };
                 this.data.users = this.data.users || [
                     {
@@ -226,7 +211,6 @@ class DBManager {
                         fullName: "Vivek Baliyan",
                         role: "admin",
                         phone: "7451050607",
-                        password: "123123123",
                         addresses: [
                             {
                                 id: "addr-admin-vivek",
@@ -246,7 +230,6 @@ class DBManager {
                         fullName: "Aacharya Dhanvantari",
                         role: "admin",
                         phone: "9425011088",
-                        password: "123123123",
                         addresses: []
                     },
                     {
@@ -254,7 +237,6 @@ class DBManager {
                         fullName: "BV Life Support",
                         role: "admin",
                         phone: "9425011088",
-                        password: "123123123",
                         addresses: []
                     },
                     {
@@ -262,7 +244,6 @@ class DBManager {
                         fullName: "Vipin Choudhary",
                         role: "admin",
                         phone: "9425011088",
-                        password: "123123123",
                         addresses: [
                             {
                                 id: "addr-1",
@@ -282,7 +263,6 @@ class DBManager {
                         fullName: "Dr. Sanjeev Rastogi",
                         role: "admin",
                         phone: "7451050607",
-                        password: "123123123",
                         addresses: []
                     },
                     {
@@ -290,27 +270,14 @@ class DBManager {
                         fullName: "Dr. Sanjeev Rastogi",
                         role: "admin",
                         phone: "7451050607",
-                        password: "123123123",
                         addresses: []
                     }
                 ];
-                // Ensure doctor user is always present even if db.json was previously created
-                if (this.data.users) {
-                    const docUsers = this.data.users.filter(u => u.email?.toLowerCase() === 'doctor@Bvlife.com' || u.email?.toLowerCase() === 'doctor@bvlife.in');
-                    docUsers.forEach(u => {
-                        u.fullName = 'Dr. Sanjeev Rastogi';
-                    });
-                    if (!this.data.users.some(u => u.email?.toLowerCase() === 'doctor@bvlife.in')) {
-                        this.data.users.push({
-                            email: "doctor@bvlife.in",
-                            fullName: "Dr. Sanjeev Rastogi",
-                            role: "admin",
-                            phone: "7451050607",
-                            password: "123123123",
-                            addresses: []
-                        });
+                // Remove the old hard-coded administrator passcodes from local stores.
+                for (const user of this.data.users) {
+                    if (user.role === 'admin' && (user.password === '123123123' || user.password === 'password123')) {
+                        delete user.password;
                     }
-                    fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
                 }
                 this.data.reviews = this.data.reviews || [
                     {
@@ -338,8 +305,8 @@ class DBManager {
                 ];
                 this.data.activityLogs = this.data.activityLogs || [];
                 this.data.payments = this.data.payments || [];
-                this.data.doctors = (this.data.doctors && this.data.doctors.length > 0) ? this.data.doctors : [...INITIAL_DOCTORS];
-                this.data.doctorAppointments = this.data.doctorAppointments || [...INITIAL_APPOINTMENTS];
+                this.data.doctors = this.data.doctors || [];
+                this.data.doctorAppointments = this.data.doctorAppointments || [];
             }
             else {
                 // Seed default database
@@ -619,12 +586,6 @@ class DBManager {
                 expiryDate: c.expiryDate,
                 active: Boolean(c.active)
             }));
-            const welcomeCoupon = INITIAL_COUPONS.find(c => c.code === 'WELCOME10');
-            const hasWelcomeCoupon = syncedCoupons.some(c => c.code.toUpperCase() === 'WELCOME10');
-            if (welcomeCoupon && !hasWelcomeCoupon) {
-                syncedCoupons.push(welcomeCoupon);
-                await this.saveCouponToMysql(welcomeCoupon);
-            }
             this.data.coupons = syncedCoupons;
             // --- 9. ACTIVITY LOGS SYNC ---
             const mysqlLogs = await query("SELECT * FROM activityLogs ORDER BY timestamp DESC LIMIT 200");
@@ -1036,25 +997,8 @@ class DBManager {
     getUserByEmail(email) {
         if (!email)
             return undefined;
-        let cleanEmail = email.trim().toLowerCase();
-        cleanEmail = cleanEmail.replace(/^(doctor\s*id\s*[:\-]?\s*|email\s*[:\-]?\s*|id\s*[:\-]?\s*)/i, '').trim();
-        if (cleanEmail.includes('doctor@bvlife.in') || cleanEmail.includes('doctor@Bvlife.com') || cleanEmail === 'doctor') {
-            cleanEmail = cleanEmail.includes('Bvlife.com') ? 'doctor@Bvlife.com' : 'doctor@bvlife.in';
-        }
-        let user = this.data.users.find(u => u.email.toLowerCase() === cleanEmail);
-        if (!user && (cleanEmail === 'doctor@bvlife.in' || cleanEmail === 'doctor@Bvlife.com')) {
-            user = {
-                email: cleanEmail,
-                fullName: "Dr. Sanjeev Rastogi",
-                role: "admin",
-                phone: "7451050607",
-                addresses: [],
-                password: "123123123"
-            };
-            this.data.users.push(user);
-            this.save();
-        }
-        return user;
+        const normalizedEmail = email.trim().toLowerCase();
+        return this.data.users.find(u => u.email.toLowerCase() === normalizedEmail);
     }
     getUserByPhone(phone) {
         if (!phone)
