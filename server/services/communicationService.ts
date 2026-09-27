@@ -592,11 +592,18 @@ export class CommunicationService {
     const customerEmail = (order.userEmail || '').trim();
     if (!customerEmail) return { success: false, error: 'User email is missing' };
 
-    const firstItem = order.items && order.items[0] ? order.items[0] : null;
+    const orderItems = order.items || [];
+    const firstItem = orderItems[0] || null;
     const productName = firstItem ? firstItem.productName : 'Ayurvedic Wellness Formulation';
     const productVariant = (firstItem as any)?.selectedVariant?.name || (firstItem as any)?.selectedVariant?.size || '100g Standard Pack';
-    const itemQuantity = firstItem ? String(firstItem.quantity) : '1';
-    const itemTotal = String(firstItem ? firstItem.price * firstItem.quantity : order.subtotal);
+    const itemQuantity = String(orderItems.reduce((total, item) => total + item.quantity, 0) || 1);
+    const itemTotal = String(order.subtotal);
+    const itemsSummary = orderItems.length
+      ? orderItems.map(item => `${item.productName} × ${item.quantity} (₹${item.price * item.quantity})`).join(', ')
+      : productName;
+    const itemsHtml = orderItems.length
+      ? orderItems.map(item => `<li style="margin: 4px 0;">${item.productName} × ${item.quantity} — ₹${item.price * item.quantity}</li>`).join('')
+      : `<li style="margin: 4px 0;">${productName} (${productVariant}) × ${itemQuantity}</li>`;
 
     const formattedOrderDate = new Date(order.orderDate).toLocaleDateString('en-IN', {
       day: 'numeric',
@@ -626,10 +633,13 @@ export class CommunicationService {
       order_date: formattedOrderDate,
       payment_method: String(order.paymentMethod).toUpperCase(),
       tracking_number: trackingNumber,
-      product_name: productName,
-      product_variant_or_weight: productVariant,
+      // Existing MSG91 templates receive all products through product_name.
+      product_name: itemsSummary,
+      product_variant_or_weight: orderItems.length > 1 ? `${orderItems.length} products` : productVariant,
       quantity: itemQuantity,
       item_total: itemTotal,
+      items_summary: itemsSummary,
+      products: itemsSummary,
       subtotal: String(order.subtotal),
       shipping_charge: order.shippingCharge === 0 ? 'FREE' : `₹${order.shippingCharge}`,
       final_amount: String(order.finalTotal),
@@ -667,6 +677,8 @@ export class CommunicationService {
         <p style="color: #4a5568; font-size: 14px; line-height: 1.6;">Your Ayurvedic wellness formulation order <strong>#${order.id}</strong> has been confirmed and placed with our dispensary.</p>
         
         <div style="background: #fbf8f2; border: 1px solid #eedcba; border-radius: 12px; padding: 16px; margin: 20px 0;">
+          <p style="margin: 4px 0 6px; font-size: 13px; color: #2d3748;"><strong>All ordered items:</strong></p>
+          <ul style="margin: 0 0 8px; padding-left: 20px; font-size: 13px; color: #2d3748;">${itemsHtml}</ul>
           <h3 style="margin: 0 0 10px 0; color: #143527; font-size: 14px; border-bottom: 1px dashed #d4af37; padding-bottom: 6px;">Order Summary</h3>
           <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Primary Item:</strong> ${productName} (${productVariant}) × ${itemQuantity}</p>
           <p style="margin: 4px 0; font-size: 13px; color: #2d3748;"><strong>Subtotal:</strong> ₹${order.subtotal}</p>
@@ -1181,9 +1193,12 @@ export class CommunicationService {
     
     console.log(`[SMS Service] Dispatching Delivery Tracking SMS to +${cleanDigits}: ${message}`);
 
-    // Call MSG91 transactional SMS API if configured
+    // SMS Flows and WhatsApp templates are separate MSG91 products. Never submit
+    // a placeholder Flow ID: MSG91 rejects it with API error 400 and sends a
+    // failure alert. Configure MSG91_FLOW_ID only if delivery SMS is required.
     const authKey = (process.env.MSG91_AUTH_KEY || '').trim();
-    if (authKey && authKey.trim() !== '') {
+    const flowId = (process.env.MSG91_FLOW_ID || '').trim();
+    if (authKey && flowId) {
       try {
         await fetch('https://control.msg91.com/api/v5/flow/', {
           method: 'POST',
@@ -1192,7 +1207,7 @@ export class CommunicationService {
             'content-type': 'application/json'
           },
           body: JSON.stringify({
-            template_id: process.env.MSG91_FLOW_ID || 'flow_delivery_update',
+            template_id: flowId,
             short_url: '0',
             recipients: [{
               mobiles: cleanDigits,
@@ -1205,6 +1220,8 @@ export class CommunicationService {
       } catch (err) {
         console.warn('[MSG91 Flow SMS] Exception:', err);
       }
+    } else if (authKey) {
+      console.log('[MSG91 Flow SMS] Skipped delivery SMS because MSG91_FLOW_ID is not configured.');
     }
 
     this.logCommunication({
@@ -1278,6 +1295,13 @@ export class CommunicationService {
     messageText?: string;
     templateId?: string;
     variables?: Record<string, any>;
+    /** MSG91's native WhatsApp template envelope, used by templates created in WhatsApp Manager. */
+    nativeTemplate?: {
+      name: string;
+      namespace: string;
+      language?: string;
+      components: Record<string, { type: 'text'; value: string }>;
+    };
     category?: CommunicationLog['category'];
   }): Promise<{ success: boolean; message: string; gatewayResponse?: any }> {
     const rawPhone = params.recipientPhone.replace(/\D/g, '');
@@ -1298,15 +1322,42 @@ export class CommunicationService {
 
         if (isTemplateMode) {
           // 1. Dedicated Template Dispatch via Outbound API
-          const payload: any = {
-            integrated_number: integratedNumber,
-            recipient_number: recipientWithCountry,
-            content_type: 'template',
-            template_id: params.templateId,
-            variables: params.variables || {}
-          };
+          const payload: any = params.nativeTemplate
+            ? {
+                integrated_number: integratedNumber,
+                content_type: 'template',
+                payload: {
+                  messaging_product: 'whatsapp',
+                  type: 'template',
+                  template: {
+                    name: params.nativeTemplate.name,
+                    language: {
+                      code: params.nativeTemplate.language || 'en',
+                      policy: 'deterministic'
+                    },
+                    namespace: params.nativeTemplate.namespace,
+                    to_and_components: [{
+                      to: [recipientWithCountry],
+                      components: params.nativeTemplate.components
+                    }]
+                  }
+                }
+              }
+            : {
+                integrated_number: integratedNumber,
+                recipient_number: recipientWithCountry,
+                content_type: 'template',
+                template_id: params.templateId,
+                variables: params.variables || {}
+              };
 
-          const res = await fetch('https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/', {
+          // MSG91 native WhatsApp templates with `to_and_components` must use
+          // the bulk endpoint. The non-bulk endpoint expects a different
+          // `payload.to` shape and rejects this valid template payload.
+          const whatsappEndpoint = params.nativeTemplate
+            ? 'https://api.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/bulk/'
+            : 'https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/';
+          const res = await fetch(whatsappEndpoint, {
             method: 'POST',
             headers: {
               'authkey': authKey,
@@ -1323,7 +1374,7 @@ export class CommunicationService {
             gatewayResponse = { raw: resText, httpStatus: res.status };
           }
 
-          if (res.ok && (gatewayResponse?.status === 'success' || gatewayResponse?.type === 'success' || (typeof gatewayResponse?.message === 'string' && gatewayResponse.message.toLowerCase().includes('success')))) {
+          if (res.ok && (params.nativeTemplate || gatewayResponse?.status === 'success' || gatewayResponse?.type === 'success' || (typeof gatewayResponse?.message === 'string' && gatewayResponse.message.toLowerCase().includes('success')))) {
             gatewaySuccess = true;
             console.log(`[WhatsApp Gateway] Template delivered to +${recipientWithCountry} via MSG91! Response:`, gatewayResponse);
           } else {
@@ -1685,8 +1736,9 @@ Check Admin Panel for order fulfillment details.`;
     const phone = order.shippingAddress?.phone || (order as any).userPhone;
     if (!phone) return { success: false, message: "No customer phone provided" };
     const templateId = (process.env.MSG91_WHATSAPP_ORDER_TEMPLATE_ID || '').trim();
-    if (!templateId) {
-      const message = 'MSG91_WHATSAPP_ORDER_TEMPLATE_ID is not configured; customer order WhatsApp was not sent.';
+    const templateNamespace = (process.env.MSG91_WHATSAPP_ORDER_TEMPLATE_NAMESPACE || '').trim();
+    if (!templateId || !templateNamespace) {
+      const message = 'MSG91_WHATSAPP_ORDER_TEMPLATE_ID or MSG91_WHATSAPP_ORDER_TEMPLATE_NAMESPACE is not configured; customer order WhatsApp was not sent.';
       console.warn(`[Order Confirmation WhatsApp] ${message}`);
       this.logCommunication({
         recipient: String(phone),
@@ -1702,6 +1754,8 @@ Check Admin Panel for order fulfillment details.`;
     const customerName = order.shippingAddress?.fullName || 'Valued Patron';
     const itemsList = (order.items || []).map(i => `• ${i.productName} (Qty: ${i.quantity}) - ₹${i.price * i.quantity}`).join('\n');
     const trackingNum = order.trackingNumber || `BVLTRK-${order.id.slice(-6).toUpperCase()}`;
+    const orderHelpline = (process.env.MSG91_WHATSAPP_ORDER_HELPLINE || process.env.MSG91_WHATSAPP_INTEGRATED_NUMBER || '9690941439').replace(/\D/g, '');
+    const supportEmail = process.env.STORE_HELPLINE_EMAIL || 'care@bvlife.in';
 
     const orderSlip = 
 `🌿 *Bv Life - Order Confirmed!* 🌿
@@ -1726,7 +1780,7 @@ ${order.shippingAddress.addressLine1}, ${order.shippingAddress.city}, ${order.sh
 • *Tracking Code:* ${trackingNum}
 
 We will notify you with courier tracking links once your package is dispatched.
-For assistance, reply directly to this WhatsApp message, call our helpline at +91 7451050607, or email care@bvlife.in.
+For assistance, reply directly to this WhatsApp message, call our customer-care team at +91 ${orderHelpline}, or email ${supportEmail}.
 
 Warm regards,
 *Bv Life Botanical Wellness*
@@ -1737,14 +1791,28 @@ Warm regards,
       messageText: orderSlip,
       templateId,
       category: 'Order Confirmation',
+      nativeTemplate: {
+        name: templateId,
+        namespace: templateNamespace,
+        language: (process.env.MSG91_WHATSAPP_ORDER_TEMPLATE_LANGUAGE || 'en').trim(),
+        components: {
+          body_1: { type: 'text', value: customerName },
+          body_2: { type: 'text', value: order.id },
+          body_3: { type: 'text', value: `₹${order.finalTotal}` },
+          body_4: { type: 'text', value: order.paymentMethod },
+          body_5: { type: 'text', value: trackingNum },
+          body_6: { type: 'text', value: orderHelpline },
+          body_7: { type: 'text', value: supportEmail }
+        }
+      },
       variables: {
         customer_name: customerName,
         order_id: order.id,
         total_amount: `₹${order.finalTotal}`,
         payment_method: order.paymentMethod,
         tracking_number: trackingNum,
-        helpline: '7451050607',
-        support_email: 'care@bvlife.in'
+        helpline: orderHelpline,
+        support_email: supportEmail
       }
     });
   }
