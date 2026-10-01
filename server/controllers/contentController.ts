@@ -6,6 +6,7 @@
 import { Request, Response } from "express";
 import { contentService } from "../services/contentService.js";
 import { communicationService } from "../services/communicationService.js";
+import { db } from "../dbManager.js";
 
 // Blogs
 export const getBlogs = (req: Request, res: Response) => {
@@ -76,6 +77,25 @@ export const updateSettings = (req: Request, res: Response) => {
     res.json({ message: "Settings updated successfully.", settings: updated });
   } catch (err: any) {
     res.status(500).json({ error: "Failed to update settings." });
+  }
+};
+
+export const getMembershipPlans = (_req: Request, res: Response) => {
+  res.json(db.getMembershipPlans());
+};
+
+export const updateMembershipPlans = async (req: Request, res: Response) => {
+  try {
+    const allowedTiers = ['1 Year', '3 Years', '5 Years', '10 Years', 'Lifetime'];
+    if (!Array.isArray(req.body?.plans)) return res.status(400).json({ error: 'Plans must be provided as a list.' });
+    const plans = req.body.plans.map((plan: any) => ({ tier: plan.tier, price: Number(plan.price), originalPrice: Number(plan.originalPrice) }));
+    if (plans.length !== allowedTiers.length || new Set(plans.map((plan: any) => plan.tier)).size !== allowedTiers.length || plans.some((plan: any) => !allowedTiers.includes(plan.tier) || !Number.isFinite(plan.price) || plan.price < 1 || !Number.isFinite(plan.originalPrice) || plan.originalPrice < plan.price)) {
+      return res.status(400).json({ error: 'Enter valid prices and original prices for every membership tier.' });
+    }
+    const result = await db.saveMembershipPlans(plans);
+    res.json(result);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Failed to save membership plans.' });
   }
 };
 

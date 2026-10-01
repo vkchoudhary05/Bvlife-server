@@ -180,12 +180,12 @@ export class ProductService {
     const allProducts = db.getProducts();
     let filtered = allProducts;
     const search = options.search?.trim().toLowerCase();
-    if (options.category) filtered = filtered.filter(product => product.category === options.category);
+    if (options.category) filtered = filtered.filter(product => (product.categories?.length ? product.categories : [product.category]).includes(options.category!));
     if (options.featured) filtered = filtered.filter(product => product.featured);
     if (options.bestSeller) filtered = filtered.filter(product => product.bestSeller);
     if (search) filtered = filtered.filter(product =>
       product.name.toLowerCase().includes(search) ||
-      product.category.toLowerCase().includes(search) ||
+      (product.categories?.length ? product.categories : [product.category]).some(category => category.toLowerCase().includes(search)) ||
       (product.description || '').toLowerCase().includes(search)
     );
 
@@ -473,7 +473,8 @@ export class ProductService {
       price: Number(data.price),
       originalPrice: Number(data.originalPrice || data.price),
       stock: stockValue,
-      category: data.category,
+      category: Array.isArray(data.categories) && data.categories.length > 0 ? data.categories[0] : data.category,
+      categories: Array.isArray(data.categories) && data.categories.length > 0 ? [...new Set(data.categories.filter((category: unknown) => typeof category === 'string' && category.trim()).map((category: string) => category.trim()))] : [data.category],
       subcategory: data.subcategory,
       brand: data.brand || "BV Life",
       description: data.description || "",
@@ -508,11 +509,16 @@ export class ProductService {
 
     const updatedSku = typeof updates.sku === 'string' && updates.sku.trim() !== '' ? updates.sku.trim() : prod.sku;
     const updatedVariants = updates.variants !== undefined ? updates.variants : prod.variants;
+    const updatedCategories = Array.isArray(updates.categories) && updates.categories.length > 0
+      ? [...new Set(updates.categories.filter((category: unknown) => typeof category === 'string' && category.trim()).map((category: string) => category.trim()))]
+      : (prod.categories?.length ? prod.categories : [updates.category || prod.category]);
 
     const updated: Product = {
       ...prod,
       ...updates,
       sku: updatedSku,
+      category: updatedCategories[0] || updates.category || prod.category,
+      categories: updatedCategories,
       price: Number(updates.price !== undefined ? updates.price : prod.price),
       originalPrice: Number(updates.originalPrice !== undefined ? updates.originalPrice : prod.originalPrice),
       stock: Number(updates.stock !== undefined ? updates.stock : prod.stock),

@@ -74,6 +74,8 @@ export interface Product {
   originalPrice: number;
   stock: number;
   category: string;
+  /** Primary category plus any additional categories selected by an administrator. */
+  categories?: string[];
   subcategory?: string;
   brand: string;
   description: string;
@@ -209,6 +211,12 @@ export interface WebsiteSettings {
   defaultTaxPercentage: number;
   baseShippingCharge: number;
   freeShippingThreshold: number;
+}
+
+export interface MembershipPlanPrice {
+  tier: '1 Year' | '3 Years' | '5 Years' | '10 Years' | 'Lifetime';
+  price: number;
+  originalPrice: number;
 }
 
 export interface UserMembership {

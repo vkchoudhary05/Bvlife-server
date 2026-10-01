@@ -32,6 +32,7 @@ import {
   getSettings, 
   updateSettings, 
   getActivityLogs 
+  , getMembershipPlans, updateMembershipPlans
 } from "../controllers/contentController.js";
 import { 
   getCoupons, 
@@ -81,4 +82,6 @@ productRouter.delete("/api/coupons/:code", authenticateToken, requireAdmin, dele
 // Store Settings
 productRouter.get("/api/settings", getSettings);
 productRouter.put("/api/settings", authenticateToken, requireAdmin, updateSettings);
+productRouter.get("/api/membership-plans", getMembershipPlans);
+productRouter.put("/api/membership-plans", authenticateToken, requireAdmin, updateMembershipPlans);
 productRouter.get("/api/activity-logs", authenticateToken, requireAdmin, getActivityLogs);
