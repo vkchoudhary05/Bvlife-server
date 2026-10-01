@@ -100,6 +100,13 @@ const INITIAL_REVIEWS = [
         date: "2026-06-25"
     }
 ];
+const DEFAULT_MEMBERSHIP_PLANS = [
+    { tier: '1 Year', price: 2500, originalPrice: 3570 },
+    { tier: '3 Years', price: 4000, originalPrice: 7500 },
+    { tier: '5 Years', price: 5000, originalPrice: 12500 },
+    { tier: '10 Years', price: 10000, originalPrice: 25000 },
+    { tier: 'Lifetime', price: 15000, originalPrice: 45000 }
+];
 // Safe JSON parsing helper to ensure malformed or plain string MySQL columns never crash database synchronization
 function safeJsonParse(val, fallback) {
     if (val === null || val === undefined)
@@ -185,7 +192,8 @@ class DBManager {
                     reviews: [...INITIAL_REVIEWS],
                     activityLogs: [],
                     payments: [],
-                    chatHistories: {}
+                    chatHistories: {},
+                    membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS]
                 };
                 return;
             }
@@ -205,6 +213,7 @@ class DBManager {
                 this.data.faqs = this.data.faqs || [...INITIAL_FAQS];
                 this.data.coupons = this.data.coupons || [...INITIAL_COUPONS];
                 this.data.settings = this.data.settings || { ...DEFAULT_SETTINGS };
+                this.data.membershipPlans = this.data.membershipPlans || [...DEFAULT_MEMBERSHIP_PLANS];
                 this.data.users = this.data.users || [
                     {
                         email: "iamvivekbaliyan07@gmail.com",
@@ -307,6 +316,7 @@ class DBManager {
                 this.data.payments = this.data.payments || [];
                 this.data.doctors = this.data.doctors || [];
                 this.data.doctorAppointments = this.data.doctorAppointments || [];
+                this.data.membershipPlans = this.data.membershipPlans || [...DEFAULT_MEMBERSHIP_PLANS];
             }
             else {
                 // Seed default database
@@ -388,7 +398,8 @@ class DBManager {
                         }
                     ],
                     payments: [],
-                    chatHistories: {}
+                    chatHistories: {},
+                    membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS]
                 };
                 this.save();
             }
@@ -408,7 +419,8 @@ class DBManager {
                 reviews: [],
                 activityLogs: [],
                 payments: [],
-                chatHistories: {}
+                chatHistories: {},
+                membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS]
             };
         }
     }
@@ -431,6 +443,15 @@ class DBManager {
     async syncWithMysql() {
         try {
             await initTables();
+            const mysqlPlans = await query("SELECT tier, price, originalPrice FROM membership_plans");
+            if (mysqlPlans?.length) {
+                this.data.membershipPlans = mysqlPlans.map((plan) => ({ tier: plan.tier, price: Number(plan.price), originalPrice: Number(plan.originalPrice) }));
+            }
+            else {
+                this.data.membershipPlans = [...DEFAULT_MEMBERSHIP_PLANS];
+                for (const plan of this.data.membershipPlans)
+                    await this.saveMembershipPlanToMysql(plan);
+            }
             // --- 1. SETTINGS SYNC ---
             const mysqlSettings = await query("SELECT * FROM settings LIMIT 1");
             if (mysqlSettings && mysqlSettings.length > 0) {
@@ -480,6 +501,7 @@ class DBManager {
                     originalPrice: Number(p.originalPrice),
                     stock: Number(p.stock),
                     category: p.category,
+                    categories: safeJsonParse(p.categories, [p.category]),
                     subcategory: p.subcategory || undefined,
                     brand: p.brand,
                     description: p.description,
@@ -700,13 +722,13 @@ class DBManager {
     async saveProductToMysql(p) {
         const sql = `
       INSERT INTO products (
-        id, name, sku, price, originalPrice, stock, category, subcategory, brand, description, 
+        id, name, sku, price, originalPrice, stock, category, categories, subcategory, brand, description, 
         mainImage, images, ingredients, benefits, dosage, usageInstructions, faqs, rating, 
         featured, bestSeller, lowStockAlertLimit, createdDate
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE 
         name = VALUES(name), sku = VALUES(sku), price = VALUES(price), originalPrice = VALUES(originalPrice),
-        stock = VALUES(stock), category = VALUES(category), subcategory = VALUES(subcategory),
+        stock = VALUES(stock), category = VALUES(category), categories = VALUES(categories), subcategory = VALUES(subcategory),
         brand = VALUES(brand), description = VALUES(description), mainImage = VALUES(mainImage),
         images = VALUES(images), ingredients = VALUES(ingredients), benefits = VALUES(benefits),
         dosage = VALUES(dosage), usageInstructions = VALUES(usageInstructions), faqs = VALUES(faqs),
@@ -714,7 +736,7 @@ class DBManager {
         lowStockAlertLimit = VALUES(lowStockAlertLimit), createdDate = VALUES(createdDate);
     `;
         await query(sql, [
-            p.id, p.name, p.sku, p.price, p.originalPrice, p.stock, p.category, p.subcategory || null, p.brand, p.description,
+            p.id, p.name, p.sku, p.price, p.originalPrice, p.stock, p.category, JSON.stringify(p.categories?.length ? p.categories : [p.category]), p.subcategory || null, p.brand, p.description,
             p.mainImage, JSON.stringify(p.images || []), JSON.stringify(p.ingredients || []), JSON.stringify(p.benefits || []),
             p.dosage, p.usageInstructions, JSON.stringify(p.faqs || []), p.rating, p.featured ? 1 : 0, p.bestSeller ? 1 : 0,
             p.lowStockAlertLimit, p.createdDate
@@ -1173,6 +1195,20 @@ class DBManager {
             });
         }
         return settings;
+    }
+    getMembershipPlans() {
+        return this.data.membershipPlans || [...DEFAULT_MEMBERSHIP_PLANS];
+    }
+    async saveMembershipPlans(plans) {
+        this.data.membershipPlans = plans;
+        this.save();
+        if (isMysqlConfigured()) {
+            await Promise.all(plans.map(plan => this.saveMembershipPlanToMysql(plan)));
+        }
+        return plans;
+    }
+    async saveMembershipPlanToMysql(plan) {
+        await query(`INSERT INTO membership_plans (tier, price, originalPrice) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE price = VALUES(price), originalPrice = VALUES(originalPrice)`, [plan.tier, plan.price, plan.originalPrice]);
     }
     // --- LOGS ---
     getActivityLogs() {

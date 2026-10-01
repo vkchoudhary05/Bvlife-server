@@ -10,13 +10,6 @@ import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
 import { otpService } from "./otpService.js";
 import { paymentService } from "./paymentService.js";
-const MEMBERSHIP_PRICES = {
-    '1 Year': 2500,
-    '3 Years': 4000,
-    '5 Years': 5000,
-    '10 Years': 10000,
-    'Lifetime': 15000
-};
 const toPublicUser = (user) => {
     const { password: _password, ...publicUser } = user;
     return publicUser;
@@ -190,7 +183,8 @@ export class AuthService {
             throw { status: 404, message: "User not found." };
         }
         const { tier, pricePaid } = params;
-        if (!(tier in MEMBERSHIP_PRICES)) {
+        const plan = db.getMembershipPlans().find(item => item.tier === tier);
+        if (!plan) {
             throw { status: 400, message: "Please select a valid membership plan." };
         }
         const now = new Date();
@@ -198,7 +192,7 @@ export class AuthService {
         // Calculate expiry date
         let expiryDate = '';
         let discountPercentage = 30;
-        let standardPrice = MEMBERSHIP_PRICES[tier];
+        let standardPrice = plan.price;
         if (tier === '1 Year') {
             const exp = new Date(now);
             exp.setFullYear(exp.getFullYear() + 1);
@@ -247,12 +241,13 @@ export class AuthService {
         const user = db.getUserByEmail(email);
         if (!user)
             throw { status: 404, message: "User not found." };
-        if (!(tier in MEMBERSHIP_PRICES))
+        const plan = db.getMembershipPlans().find(item => item.tier === tier);
+        if (!plan)
             throw { status: 400, message: "Please select a valid membership plan." };
         const paymentId = `membership_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
         const receipt = `mem_${paymentId.slice(-24)}`;
         const razorpayOrder = await paymentService.createRazorpayOrder({
-            amount: MEMBERSHIP_PRICES[tier],
+            amount: plan.price,
             currency: "INR",
             receipt
         });
@@ -260,7 +255,7 @@ export class AuthService {
             id: paymentId,
             orderId: razorpayOrder.orderId,
             userEmail: user.email.toLowerCase(),
-            amount: MEMBERSHIP_PRICES[tier],
+            amount: plan.price,
             paymentMethod: "Razorpay Membership",
             transactionReference: razorpayOrder.orderId,
             status: "Pending",
@@ -278,9 +273,10 @@ export class AuthService {
             throw { status: 404, message: "Membership payment session not found." };
         if (payment.status === "Paid")
             throw { status: 409, message: "This membership payment was already processed." };
-        if (!params.tier || !(params.tier in MEMBERSHIP_PRICES))
+        const plan = params.tier ? db.getMembershipPlans().find(item => item.tier === params.tier) : undefined;
+        if (!params.tier || !plan)
             throw { status: 400, message: "Please select a valid membership plan." };
-        if (payment.amount !== MEMBERSHIP_PRICES[params.tier])
+        if (payment.amount !== plan.price)
             throw { status: 400, message: "Membership payment amount does not match the selected plan." };
         if (!params.razorpay_order_id || params.razorpay_order_id !== payment.orderId)
             throw { status: 400, message: "Razorpay order does not match the membership payment session." };

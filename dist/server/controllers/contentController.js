@@ -4,6 +4,7 @@
  */
 import { contentService } from "../services/contentService.js";
 import { communicationService } from "../services/communicationService.js";
+import { db } from "../dbManager.js";
 // Blogs
 export const getBlogs = (req, res) => {
     try {
@@ -74,6 +75,25 @@ export const updateSettings = (req, res) => {
     }
     catch (err) {
         res.status(500).json({ error: "Failed to update settings." });
+    }
+};
+export const getMembershipPlans = (_req, res) => {
+    res.json(db.getMembershipPlans());
+};
+export const updateMembershipPlans = async (req, res) => {
+    try {
+        const allowedTiers = ['1 Year', '3 Years', '5 Years', '10 Years', 'Lifetime'];
+        if (!Array.isArray(req.body?.plans))
+            return res.status(400).json({ error: 'Plans must be provided as a list.' });
+        const plans = req.body.plans.map((plan) => ({ tier: plan.tier, price: Number(plan.price), originalPrice: Number(plan.originalPrice) }));
+        if (plans.length !== allowedTiers.length || new Set(plans.map((plan) => plan.tier)).size !== allowedTiers.length || plans.some((plan) => !allowedTiers.includes(plan.tier) || !Number.isFinite(plan.price) || plan.price < 1 || !Number.isFinite(plan.originalPrice) || plan.originalPrice < plan.price)) {
+            return res.status(400).json({ error: 'Enter valid prices and original prices for every membership tier.' });
+        }
+        const result = await db.saveMembershipPlans(plans);
+        res.json(result);
+    }
+    catch (err) {
+        res.status(500).json({ error: err.message || 'Failed to save membership plans.' });
     }
 };
 // Activity Logs

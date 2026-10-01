@@ -66,6 +66,13 @@ export async function initTables() {
         membership MEDIUMTEXT
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
+        await query(`
+      CREATE TABLE IF NOT EXISTS membership_plans (
+        tier VARCHAR(50) PRIMARY KEY,
+        price DECIMAL(10,2) NOT NULL,
+        originalPrice DECIMAL(10,2) NOT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
         try {
             const membershipColumn = await query("SHOW COLUMNS FROM users LIKE 'membership'");
             if (!membershipColumn || membershipColumn.length === 0) {
@@ -85,6 +92,7 @@ export async function initTables() {
         originalPrice DECIMAL(10,2) NOT NULL,
         stock INT NOT NULL,
         category VARCHAR(255) NOT NULL,
+        categories TEXT,
         subcategory VARCHAR(255),
         brand VARCHAR(255) NOT NULL,
         description TEXT,
@@ -106,6 +114,15 @@ export async function initTables() {
         // 64KB, so widen existing installations as well as newly created tables.
         await query("ALTER TABLE products MODIFY COLUMN mainImage MEDIUMTEXT");
         await query("ALTER TABLE products MODIFY COLUMN images MEDIUMTEXT");
+        try {
+            const categoriesColumn = await query("SHOW COLUMNS FROM products LIKE 'categories'");
+            if (!categoriesColumn || categoriesColumn.length === 0) {
+                await query("ALTER TABLE products ADD COLUMN categories TEXT AFTER category");
+            }
+        }
+        catch (colErr) {
+            console.warn("Failed to add products.categories column:", colErr);
+        }
         // 3. Orders Table
         await query(`
       CREATE TABLE IF NOT EXISTS orders (
