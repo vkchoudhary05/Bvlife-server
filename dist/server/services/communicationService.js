@@ -1374,7 +1374,14 @@ Warm regards,
      * Dispatches an instant Order Alert Email to the Store Helpline (care@gmail.com and care@bvlife.in)
      */
     async sendOrderAlertEmailToClinic(order) {
-        const emailTemplateId = (process.env.MSG91_STORE_ALERT_EMAIL_TEMPLATE_ID || '').trim().replace(/^['"]|['"]$/g, '');
+        const storeAlertTemplateId = (process.env.MSG91_STORE_ALERT_EMAIL_TEMPLATE_ID || '').trim().replace(/^['"]|['"]$/g, '');
+        // `msg91_store_alert_email_template` was included as an example value in
+        // older env files. It is not a usable MSG91 template ID. Use the approved
+        // order-email template when a separate store-alert template is absent.
+        const isPlaceholderTemplate = !storeAlertTemplateId || /^(msg91_)?store_alert_email_template$/i.test(storeAlertTemplateId);
+        const emailTemplateId = isPlaceholderTemplate
+            ? (this.commSettings.orderEmailTemplateId || process.env.MSG91_ORDER_EMAIL_TEMPLATE_ID || process.env.MSG91_EMAIL_TEMPLATE_ID || '').trim().replace(/^['"]|['"]$/g, '')
+            : storeAlertTemplateId;
         const configuredEmails = [
             process.env.ORDER_ADMIN_EMAIL,
             process.env.STORE_HELPLINE_EMAIL,
@@ -1409,6 +1416,20 @@ Warm regards,
                 content: error,
                 status: 'FAILED',
                 metadata: { orderId: order.id, reason: 'missing_msg91_auth_key' }
+            });
+            return { success: false, error };
+        }
+        if (!emailTemplateId) {
+            const error = 'MSG91_STORE_ALERT_EMAIL_TEMPLATE_ID or MSG91_ORDER_EMAIL_TEMPLATE_ID must contain an approved MSG91 email template ID; the new-order email was not sent.';
+            console.error(`[MSG91 Order Alert Email] ${error}`);
+            this.logCommunication({
+                recipient: recipientEmails.join(', '),
+                channel: 'EMAIL',
+                category: 'Order',
+                subject: `Order Alert: #${order.id}`,
+                content: error,
+                status: 'FAILED',
+                metadata: { orderId: order.id, reason: 'missing_msg91_order_alert_template_id' }
             });
             return { success: false, error };
         }
@@ -1465,7 +1486,7 @@ Warm regards,
                 name: this.commSettings.senderName
             },
             domain: this.commSettings.emailDomain,
-            template_id: emailTemplateId || undefined,
+            template_id: emailTemplateId,
             subject: `📦 [Order Alert] #${order.id}: ₹${order.finalTotal} by ${order.shippingAddress?.fullName || 'Customer'} - Bv Life`,
             body: alertHtml
         });
