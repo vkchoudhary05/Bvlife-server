@@ -18,6 +18,8 @@ import { productRouter } from "./server/routes/productRoutes.js";
 import { orderRouter } from "./server/routes/orderRoutes.js";
 import { aiRouter } from "./server/routes/aiRoutes.js";
 import { doctorRouter } from "./server/routes/doctorRoutes.js";
+import { affiliateRouter } from "./server/routes/affiliateRoutes.js";
+import { affiliateService } from "./server/services/affiliateService.js";
 import { db } from "./server/dbManager.js";
 import { isMysqlConfigured, getMysqlConfig } from "./server/mysqlClient.js";
 import { authenticateToken, requireAdmin } from "./server/middleware/authMiddleware.js";
@@ -140,6 +142,22 @@ app.use(productRouter);
 app.use(orderRouter);
 app.use(aiRouter);
 app.use(doctorRouter);
+app.use(affiliateRouter);
+
+// Public production referral URL. Local Vite development uses the matching SPA
+// route and proxies its tracking call through /api.
+app.get('/r/:code', rateLimiter(60), (req, res) => {
+  try {
+    const result = affiliateService.trackReferral(req.params.code, {
+      ip: req.ip,
+      userAgent: req.get('user-agent')
+    });
+    res.setHeader('Set-Cookie', affiliateService.referralCookie(result.token, process.env.NODE_ENV === 'production'));
+    res.redirect(302, '/');
+  } catch {
+    res.redirect(302, '/');
+  }
+});
 
 // Global Error Handler
 app.use(errorHandler);

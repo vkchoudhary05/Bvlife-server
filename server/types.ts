@@ -167,6 +167,85 @@ export interface Order {
   orderDate: string;
   trackingNumber?: string;
   trackingUpdates: TrackingUpdate[];
+  /** Attribution is immutable once an order is placed. */
+  affiliateCode?: string;
+  affiliateId?: string;
+  referralSource?: string;
+  referralClickId?: string;
+  commissionRate?: number;
+  commissionAmount?: number;
+  affiliateCommissionStatus?: AffiliateCommission['status'];
+}
+
+export interface Affiliate {
+  id: string;
+  userEmail: string;
+  fullName: string;
+  phone?: string;
+  code?: string;
+  status: 'pending' | 'active' | 'suspended' | 'rejected';
+  commissionRate: number;
+  instagramUsername?: string;
+  instagramProfileUrl?: string;
+  city?: string;
+  upiId?: string;
+  termsAcceptedAt?: string;
+  payoutMethod?: string;
+  payoutDetails?: string;
+  createdAt: string;
+}
+
+/** Separate authentication identity for partners; it is intentionally not stored in users. */
+export interface AffiliateUser {
+  id: string;
+  email: string;
+  fullName: string;
+  phone?: string;
+  password?: string;
+  createdAt: string;
+}
+
+export interface AffiliateClick {
+  id: string;
+  affiliateId: string;
+  affiliateCode: string;
+  createdAt: string;
+  visitorHash?: string;
+  source?: string;
+}
+
+export interface AffiliateCommission {
+  id: string;
+  affiliateId: string;
+  affiliateCode: string;
+  orderId: string;
+  orderTotal: number;
+  commissionRate: number;
+  amount: number;
+  eligibleValue?: number;
+  status: 'pending' | 'approved' | 'paid' | 'rejected' | 'cancelled' | 'returned' | 'refunded';
+  createdAt: string;
+  paidAt?: string;
+}
+
+export interface AffiliatePayout {
+  id: string;
+  affiliateId: string;
+  amount: number;
+  status: 'requested' | 'processing' | 'paid' | 'rejected';
+  paymentMethod?: string;
+  transactionReference?: string;
+  requestedAt: string;
+  paidAt?: string;
+  processedBy?: string;
+  commissionIds: string[];
+}
+
+export interface AffiliateSettings {
+  cookieDays: number;
+  defaultCommissionRate: number;
+  minimumPayout: number;
+  returnWindowDays: number;
 }
 
 export interface Blog {
@@ -232,7 +311,7 @@ export interface UserMembership {
 export interface User {
   email: string;
   fullName: string;
-  role: 'customer' | 'admin';
+  role: 'customer' | 'affiliate' | 'admin';
   phone?: string;
   addresses: Address[];
   password?: string;

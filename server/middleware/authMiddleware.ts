@@ -41,15 +41,17 @@ export const authenticateToken = (req: AuthenticatedRequest, res: Response, next
   const decoded = verifyToken(token);
   if (decoded) {
     const normalizedEmail = typeof decoded.email === "string" ? decoded.email.toLowerCase() : "";
-    const user = normalizedEmail ? db.getUserByEmail(normalizedEmail) : undefined;
+    const storeUser = normalizedEmail ? db.getUserByEmail(normalizedEmail) : undefined;
+    const affiliateUser = !storeUser && normalizedEmail ? db.getAffiliateUserByEmail(normalizedEmail) : undefined;
+    const user = storeUser || affiliateUser;
     if (!user) {
       return res.status(401).json({ error: "Account is no longer active. Please sign in again." });
     }
-    const isAdmin = ADMIN_EMAILS.includes(normalizedEmail) || user.role === "admin";
+    const isAdmin = ADMIN_EMAILS.includes(normalizedEmail) || storeUser?.role === "admin";
 
     req.user = {
       email: normalizedEmail,
-      role: isAdmin ? "admin" : "customer",
+      role: isAdmin ? "admin" : (storeUser?.role || 'affiliate'),
       fullName: user.fullName || "User"
     };
     return next();
@@ -74,12 +76,14 @@ export const optionalAuthenticateToken = (req: AuthenticatedRequest, res: Respon
   const decoded = verifyToken(token);
   if (decoded) {
     const normalizedEmail = typeof decoded.email === "string" ? decoded.email.toLowerCase() : "";
-    const user = normalizedEmail ? db.getUserByEmail(normalizedEmail) : undefined;
+    const storeUser = normalizedEmail ? db.getUserByEmail(normalizedEmail) : undefined;
+    const affiliateUser = !storeUser && normalizedEmail ? db.getAffiliateUserByEmail(normalizedEmail) : undefined;
+    const user = storeUser || affiliateUser;
     if (user) {
-      const isAdmin = ADMIN_EMAILS.includes(normalizedEmail) || user.role === "admin";
+      const isAdmin = ADMIN_EMAILS.includes(normalizedEmail) || storeUser?.role === "admin";
       req.user = {
         email: normalizedEmail,
-        role: isAdmin ? "admin" : "customer",
+        role: isAdmin ? "admin" : (storeUser?.role || 'affiliate'),
         fullName: user.fullName || "User"
       };
     }

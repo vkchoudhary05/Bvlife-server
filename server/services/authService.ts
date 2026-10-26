@@ -180,7 +180,9 @@ export class AuthService {
   getUserProfile(email: string) {
     const user = db.getUserByEmail(email);
     if (!user) {
-      throw { status: 401, message: "User profile not found." };
+      const affiliateUser = db.getAffiliateUserByEmail(email);
+      if (!affiliateUser) throw { status: 401, message: "User profile not found." };
+      return { email: affiliateUser.email, fullName: affiliateUser.fullName, phone: affiliateUser.phone, role: 'affiliate' as const, addresses: [], createdAt: affiliateUser.createdAt };
     }
     const lowerEmail = user.email.toLowerCase();
     if (ADMIN_EMAILS.includes(lowerEmail)) {

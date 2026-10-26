@@ -193,7 +193,9 @@ class DBManager {
                     activityLogs: [],
                     payments: [],
                     chatHistories: {},
-                    membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS]
+                    membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS],
+                    affiliates: [], affiliateUsers: [], affiliateClicks: [], affiliateCommissions: [], affiliatePayouts: [],
+                    affiliateSettings: { cookieDays: 30, defaultCommissionRate: 5, minimumPayout: 500, returnWindowDays: 7 }
                 };
                 return;
             }
@@ -214,6 +216,17 @@ class DBManager {
                 this.data.coupons = this.data.coupons || [...INITIAL_COUPONS];
                 this.data.settings = this.data.settings || { ...DEFAULT_SETTINGS };
                 this.data.membershipPlans = this.data.membershipPlans || [...DEFAULT_MEMBERSHIP_PLANS];
+                this.data.affiliates = this.data.affiliates || [];
+                this.data.affiliateUsers = this.data.affiliateUsers || [];
+                this.data.affiliateClicks = this.data.affiliateClicks || [];
+                this.data.affiliateCommissions = this.data.affiliateCommissions || [];
+                this.data.affiliatePayouts = this.data.affiliatePayouts || [];
+                this.data.affiliateSettings = this.data.affiliateSettings || { cookieDays: 30, defaultCommissionRate: 5, minimumPayout: 500, returnWindowDays: 7 };
+                this.data.affiliates = this.data.affiliates || [];
+                this.data.affiliateClicks = this.data.affiliateClicks || [];
+                this.data.affiliateCommissions = this.data.affiliateCommissions || [];
+                this.data.affiliatePayouts = this.data.affiliatePayouts || [];
+                this.data.affiliateSettings = this.data.affiliateSettings || { cookieDays: 30, defaultCommissionRate: 5, minimumPayout: 500, returnWindowDays: 7 };
                 this.data.users = this.data.users || [
                     {
                         email: "iamvivekbaliyan07@gmail.com",
@@ -399,7 +412,9 @@ class DBManager {
                     ],
                     payments: [],
                     chatHistories: {},
-                    membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS]
+                    membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS],
+                    affiliates: [], affiliateUsers: [], affiliateClicks: [], affiliateCommissions: [], affiliatePayouts: [],
+                    affiliateSettings: { cookieDays: 30, defaultCommissionRate: 5, minimumPayout: 500, returnWindowDays: 7 }
                 };
                 this.save();
             }
@@ -420,7 +435,8 @@ class DBManager {
                 activityLogs: [],
                 payments: [],
                 chatHistories: {},
-                membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS]
+                membershipPlans: [...DEFAULT_MEMBERSHIP_PLANS],
+                affiliates: [], affiliateUsers: [], affiliateClicks: [], affiliateCommissions: [], affiliatePayouts: [], affiliateSettings: { cookieDays: 30, defaultCommissionRate: 5, minimumPayout: 500, returnWindowDays: 7 }
             };
         }
     }
@@ -490,6 +506,21 @@ class DBManager {
             else {
                 this.data.users = [];
             }
+            // --- 2b. AFFILIATE AUTH USERS SYNC (separate from customer/admin users) ---
+            try {
+                const mysqlAffiliateUsers = await query("SELECT * FROM affiliate_users");
+                this.data.affiliateUsers = (mysqlAffiliateUsers || []).map((u) => ({ id: u.id, email: u.email, fullName: u.fullName, phone: u.phone || undefined, password: u.password || undefined, createdAt: u.createdAt }));
+            }
+            catch {
+                this.data.affiliateUsers = [];
+            }
+            try {
+                const mysqlAffiliates = await query("SELECT * FROM affiliates");
+                this.data.affiliates = (mysqlAffiliates || []).map((a) => ({ id: a.id, userEmail: a.userEmail, fullName: a.fullName, phone: a.phone || undefined, code: a.code || undefined, status: a.status, commissionRate: Number(a.commissionRate), payoutMethod: a.payoutMethod || undefined, payoutDetails: a.payoutDetails || undefined, instagramUsername: a.instagramUsername || undefined, instagramProfileUrl: a.instagramProfileUrl || undefined, city: a.city || undefined, upiId: a.upiId || undefined, termsAcceptedAt: a.termsAcceptedAt || undefined, createdAt: a.createdAt }));
+            }
+            catch {
+                this.data.affiliates = [];
+            }
             // --- 3. PRODUCTS SYNC ---
             const mysqlProducts = await query("SELECT * FROM products");
             if (mysqlProducts && mysqlProducts.length > 0) {
@@ -541,7 +572,8 @@ class DBManager {
                     paymentStatus: o.paymentStatus,
                     orderDate: o.orderDate,
                     trackingNumber: o.trackingNumber || undefined,
-                    trackingUpdates: safeJsonParse(o.trackingUpdates, [])
+                    trackingUpdates: safeJsonParse(o.trackingUpdates, []),
+                    affiliateCode: o.affiliateCode || undefined
                 }));
             }
             else {
@@ -761,8 +793,8 @@ class DBManager {
         const sql = `
       INSERT INTO orders (
         id, userEmail, userName, shippingAddress, items, subtotal, tax, shippingCharge, 
-        discount, finalTotal, status, paymentMethod, paymentStatus, orderDate, trackingNumber, trackingUpdates
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        discount, finalTotal, status, paymentMethod, paymentStatus, orderDate, trackingNumber, trackingUpdates, affiliateCode
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE 
         status = VALUES(status), paymentStatus = VALUES(paymentStatus), trackingNumber = VALUES(trackingNumber),
         trackingUpdates = VALUES(trackingUpdates);
@@ -770,7 +802,7 @@ class DBManager {
         await query(sql, [
             o.id, o.userEmail.toLowerCase(), o.userName, JSON.stringify(o.shippingAddress), JSON.stringify(o.items),
             o.subtotal, o.tax, o.shippingCharge, o.discount, o.finalTotal, o.status, o.paymentMethod, o.paymentStatus,
-            o.orderDate, o.trackingNumber || null, JSON.stringify(o.trackingUpdates || [])
+            o.orderDate, o.trackingNumber || null, JSON.stringify(o.trackingUpdates || []), o.affiliateCode || null
         ]);
     }
     async saveReviewToMysql(r) {
@@ -1196,6 +1228,76 @@ class DBManager {
         }
         return settings;
     }
+    // --- AFFILIATES ---
+    getAffiliates() { return this.data.affiliates || []; }
+    getAffiliateUsers() { return this.data.affiliateUsers || []; }
+    getAffiliateUserByEmail(email) {
+        const normalized = String(email || '').trim().toLowerCase();
+        return this.getAffiliateUsers().find(item => item.email.toLowerCase() === normalized);
+    }
+    saveAffiliateUser(user) {
+        this.data.affiliateUsers = this.data.affiliateUsers || [];
+        const index = this.data.affiliateUsers.findIndex(item => item.email.toLowerCase() === user.email.toLowerCase());
+        if (index >= 0)
+            this.data.affiliateUsers[index] = user;
+        else
+            this.data.affiliateUsers.push(user);
+        this.save();
+        if (isMysqlConfigured())
+            query(`INSERT INTO affiliate_users (id,email,fullName,phone,password,createdAt) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE fullName=VALUES(fullName),phone=VALUES(phone),password=VALUES(password)`, [user.id, user.email, user.fullName, user.phone || null, user.password || null, user.createdAt]).catch(err => console.error('Failed to save affiliate user to MySQL:', err));
+        return user;
+    }
+    getAffiliateByCode(code) {
+        const normalized = String(code || '').trim().toUpperCase();
+        return this.getAffiliates().find(item => item.code?.toUpperCase() === normalized);
+    }
+    getAffiliateByEmail(email) {
+        const normalized = String(email || '').trim().toLowerCase();
+        return this.getAffiliates().find(item => item.userEmail.toLowerCase() === normalized);
+    }
+    saveAffiliate(affiliate) {
+        this.data.affiliates = this.data.affiliates || [];
+        const idx = this.getAffiliates().findIndex(item => item.id === affiliate.id);
+        if (idx >= 0)
+            this.data.affiliates[idx] = affiliate;
+        else
+            this.data.affiliates.push(affiliate);
+        this.save();
+        if (isMysqlConfigured())
+            query(`INSERT INTO affiliates (id,userEmail,fullName,phone,code,status,commissionRate,payoutMethod,payoutDetails,createdAt,instagramUsername,instagramProfileUrl,city,upiId,termsAcceptedAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE fullName=VALUES(fullName),phone=VALUES(phone),code=VALUES(code),status=VALUES(status),commissionRate=VALUES(commissionRate),payoutMethod=VALUES(payoutMethod),payoutDetails=VALUES(payoutDetails),instagramUsername=VALUES(instagramUsername),instagramProfileUrl=VALUES(instagramProfileUrl),city=VALUES(city),upiId=VALUES(upiId),termsAcceptedAt=VALUES(termsAcceptedAt)`, [affiliate.id, affiliate.userEmail, affiliate.fullName, affiliate.phone || null, affiliate.code || null, affiliate.status, affiliate.commissionRate, affiliate.payoutMethod || null, affiliate.payoutDetails || null, affiliate.createdAt, affiliate.instagramUsername || null, affiliate.instagramProfileUrl || null, affiliate.city || null, affiliate.upiId || null, affiliate.termsAcceptedAt || null]).catch(err => console.error('Failed to save affiliate to MySQL:', err));
+        return affiliate;
+    }
+    getAffiliateClicks() { return this.data.affiliateClicks || []; }
+    saveAffiliateClick(click) {
+        this.data.affiliateClicks = this.data.affiliateClicks || [];
+        this.data.affiliateClicks.push(click);
+        this.save();
+        return click;
+    }
+    getAffiliateCommissions() { return this.data.affiliateCommissions || []; }
+    saveAffiliateCommission(commission) {
+        this.data.affiliateCommissions = this.data.affiliateCommissions || [];
+        const idx = this.data.affiliateCommissions.findIndex(item => item.id === commission.id || item.orderId === commission.orderId);
+        if (idx >= 0)
+            this.data.affiliateCommissions[idx] = commission;
+        else
+            this.data.affiliateCommissions.push(commission);
+        this.save();
+        return commission;
+    }
+    getAffiliatePayouts() { return this.data.affiliatePayouts || []; }
+    saveAffiliatePayout(payout) {
+        this.data.affiliatePayouts = this.data.affiliatePayouts || [];
+        const idx = this.data.affiliatePayouts.findIndex(item => item.id === payout.id);
+        if (idx >= 0)
+            this.data.affiliatePayouts[idx] = payout;
+        else
+            this.data.affiliatePayouts.push(payout);
+        this.save();
+        return payout;
+    }
+    getAffiliateSettings() { return this.data.affiliateSettings || { cookieDays: 30, defaultCommissionRate: 5, minimumPayout: 500, returnWindowDays: 7 }; }
+    saveAffiliateSettings(settings) { this.data.affiliateSettings = settings; this.save(); return settings; }
     getMembershipPlans() {
         return this.data.membershipPlans || [...DEFAULT_MEMBERSHIP_PLANS];
     }

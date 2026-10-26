@@ -39,7 +39,8 @@ export const placeOrder = (req: AuthenticatedRequest, res: Response) => {
     const newOrder = orderService.placeOrder({
       ...req.body,
       currentUserEmail: req.user?.email,
-      currentUserName: req.user?.fullName
+      currentUserName: req.user?.fullName,
+      cookieHeader: req.headers.cookie
     });
     res.json({ message: "Order placed successfully!", order: newOrder });
   } catch (err: any) {

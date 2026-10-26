@@ -144,6 +144,66 @@ export async function initTables() {
         trackingUpdates TEXT
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
+        try {
+            const affiliateCodeColumn = await query("SHOW COLUMNS FROM orders LIKE 'affiliateCode'");
+            if (!affiliateCodeColumn || affiliateCodeColumn.length === 0) {
+                await query("ALTER TABLE orders ADD COLUMN affiliateCode VARCHAR(64) NULL AFTER trackingUpdates");
+            }
+        }
+        catch (colErr) {
+            console.warn('Failed to add orders.affiliateCode column:', colErr);
+        }
+        await query(`
+      CREATE TABLE IF NOT EXISTS affiliates (
+        id VARCHAR(64) PRIMARY KEY, userEmail VARCHAR(255) NOT NULL UNIQUE,
+        fullName VARCHAR(255) NOT NULL, phone VARCHAR(50), code VARCHAR(64) NOT NULL UNIQUE,
+        status VARCHAR(20) NOT NULL, commissionRate DECIMAL(5,2) NOT NULL DEFAULT 10,
+        payoutMethod VARCHAR(100), payoutDetails TEXT, createdAt VARCHAR(100) NOT NULL,
+        INDEX idx_affiliates_code (code)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+        await query(`CREATE TABLE IF NOT EXISTS affiliate_users (
+      id VARCHAR(64) PRIMARY KEY, email VARCHAR(255) NOT NULL UNIQUE, fullName VARCHAR(255) NOT NULL,
+      phone VARCHAR(50), password VARCHAR(255) NOT NULL, createdAt VARCHAR(100) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;`);
+        await query(`
+      CREATE TABLE IF NOT EXISTS affiliate_commissions (
+        id VARCHAR(64) PRIMARY KEY, affiliateId VARCHAR(64) NOT NULL, affiliateCode VARCHAR(64) NOT NULL,
+        orderId VARCHAR(255) NOT NULL UNIQUE, orderTotal DECIMAL(10,2) NOT NULL,
+        commissionRate DECIMAL(5,2) NOT NULL, amount DECIMAL(10,2) NOT NULL,
+        status VARCHAR(20) NOT NULL, createdAt VARCHAR(100) NOT NULL, paidAt VARCHAR(100) NULL,
+        INDEX idx_commissions_affiliate (affiliateId), INDEX idx_commissions_status (status)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+        await query(`CREATE TABLE IF NOT EXISTS affiliate_clicks (
+      id VARCHAR(80) PRIMARY KEY, affiliateId VARCHAR(64) NOT NULL, affiliateCode VARCHAR(64) NOT NULL,
+      createdAt VARCHAR(100) NOT NULL, visitorHash VARCHAR(64), source VARCHAR(100),
+      INDEX idx_affiliate_clicks_affiliate (affiliateId)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;`);
+        await query(`CREATE TABLE IF NOT EXISTS affiliate_payouts (
+      id VARCHAR(80) PRIMARY KEY, affiliateId VARCHAR(64) NOT NULL, amount DECIMAL(10,2) NOT NULL,
+      status VARCHAR(20) NOT NULL, paymentMethod VARCHAR(100), transactionReference VARCHAR(255),
+      requestedAt VARCHAR(100) NOT NULL, paidAt VARCHAR(100), processedBy VARCHAR(255), commissionIds TEXT NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;`);
+        await query(`CREATE TABLE IF NOT EXISTS affiliate_settings (
+      id TINYINT PRIMARY KEY, cookieDays INT NOT NULL, defaultCommissionRate DECIMAL(5,2) NOT NULL,
+      minimumPayout DECIMAL(10,2) NOT NULL, returnWindowDays INT NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;`);
+        for (const [column, definition] of [
+            ['instagramUsername', 'VARCHAR(255) NULL'], ['instagramProfileUrl', 'VARCHAR(500) NULL'], ['city', 'VARCHAR(255) NULL'],
+            ['upiId', 'VARCHAR(255) NULL'], ['termsAcceptedAt', 'VARCHAR(100) NULL']
+        ]) {
+            try {
+                const found = await query(`SHOW COLUMNS FROM affiliates LIKE '${column}'`);
+                if (!found?.length)
+                    await query(`ALTER TABLE affiliates ADD COLUMN ${column} ${definition}`);
+            }
+            catch { }
+        }
+        try {
+            await query('ALTER TABLE affiliates MODIFY COLUMN code VARCHAR(64) NULL');
+        }
+        catch { }
         // 4. Reviews Table
         await query(`
       CREATE TABLE IF NOT EXISTS reviews (

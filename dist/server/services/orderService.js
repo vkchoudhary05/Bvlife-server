@@ -5,6 +5,7 @@
 import { db } from "../dbManager.js";
 import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
+import { affiliateService } from "./affiliateService.js";
 export class OrderService {
     /**
      * Fetch orders according to user privileges
@@ -90,6 +91,8 @@ export class OrderService {
                 db.saveProduct(prod);
             }
         });
+        const referral = affiliateService.resolveReferral(params.cookieHeader);
+        affiliateService.createCommission(newOrder, referral);
         db.saveOrder(newOrder);
         // Save shipping address to user's saved addresses in DB
         const existingUser = db.getUserByEmail(emailToUse);
@@ -175,6 +178,7 @@ export class OrderService {
             order.trackingUpdates = [...(order.trackingUpdates || []), updateObj];
         }
         db.saveOrder(order);
+        affiliateService.syncOrderCommission(order);
         db.logActivity(actorEmail || "admin@Bvlife.com", "Order Update", `Updated order #${orderId} status to ${status}`);
         if (status && status !== previousStatus) {
             if (order.shippingAddress?.phone) {

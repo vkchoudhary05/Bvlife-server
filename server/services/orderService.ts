@@ -7,6 +7,7 @@ import { db } from "../dbManager.js";
 import { Order, Payment } from "../types.js";
 import { ADMIN_EMAILS } from "../middleware/authMiddleware.js";
 import { communicationService } from "./communicationService.js";
+import { affiliateService } from "./affiliateService.js";
 
 export class OrderService {
   /**
@@ -57,6 +58,7 @@ export class OrderService {
     paymentMethod: string;
     currentUserEmail?: string;
     currentUserName?: string;
+    cookieHeader?: string;
   }) {
     const {
       userEmail,
@@ -129,6 +131,8 @@ export class OrderService {
       }
     });
 
+    const referral = affiliateService.resolveReferral((params as any).cookieHeader);
+    affiliateService.createCommission(newOrder, referral);
     db.saveOrder(newOrder);
 
     // Save shipping address to user's saved addresses in DB
@@ -231,6 +235,7 @@ export class OrderService {
     }
 
     db.saveOrder(order);
+    affiliateService.syncOrderCommission(order);
     db.logActivity(actorEmail || "admin@Bvlife.com", "Order Update", `Updated order #${orderId} status to ${status}`);
 
     if (status && status !== previousStatus) {
